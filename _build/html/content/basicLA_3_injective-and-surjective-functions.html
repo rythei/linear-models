@@ -1,0 +1,849 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>5.3. Injective, surjective and invertible functions &#8212; Linear Algebra for Data Workbook</title>
+    
+  <link href="../_static/css/theme.css" rel="stylesheet">
+  <link href="../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
+    <script>
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="5.4. Left Inverses, Right Inverses, and Inverses" href="basicLA_3_inverses.html" />
+    <link rel="prev" title="5.2. Matrices and Linear Functions" href="basicLA_3_matrices_and_linear_functions.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../_static/logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Linear Algebra for Data Workbook</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../overview.html">
+   Welcome to Stat 89A
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Background
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="python_chheader.html">
+   1. Python 101
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="python_basics.html">
+     1.1. The Basics
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="python_numpy.html">
+     1.2. Introduction to NumPy
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="python_plotting.html">
+     1.3. MatPlotLib
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Basic Linear Algebra
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="basicLA_1_chheader.html">
+   2. Matrices, vectors, and
+   <span class="math notranslate nohighlight">
+    \(\mathbb{R}^n\)
+   </span>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="basicLA_1_introduction-to-norms.html">
+     2.1. Introduction to Norms
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="basicLA_1_norms-integration-monte-carlo.html">
+     2.2. An application: approximating integrals with norms and Monte Carlo integration
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="basicLA_1_lp-balls.html">
+     2.3.
+     <span class="math notranslate nohighlight">
+      \(\ell_p\)
+     </span>
+     Balls
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="basicLA_1_classification-with-norms.html">
+     2.4. An application: classifying data points using norms
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="basicLA_2_chheader.html">
+   3. Basics of vectors and vector spaces
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+  <label for="toctree-checkbox-3">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="basicLA_2A_vectorspaces.html">
+     3.1. Vectors and vector spaces
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="basicLA_3_chheader.html">
+   4. Basics of matrices
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+  <label for="toctree-checkbox-4">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="basicLA_3_matrices-and-matrix-operations.html">
+     4.1. Matrices and matrix operations
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="basicLA_3_deconstructing.html">
+     4.2. Deconstructing Matrix Multiplication
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="basicLA_3_powers_of_matrices.html">
+     4.3. Taking Powers of Matrices
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="basicLA_3B_chheader.html">
+   5. Matrices as transformations
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
+  <label for="toctree-checkbox-5">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="basicLA_3_linear_examples_new.html">
+     5.1. Linear and Nonlinear Functions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="basicLA_3_matrices_and_linear_functions.html">
+     5.2. Matrices and Linear Functions
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     5.3. Injective, surjective and invertible functions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="basicLA_3_inverses.html">
+     5.4. Left Inverses, Right Inverses, and Inverses
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="basicLA_3_changing_basis.html">
+     5.5. Changing Basis
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="basicLA_4_chheader.html">
+   6. Geometry: angles, orthogonality, and projections
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
+  <label for="toctree-checkbox-6">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="basicLA_4_dot-products-and-angles.html">
+     6.1. Dot products, angles, and orthogonality
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="basicLA_4_QR.html">
+     6.2. Gram–Schmidt and the QR Decomposition
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="basicLA_4_QR_linear_systems.html">
+     6.3. Solving linear systems with the QR decomposition
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="basicLA_4_projections.html">
+     6.4. Projections
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  The EVD, SVD and applications
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="eigenstuff_chheader.html">
+   7. Eigenthings
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/>
+  <label for="toctree-checkbox-7">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="eigenstuff_quadratic-forms.html">
+     7.1. Quadratic forms
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="eigenstuff_eigenthings.html">
+     7.2. Eigenvalues and eigenvectors
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="eigenstuff_eigenthings-special-matrices.html">
+     7.3. The Eigenvalue decomposition for special types of matrices
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="eigenstuff_qr-algorithm.html">
+     7.4. The QR algorithm for finding eigenvalues and eigenvectors
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="eigenstuff_SVD.html">
+     7.5. The Singular Value Decomposition
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="eigenstuff_low-rank-approximation.html">
+     7.6. Low-rank approximation using the SVD
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="applications_chheader.html">
+   8. Applications
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
+  <label for="toctree-checkbox-8">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="applications_PCA.html">
+     8.1. Principal Component Analysis (PCA)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="applications_spectral-clustering.html">
+     8.2. Sprectral Clustering
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="applications_least-squares.html">
+     8.3. Least Squares
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="applications_double-descent.html">
+     8.4. The “double descent” phenomenon
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        <a class="dropdown-buttons"
+            href="../_sources/content/basicLA_3_injective-and-surjective-functions.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download notebook file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/content/basicLA_3_injective-and-surjective-functions.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.md</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/erichson/LinearAlgebra/master?urlpath=tree/content/basicLA_3_injective-and-surjective-functions.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#injective-functions-and-left-inverses">
+   5.3.1. Injective functions and left inverses
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#surjective-functions-and-right-inverses">
+   5.3.2. Surjective functions and right inverses
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#bijective-and-invertible-functions">
+   5.3.3. Bijective and invertible functions
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Injective, surjective and invertible functions</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#injective-functions-and-left-inverses">
+   5.3.1. Injective functions and left inverses
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#surjective-functions-and-right-inverses">
+   5.3.2. Surjective functions and right inverses
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#bijective-and-invertible-functions">
+   5.3.3. Bijective and invertible functions
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            
+              <div>
+                
+  <div class="tex2jax_ignore mathjax_ignore section" id="injective-surjective-and-invertible-functions">
+<h1><span class="section-number">5.3. </span>Injective, surjective and invertible functions<a class="headerlink" href="#injective-surjective-and-invertible-functions" title="Permalink to this headline">¶</a></h1>
+<p>Before we can proceed to talk about matrix inverses, we first briefly review some properties of functions. Given two sets <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span>, a function <span class="math notranslate nohighlight">\(f:A\to B\)</span> mapping the set <span class="math notranslate nohighlight">\(A\)</span> to the set <span class="math notranslate nohighlight">\(B\)</span> is an operation such that for any <span class="math notranslate nohighlight">\(a\in A\)</span>, there exists a unique <span class="math notranslate nohighlight">\(b\in B\)</span> for which <span class="math notranslate nohighlight">\(f(a) = B\)</span>. Here the set <span class="math notranslate nohighlight">\(A\)</span> is called the <strong>domain</strong> of <span class="math notranslate nohighlight">\(f\)</span>, while the set <span class="math notranslate nohighlight">\(B\)</span> is called the <strong>co-domain</strong> of <span class="math notranslate nohighlight">\(f\)</span>. Note that by definition, every <span class="math notranslate nohighlight">\(a\in A\)</span> is associated with some output <span class="math notranslate nohighlight">\(b = f(a) \in B\)</span>, but importantly it need not be the case that <em>every</em> <span class="math notranslate nohighlight">\(b\in B\)</span> is the output associated with some input <span class="math notranslate nohighlight">\(a\in A\)</span>. That is, there may be some elements <span class="math notranslate nohighlight">\(b\in B\)</span> such that there is no <span class="math notranslate nohighlight">\(a\in A\)</span> for which <span class="math notranslate nohighlight">\(f(a) = b\)</span>. The set of elements <span class="math notranslate nohighlight">\(b\in B\)</span> for which <span class="math notranslate nohighlight">\(b = f(a)\)</span> for some <span class="math notranslate nohighlight">\(a\in A\)</span> is called the <strong>range</strong> of <span class="math notranslate nohighlight">\(f\)</span> (or sometimes called the <em>image</em> of <span class="math notranslate nohighlight">\(f\)</span>) and is denoted</p>
+<div class="math notranslate nohighlight">
+\[
+\text{Range}(f) = \{b\in B : b = f(a) \text{ for some } a\in A\}.
+\]</div>
+<p>There are two special properties that a function <span class="math notranslate nohighlight">\(f:A\to B\)</span> may or may not satisfy that will be relevant to us. These are <em>injectivity</em> and <em>surjectivity</em> (and <em>bijectivity</em> when a function satisfies both).</p>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="text-align:center head"><p><img alt="" src="../_images/function_examples.png" /></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-align:center"><p><b>Figure 1: Examples of injective, surjective and bijective functions.</b></p></td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="injective-functions-and-left-inverses">
+<h2><span class="section-number">5.3.1. </span>Injective functions and left inverses<a class="headerlink" href="#injective-functions-and-left-inverses" title="Permalink to this headline">¶</a></h2>
+<p>The first property that we will discuss is injectivity. A function <span class="math notranslate nohighlight">\(f:A\to B\)</span> is said to be <strong>injective</strong> if for every <span class="math notranslate nohighlight">\(a, a' \in A\)</span> with <span class="math notranslate nohighlight">\(a\neq a'\)</span>, we have <span class="math notranslate nohighlight">\(f(a)\neq f(a')\)</span>. Equivalently, a function <span class="math notranslate nohighlight">\(f\)</span> is injective if <span class="math notranslate nohighlight">\(f(a) = f(a')\)</span> implies that <span class="math notranslate nohighlight">\(a=a'\)</span>. In words, a function is injective if for any two distinct inputs, we obtain two distinct outputs. Let’s see a simple example of such a function. Intuitively, the existence of an injective map from <span class="math notranslate nohighlight">\(A\to B\)</span> means that <span class="math notranslate nohighlight">\(A\)</span> is “smaller” (or no bigger than) <span class="math notranslate nohighlight">\(B\)</span>, since we need at least as many elements in <span class="math notranslate nohighlight">\(B\)</span> as in <span class="math notranslate nohighlight">\(A\)</span> in order for each <span class="math notranslate nohighlight">\(a\in A\)</span> to get mapped to a distinct output.</p>
+<p>Consider the sets <span class="math notranslate nohighlight">\(A = \{a,b,c,d\}\)</span> and <span class="math notranslate nohighlight">\(B = \{1,2,3,4,5\}\)</span>, and define the function (input-output mapping) as follows (illustrated in the top-left of Figure 1):</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+f(a) &amp;= 1\\ f(b) &amp;= 5 \\ f(c) &amp;= 2\\ f(d) &amp;= 3
+\end{align*}
+\end{split}\]</div>
+<p>This function is injective, since any two distinct elements in <span class="math notranslate nohighlight">\(A\)</span> get mapped to two distinct elements in <span class="math notranslate nohighlight">\(B\)</span>. Let’s see perhaps a more familiar example. Consider the function <span class="math notranslate nohighlight">\(f:\mathbb{R}\to \mathbb{R}\)</span> given by</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+f(x) = \begin{cases}2x &amp; \text{if } x\leq 0\\ x^2+5 &amp; \text{if } x&gt;0\end{cases} \hspace{20mm} (1)
+\end{split}\]</div>
+<p>which we plot using the following.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">x</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">2</span><span class="o">*</span><span class="n">x</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">5</span>
+
+<span class="n">xx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">fxx</span> <span class="o">=</span> <span class="p">[</span><span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">xx</span><span class="p">]</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">fxx</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;f(x)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$y$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$x$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/basicLA_3_injective-and-surjective-functions_1_0.png" src="../_images/basicLA_3_injective-and-surjective-functions_1_0.png" />
+</div>
+</div>
+<p>Inspecting this function visually, we see that since this function is strictly monotone increasing, it satisfies the condition that any two distinct inputs get mapped to two outputs, and hence is an injective function (indeed, in one dimension all injective functions are monotone). On the other hand, the function <span class="math notranslate nohighlight">\(f(x) = x^2\)</span> is <em>not</em> an injective function since, for example, <span class="math notranslate nohighlight">\(x= -\sqrt{2}\)</span> and <span class="math notranslate nohighlight">\(x=\sqrt{2}\)</span> get mapped to the same output, <span class="math notranslate nohighlight">\(f(x) = 2\)</span>.</p>
+<p>Injective functions are special in that they always come with (at least one) special complementary function called a <strong>left inverse</strong>. A left inverse for a function <span class="math notranslate nohighlight">\(f:A\to B\)</span> is a function <span class="math notranslate nohighlight">\(g:B\to A\)</span> such that for and <span class="math notranslate nohighlight">\(x\in A\)</span> we have</p>
+<div class="math notranslate nohighlight">
+\[
+(g\circ f)(x) = g(f(x)) = x.
+\]</div>
+<p>Here the notation <span class="math notranslate nohighlight">\(g\circ f\)</span> means “<span class="math notranslate nohighlight">\(g\)</span> composed with <span class="math notranslate nohighlight">\(f\)</span>” and is by definition the function <span class="math notranslate nohighlight">\(g\circ f: A\to A\)</span> defined by <span class="math notranslate nohighlight">\(g(f(x))\)</span>. If <span class="math notranslate nohighlight">\(g\)</span> is a left inverse for <span class="math notranslate nohighlight">\(f\)</span>, then the above condition states that <span class="math notranslate nohighlight">\(g\circ f\)</span> is the <em>identity function</em>. Let’s see an example of a left inverse for the injective function <span class="math notranslate nohighlight">\(f\)</span> defined in Figure 1. Consider the function <span class="math notranslate nohighlight">\(g:B\to A\)</span> defined by</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+g(1) &amp; = a\\
+g(5) &amp;= b\\
+g(2) &amp;= c\\
+g(3) &amp;= d\\
+g(4) &amp;= a
+\end{align*}
+\end{split}\]</div>
+<p>We see that by definition <span class="math notranslate nohighlight">\(g(f(a)) =a, g(f(b)) = b, g(f(c))=c\)</span> and <span class="math notranslate nohighlight">\(g(f(d)) =d\)</span>, so in particular it is indeed the case that <span class="math notranslate nohighlight">\(g\circ f\)</span> is the identity function on <span class="math notranslate nohighlight">\(A\)</span> and hence <span class="math notranslate nohighlight">\(g\)</span> is a left inverse for <span class="math notranslate nohighlight">\(f\)</span>. Let’s also see an example of a left inverse for the function defined in equation <span class="math notranslate nohighlight">\((1)\)</span>. For example consider the function <span class="math notranslate nohighlight">\(g:\mathbb{R}\to \mathbb{R}\)</span> defined by</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+g(y) = \begin{cases}\frac{1}{2}y &amp;\text{if } y\leq 0\\ 3.14159 &amp; \text{if } 0&lt;y&lt;5\\ \sqrt{y-5} &amp; \text{if }y\geq 5 \end{cases}.
+\end{split}\]</div>
+<p>Lets plot this function and the function <span class="math notranslate nohighlight">\(g\circ f\)</span> to verify that it is indeed a left inverse.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">g</span><span class="p">(</span><span class="n">y</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">y</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">y</span>
+    <span class="k">elif</span> <span class="p">(</span><span class="n">y</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">y</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">):</span>
+        <span class="k">return</span> <span class="mf">3.14159</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">y</span><span class="o">-</span><span class="mi">5</span><span class="p">)</span>
+
+<span class="n">yy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">200</span><span class="p">)</span>
+<span class="n">xx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
+
+<span class="n">gyy</span> <span class="o">=</span> <span class="p">[</span><span class="n">g</span><span class="p">(</span><span class="n">y</span><span class="p">)</span> <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">yy</span><span class="p">]</span>
+<span class="n">gfxx</span> <span class="o">=</span> <span class="p">[</span><span class="n">g</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">))</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">xx</span><span class="p">]</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">yy</span><span class="p">,</span> <span class="n">gyy</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$g(y)$&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">gfxx</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$(g\circ f)(x)$&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">xx</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$y=x$&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dotted&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$x$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$y$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/basicLA_3_injective-and-surjective-functions_3_0.png" src="../_images/basicLA_3_injective-and-surjective-functions_3_0.png" />
+</div>
+</div>
+<p>Notice that the graph of the function <span class="math notranslate nohighlight">\((g\circ f)(x)\)</span> is just the <span class="math notranslate nohighlight">\(y=x\)</span> line, indicating that <span class="math notranslate nohighlight">\(g\circ f\)</span> is indeed the identity function, and hence <span class="math notranslate nohighlight">\(g\)</span> is in fact a left inverse for <span class="math notranslate nohighlight">\(f\)</span>. We haven’t addressed an oddity in the definition of <span class="math notranslate nohighlight">\(g\)</span>: why did we pick <span class="math notranslate nohighlight">\(g(y) = 3.14159\)</span> for <span class="math notranslate nohighlight">\(y\in (0,5)\)</span>? Well it turns out it doesn’t matter at all what we choose <span class="math notranslate nohighlight">\(g\)</span> to do in the range, in fact we could have defined it however we wanted. For example, the function</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\tilde{g}(y) = \begin{cases}\frac{1}{2}y &amp; \text{if } y\leq 0\\ \sin(10y)+y &amp; \text{if } 0&lt;y&lt;5 \\ \sqrt{y-5} &amp; \text{if }y\geq 5 \end{cases}.
+\end{split}\]</div>
+<p>is also a perfectly valid left inverse for <span class="math notranslate nohighlight">\(f\)</span>. Let’s verify this with code as well.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">gtilde</span><span class="p">(</span><span class="n">y</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">y</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">y</span>
+    <span class="k">elif</span> <span class="p">(</span><span class="n">y</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">y</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">10</span><span class="o">*</span><span class="n">y</span><span class="p">)</span><span class="o">+</span><span class="n">y</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">y</span><span class="o">-</span><span class="mi">5</span><span class="p">)</span>
+
+<span class="n">yy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">200</span><span class="p">)</span>
+<span class="n">xx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
+
+<span class="n">gyy</span> <span class="o">=</span> <span class="p">[</span><span class="n">gtilde</span><span class="p">(</span><span class="n">y</span><span class="p">)</span> <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">yy</span><span class="p">]</span>
+<span class="n">gfxx</span> <span class="o">=</span> <span class="p">[</span><span class="n">gtilde</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">))</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">xx</span><span class="p">]</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">yy</span><span class="p">,</span> <span class="n">gyy</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$\tilde</span><span class="si">{g}</span><span class="s1">(y)$&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">gfxx</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$(\tilde</span><span class="si">{g}</span><span class="s1">\circ f)(x)$&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">xx</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$y=x$&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dotted&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$x$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$y$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/basicLA_3_injective-and-surjective-functions_5_0.png" src="../_images/basicLA_3_injective-and-surjective-functions_5_0.png" />
+</div>
+</div>
+<p>The reason for the redundancy is that the range of <span class="math notranslate nohighlight">\(f\)</span> is not equal to all of <span class="math notranslate nohighlight">\(\mathbb{R}\)</span>: all we required out of a left inverse is that for every value of <span class="math notranslate nohighlight">\(x\)</span>, <span class="math notranslate nohighlight">\(g\)</span> maps <span class="math notranslate nohighlight">\(f(x)\)</span> back to <span class="math notranslate nohighlight">\(x\)</span>. For any values of <span class="math notranslate nohighlight">\(y\)</span> that are not in the range of <span class="math notranslate nohighlight">\(f\)</span>, the function <span class="math notranslate nohighlight">\(g\)</span> can do anything. This redundancy can be resolved by requiring that the function <span class="math notranslate nohighlight">\(f\)</span> has another property – called <em>surjectivity</em> – which we discuss next.</p>
+</div>
+<div class="section" id="surjective-functions-and-right-inverses">
+<h2><span class="section-number">5.3.2. </span>Surjective functions and right inverses<a class="headerlink" href="#surjective-functions-and-right-inverses" title="Permalink to this headline">¶</a></h2>
+<p>A function <span class="math notranslate nohighlight">\(f:A\to B\)</span> is said to be <strong>surjective</strong> if for every <span class="math notranslate nohighlight">\(b \in B\)</span> there exists <span class="math notranslate nohighlight">\(a\in A\)</span> such that <span class="math notranslate nohighlight">\(f(a) = B\)</span>. Equivalently, a function <span class="math notranslate nohighlight">\(f:A\to B\)</span> is surjective if <span class="math notranslate nohighlight">\(\text{range}(f) = B\)</span>. Intuitively, a surjective function from <span class="math notranslate nohighlight">\(A\)</span> to <span class="math notranslate nohighlight">\(B\)</span> means that <span class="math notranslate nohighlight">\(A\)</span> is “bigger” (or no smaller) than <span class="math notranslate nohighlight">\(B\)</span>.</p>
+<p>For example, see the function <span class="math notranslate nohighlight">\(f:A\to B\)</span> defined in the top-right of Figure 1: this function is clearly surjective, as every point in <span class="math notranslate nohighlight">\(B = \{1,2,3,4\}\)</span> is mapped to by some point in <span class="math notranslate nohighlight">\(A = \{a,b,c,d,e\}\)</span>. Let’s see a more realistic example. Consider the function <span class="math notranslate nohighlight">\(f:\mathbb{R}\to \mathbb{R}\)</span> defined by</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+f(x) = \begin{cases}-2x-4 &amp; \text{if } x\leq -2\\
+0 &amp; \text{if } -2&lt; x &lt;2\\ -(x-2)^2 &amp; \text{if } x \geq 2 \end{cases} \hspace{20mm} (2)
+\end{split}\]</div>
+<p>Let’s plot this function to see what it looks like.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">x</span> <span class="o">&lt;=</span> <span class="o">-</span><span class="mi">2</span><span class="p">:</span>
+        <span class="k">return</span> <span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">x</span><span class="o">-</span><span class="mi">4</span>
+    <span class="k">elif</span> <span class="p">(</span><span class="n">x</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mi">2</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">x</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">):</span>
+        <span class="k">return</span> <span class="mi">0</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="o">-</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+
+<span class="n">xx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
+
+<span class="n">fxx</span> <span class="o">=</span> <span class="p">[</span><span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">xx</span><span class="p">]</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">fxx</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$f(y)$&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$x$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$y$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/basicLA_3_injective-and-surjective-functions_7_0.png" src="../_images/basicLA_3_injective-and-surjective-functions_7_0.png" />
+</div>
+</div>
+<p>This function is clearly surjective as any value <span class="math notranslate nohighlight">\(y\in \mathbb{R}\)</span> is mapped to by some <span class="math notranslate nohighlight">\(x\in \mathbb{R}\)</span>. However it is clearly <em>not</em> injective, since any <span class="math notranslate nohighlight">\(x\in[-2,2]\)</span> gets mapped to the same value: <span class="math notranslate nohighlight">\(0\)</span>. Similar to injective functions, surjective functions come with special complementary functions called <strong>right inverses</strong>. A right inverse for a function <span class="math notranslate nohighlight">\(f:A\to B\)</span> is a function <span class="math notranslate nohighlight">\(g:B\to A\)</span> such that for all <span class="math notranslate nohighlight">\(y\in B\)</span> we have</p>
+<div class="math notranslate nohighlight">
+\[
+(f\circ g)(y) = f(g(y)) = y.
+\]</div>
+<p>That is, a right inverse for <span class="math notranslate nohighlight">\(f\)</span> is a function <span class="math notranslate nohighlight">\(g\)</span> such that <span class="math notranslate nohighlight">\(f\circ g\)</span> is the identity function on the set <span class="math notranslate nohighlight">\(B\)</span>. Let’s find a right inverse for the function <span class="math notranslate nohighlight">\(f\)</span> defined in equation <span class="math notranslate nohighlight">\((2)\)</span>. For example, we could choose:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+g(y) = \begin{cases} 2+\sqrt{-y} &amp; \text{if } y &lt; 0\\
+1.2 &amp; \text{if } y=0 \\ -\frac{y+4}{2} &amp; \text{if } y &gt; 0 \end{cases}
+\end{split}\]</div>
+<p>Let’s plot this function and the composition <span class="math notranslate nohighlight">\(f\circ g\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">g</span><span class="p">(</span><span class="n">y</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">y</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">2</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="o">-</span><span class="n">y</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">y</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mf">1.2</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="o">-</span><span class="p">(</span><span class="n">y</span><span class="o">+</span><span class="mi">4</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span>
+
+<span class="n">yy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">200</span><span class="p">)</span>
+
+<span class="n">gyy</span> <span class="o">=</span> <span class="p">[</span><span class="n">g</span><span class="p">(</span><span class="n">y</span><span class="p">)</span> <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">yy</span><span class="p">]</span>
+<span class="n">fgyy</span> <span class="o">=</span> <span class="p">[</span><span class="n">f</span><span class="p">(</span><span class="n">g</span><span class="p">(</span><span class="n">y</span><span class="p">))</span> <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">yy</span><span class="p">]</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">yy</span><span class="p">,</span> <span class="n">gyy</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$g(y)$&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">g</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$g(0)$&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">yy</span><span class="p">,</span> <span class="n">fgyy</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$(f\circ g)(y)$&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">yy</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$y=x$&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dotted&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$y$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$x$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/basicLA_3_injective-and-surjective-functions_9_0.png" src="../_images/basicLA_3_injective-and-surjective-functions_9_0.png" />
+</div>
+</div>
+<p>As we can see, <span class="math notranslate nohighlight">\(f\circ g\)</span> is indeed the identity function, so <span class="math notranslate nohighlight">\(g\)</span> is a valid right inverse. So why did we choose the value <span class="math notranslate nohighlight">\(g(0) = 1.2\)</span>? Like with the left inverse, there are many values we could have chosen for <span class="math notranslate nohighlight">\(g(0)\)</span>: it just needs to be some value that <span class="math notranslate nohighlight">\(f\)</span> would have mapped to <span class="math notranslate nohighlight">\(0\)</span>, which is any value in <span class="math notranslate nohighlight">\([-2,2]\)</span>. So really we can get a whole variety of right inverses by choosing <span class="math notranslate nohighlight">\(g(0)\)</span> to be different values in <span class="math notranslate nohighlight">\([-2,2]\)</span>.</p>
+<p>Before proceeding, it’s important to note that the function <span class="math notranslate nohighlight">\(g\)</span> we defined above is <em>not</em> also a left inverse for <span class="math notranslate nohighlight">\(f\)</span>. Let’s plot this to verify.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">xx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">200</span><span class="p">)</span>
+
+<span class="n">gfxx</span> <span class="o">=</span> <span class="p">[</span><span class="n">g</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">))</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">xx</span><span class="p">]</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">gfxx</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$(g\circ f)(x)$&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">xx</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$y=x$&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dotted&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$x$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$y$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/basicLA_3_injective-and-surjective-functions_11_0.png" src="../_images/basicLA_3_injective-and-surjective-functions_11_0.png" />
+</div>
+</div>
+<p>We see that <span class="math notranslate nohighlight">\(g\circ f\)</span> is not equal to the identity, and so <span class="math notranslate nohighlight">\(g\)</span> is definitely not a left inverse for <span class="math notranslate nohighlight">\(f\)</span>. Indeed, because the function <span class="math notranslate nohighlight">\(f\)</span> is not injective, it does not have any left inverses. As we will see next, there are some special functions which are both injective <em>and</em> surjective, called bijective functions, which have a complementary function, called an inverse, which is both a left and right inverse.</p>
+</div>
+<div class="section" id="bijective-and-invertible-functions">
+<h2><span class="section-number">5.3.3. </span>Bijective and invertible functions<a class="headerlink" href="#bijective-and-invertible-functions" title="Permalink to this headline">¶</a></h2>
+<p>So far we’ve seen what injective and surjective functions are, and that they come with left and right inverses, respectively. A <strong>bijective</strong> function is a function which is both injective <em>and</em> surjective. More explicitly, a function <span class="math notranslate nohighlight">\(f:A\to B\)</span> is a function such that 1) for every <span class="math notranslate nohighlight">\(x,x' \in A\)</span> with <span class="math notranslate nohighlight">\(x\neq x'\)</span>, <span class="math notranslate nohighlight">\(f(x) \neq f(x')\)</span> and 2) for every <span class="math notranslate nohighlight">\(y\in B\)</span>, there is <span class="math notranslate nohighlight">\(x\in A\)</span> such that <span class="math notranslate nohighlight">\(f(x) = y\)</span>. Intuitively, this means that there is a one-to-one correspondence between points in <span class="math notranslate nohighlight">\(A\)</span> and points in <span class="math notranslate nohighlight">\(B\)</span> (indeed, bijective functions are often called “one-to-one”). See the bottom graphic in Figure 1 for a simple example of a bijective function.</p>
+<p>Since a bijective function <span class="math notranslate nohighlight">\(f\)</span> is injective and surjective, it has both a left and right inverse. Indeed, it turns out that these two inverses are the same thing, and this function is just called the <em>inverse</em> of <span class="math notranslate nohighlight">\(f\)</span>. Thus, bijective functions are often called invertible functions. Let’s see an example. Consider the function <span class="math notranslate nohighlight">\(f:\mathbb{R}\to\mathbb{R}\)</span> defined by <span class="math notranslate nohighlight">\(f(x) = x^3\)</span>. Then the function <span class="math notranslate nohighlight">\(f^{-1}(x) = x^{1/3}\)</span> is both a left and right inverse for <span class="math notranslate nohighlight">\(f\)</span>.</p>
+<p>In the next sections, we will apply the ideas introduced here to linear functions of the form</p>
+<div class="math notranslate nohighlight">
+\[
+f(\boldsymbol{x}) = \boldsymbol{Ax}
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(\boldsymbol{A}\)</span> is an <span class="math notranslate nohighlight">\(m\times n\)</span> matrix, and use them to understand when a <em>matrix</em> is invertible, or has a left or right inverse.</p>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./content"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="basicLA_3_matrices_and_linear_functions.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title"><span class="section-number">5.2. </span>Matrices and Linear Functions</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="basicLA_3_inverses.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><span class="section-number">5.4. </span>Left Inverses, Right Inverses, and Inverses</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            
+        </div>
+    </div>
+    <footer class="footer">
+  <p>
+    
+      By Michael W. Mahoney, N. Benjamin Erichson and Ryan Theisen<br/>
+    
+        &copy; Copyright 2021.<br/>
+  </p>
+</footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
+  </body>
+</html>

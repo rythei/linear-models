@@ -1,0 +1,11 @@
+format: jb-book
+root: overview
+parts:
+- caption: Basics of Python
+  numbered: true
+  chapters:
+  - file: content/python_basics/python_chheader
+    sections:
+    - file: content/python_basics/python_basics
+    - file: content/python_basics/python_numpy
+    - file: content/python_basics/python_plotting

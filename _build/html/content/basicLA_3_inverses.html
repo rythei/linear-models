@@ -1,0 +1,1154 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>5.4. Left Inverses, Right Inverses, and Inverses &#8212; Linear Algebra for Data Workbook</title>
+    
+  <link href="../_static/css/theme.css" rel="stylesheet">
+  <link href="../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
+    <script>
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="5.5. Changing Basis" href="basicLA_3_changing_basis.html" />
+    <link rel="prev" title="5.3. Injective, surjective and invertible functions" href="basicLA_3_injective-and-surjective-functions.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../_static/logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Linear Algebra for Data Workbook</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../overview.html">
+   Welcome to Stat 89A
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Background
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="python_chheader.html">
+   1. Python 101
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="python_basics.html">
+     1.1. The Basics
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="python_numpy.html">
+     1.2. Introduction to NumPy
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="python_plotting.html">
+     1.3. MatPlotLib
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Basic Linear Algebra
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="basicLA_1_chheader.html">
+   2. Matrices, vectors, and
+   <span class="math notranslate nohighlight">
+    \(\mathbb{R}^n\)
+   </span>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="basicLA_1_introduction-to-norms.html">
+     2.1. Introduction to Norms
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="basicLA_1_norms-integration-monte-carlo.html">
+     2.2. An application: approximating integrals with norms and Monte Carlo integration
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="basicLA_1_lp-balls.html">
+     2.3.
+     <span class="math notranslate nohighlight">
+      \(\ell_p\)
+     </span>
+     Balls
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="basicLA_1_classification-with-norms.html">
+     2.4. An application: classifying data points using norms
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="basicLA_2_chheader.html">
+   3. Basics of vectors and vector spaces
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+  <label for="toctree-checkbox-3">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="basicLA_2A_vectorspaces.html">
+     3.1. Vectors and vector spaces
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="basicLA_3_chheader.html">
+   4. Basics of matrices
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+  <label for="toctree-checkbox-4">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="basicLA_3_matrices-and-matrix-operations.html">
+     4.1. Matrices and matrix operations
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="basicLA_3_deconstructing.html">
+     4.2. Deconstructing Matrix Multiplication
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="basicLA_3_powers_of_matrices.html">
+     4.3. Taking Powers of Matrices
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="basicLA_3B_chheader.html">
+   5. Matrices as transformations
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
+  <label for="toctree-checkbox-5">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="basicLA_3_linear_examples_new.html">
+     5.1. Linear and Nonlinear Functions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="basicLA_3_matrices_and_linear_functions.html">
+     5.2. Matrices and Linear Functions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="basicLA_3_injective-and-surjective-functions.html">
+     5.3. Injective, surjective and invertible functions
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     5.4. Left Inverses, Right Inverses, and Inverses
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="basicLA_3_changing_basis.html">
+     5.5. Changing Basis
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="basicLA_4_chheader.html">
+   6. Geometry: angles, orthogonality, and projections
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
+  <label for="toctree-checkbox-6">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="basicLA_4_dot-products-and-angles.html">
+     6.1. Dot products, angles, and orthogonality
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="basicLA_4_QR.html">
+     6.2. Gram–Schmidt and the QR Decomposition
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="basicLA_4_QR_linear_systems.html">
+     6.3. Solving linear systems with the QR decomposition
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="basicLA_4_projections.html">
+     6.4. Projections
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  The EVD, SVD and applications
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="eigenstuff_chheader.html">
+   7. Eigenthings
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/>
+  <label for="toctree-checkbox-7">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="eigenstuff_quadratic-forms.html">
+     7.1. Quadratic forms
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="eigenstuff_eigenthings.html">
+     7.2. Eigenvalues and eigenvectors
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="eigenstuff_eigenthings-special-matrices.html">
+     7.3. The Eigenvalue decomposition for special types of matrices
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="eigenstuff_qr-algorithm.html">
+     7.4. The QR algorithm for finding eigenvalues and eigenvectors
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="eigenstuff_SVD.html">
+     7.5. The Singular Value Decomposition
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="eigenstuff_low-rank-approximation.html">
+     7.6. Low-rank approximation using the SVD
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="applications_chheader.html">
+   8. Applications
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
+  <label for="toctree-checkbox-8">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="applications_PCA.html">
+     8.1. Principal Component Analysis (PCA)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="applications_spectral-clustering.html">
+     8.2. Sprectral Clustering
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="applications_least-squares.html">
+     8.3. Least Squares
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="applications_double-descent.html">
+     8.4. The “double descent” phenomenon
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        <a class="dropdown-buttons"
+            href="../_sources/content/basicLA_3_inverses.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download notebook file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/content/basicLA_3_inverses.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.md</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/erichson/LinearAlgebra/master?urlpath=tree/content/basicLA_3_inverses.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#left-inverses-for-matrices">
+   5.4.1. Left inverses for matrices
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#when-is-a-linear-function-injective">
+     5.4.1.1. When is a linear function injective
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#left-inverses-for-injective-linear-functions">
+     5.4.1.2. Left inverses for injective linear functions
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#right-inverses-for-matrices">
+   5.4.2. Right inverses for matrices
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#when-is-a-linear-function-surjective">
+     5.4.2.1. When is a linear function surjective
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#right-inverses-for-surjective-linear-functions">
+     5.4.2.2. Right inverses for surjective linear functions
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#linear-functions-with-inverses">
+   5.4.3. Linear functions with inverses
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Left Inverses, Right Inverses, and Inverses</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#left-inverses-for-matrices">
+   5.4.1. Left inverses for matrices
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#when-is-a-linear-function-injective">
+     5.4.1.1. When is a linear function injective
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#left-inverses-for-injective-linear-functions">
+     5.4.1.2. Left inverses for injective linear functions
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#right-inverses-for-matrices">
+   5.4.2. Right inverses for matrices
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#when-is-a-linear-function-surjective">
+     5.4.2.1. When is a linear function surjective
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#right-inverses-for-surjective-linear-functions">
+     5.4.2.2. Right inverses for surjective linear functions
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#linear-functions-with-inverses">
+   5.4.3. Linear functions with inverses
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            
+              <div>
+                
+  <div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="tex2jax_ignore mathjax_ignore section" id="left-inverses-right-inverses-and-inverses">
+<h1><span class="section-number">5.4. </span>Left Inverses, Right Inverses, and Inverses<a class="headerlink" href="#left-inverses-right-inverses-and-inverses" title="Permalink to this headline">¶</a></h1>
+<p>As we’ve seen in the previous section, matrices really just represent <em>linear functions</em> between vector spaces.
+In particular, a <span class="math notranslate nohighlight">\(m\times n\)</span> matrix <span class="math notranslate nohighlight">\(\boldsymbol{A}\)</span> is a linear function mapping vectors <span class="math notranslate nohighlight">\(\boldsymbol{x} \in \mathbb{R}^n\)</span> to vectors <span class="math notranslate nohighlight">\(\boldsymbol{y} = \boldsymbol{Ax} \in \mathbb{R}^m\)</span>.</p>
+<p>From our discussion on functions earlier in the semester, we know that functions may have left inverses, right inverses, or both, depending on whether the function is injective or surjective or both.
+This is in particular true for linear functions <span class="math notranslate nohighlight">\(f: \mathbb{R}^n \to \mathbb{R}^m\)</span>, which are all of the form <span class="math notranslate nohighlight">\(f(\boldsymbol{x}) = \boldsymbol{Ax}\)</span> for some <span class="math notranslate nohighlight">\(m\times n\)</span> matrix <span class="math notranslate nohighlight">\(\boldsymbol{A}\)</span>.
+In this section, we discuss if and when such a function <span class="math notranslate nohighlight">\(f\)</span> is injective or surjective or both, in terms of properties of the matrix <span class="math notranslate nohighlight">\(\boldsymbol{A}\)</span>.</p>
+<div class="section" id="left-inverses-for-matrices">
+<h2><span class="section-number">5.4.1. </span>Left inverses for matrices<a class="headerlink" href="#left-inverses-for-matrices" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="when-is-a-linear-function-injective">
+<h3><span class="section-number">5.4.1.1. </span>When is a linear function injective<a class="headerlink" href="#when-is-a-linear-function-injective" title="Permalink to this headline">¶</a></h3>
+<p>As we saw earlier in the last section, a function <span class="math notranslate nohighlight">\(f\)</span> has (at least one) left inverse as long as it is <em>injective</em>.
+Recall that a function <span class="math notranslate nohighlight">\(f\)</span> is injective if <span class="math notranslate nohighlight">\(f(\boldsymbol{x}) = f(\boldsymbol{y})\)</span> implies that <span class="math notranslate nohighlight">\(\boldsymbol{x}=\boldsymbol{y}\)</span>.</p>
+<p>Now suppose we have a linear function <span class="math notranslate nohighlight">\(f:\mathbb{R}^n \to \mathbb{R}^m\)</span> given by <span class="math notranslate nohighlight">\(f(\boldsymbol{x}) = \boldsymbol{Ax}\)</span>.
+Then, by linearity of <span class="math notranslate nohighlight">\(f\)</span>,</p>
+<div class="math notranslate nohighlight">
+\[
+f(\boldsymbol{x}) = f(\boldsymbol{y}) \iff f(\boldsymbol{x}) - f(\boldsymbol{y}) = \boldsymbol{0} \iff f(\boldsymbol{x} - \boldsymbol{y}) = \boldsymbol{0} \iff \boldsymbol{A}(\boldsymbol{x}-\boldsymbol{y}) = \boldsymbol{0}  .
+\]</div>
+<p>Therefore, supposing that <span class="math notranslate nohighlight">\(f(\boldsymbol{x}) = f(\boldsymbol{y})\)</span> is the same as supposing that <span class="math notranslate nohighlight">\(\boldsymbol{x} - \boldsymbol{y}\)</span> is a vector such that <span class="math notranslate nohighlight">\(\boldsymbol{A}(\boldsymbol{x}-\boldsymbol{y}) = \boldsymbol{0}\)</span>.
+What injectivity is saying is that this is only possible if <span class="math notranslate nohighlight">\(\boldsymbol{x} - \boldsymbol{y} = \boldsymbol{0}.\)</span>
+In other words, <span class="math notranslate nohighlight">\(f(\boldsymbol{x}) = \boldsymbol{Ax}\)</span> is injective if and only if the only vector that <span class="math notranslate nohighlight">\(\boldsymbol{A}\)</span> maps to zero is the zero vector.</p>
+<p>Before continuing, it’s important to come up with a convenient representation for <span class="math notranslate nohighlight">\(\boldsymbol{Ax}\)</span>.
+For this section, we will denote the <span class="math notranslate nohighlight">\(i^{th}\)</span> column of <span class="math notranslate nohighlight">\(\boldsymbol{A}\)</span> by <span class="math notranslate nohighlight">\(\boldsymbol{A}[:,i]\)</span>, which is a vector in <span class="math notranslate nohighlight">\(\mathbb{R}^m\)</span>.
+We can express the vector <span class="math notranslate nohighlight">\(\boldsymbol{Ax}\)</span> as</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\boldsymbol{Ax} = \begin{bmatrix} \boldsymbol{A}[:,1] &amp; \cdots &amp; \boldsymbol{A}[:,n] \end{bmatrix}\begin{bmatrix}x_1\\\vdots \\ x_n\end{bmatrix} = x_1\boldsymbol{A}[:,1] + x_2\boldsymbol{A}[:,2] + \cdots + x_n\boldsymbol{A}[:,n].
+\end{split}\]</div>
+<p>Therefore we see that the vector <span class="math notranslate nohighlight">\(\boldsymbol{Ax}\)</span> is really a linear combination of the columns of <span class="math notranslate nohighlight">\(\boldsymbol{A}\)</span>.</p>
+<p>Now let’s return to our original problem of determining whether or not <span class="math notranslate nohighlight">\(f(\boldsymbol{x}) = \boldsymbol{Ax}\)</span> is injective.
+Suppose that <span class="math notranslate nohighlight">\(\boldsymbol{Ax} = \boldsymbol{0}\)</span>.
+Then, from the above, we have that</p>
+<div class="math notranslate nohighlight">
+\[
+x_1\boldsymbol{A}[:,1] + x_2\boldsymbol{A}[:,2] + \cdots + x_n\boldsymbol{A}[:,n] = \boldsymbol{0}   .
+\]</div>
+<p>That is, our function <span class="math notranslate nohighlight">\(f(\boldsymbol{x})\)</span> is injective if and only if the above identity is possible only if <span class="math notranslate nohighlight">\(\boldsymbol{x} = \boldsymbol{0}\)</span>, or in other words if <span class="math notranslate nohighlight">\(x_1 = x_2 = \dots = x_n = 0\)</span>.
+From our discussion on linear combinations and linear dependence in the previous chapter, we know that this is true if and only if the vectors <span class="math notranslate nohighlight">\(\boldsymbol{A}[:,1],\dots,\boldsymbol{A}[:,n]\)</span> are linearly independent.
+Therefore, we have the following statement, which ties together our concepts from injective functions for general functions, and our linear algebraic concepts of vectors and linear dependence:</p>
+<blockquote>
+<div><p><em>For an <span class="math notranslate nohighlight">\(m\times n\)</span> matrix <span class="math notranslate nohighlight">\(\boldsymbol{A}\)</span>, the linear function <span class="math notranslate nohighlight">\(f(\boldsymbol{x}) = \boldsymbol{Ax}\)</span> is injective if and only if the columns of <span class="math notranslate nohighlight">\(\boldsymbol{A}\)</span> are linearly independent</em>.</p>
+</div></blockquote>
+<p>A simple corollary of this fact is the following: if <span class="math notranslate nohighlight">\(n &gt; m\)</span>, then <span class="math notranslate nohighlight">\(f(\boldsymbol{x}) = \boldsymbol{Ax}\)</span> can <em>never</em> be injective.
+This is because the maximum number of linearly independent vectors in <span class="math notranslate nohighlight">\(\mathbb{R}^m\)</span> is <span class="math notranslate nohighlight">\(m\)</span>, and so no <span class="math notranslate nohighlight">\(n\)</span> vectors can be linearly independent.
+Thus, at the very least, for <span class="math notranslate nohighlight">\(f(\boldsymbol{x}) = \boldsymbol{Ax}\)</span> to be injective, we need that <span class="math notranslate nohighlight">\(n\leq m\)</span>.
+Notice that this is coherent with our understanding of injective functions from the previous section: there we said that, intuitively, <span class="math notranslate nohighlight">\(f: X\to Y\)</span> can only be injective if <span class="math notranslate nohighlight">\(X\)</span> is “smaller than” <span class="math notranslate nohighlight">\(Y\)</span>. Here, this translates to the fact that if <span class="math notranslate nohighlight">\(n\leq m\)</span>, then <span class="math notranslate nohighlight">\(\mathbb{R}^n\)</span> is “smaller than” <span class="math notranslate nohighlight">\(\mathbb{R}^m\)</span>.</p>
+</div>
+<div class="section" id="left-inverses-for-injective-linear-functions">
+<h3><span class="section-number">5.4.1.2. </span>Left inverses for injective linear functions<a class="headerlink" href="#left-inverses-for-injective-linear-functions" title="Permalink to this headline">¶</a></h3>
+<p>We know that a function every injective function <span class="math notranslate nohighlight">\(f: X \to Y\)</span> has a least one left inverse <span class="math notranslate nohighlight">\(g:Y \to X\)</span> such that <span class="math notranslate nohighlight">\(g\circ f = \text{id}_X\)</span>.
+For linear functions of the form <span class="math notranslate nohighlight">\(f(\boldsymbol{x}) = \boldsymbol{Ax}\)</span>, a left inverse is another linear function <span class="math notranslate nohighlight">\(g(\boldsymbol{y}) = \boldsymbol{By}\)</span> where <span class="math notranslate nohighlight">\(\boldsymbol{B}\)</span> is an <span class="math notranslate nohighlight">\(n\times m\)</span> matrix such that</p>
+<div class="math notranslate nohighlight">
+\[
+\boldsymbol{x} = (g\circ f)(\boldsymbol{x}) = g(f(\boldsymbol{x})) = g(\boldsymbol{Ax}) = \boldsymbol{B}\boldsymbol{Ax}   .
+\]</div>
+<p>In other words, <span class="math notranslate nohighlight">\(g(\boldsymbol{y}) = \boldsymbol{By}\)</span> is a left inverse if and only if <span class="math notranslate nohighlight">\(\boldsymbol{BA} = \boldsymbol{I}\)</span> is the identity matrix on <span class="math notranslate nohighlight">\(\mathbb{R}^n\)</span>.</p>
+<p>The condition <span class="math notranslate nohighlight">\(\boldsymbol{BA} = \boldsymbol{I}\)</span> constitutes a linear system of equations, with <span class="math notranslate nohighlight">\(n^2\)</span> constraints and <span class="math notranslate nohighlight">\(n\cdot m\)</span> unknown variables (the entries of the matrix <span class="math notranslate nohighlight">\(\boldsymbol{B}\)</span>).
+Since we know that for <span class="math notranslate nohighlight">\(f\)</span> to be injective we need <span class="math notranslate nohighlight">\(n\leq m\)</span>, we have that <span class="math notranslate nohighlight">\(n^2 \leq n\cdot m\)</span>, and so in fact <span class="math notranslate nohighlight">\(\boldsymbol{BA} = \boldsymbol{I}\)</span> is a linear system with more unknowns than constraints – this is also commonly known as an <em>underdetermined system</em>.
+Typically, undetermined solutions have many possible solutions, and hence in general an injective function <span class="math notranslate nohighlight">\(f(\boldsymbol{x}) = \boldsymbol{Ax}\)</span> will have many left inverses.</p>
+<p>In what follows, we walk through a simple example in Python of finding a left inverse of a matrix.
+Consider the function <span class="math notranslate nohighlight">\(f: \mathbb{R}^2 \to \mathbb{R}^3\)</span> where <span class="math notranslate nohighlight">\(f(\boldsymbol{x}) = \boldsymbol{Ax}\)</span> with</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\boldsymbol{A} = \begin{bmatrix}1 &amp; 2 \\ 0 &amp; 0 \\ 0 &amp;3\end{bmatrix}  .
+\end{split}\]</div>
+<p>It’s easy to see that the vectors <span class="math notranslate nohighlight">\((1,0,0)\)</span> and <span class="math notranslate nohighlight">\((2,0,3)\)</span> are linearly independent, and so we know from the previous subsection that <span class="math notranslate nohighlight">\(f(\boldsymbol{x}) = \boldsymbol{Ax}\)</span> is indeed injective.</p>
+<p>Let’s define <span class="math notranslate nohighlight">\(\boldsymbol{A}\)</span> as a numpy array.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">]])</span>
+<span class="n">A</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[1, 2],
+       [0, 0],
+       [0, 3]])
+</pre></div>
+</div>
+</div>
+</div>
+<p>A left inverse <span class="math notranslate nohighlight">\(\boldsymbol{B}\)</span> for <span class="math notranslate nohighlight">\(\boldsymbol{A}\)</span> will be a <span class="math notranslate nohighlight">\(2\times 3\)</span> matrix of the form</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\boldsymbol{B} = \begin{bmatrix}b_{11} &amp; b_{12} &amp; b_{13}\\ b_{21} &amp; b_{22} &amp; b_{23}\end{bmatrix}  .
+\end{split}\]</div>
+<p>The constraint <span class="math notranslate nohighlight">\(\boldsymbol{BA} = \boldsymbol{I}\)</span> becomes</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\boldsymbol{BA} = \begin{bmatrix}b_{11} &amp; b_{12} &amp; b_{13}\\ b_{21} &amp; b_{22} &amp; b_{23}\end{bmatrix} \begin{bmatrix}1 &amp; 2 \\ 0 &amp; 0 \\ 0 &amp;3\end{bmatrix} =  \begin{bmatrix}1 &amp; 0 \\ 0 &amp; 1\end{bmatrix}  .
+\end{split}\]</div>
+<p>If we carry out the above matrix multiplication, we are left with the following <span class="math notranslate nohighlight">\(4\)</span> constraints:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{cases}
+b_{11} = 1 &amp; (1)\\
+2b_{11} + 3 b_{13} = 0 &amp; (2)\\
+b_{21} = 0 &amp; (3)\\
+2b_{21} + 3b_{23} = 1&amp; (4)   .
+\end{cases}
+\end{split}\]</div>
+<p>We’ve immediately determined that <span class="math notranslate nohighlight">\(b_{11} = 1\)</span> and <span class="math notranslate nohighlight">\(b_{21} = 0\)</span>, so let’s define these:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">b11</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">b21</span> <span class="o">=</span> <span class="mi">0</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>It remains to determine the remaining entries of the matrix <span class="math notranslate nohighlight">\(\boldsymbol{B}\)</span>. From equation (2), we have that</p>
+<div class="math notranslate nohighlight">
+\[
+0= 2b_{11} + 3b_{13} = 2 + 3b_{13} \implies b_{13} = -\frac{2}{3}   .
+\]</div>
+<p>Similarly, from (4) we have</p>
+<div class="math notranslate nohighlight">
+\[
+1 = 2b_{21} + 3b_{23} = 3b_{23} \implies b_{23} = \frac{1}{3}   .
+\]</div>
+<p>Let’s define these in Python as well.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">b13</span> <span class="o">=</span> <span class="o">-</span><span class="mf">2.</span><span class="o">/</span><span class="mi">3</span>
+<span class="n">b23</span> <span class="o">=</span> <span class="mf">1.</span><span class="o">/</span><span class="mi">3</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>But what about <span class="math notranslate nohighlight">\(b_{12}\)</span> and <span class="math notranslate nohighlight">\(b_{22}\)</span>?
+These two variables don’t appear in our constraints at all; indeed, this is precisely because these variables can be <em>anything</em>.
+Let’s see that this is indeed true.
+First, we’ll define a function <code class="docutils literal notranslate"><span class="pre">left_inverse_for_A(b12,</span> <span class="pre">b22)</span></code> which takes in values of <span class="math notranslate nohighlight">\(b_{12}, b_{22}\)</span> and returns the matrix</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\boldsymbol{B} = \begin{bmatrix}1 &amp; b_{12} &amp; -2/3\\ 0 &amp; b_{22} &amp; 1/3\end{bmatrix}   .
+\end{split}\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">left_inverse_for_A</span><span class="p">(</span><span class="n">b12</span><span class="p">,</span> <span class="n">b22</span><span class="p">):</span>
+    <span class="n">B</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">b11</span><span class="p">,</span> <span class="n">b12</span><span class="p">,</span> <span class="n">b13</span><span class="p">],</span> <span class="p">[</span><span class="n">b21</span><span class="p">,</span> <span class="n">b22</span><span class="p">,</span> <span class="n">b23</span><span class="p">]])</span>
+    <span class="k">return</span> <span class="n">B</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now let’s try plugging in different values of <span class="math notranslate nohighlight">\(b_{12}\)</span> and <span class="math notranslate nohighlight">\(b_{22}\)</span> and see that these all give us valid left inverses for <span class="math notranslate nohighlight">\(\boldsymbol{A}\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">B1</span> <span class="o">=</span> <span class="n">left_inverse_for_A</span><span class="p">(</span><span class="n">b12</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">b22</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;For b12 = 1, b22 = 2, we have BA = &#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">B1</span><span class="p">,</span> <span class="n">A</span><span class="p">),</span><span class="mi">4</span><span class="p">))</span>
+
+<span class="n">B2</span> <span class="o">=</span> <span class="n">left_inverse_for_A</span><span class="p">(</span><span class="n">b12</span> <span class="o">=</span> <span class="o">-</span><span class="mi">341</span><span class="p">,</span> <span class="n">b22</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;For b12 = -341, b22 = 0.1, we have BA = &#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">B2</span><span class="p">,</span> <span class="n">A</span><span class="p">),</span><span class="mi">4</span><span class="p">))</span>
+
+<span class="n">B3</span> <span class="o">=</span> <span class="n">left_inverse_for_A</span><span class="p">(</span><span class="n">b12</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">b22</span> <span class="o">=</span> <span class="mi">50</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;For b12 = 0, b22 = 50, we have BA = &#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">B3</span><span class="p">,</span> <span class="n">A</span><span class="p">),</span><span class="mi">4</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>For b12 = 1, b22 = 2, we have BA = 
+[[1. 0.]
+ [0. 1.]]
+For b12 = -341, b22 = 0.1, we have BA = 
+[[1. 0.]
+ [0. 1.]]
+For b12 = 0, b22 = 50, we have BA = 
+[[1. 0.]
+ [0. 1.]]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Indeed, no matter what values of <span class="math notranslate nohighlight">\(b_{12}\)</span> and <span class="math notranslate nohighlight">\(b_{22}\)</span> we plug in, we always get that <span class="math notranslate nohighlight">\(\boldsymbol{BA} = \boldsymbol{I}\)</span>, and hence <span class="math notranslate nohighlight">\(\boldsymbol{A}\)</span> has many left inverses.</p>
+<p>Here we illustrated the existence of many left inverses using a simple example which we could solve by hand; to find left inverses for bigger matrices we will need tools that we introduce in the next chapter.</p>
+</div>
+</div>
+<div class="section" id="right-inverses-for-matrices">
+<h2><span class="section-number">5.4.2. </span>Right inverses for matrices<a class="headerlink" href="#right-inverses-for-matrices" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="when-is-a-linear-function-surjective">
+<h3><span class="section-number">5.4.2.1. </span>When is a linear function surjective<a class="headerlink" href="#when-is-a-linear-function-surjective" title="Permalink to this headline">¶</a></h3>
+<p>As we saw in the previous section, a function <span class="math notranslate nohighlight">\(f\)</span> has (at least one) right inverse as long as it is <em>surjective</em>.
+Recall that a function <span class="math notranslate nohighlight">\(f:X\to Y\)</span> is surjective if for every <span class="math notranslate nohighlight">\(y\in Y\)</span> there exists <span class="math notranslate nohighlight">\(x\in X\)</span> such that <span class="math notranslate nohighlight">\(f(x)= y\)</span>.</p>
+<p>Now suppose again we have a linear function <span class="math notranslate nohighlight">\(f:\mathbb{R}^n \to \mathbb{R}^m\)</span> given by <span class="math notranslate nohighlight">\(f(\boldsymbol{x}) = \boldsymbol{Ax}\)</span>.
+Let <span class="math notranslate nohighlight">\(\boldsymbol{y}\)</span> be an arbitrary vector in <span class="math notranslate nohighlight">\(\mathbb{R}^m\)</span>.
+To check whether <span class="math notranslate nohighlight">\(f\)</span> is surjective, we want to know whether there is a vector <span class="math notranslate nohighlight">\(\boldsymbol{x}\in \mathbb{R}^n\)</span> such that <span class="math notranslate nohighlight">\(\boldsymbol{y} = \boldsymbol{Ax} = f(\boldsymbol{x})\)</span>.
+Using our representation of <span class="math notranslate nohighlight">\(\boldsymbol{Ax}\)</span> from the previous section, we want to know if there are coordinates <span class="math notranslate nohighlight">\(\boldsymbol{x} = (x_1,\dots,x_n)\)</span> such that</p>
+<div class="math notranslate nohighlight">
+\[
+\boldsymbol{y} = x_1 \boldsymbol{A}[:,1] + x_2 \boldsymbol{A}[:, 2] + \cdots + x_n \boldsymbol{A}[:, n]   .
+\]</div>
+<p>By definition, we will always be able to find such coordinates <span class="math notranslate nohighlight">\(x_1,\dots,x_n\)</span> as long as the columns <span class="math notranslate nohighlight">\(\boldsymbol{A}[:,1],\dots,\boldsymbol{A}[:,n]\)</span> span all of <span class="math notranslate nohighlight">\(\mathbb{R}^m\)</span>.
+Hence we have the following characterization of surjective functions which ties together our concepts for general functions, and our linear algebraic concept of span:</p>
+<blockquote>
+<div><p><em>For an <span class="math notranslate nohighlight">\(m\times n\)</span> matrix <span class="math notranslate nohighlight">\(\boldsymbol{A}\)</span>, the linear function <span class="math notranslate nohighlight">\(f(\boldsymbol{x}) = \boldsymbol{Ax}\)</span> is surjective if and only if the columns of <span class="math notranslate nohighlight">\(\boldsymbol{A}\)</span> span <span class="math notranslate nohighlight">\(\mathbb{R}^m\)</span></em>.</p>
+</div></blockquote>
+<p>A simple corollary of this fact is the following: if <span class="math notranslate nohighlight">\(m &gt; n\)</span>, then <span class="math notranslate nohighlight">\(f(\boldsymbol{x}) = \boldsymbol{Ax}\)</span> can <em>never</em> be surjective.
+This is because the minimum number of vectors which can span <span class="math notranslate nohighlight">\(\mathbb{R}^m\)</span> is <span class="math notranslate nohighlight">\(m\)</span>, and so if <span class="math notranslate nohighlight">\(n\)</span> is smaller than <span class="math notranslate nohighlight">\(m\)</span>, no <span class="math notranslate nohighlight">\(n\)</span> vectors can ever span all of <span class="math notranslate nohighlight">\(\mathbb{R}^m\)</span>.
+Thus, at the very least, for <span class="math notranslate nohighlight">\(f(\boldsymbol{x}) = \boldsymbol{Ax}\)</span> to be surjective, we need that <span class="math notranslate nohighlight">\(m\leq n\)</span>.
+Notice that this is coherent with our understanding of surjective functions from before: there we said that, intuitively, <span class="math notranslate nohighlight">\(f: X\to Y\)</span> can only be surjective if <span class="math notranslate nohighlight">\(X\)</span> is “bigger than” <span class="math notranslate nohighlight">\(Y\)</span>.
+Here, this translates to the fact that if <span class="math notranslate nohighlight">\(m\leq n\)</span>, then <span class="math notranslate nohighlight">\(\mathbb{R}^n\)</span> is “bigger than” <span class="math notranslate nohighlight">\(\mathbb{R}^m\)</span>.</p>
+</div>
+<div class="section" id="right-inverses-for-surjective-linear-functions">
+<h3><span class="section-number">5.4.2.2. </span>Right inverses for surjective linear functions<a class="headerlink" href="#right-inverses-for-surjective-linear-functions" title="Permalink to this headline">¶</a></h3>
+<p>From before, we know that a function every surjective function <span class="math notranslate nohighlight">\(f: X \to Y\)</span> has a least one right inverse <span class="math notranslate nohighlight">\(g:Y \to X\)</span> such that <span class="math notranslate nohighlight">\(f\circ g = \text{id}_Y\)</span>.
+In the case of linear functions of the form <span class="math notranslate nohighlight">\(f(\boldsymbol{x}) = \boldsymbol{Ax}\)</span>, a right inverse is another linear function <span class="math notranslate nohighlight">\(g(\boldsymbol{y}) = \boldsymbol{By}\)</span> where <span class="math notranslate nohighlight">\(\boldsymbol{B}\)</span> is an <span class="math notranslate nohighlight">\(n\times m\)</span> matrix such that</p>
+<div class="math notranslate nohighlight">
+\[
+\boldsymbol{y} = (f\circ g)(\boldsymbol{y}) = f(g(\boldsymbol{y})) = f(\boldsymbol{By}) = \boldsymbol{A}\boldsymbol{By}   .
+\]</div>
+<p>In other words <span class="math notranslate nohighlight">\(g(\boldsymbol{y}) = \boldsymbol{By}\)</span> is a right inverse if and only if <span class="math notranslate nohighlight">\(\boldsymbol{AB} = \boldsymbol{I}\)</span> is the identity matrix on <span class="math notranslate nohighlight">\(\mathbb{R}^m\)</span>.
+Like in the previous section, the condition <span class="math notranslate nohighlight">\(\boldsymbol{AB} = \boldsymbol{I}\)</span> constitutes a linear system of equations, with <span class="math notranslate nohighlight">\(m^2\)</span> constraints and <span class="math notranslate nohighlight">\(n\cdot m\)</span> unknown variables (the entries of the matrix <span class="math notranslate nohighlight">\(\boldsymbol{B}\)</span>).
+Since we know that for <span class="math notranslate nohighlight">\(f\)</span> to be surjective we need <span class="math notranslate nohighlight">\(m \leq n\)</span>, we have that <span class="math notranslate nohighlight">\(m^2 \leq n\cdot m\)</span>, and so in fact <span class="math notranslate nohighlight">\(\boldsymbol{AB} = \boldsymbol{I}\)</span> is a linear system with more unknowns than constraints – this is also commonly known as an <em>underdetermined system</em>.
+Typically, undetermined solutions have many possible solutions, and hence in general an surjective function <span class="math notranslate nohighlight">\(f(\boldsymbol{x}) = \boldsymbol{Ax}\)</span> will have many right inverses.</p>
+<p>In what follows, we walk through a simple example in Python of finding a right inverse of a matrix.
+Consider the function <span class="math notranslate nohighlight">\(f: \mathbb{R}^3 \to \mathbb{R}^2\)</span> where <span class="math notranslate nohighlight">\(f(\boldsymbol{x}) = \boldsymbol{Ax}\)</span> with</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\boldsymbol{A} = \begin{bmatrix}1 &amp; 2  &amp; 0\\ 0 &amp; 0 &amp; 3\end{bmatrix}  .
+\end{split}\]</div>
+<p>It’s easy to see that the vectors <span class="math notranslate nohighlight">\((1,0)\)</span>, <span class="math notranslate nohighlight">\((2,0)\)</span> and <span class="math notranslate nohighlight">\((0,3)\)</span> span <span class="math notranslate nohighlight">\(\mathbb{R}^2\)</span>, and so we know from the previous subsection that <span class="math notranslate nohighlight">\(f(\boldsymbol{x}) = \boldsymbol{Ax}\)</span> is indeed surjective.</p>
+<p>Let’s define this as a numpy array.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">]])</span>
+<span class="n">A</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[1, 2, 0],
+       [0, 0, 3]])
+</pre></div>
+</div>
+</div>
+</div>
+<p>A right inverse <span class="math notranslate nohighlight">\(\boldsymbol{B}\)</span> for <span class="math notranslate nohighlight">\(\boldsymbol{A}\)</span> will be a <span class="math notranslate nohighlight">\(3\times 2\)</span> matrix of the form</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\boldsymbol{B} = \begin{bmatrix}b_{11} &amp; b_{12}\\ b_{21} &amp; b_{22}\\ b_{31} &amp; b_{32}\end{bmatrix}  .
+\end{split}\]</div>
+<p>The constraint <span class="math notranslate nohighlight">\(\boldsymbol{AB} = \boldsymbol{I}\)</span> becomes</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\boldsymbol{AB} = \begin{bmatrix}1 &amp; 2  &amp; 0\\ 0 &amp; 0 &amp; 3\end{bmatrix}\begin{bmatrix}b_{11} &amp; b_{12}\\ b_{21} &amp; b_{22}\\ b_{31} &amp; b_{32}\end{bmatrix} =  \begin{bmatrix}1 &amp; 0 \\ 0 &amp; 1\end{bmatrix}  .
+\end{split}\]</div>
+<p>If we carry out the above matrix multiplication, we are left with the following <span class="math notranslate nohighlight">\(4\)</span> constraints:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{cases}
+b_{11} + 2b_{21} = 1 &amp; (1)\\
+b_{12} + 2 b_{22} = 0 &amp; (2)\\
+3b_{31} = 0 &amp; (3)\\
+3b_{32} = 1&amp; (4)  .
+\end{cases}
+\end{split}\]</div>
+<p>From (3) and (4) we immediately know that <span class="math notranslate nohighlight">\(b_{31} = 0\)</span> and <span class="math notranslate nohighlight">\(b_{32} = 1/3\)</span>.
+Moreover, from (1) and (2) we know that <span class="math notranslate nohighlight">\(b_{11} = 1-2b_{21}\)</span> and <span class="math notranslate nohighlight">\(b_{12} = -2b_{22}\)</span>.
+As we can see, we do not have enough constraints to fully determine the matrix <span class="math notranslate nohighlight">\(\boldsymbol{B}\)</span>: <span class="math notranslate nohighlight">\(b_{21}\)</span> and <span class="math notranslate nohighlight">\(b_{22}\)</span> are free to vary.
+Let’s check that no matter what choices of these values, we still get a right inverse.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">b31</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">b32</span> <span class="o">=</span> <span class="mf">1.</span><span class="o">/</span><span class="mi">3</span>
+
+<span class="k">def</span> <span class="nf">right_inverse_for_A</span><span class="p">(</span><span class="n">b21</span><span class="p">,</span> <span class="n">b22</span><span class="p">):</span>
+    <span class="n">b11</span> <span class="o">=</span> <span class="mi">1</span><span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">b21</span>
+    <span class="n">b12</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">b22</span>
+    <span class="n">B</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">b11</span><span class="p">,</span> <span class="n">b12</span><span class="p">],</span> <span class="p">[</span><span class="n">b21</span><span class="p">,</span> <span class="n">b22</span><span class="p">],</span> <span class="p">[</span><span class="n">b31</span><span class="p">,</span> <span class="n">b32</span><span class="p">]])</span>
+    <span class="k">return</span> <span class="n">B</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s again try several values for <span class="math notranslate nohighlight">\(b_{21}\)</span> and <span class="math notranslate nohighlight">\(b_{22}\)</span>, and check that they all give valid right inverses, i.e. that <span class="math notranslate nohighlight">\(\boldsymbol{AB} = \boldsymbol{I}\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">B1</span> <span class="o">=</span> <span class="n">right_inverse_for_A</span><span class="p">(</span><span class="n">b21</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">b22</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;For b21 = 1, b22 = 2, we have AB = &#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B1</span><span class="p">),</span><span class="mi">4</span><span class="p">))</span>
+
+<span class="n">B2</span> <span class="o">=</span> <span class="n">right_inverse_for_A</span><span class="p">(</span><span class="n">b21</span> <span class="o">=</span> <span class="o">-</span><span class="mi">341</span><span class="p">,</span> <span class="n">b22</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;For b21 = -341, b22 = 0.1, we have AB = &#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B2</span><span class="p">),</span><span class="mi">4</span><span class="p">))</span>
+
+<span class="n">B3</span> <span class="o">=</span> <span class="n">right_inverse_for_A</span><span class="p">(</span><span class="n">b21</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">b22</span> <span class="o">=</span> <span class="mi">50</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;For b21 = 0, b22 = 50, we have AB = &#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B3</span><span class="p">),</span><span class="mi">4</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>For b21 = 1, b22 = 2, we have AB = 
+[[1. 0.]
+ [0. 1.]]
+For b21 = -341, b22 = 0.1, we have AB = 
+[[1. 0.]
+ [0. 1.]]
+For b21 = 0, b22 = 50, we have AB = 
+[[1. 0.]
+ [0. 1.]]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Indeed, as expected, these each give valid right inverses for <span class="math notranslate nohighlight">\(f(\boldsymbol{x}) = \boldsymbol{Ax}\)</span>, reflecting the fact that, in general, surjective functions will have many right inverses.</p>
+<p>Here we illustrated the existence of many right inverses using a simple example which we could solve by hand; to find right inverses for bigger matrices we will need tools that we introduce in the next chapter.</p>
+</div>
+</div>
+<div class="section" id="linear-functions-with-inverses">
+<h2><span class="section-number">5.4.3. </span>Linear functions with inverses<a class="headerlink" href="#linear-functions-with-inverses" title="Permalink to this headline">¶</a></h2>
+<p>As a special case of the previous two sections, we can have functions which are both injective <em>and</em> surjective.
+Such functions are called <em>bijective</em>.</p>
+<p>For linear functions, we saw in the previous two sections that the injective and surjective linear functions are characterized by the following two statements:</p>
+<ul class="simple">
+<li><p>For an <span class="math notranslate nohighlight">\(m\times n\)</span> matrix <span class="math notranslate nohighlight">\(\boldsymbol{A}\)</span>, the linear function <span class="math notranslate nohighlight">\(f(\boldsymbol{x}) = \boldsymbol{Ax}\)</span> is injective if and only if the columns of <span class="math notranslate nohighlight">\(\boldsymbol{A}\)</span> are linearly independent.</p></li>
+<li><p>For an <span class="math notranslate nohighlight">\(m\times n\)</span> matrix <span class="math notranslate nohighlight">\(\boldsymbol{A}\)</span>, the linear function <span class="math notranslate nohighlight">\(f(\boldsymbol{x}) = \boldsymbol{Ax}\)</span> is surjective if and only if the columns of <span class="math notranslate nohighlight">\(\boldsymbol{A}\)</span> span <span class="math notranslate nohighlight">\(\mathbb{R}^m\)</span>.</p></li>
+</ul>
+<p>We also saw that the function <span class="math notranslate nohighlight">\(f(\boldsymbol{x}) = \boldsymbol{Ax}\)</span> is injective only if <span class="math notranslate nohighlight">\(n\leq m\)</span>, and surjective only if <span class="math notranslate nohighlight">\(m\leq n\)</span>.
+Combining these two facts, a linear function can only be bijective if <span class="math notranslate nohighlight">\(m=n\)</span>, or in other words if the matrix <span class="math notranslate nohighlight">\(\boldsymbol{A}\)</span> is square.
+Therefore, we can characterize bijective linear functions with the following.</p>
+<blockquote>
+<div><p><em>For an <span class="math notranslate nohighlight">\(m\times n\)</span> matrix <span class="math notranslate nohighlight">\(\boldsymbol{A}\)</span>, the linear function <span class="math notranslate nohighlight">\(f(\boldsymbol{x}) = \boldsymbol{Ax}\)</span> is bijective if and only if <span class="math notranslate nohighlight">\(\boldsymbol{A}\)</span> is a square matrix, and the columns of <span class="math notranslate nohighlight">\(\boldsymbol{A}\)</span> are linearly independent and span <span class="math notranslate nohighlight">\(\mathbb{R}^m\)</span>. That is, <span class="math notranslate nohighlight">\(f(\boldsymbol{x}) = \boldsymbol{Ax}\)</span> is bijective if and only if the columns of <span class="math notranslate nohighlight">\(\boldsymbol{A}\)</span> form a basis for <span class="math notranslate nohighlight">\(\mathbb{R}^m\)</span>.</em></p>
+</div></blockquote>
+<p>Recall that bijective functions have a unique complementary function <span class="math notranslate nohighlight">\(f^{-1}\)</span> called an <em>inverse</em> function.
+In the case of a linear function <span class="math notranslate nohighlight">\(f(\boldsymbol{x}) = \boldsymbol{Ax}\)</span>, an inverse is a function  <span class="math notranslate nohighlight">\(f^{-1}(\boldsymbol{x}) = \boldsymbol{A}^{-1}\boldsymbol{x}\)</span>, where <span class="math notranslate nohighlight">\(\boldsymbol{A}^{-1}\)</span> is a square matrix such that</p>
+<div class="math notranslate nohighlight">
+\[
+\boldsymbol{A}\boldsymbol{A}^{-1} = I\hspace{10mm}\text{ and }\hspace{10mm} \boldsymbol{A}^{-1}\boldsymbol{A} = \boldsymbol{I}  .
+\]</div>
+<p>The matrix <span class="math notranslate nohighlight">\(\boldsymbol{A}^{-1}\)</span> is called the <em>inverse matrix</em> of <span class="math notranslate nohighlight">\(\boldsymbol{A}\)</span>.
+We call a matrix <em>invertible</em> if the function <span class="math notranslate nohighlight">\(f(\boldsymbol{x}) = \boldsymbol{Ax}\)</span> has an inverse function.
+Equivalently, using our characterization above, a square matrix <span class="math notranslate nohighlight">\(\boldsymbol{A}\)</span> is invertible if and only if its columns are linearly independent and span all of <span class="math notranslate nohighlight">\(\mathbb{R}^m\)</span>.
+Note that this is equivalent to saying that <span class="math notranslate nohighlight">\(\boldsymbol{A}\)</span> is invertible if and only if its columns form a basis.</p>
+<p>In numpy, we can use the function <code class="docutils literal notranslate"><span class="pre">np.linalg.inv(A)</span></code> to find the inverse of a matrix <span class="math notranslate nohighlight">\(\boldsymbol{A}\)</span>.
+Before giving examples of when this works, let’s see what happens if we try to use this function to invert functions which <em>aren’t</em> invertible.
+For example, consider again the matrix <span class="math notranslate nohighlight">\(\boldsymbol{A}\)</span> from the previous section</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\boldsymbol{A} = \begin{bmatrix}1 &amp; 2  &amp; 0\\ 0 &amp; 0 &amp; 3\end{bmatrix}  .
+\end{split}\]</div>
+<p>This matrix is not square, and so by our discussion above, it cannot have an inverse.
+Let’s see what happens if we try to apply <code class="docutils literal notranslate"><span class="pre">np.linalg.inv()</span></code> to this matrix.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">]])</span>
+<span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">LinAlgError</span><span class="g g-Whitespace">                               </span>Traceback (most recent call last)
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">10</span><span class="o">-</span><span class="mi">5</span><span class="n">c0cd72bac30</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">]])</span>
+<span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+
+<span class="nn">~/opt/miniconda3/lib/python3.9/site-packages/numpy/core/overrides.py</span> in <span class="ni">inv</span><span class="nt">(*args, **kwargs)</span>
+
+<span class="nn">~/opt/miniconda3/lib/python3.9/site-packages/numpy/linalg/linalg.py</span> in <span class="ni">inv</span><span class="nt">(a)</span>
+<span class="g g-Whitespace">    </span><span class="mi">538</span>     <span class="n">a</span><span class="p">,</span> <span class="n">wrap</span> <span class="o">=</span> <span class="n">_makearray</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">539</span>     <span class="n">_assert_stacked_2d</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="ne">--&gt; </span><span class="mi">540</span>     <span class="n">_assert_stacked_square</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">541</span>     <span class="n">t</span><span class="p">,</span> <span class="n">result_t</span> <span class="o">=</span> <span class="n">_commonType</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">542</span> 
+
+<span class="nn">~/opt/miniconda3/lib/python3.9/site-packages/numpy/linalg/linalg.py</span> in <span class="ni">_assert_stacked_square</span><span class="nt">(*arrays)</span>
+<span class="g g-Whitespace">    </span><span class="mi">201</span>         <span class="n">m</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">:]</span>
+<span class="g g-Whitespace">    </span><span class="mi">202</span>         <span class="k">if</span> <span class="n">m</span> <span class="o">!=</span> <span class="n">n</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">203</span>             <span class="k">raise</span> <span class="n">LinAlgError</span><span class="p">(</span><span class="s1">&#39;Last 2 dimensions of the array must be square&#39;</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">204</span> 
+<span class="g g-Whitespace">    </span><span class="mi">205</span> <span class="k">def</span> <span class="nf">_assert_finite</span><span class="p">(</span><span class="o">*</span><span class="n">arrays</span><span class="p">):</span>
+
+<span class="ne">LinAlgError</span>: Last 2 dimensions of the array must be square
+</pre></div>
+</div>
+</div>
+</div>
+<p>Indeed, numpy gives us an error saying that the array needs to be square in order to apply the function.
+Next, let’s what happens if the columns of <span class="math notranslate nohighlight">\(\boldsymbol{A}\)</span> are not linearly independent and don’t span all of <span class="math notranslate nohighlight">\(\mathbb{R}^m\)</span>.
+For example, consider the matrix</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\boldsymbol{A} = \begin{bmatrix} 1 &amp; -1\\ -1 &amp;1\end{bmatrix}  .
+\end{split}\]</div>
+<p>While this matrix is square, it’s columns are not linearly independent, since <span class="math notranslate nohighlight">\(\boldsymbol{A}[:,1] = -\boldsymbol{A}[:,2]\)</span>, and for the same reason, the columns do not span <span class="math notranslate nohighlight">\(\mathbb{R}^2\)</span>.
+When we try to apply the function <code class="docutils literal notranslate"><span class="pre">np.linalg.inv(A)</span></code> on a matrix we get:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]])</span>
+<span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">LinAlgError</span><span class="g g-Whitespace">                               </span>Traceback (most recent call last)
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="n">e664e9c8a60c</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]])</span>
+<span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+
+<span class="nn">~/opt/miniconda3/lib/python3.9/site-packages/numpy/core/overrides.py</span> in <span class="ni">inv</span><span class="nt">(*args, **kwargs)</span>
+
+<span class="nn">~/opt/miniconda3/lib/python3.9/site-packages/numpy/linalg/linalg.py</span> in <span class="ni">inv</span><span class="nt">(a)</span>
+<span class="g g-Whitespace">    </span><span class="mi">543</span>     <span class="n">signature</span> <span class="o">=</span> <span class="s1">&#39;D-&gt;D&#39;</span> <span class="k">if</span> <span class="n">isComplexType</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="k">else</span> <span class="s1">&#39;d-&gt;d&#39;</span>
+<span class="g g-Whitespace">    </span><span class="mi">544</span>     <span class="n">extobj</span> <span class="o">=</span> <span class="n">get_linalg_error_extobj</span><span class="p">(</span><span class="n">_raise_linalgerror_singular</span><span class="p">)</span>
+<span class="ne">--&gt; </span><span class="mi">545</span>     <span class="n">ainv</span> <span class="o">=</span> <span class="n">_umath_linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">signature</span><span class="o">=</span><span class="n">signature</span><span class="p">,</span> <span class="n">extobj</span><span class="o">=</span><span class="n">extobj</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">546</span>     <span class="k">return</span> <span class="n">wrap</span><span class="p">(</span><span class="n">ainv</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">result_t</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+<span class="g g-Whitespace">    </span><span class="mi">547</span> 
+
+<span class="nn">~/opt/miniconda3/lib/python3.9/site-packages/numpy/linalg/linalg.py</span> in <span class="ni">_raise_linalgerror_singular</span><span class="nt">(err, flag)</span>
+<span class="g g-Whitespace">     </span><span class="mi">86</span> 
+<span class="g g-Whitespace">     </span><span class="mi">87</span> <span class="k">def</span> <span class="nf">_raise_linalgerror_singular</span><span class="p">(</span><span class="n">err</span><span class="p">,</span> <span class="n">flag</span><span class="p">):</span>
+<span class="ne">---&gt; </span><span class="mi">88</span>     <span class="k">raise</span> <span class="n">LinAlgError</span><span class="p">(</span><span class="s2">&quot;Singular matrix&quot;</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">89</span> 
+<span class="g g-Whitespace">     </span><span class="mi">90</span> <span class="k">def</span> <span class="nf">_raise_linalgerror_nonposdef</span><span class="p">(</span><span class="n">err</span><span class="p">,</span> <span class="n">flag</span><span class="p">):</span>
+
+<span class="ne">LinAlgError</span>: Singular matrix
+</pre></div>
+</div>
+</div>
+</div>
+<p>In this case, we now get an error telling us that <span class="math notranslate nohighlight">\(\boldsymbol{A}\)</span> is a singular matrix.
+This is because <span class="math notranslate nohighlight">\(\boldsymbol{A}\)</span> has lineary depdenent columns, and therefore is not invertible.
+Thus we see that numpy requires us to pass the <code class="docutils literal notranslate"><span class="pre">np.linalg.inv()</span></code> function a valid, invertible matrix.
+Let’s see an example of doing this.
+Consider the matrix</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\boldsymbol{A} = \begin{bmatrix} 1 &amp; 2\\ 0 &amp;3 \end{bmatrix}.
+\end{split}\]</div>
+<p>This matrix is square and indeed has linearly independent columns/columns which span <span class="math notranslate nohighlight">\(\mathbb{R}^2\)</span>.
+Let’s try finding its inverse in Python.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">]])</span>
+<span class="n">A_inv</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>As we can see, this time numpy did not throw an error.
+Moreover, we can check that <code class="docutils literal notranslate"><span class="pre">A_inv</span></code> is indeed an inverse by computing <span class="math notranslate nohighlight">\(\boldsymbol{A}\boldsymbol{A}^{-1}\)</span> and <span class="math notranslate nohighlight">\(\boldsymbol{A}^{-1}\boldsymbol{A}\)</span>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;AA^{-1} = &#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">A_inv</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;A^{-1}A = &#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">A_inv</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>AA^{-1} = 
+[[1. 0.]
+ [0. 1.]]
+A^{-1}A = 
+[[1. 0.]
+ [0. 1.]]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Indeed, we have that <span class="math notranslate nohighlight">\(\boldsymbol{A}\boldsymbol{A}^{-1} = \boldsymbol{I}\)</span> and <span class="math notranslate nohighlight">\(\boldsymbol{A}^{-1}\boldsymbol{A} = \boldsymbol{I}\)</span>, verifying that <span class="math notranslate nohighlight">\(\boldsymbol{A}^{-1}\)</span> is a valid inverse for <span class="math notranslate nohighlight">\(\boldsymbol{A}\)</span>.</p>
+<p>Of course, we can also do this for bigger matrices, for example a <span class="math notranslate nohighlight">\(10 \times 10\)</span> matrix. Below we give an example of such a matrix where each of the entries are drawn randomly from a normal distribution (such matrices can be shown to be invertible with very high probability).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n</span> <span class="o">=</span> <span class="mi">10</span>
+
+<span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span> <span class="o">=</span> <span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">n</span><span class="p">))</span>
+<span class="n">A_inv</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;AA^{-1} = &#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">A_inv</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;A^{-1}A = &#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">A_inv</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>AA^{-1} = 
+[[ 1.  0.  0. -0. -0.  0. -0.  0.  0.  0.]
+ [-0.  1.  0. -0. -0.  0. -0.  0.  0.  0.]
+ [ 0. -0.  1. -0.  0. -0.  0. -0. -0.  0.]
+ [-0. -0.  0.  1.  0.  0. -0.  0. -0. -0.]
+ [-0.  0.  0.  0.  1.  0. -0. -0.  0. -0.]
+ [-0.  0. -0. -0. -0.  1.  0. -0. -0.  0.]
+ [-0. -0. -0. -0. -0. -0.  1. -0.  0.  0.]
+ [ 0. -0.  0. -0.  0.  0.  0.  1.  0. -0.]
+ [-0. -0.  0.  0. -0.  0.  0. -0.  1. -0.]
+ [ 0. -0. -0.  0.  0.  0. -0. -0. -0.  1.]]
+A^{-1}A = 
+[[ 1.  0.  0. -0. -0.  0. -0.  0.  0.  0.]
+ [-0.  1.  0. -0. -0.  0. -0.  0.  0.  0.]
+ [ 0. -0.  1. -0.  0. -0.  0. -0. -0.  0.]
+ [-0. -0.  0.  1.  0.  0. -0.  0. -0. -0.]
+ [-0.  0.  0.  0.  1.  0. -0. -0.  0. -0.]
+ [-0.  0. -0. -0. -0.  1.  0. -0. -0.  0.]
+ [-0. -0. -0. -0. -0. -0.  1. -0.  0.  0.]
+ [ 0. -0.  0. -0.  0.  0.  0.  1.  0. -0.]
+ [-0. -0.  0.  0. -0.  0.  0. -0.  1. -0.]
+ [ 0. -0. -0.  0.  0.  0. -0. -0. -0.  1.]]
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./content"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="basicLA_3_injective-and-surjective-functions.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title"><span class="section-number">5.3. </span>Injective, surjective and invertible functions</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="basicLA_3_changing_basis.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><span class="section-number">5.5. </span>Changing Basis</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            
+        </div>
+    </div>
+    <footer class="footer">
+  <p>
+    
+      By Michael W. Mahoney, N. Benjamin Erichson and Ryan Theisen<br/>
+    
+        &copy; Copyright 2021.<br/>
+  </p>
+</footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
+  </body>
+</html>
