@@ -131,10 +131,27 @@
    </li>
   </ul>
  </li>
- <li class="toctree-l1">
+ <li class="toctree-l1 has-children">
   <a class="reference internal" href="../basic_linear_regression/chheader.html">
    2. Basics of linear regression
   </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basic_linear_regression/visualizing_data.html">
+     2.1. Exploring and visualizing data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basic_linear_regression/simple_linear_regression.html">
+     2.2. Simple linear regression
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../generalizing_linear_regression/chheader.html">
@@ -576,10 +593,10 @@
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>points:
-[[0.66962945 0.9860176  0.06277874 0.48663823 0.69458722 0.18898016
-  0.9110304  0.30028023 0.59889919 0.80175604]
- [0.89972626 0.51375552 0.81699178 0.51286771 0.76313848 0.50230117
-  0.84092063 0.19799132 0.38321062 0.26067384]]
+[[0.39122505 0.85383182 0.58628836 0.1908911  0.86703444 0.46776403
+  0.51821878 0.35178409 0.8872526  0.65751142]
+ [0.72872099 0.03613852 0.59754237 0.37328009 0.78545138 0.37510751
+  0.60517034 0.54116092 0.70554668 0.01155621]]
 
 points has shape (2, 10)
 </pre></div>
@@ -600,12 +617,12 @@ points has shape (2, 10)
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>xs (shape: (10,)):
-[0.66962945 0.9860176  0.06277874 0.48663823 0.69458722 0.18898016
- 0.9110304  0.30028023 0.59889919 0.80175604]
+[0.39122505 0.85383182 0.58628836 0.1908911  0.86703444 0.46776403
+ 0.51821878 0.35178409 0.8872526  0.65751142]
 
 ys (shape: (10,)):
-[0.89972626 0.51375552 0.81699178 0.51286771 0.76313848 0.50230117
- 0.84092063 0.19799132 0.38321062 0.26067384]
+[0.72872099 0.03613852 0.59754237 0.37328009 0.78545138 0.37510751
+ 0.60517034 0.54116092 0.70554668 0.01155621]
 </pre></div>
 </div>
 </div>

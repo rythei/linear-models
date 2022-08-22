@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>4. Extensions and applications &#8212; Stat 151, Linear Models</title>
+    <title>2.2. Simple linear regression &#8212; Stat 151, Linear Models</title>
     
   <link href="../../_static/css/theme.css" rel="stylesheet">
   <link href="../../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
@@ -51,7 +51,8 @@
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="prev" title="3. Generalizing linear regression" href="../generalizing_linear_regression/chheader.html" />
+    <link rel="next" title="3. Generalizing linear regression" href="../generalizing_linear_regression/chheader.html" />
+    <link rel="prev" title="2.1. Exploring and visualizing data" href="visualizing_data.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -128,23 +129,23 @@
    </li>
   </ul>
  </li>
- <li class="toctree-l1 has-children">
-  <a class="reference internal" href="../basic_linear_regression/chheader.html">
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="chheader.html">
    2. Basics of linear regression
   </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
   <label for="toctree-checkbox-2">
    <i class="fas fa-chevron-down">
    </i>
   </label>
-  <ul>
+  <ul class="current">
    <li class="toctree-l2">
-    <a class="reference internal" href="../basic_linear_regression/visualizing_data.html">
+    <a class="reference internal" href="visualizing_data.html">
      2.1. Exploring and visualizing data
     </a>
    </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../basic_linear_regression/simple_linear_regression.html">
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
      2.2. Simple linear regression
     </a>
    </li>
@@ -155,8 +156,8 @@
    3. Generalizing linear regression
   </a>
  </li>
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../extensions_applications/chheader.html">
    4. Extensions and applications
   </a>
  </li>
@@ -200,11 +201,11 @@
     <div class="dropdown-buttons">
         <!-- ipynb file if we had a myst markdown file -->
         <a class="dropdown-buttons"
-            href="../../_sources/content/extensions_applications/chheader.ipynb"><button type="button"
+            href="../../_sources/content/basic_linear_regression/simple_linear_regression.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download notebook file" data-toggle="tooltip"
                 data-placement="left">.ipynb</button></a>
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../../_sources/content/extensions_applications/chheader.md"><button type="button"
+        <a class="dropdown-buttons" href="../../_sources/content/basic_linear_regression/simple_linear_regression.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
@@ -229,7 +230,7 @@
         aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
     <div class="dropdown-buttons">
         
-        <a class="binder-button" href="https://mybinder.org/v2/gh/erichson/LinearAlgebra/master?urlpath=tree/content/extensions_applications/chheader.md"><button type="button"
+        <a class="binder-button" href="https://mybinder.org/v2/gh/erichson/LinearAlgebra/master?urlpath=tree/content/basic_linear_regression/simple_linear_regression.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
                 data-placement="left"><img class="binder-button-logo"
                     src="../../_static/images/logo_binder.svg"
@@ -253,7 +254,7 @@
         <div class="col-12 col-md-9 pl-md-3 pr-md-0">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>Extensions and applications</h1>
+                <h1>Simple linear regression</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
@@ -264,9 +265,8 @@
             
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="extensions-and-applications">
-<h1><span class="section-number">4. </span>Extensions and applications<a class="headerlink" href="#extensions-and-applications" title="Permalink to this headline">¶</a></h1>
-<p>In this section we will cover:</p>
+  <div class="tex2jax_ignore mathjax_ignore section" id="simple-linear-regression">
+<h1><span class="section-number">2.2. </span>Simple linear regression<a class="headerlink" href="#simple-linear-regression" title="Permalink to this headline">¶</a></h1>
 </div>
 
     <script type="text/x-thebe-config">
@@ -282,7 +282,7 @@
         },
         kernelOptions: {
             kernelName: "python3",
-            path: "./content/extensions_applications"
+            path: "./content/basic_linear_regression"
         },
         predefinedOutput: true
     }
@@ -294,12 +294,19 @@
             
                 <!-- Previous / next buttons -->
 <div class='prev-next-area'> 
-    <a class='left-prev' id="prev-link" href="../generalizing_linear_regression/chheader.html" title="previous page">
+    <a class='left-prev' id="prev-link" href="visualizing_data.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title"><span class="section-number">3. </span>Generalizing linear regression</p>
+            <p class="prev-next-title"><span class="section-number">2.1. </span>Exploring and visualizing data</p>
         </div>
+    </a>
+    <a class='right-next' id="next-link" href="../generalizing_linear_regression/chheader.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><span class="section-number">3. </span>Generalizing linear regression</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
     </a>
 </div>
             
