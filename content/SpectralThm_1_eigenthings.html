@@ -1,0 +1,786 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Eigenvalues and eigenvectors &#8212; Linear Algebra for Data Workbook</title>
+    
+  <link href="../_static/css/theme.css" rel="stylesheet">
+  <link href="../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
+    <script>
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../_static/logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Linear Algebra for Data Workbook</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../overview.html">
+   Welcome to Stat 89A
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Background
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="python_chheader.html">
+   1. Python 101
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="python_basics.html">
+     1.1. The Basics
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="python_numpy.html">
+     1.2. Introduction to NumPy
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="python_plotting.html">
+     1.3. MatPlotLib
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Basic Linear Algebra
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="basicLA_1_chheader.html">
+   2. Matrices, vectors, and
+   <span class="math notranslate nohighlight">
+    \(\mathbb{R}^n\)
+   </span>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="basicLA_1_introduction-to-norms.html">
+     2.1. Introduction to Norms
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="basicLA_1_norms-integration-monte-carlo.html">
+     2.2. An application: approximating integrals with norms and Monte Carlo integration
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="basicLA_1_lp-balls.html">
+     2.3.
+     <span class="math notranslate nohighlight">
+      \(\ell_p\)
+     </span>
+     Balls
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="basicLA_1_classification-with-norms.html">
+     2.4. An application: classifying data points using norms
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="basicLA_2_chheader.html">
+   3. Basics of vectors and vector spaces
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+  <label for="toctree-checkbox-3">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="basicLA_2A_vectorspaces.html">
+     3.1. Vectors and vector spaces
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="basicLA_3_chheader.html">
+   4. Basics of matrices
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+  <label for="toctree-checkbox-4">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="basicLA_3_matrices-and-matrix-operations.html">
+     4.1. Matrices and matrix operations
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="basicLA_3_deconstructing.html">
+     4.2. Deconstructing Matrix Multiplication
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="basicLA_3_powers_of_matrices.html">
+     4.3. Taking Powers of Matrices
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="basicLA_3B_chheader.html">
+   5. Matrices as transformations
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
+  <label for="toctree-checkbox-5">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="basicLA_3_linear_examples_new.html">
+     5.1. Linear and Nonlinear Functions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="basicLA_3_matrices_and_linear_functions.html">
+     5.2. Matrices and Linear Functions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="basicLA_3_injective-and-surjective-functions.html">
+     5.3. Injective, surjective and invertible functions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="basicLA_3_inverses.html">
+     5.4. Left Inverses, Right Inverses, and Inverses
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="basicLA_3_changing_basis.html">
+     5.5. Changing Basis
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="basicLA_4_chheader.html">
+   6. Geometry: angles, orthogonality, and projections
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
+  <label for="toctree-checkbox-6">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="basicLA_4_dot-products-and-angles.html">
+     6.1. Dot products, angles, and orthogonality
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="basicLA_4_QR.html">
+     6.2. Gram–Schmidt and the QR Decomposition
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="basicLA_4_QR_linear_systems.html">
+     6.3. Solving linear systems with the QR decomposition
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="basicLA_4_projections.html">
+     6.4. Projections
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        <a class="dropdown-buttons"
+            href="../_sources/content/SpectralThm_1_eigenthings.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download notebook file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/content/SpectralThm_1_eigenthings.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.md</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/erichson/LinearAlgebra/master?urlpath=tree/content/SpectralThm_1_eigenthings.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-quadratic-forms-perspective">
+   The quadratic forms perspective
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-geometric-perspective">
+   The geometric perspective
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#finding-eigenvalues-and-eigenvectors">
+   Finding eigenvalues and eigenvectors
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#symmetric-matrices">
+   Symmetric matrices
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Eigenvalues and eigenvectors</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-quadratic-forms-perspective">
+   The quadratic forms perspective
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-geometric-perspective">
+   The geometric perspective
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#finding-eigenvalues-and-eigenvectors">
+   Finding eigenvalues and eigenvectors
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#symmetric-matrices">
+   Symmetric matrices
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            
+              <div>
+                
+  <div class="tex2jax_ignore mathjax_ignore section" id="eigenvalues-and-eigenvectors">
+<h1>Eigenvalues and eigenvectors<a class="headerlink" href="#eigenvalues-and-eigenvectors" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="the-quadratic-forms-perspective">
+<h2>The quadratic forms perspective<a class="headerlink" href="#the-quadratic-forms-perspective" title="Permalink to this headline">¶</a></h2>
+<p>In the previous section on quadratic forms, we investigated functions of the form</p>
+<div class="math notranslate nohighlight">
+\[
+f(x) = x^\top A x
+\]</div>
+<p>for an <span class="math notranslate nohighlight">\(n\times n\)</span> matrix <span class="math notranslate nohighlight">\(A\)</span>. In particular, we considered the problem of finding <em>extrema</em> of such functions – that is, maxima and minima – under the condition that <span class="math notranslate nohighlight">\(\|x\|_2^2 = x^\top x = 1\)</span>. This problem can be written as</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+&amp;\max_{x}\;\; x^\top Ax\\
+&amp;\text{subject to}\;\; x^\top x = 1
+\end{aligned}
+\end{split}\]</div>
+<p>Using the theory of Lagrange multipliers (don’t worry if you haven’t seen these before), this problem can be solved by considering the <em>Langrangian</em></p>
+<div class="math notranslate nohighlight">
+\[
+L(x,\lambda) = x^\top A x - \lambda(x^\top x - 1)
+\]</div>
+<p>By taking partial derivatives of this function with respect to <span class="math notranslate nohighlight">\(x\)</span> and setting it equal to zero, we get the following condition for <span class="math notranslate nohighlight">\(x\)</span> to be an extrema of <span class="math notranslate nohighlight">\(f(x)\)</span> subject to <span class="math notranslate nohighlight">\(x^\top x = 1\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+0 = \nabla_x L(x,\lambda) = 2Ax - 2\lambda x \implies Ax = \lambda x
+\]</div>
+<p>Thus the maxima of <span class="math notranslate nohighlight">\(x^\top A x\)</span> subject to <span class="math notranslate nohighlight">\(x\)</span> being a unit vector satisfy the equation <span class="math notranslate nohighlight">\(Ax = \lambda x\)</span>. Solutions of this equation <span class="math notranslate nohighlight">\((\lambda, x)\)</span> are called <em>eigenvalue/eigenvector</em> pairs of the matrix <span class="math notranslate nohighlight">\(A\)</span>.</p>
+<p><strong>Remark:</strong> The condition that <span class="math notranslate nohighlight">\(x\)</span> is a unit vector doesn’t change much in how we solve the equation <span class="math notranslate nohighlight">\(Ax = \lambda x\)</span>. Indeed, no matter what the norm of <span class="math notranslate nohighlight">\(x\)</span> is, we have</p>
+<div class="math notranslate nohighlight">
+\[
+Ax = \lambda x \iff \frac{1}{\|x\|_2}Ax = \frac{1}{\|x\|_2}\lambda x \iff A\left(\frac{x}{\|x\|_2}\right) = \lambda \left (\frac{x}{\|x\|_2}\right) \iff Ax' = \lambda x'
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(x' = \frac{x}{\|x\|_2}\)</span> is always a unit vector. Hence if we can solve <span class="math notranslate nohighlight">\(Ax = \lambda x\)</span> for any nonzero <span class="math notranslate nohighlight">\(x\)</span>, we can always find a solution that is a unit vector simply by normalizing.</p>
+<p>Before seeing how we can solve the equation <span class="math notranslate nohighlight">\(Ax = \lambda x\)</span>, we will look at a geometric interpretation of eigenvalues and eigenvectors.</p>
+</div>
+<div class="section" id="the-geometric-perspective">
+<h2>The geometric perspective<a class="headerlink" href="#the-geometric-perspective" title="Permalink to this headline">¶</a></h2>
+<p>Above we saw that the equation <span class="math notranslate nohighlight">\(Ax = \lambda x\)</span> can arise out of a maximization problem with quadratic forms. However, it also can be viewed geometrically. In words, the condition <span class="math notranslate nohighlight">\(Ax = \lambda x\)</span> means “applying the linear transformation <span class="math notranslate nohighlight">\(A\)</span> to <span class="math notranslate nohighlight">\(x\)</span> is the same as rescaling <span class="math notranslate nohighlight">\(x\)</span> by <span class="math notranslate nohighlight">\(\lambda\)</span>”. For a general square matrix <span class="math notranslate nohighlight">\(A\)</span> and arbitrary vector <span class="math notranslate nohighlight">\(x\)</span>, the vector <span class="math notranslate nohighlight">\(Ax\)</span> will be a rotated <em>and</em> rescaled version of <span class="math notranslate nohighlight">\(x\)</span>, so the pair <span class="math notranslate nohighlight">\((\lambda, x)\)</span> must be a very special pair.</p>
+<p>As a special case, let’s consider what happens with a diagonal matrix <span class="math notranslate nohighlight">\(A = \begin{pmatrix}a_1 &amp; 0\\ 0 &amp; a_2\end{pmatrix}\)</span>. Then</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+Ax = \begin{pmatrix}a_1 &amp; 0\\ 0 &amp; a_2\end{pmatrix}\begin{pmatrix}x_1 \\ x_2\end{pmatrix}= \begin{pmatrix}a_1x_1 \\ a_2x_2\end{pmatrix}
+\end{split}\]</div>
+<p>So the question for diagonal matrices is, when do we have that</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+Ax = \begin{pmatrix}a_1x_1 \\ a_2x_2\end{pmatrix} = \lambda  \begin{pmatrix}x_1 \\ x_2\end{pmatrix}
+\end{split}\]</div>
+<p>It’s easy to see from the above expression that equation will hold if and only if <span class="math notranslate nohighlight">\(x = e_1 = \begin{pmatrix}1\\0\end{pmatrix}\)</span> or <span class="math notranslate nohighlight">\(x = e_2 = \begin{pmatrix}0\\1\end{pmatrix}\)</span>. In this case</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+Ae_1 =  \begin{pmatrix}a_1 \\ 0\end{pmatrix} = a_1 e_1 \;\;\;\; \text{ and } \;\;\;\; Ae_2 =  \begin{pmatrix}0 \\ a_2\end{pmatrix} = a_2e_2
+\end{split}\]</div>
+<p>Therefore, we have <em>two</em> eigenvalue/eigenvector pairs for <span class="math notranslate nohighlight">\(A\)</span>, namely <span class="math notranslate nohighlight">\((a_1, e_1)\)</span> and <span class="math notranslate nohighlight">\((a_2, e_2)\)</span>. It turns out that this is always true for diagonal matrix.</p>
+<blockquote>
+<div><p>For an <span class="math notranslate nohighlight">\(n\times n\)</span> diagonal matrix <span class="math notranslate nohighlight">\(A = \text{diag}(a_1,\dots, a_n)\)</span>, the eigenvalue/eigenvector pairs of <span class="math notranslate nohighlight">\(A\)</span> are given by <span class="math notranslate nohighlight">\((a_1,e_1),\dots, (a_n, e_n)\)</span>.</p>
+</div></blockquote>
+<p>The solution for diagonal <span class="math notranslate nohighlight">\(A\)</span> was pretty straightforward, so let’s see another example. Consider</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+A = \begin{pmatrix}2 &amp; 1\\ 1 &amp;2\end{pmatrix}
+\end{split}\]</div>
+<p>Let’s see how this matrix acts on unit vectors <span class="math notranslate nohighlight">\(x\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">],[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]])</span>
+
+<span class="n">theta_range</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">+</span><span class="mf">.01</span><span class="p">,</span><span class="mf">.01</span><span class="p">)</span> 
+<span class="n">unit_x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)]</span> <span class="k">for</span> <span class="n">theta</span> <span class="ow">in</span> <span class="n">theta_range</span><span class="p">])</span><span class="o">.</span><span class="n">T</span> <span class="c1">#parameterize the unit circle</span>
+<span class="n">Ax</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">unit_x</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">ax1</span><span class="p">,</span> <span class="n">ax2</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">unit_x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">unit_x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">theta_range</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">Ax</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">Ax</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">theta_range</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;unit circle&#39;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;unit vectors transformed by A&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/SpectralThm_1_eigenthings_1_0.png" src="../_images/SpectralThm_1_eigenthings_1_0.png" />
+</div>
+</div>
+<p>Most of the vectors on the unit circle appear to have been rescaled <em>and</em> rotated. For example, let’s look at how <span class="math notranslate nohighlight">\(A\)</span> acts on the standard basis vectors <span class="math notranslate nohighlight">\(e_1, e_2\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">e1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">e2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">origin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">quiver</span><span class="p">(</span><span class="o">*</span><span class="n">origin</span><span class="p">,</span> <span class="o">*</span><span class="n">e1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;e1&#39;</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s1">&#39;xy&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">quiver</span><span class="p">(</span><span class="o">*</span><span class="n">origin</span><span class="p">,</span> <span class="o">*</span><span class="n">e2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;e2&#39;</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s1">&#39;xy&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">quiver</span><span class="p">(</span><span class="o">*</span><span class="n">origin</span><span class="p">,</span> <span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">e1</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Ae1&#39;</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s1">&#39;xy&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;darkred&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">quiver</span><span class="p">(</span><span class="o">*</span><span class="n">origin</span><span class="p">,</span> <span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">e2</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Ae2&#39;</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s1">&#39;xy&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;darkblue&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="o">-</span><span class="mf">.5</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="o">-</span><span class="mf">.5</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;transforming the standard basis vectors&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/SpectralThm_1_eigenthings_3_0.png" src="../_images/SpectralThm_1_eigenthings_3_0.png" />
+</div>
+</div>
+<p>Indeed, we see that the standard basis vectors get rotated – not just rescaled – by <span class="math notranslate nohighlight">\(A\)</span>, and so we cannot have that <span class="math notranslate nohighlight">\(Ae_1 = \lambda e_1\)</span> or <span class="math notranslate nohighlight">\(Ae_2 = \lambda e_2\)</span>. On the other hand, consider the vectors</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+u_1 = \begin{pmatrix}1/\sqrt{2} \\ 1/\sqrt{2}\end{pmatrix}, \hspace{10mm} u_2 = \begin{pmatrix}1/\sqrt{2}\\ -1/\sqrt{2}\end{pmatrix}
+\end{split}\]</div>
+<p>Let’s see what happens when we act on these vectors with <span class="math notranslate nohighlight">\(A\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">u1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span><span class="mi">1</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)])</span>
+<span class="n">u2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span><span class="o">-</span><span class="mi">1</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)])</span>
+<span class="n">origin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">quiver</span><span class="p">(</span><span class="o">*</span><span class="n">origin</span><span class="p">,</span> <span class="o">*</span><span class="n">u1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;u1&#39;</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s1">&#39;xy&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">quiver</span><span class="p">(</span><span class="o">*</span><span class="n">origin</span><span class="p">,</span> <span class="o">*</span><span class="n">u2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;u2&#39;</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s1">&#39;xy&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">quiver</span><span class="p">(</span><span class="o">*</span><span class="n">origin</span><span class="p">,</span> <span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">u1</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Au1&#39;</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s1">&#39;xy&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;darkred&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">quiver</span><span class="p">(</span><span class="o">*</span><span class="n">origin</span><span class="p">,</span> <span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">u2</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Au2&#39;</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s1">&#39;xy&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;darkblue&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="o">-</span><span class="mf">.5</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;transforming the eigenvectors of A&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/SpectralThm_1_eigenthings_5_0.png" src="../_images/SpectralThm_1_eigenthings_5_0.png" />
+</div>
+</div>
+<p>Indeed, this time we have that <span class="math notranslate nohighlight">\(Au_1\)</span> and <span class="math notranslate nohighlight">\(Au_2\)</span> <em>are</em> just rescaled versions of <span class="math notranslate nohighlight">\(u_1\)</span> and <span class="math notranslate nohighlight">\(u_2\)</span>. In particular, we can check that</p>
+<div class="math notranslate nohighlight">
+\[
+Au_1 = 3u_1\;\;\;\; \text{ and }\;\;\;\; Au_2 = u_2
+\]</div>
+<p>which means that <span class="math notranslate nohighlight">\((3,u_1)\)</span> and <span class="math notranslate nohighlight">\((1,u_2)\)</span> are the <em>eigenvalue/eigenvector</em> pairs for the matrix <span class="math notranslate nohighlight">\(A\)</span>.</p>
+</div>
+<div class="section" id="finding-eigenvalues-and-eigenvectors">
+<h2>Finding eigenvalues and eigenvectors<a class="headerlink" href="#finding-eigenvalues-and-eigenvectors" title="Permalink to this headline">¶</a></h2>
+<p>So far, we’ve seen examples of eigenvalues and eigenvectors, but haven’t seen how we can actually <em>find</em> them in practice for non-diagonal matrices. Here we discuss how we can do this.</p>
+<p>First, let’s rewrite the equation <span class="math notranslate nohighlight">\(Ax = \lambda x\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+Ax = \lambda x \iff  Ax- \lambda I x =0 \iff (A-\lambda I)x = 0
+\]</div>
+<p>Therefore, to find the eigenvalues, we want to find all numbers <span class="math notranslate nohighlight">\(\lambda\)</span> such that <span class="math notranslate nohighlight">\((A-\lambda I)x\)</span> is equal to zero for some non-zero vector <span class="math notranslate nohighlight">\(x.\)</span> This cannot be possible if the matrix <span class="math notranslate nohighlight">\((A-\lambda I)\)</span> is full rank, since then the only vector <span class="math notranslate nohighlight">\(x\)</span> for which <span class="math notranslate nohighlight">\((A-\lambda I)x=0\)</span> is <span class="math notranslate nohighlight">\(x=0\)</span>. Thus we want all values of <span class="math notranslate nohighlight">\(\lambda\)</span> such that <span class="math notranslate nohighlight">\(A-\lambda I\)</span> is <em>not</em> full rank. One way to characterize this is by checking for which values of <span class="math notranslate nohighlight">\(\lambda\)</span> the <em>determinant</em> of <span class="math notranslate nohighlight">\(A-\lambda I\)</span> is equal to zero. This gives us the following condition for the eigenvalues of a square matrix <span class="math notranslate nohighlight">\(A\)</span>.</p>
+<blockquote>
+<div><p>Let <span class="math notranslate nohighlight">\(A\)</span> be an <span class="math notranslate nohighlight">\(n\times n\)</span> matrix. Then <span class="math notranslate nohighlight">\(\lambda\)</span> is an eigenvalue for <span class="math notranslate nohighlight">\(A\)</span> if and only if <span class="math notranslate nohighlight">\(\det(A-\lambda I) = 0\)</span>.</p>
+</div></blockquote>
+<p>In particular, to find the eigenvalues of <span class="math notranslate nohighlight">\(A\)</span>, we want to find the zeros of the function</p>
+<div class="math notranslate nohighlight">
+\[
+p(\lambda) = \det(A-\lambda I).
+\]</div>
+<p>When <span class="math notranslate nohighlight">\(A\)</span> is an <span class="math notranslate nohighlight">\(n\times n\)</span> matrix, the function <span class="math notranslate nohighlight">\(p(\lambda)\)</span> will be a degree <span class="math notranslate nohighlight">\(n\)</span> polynomial, which will in general have <span class="math notranslate nohighlight">\(n\)</span> roots.  While we haven’t discussed determinants much in this class, we have seen examples of them in two dimensions, so let’s focus on that case. Recall that</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\text{det}\begin{pmatrix}a &amp;b\\c&amp;d\end{pmatrix} = ad-bc
+\end{split}\]</div>
+<p>In particular then, if <span class="math notranslate nohighlight">\(A = \begin{pmatrix}a_{11} &amp; a_{12}\\ a_{21}&amp;a_{22}\end{pmatrix}\)</span>, then</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+p(\lambda) = \det(A - \lambda I) = \det \begin{pmatrix}a_{11}-\lambda &amp; a_{12}\\ a_{21}&amp;a_{22}-\lambda\end{pmatrix} = (a_{11}-\lambda)(a_{22}-\lambda) - a_{12}a_{21} = \lambda^2 - (a_{11}+a_{22})\lambda + a_{11}a_{22}-a_{12}a_{21}
+\end{split}\]</div>
+<p>This is a polynomial of degree 2, which by the quadratic formula has roots:</p>
+<div class="math notranslate nohighlight">
+\[
+\lambda_1 = \frac{(a_{11}+a_{22}) + \sqrt{(a_{11}+a_{22})^2 - 4(a_{11}a_{22}-a_{12}a_{21})}}{2},\;\; \lambda_2 = \frac{(a_{11}+a_{22}) - \sqrt{(a_{11}+a_{22})^2 - 4(a_{11}a_{22}-a_{12}a_{21})}}{2}
+\]</div>
+<p>Let’s apply this formula to the matrix <span class="math notranslate nohighlight">\(A =  \begin{pmatrix}2 &amp; 1\\ 1 &amp;2\end{pmatrix}\)</span> that we considered in the last section. We have <span class="math notranslate nohighlight">\(a_{11}= a_{22}=2\)</span> and <span class="math notranslate nohighlight">\(a_{21} = a_{12} = 1\)</span>, so</p>
+<div class="math notranslate nohighlight">
+\[
+\lambda_1 = \frac{4 + \sqrt{16-4(3)}}{2} = 3\;\;\;\;\text{ and }\;\;\;\; \lambda_2 = \frac{4 - \sqrt{16-4(3)}}{2} = 1
+\]</div>
+<p>which were exactly the eigenvalues we found before. Now, given these eigenvalues, how can we find the corresponding eigenvectors <span class="math notranslate nohighlight">\(u_1\)</span> and <span class="math notranslate nohighlight">\(u_2\)</span>? We want that</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+Au_1 = 3u_1 \implies  \begin{pmatrix}2 &amp; 1\\ 1 &amp;2\end{pmatrix}\begin{pmatrix}u_{11}\\ u_{12}\end{pmatrix} = 3\begin{pmatrix}u_{11}\\ u_{12}\end{pmatrix}
+\end{split}\]</div>
+<p>and</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+Au_2 = u_2 \implies  \begin{pmatrix}2 &amp; 1\\ 1 &amp;2\end{pmatrix}\begin{pmatrix}u_{21}\\ u_{22}\end{pmatrix} = \begin{pmatrix}u_{21}\\ u_{22}\end{pmatrix}.
+\end{split}\]</div>
+<p>These systems each give us two linear equations with two unknowns, which we can straightforwardly solve to find</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+u_1 = \begin{pmatrix}1/\sqrt{2} \\ 1/\sqrt{2}\end{pmatrix}, \hspace{10mm} u_2 = \begin{pmatrix}1/\sqrt{2}\\ -1/\sqrt{2}\end{pmatrix}.
+\end{split}\]</div>
+<p>More generally, we can use the following approach to find the eigenvalue/eigenvector pairs of an <span class="math notranslate nohighlight">\(n\times n\)</span> matrix <span class="math notranslate nohighlight">\(A\)</span>:</p>
+<ul class="simple">
+<li><p>Find the eigenvalues <span class="math notranslate nohighlight">\(\lambda_1,\dots, \lambda_n\)</span> by finding the roots of the polynomial <span class="math notranslate nohighlight">\(p(\lambda) = \det(A-\lambda I)\)</span>.</p></li>
+<li><p>Find the eigenvectors <span class="math notranslate nohighlight">\(u_1,\dots,u_n\)</span> by solving the <span class="math notranslate nohighlight">\(n\)</span> systems of <span class="math notranslate nohighlight">\(n\)</span> linear constraints <span class="math notranslate nohighlight">\(Au_i = \lambda_i u_i\)</span> for <span class="math notranslate nohighlight">\(i=1,\dots,n\)</span>.</p></li>
+</ul>
+<p>(Of course, in practice, this algorithm is difficult to apply by hand, so we will use Python functions to compute the eigenvalue decompositions of larger matrices.) Given the <span class="math notranslate nohighlight">\(n\)</span> eigenvalues <span class="math notranslate nohighlight">\(\lambda_1,\dots, \lambda_n\)</span> and <span class="math notranslate nohighlight">\(n\)</span> eigenvectors <span class="math notranslate nohighlight">\(u_1,\dots, u_n\)</span> of an <span class="math notranslate nohighlight">\(n\times n\)</span> matrix <span class="math notranslate nohighlight">\(A\)</span>, we can write the equations <span class="math notranslate nohighlight">\(Au_i = \lambda_i u_i\)</span> simultaneously as follows. Let <span class="math notranslate nohighlight">\(U = \begin{pmatrix} u_1 &amp; \cdots &amp;u_n\end{pmatrix}\)</span> be the matrix whose columns are the eigenvectors, and let <span class="math notranslate nohighlight">\(\Lambda = \text{diag}(\lambda_1,\dots, \lambda_n)\)</span> be the diagonal matrix with the eigenvalues on the diagonal. Then</p>
+<div class="math notranslate nohighlight">
+\[
+Au_i = \lambda_i u_i \;\; \forall i \iff AU = U\Lambda \iff A = U\Lambda U^{-1}
+\]</div>
+<p>The decomposition <span class="math notranslate nohighlight">\(A = U\Lambda U^{-1}\)</span> is called the <em>eigenvalue decomposition</em> of <span class="math notranslate nohighlight">\(A\)</span>.</p>
+</div>
+<div class="section" id="symmetric-matrices">
+<h2>Symmetric matrices<a class="headerlink" href="#symmetric-matrices" title="Permalink to this headline">¶</a></h2>
+<p>In general, the roots of the polynomial <span class="math notranslate nohighlight">\(p(\lambda) = \det(A-\lambda I)\)</span> need not be real-valued – even in the 2-d case, we will have complex valued eigenvalues whenever <span class="math notranslate nohighlight">\((a_{11}+a_{22})^2 - 4(a_{11}a_{22}-a_{12}a_{21}) &lt; 0\)</span>. On the other hand, if <span class="math notranslate nohighlight">\(A\)</span> is <em>symmetric</em>, so that <span class="math notranslate nohighlight">\(A^\top =A\)</span>, then the eigenvalues and eigenvectors of <span class="math notranslate nohighlight">\(A\)</span> will always be real-valued. (If you’re interested in why, and are familiar with complex numbers, see the remark below.)</p>
+<p>Furthermore, for symmetric matrices, the eigenvectors of <span class="math notranslate nohighlight">\(A\)</span> are always <em>orthogonal</em>. In particular, this means that the matrix <span class="math notranslate nohighlight">\(U\)</span> is an orthogonal matrix satisfying <span class="math notranslate nohighlight">\(U^\top U = I\)</span> and <span class="math notranslate nohighlight">\(UU^\top = I\)</span>, since <span class="math notranslate nohighlight">\(U\)</span> is square. This means that <span class="math notranslate nohighlight">\(U^{-1} = U^\top\)</span>, and so in paritcular we can simplify the expression in the eigendecomposition:</p>
+<div class="math notranslate nohighlight">
+\[
+A = U\Lambda U^\top
+\]</div>
+<p>Let’s see an example in Python, using the <code class="docutils literal notranslate"><span class="pre">np.linalg.eig(A)</span></code> function to find eigenvalues. To find a symmetric matrix <span class="math notranslate nohighlight">\(A\)</span>, we will use the following approach: first, draw a random <span class="math notranslate nohighlight">\(n\times n\)</span> matrix <span class="math notranslate nohighlight">\(B\)</span>, and then let <span class="math notranslate nohighlight">\(A = B^\top B\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">B</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">n</span><span class="p">))</span>
+<span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">B</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">B</span><span class="p">)</span> <span class="c1"># B^T B is always a symmetric matrix</span>
+
+<span class="n">Lambda</span><span class="p">,</span> <span class="n">U</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eig</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+<span class="n">Lambda</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">Lambda</span><span class="p">)</span> <span class="c1"># numpy returns Lambda as an array, so let&#39;s make it a diagonal matrix</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now let’s verify that <span class="math notranslate nohighlight">\(A = U\Lambda U^\top\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ULUT</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">U</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">Lambda</span><span class="p">,</span> <span class="n">U</span><span class="o">.</span><span class="n">T</span><span class="p">))</span>
+<span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">ULUT</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True
+</pre></div>
+</div>
+</div>
+</div>
+<p>Indeed, the two matrices are the same. Next, let’s check that <span class="math notranslate nohighlight">\(U\)</span> is in fact orthogonal, by checking that <span class="math notranslate nohighlight">\(U^\top U = I\)</span>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">UTU</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">U</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">U</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
+<span class="n">UTU</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[ 1., -0.,  0., -0., -0.,  0.,  0.,  0.,  0.,  0.],
+       [-0.,  1., -0., -0., -0., -0.,  0., -0.,  0.,  0.],
+       [ 0., -0.,  1.,  0., -0.,  0.,  0., -0.,  0.,  0.],
+       [-0., -0.,  0.,  1.,  0., -0., -0.,  0.,  0., -0.],
+       [-0., -0., -0.,  0.,  1.,  0., -0.,  0., -0., -0.],
+       [ 0., -0.,  0., -0.,  0.,  1.,  0.,  0., -0., -0.],
+       [ 0.,  0.,  0., -0., -0.,  0.,  1., -0., -0., -0.],
+       [ 0., -0., -0.,  0.,  0.,  0., -0.,  1., -0., -0.],
+       [ 0.,  0.,  0.,  0., -0., -0., -0., -0.,  1.,  0.],
+       [ 0.,  0.,  0., -0., -0., -0., -0., -0.,  0.,  1.]])
+</pre></div>
+</div>
+</div>
+</div>
+<p>We get the identity back, and so <span class="math notranslate nohighlight">\(U\)</span> is in fact orthogonal.</p>
+<p><strong>Remark:</strong> Let’s quickly see why symmetric matrices always have real-valued eigenvalues. For a number/vector <span class="math notranslate nohighlight">\(x\)</span>, let <span class="math notranslate nohighlight">\(\bar{x}\)</span> denote its complex conjugate. Then for any real matrix <span class="math notranslate nohighlight">\(A\)</span>, let <span class="math notranslate nohighlight">\((\lambda, v)\)</span> be an eigenvalue/eigenvector pair of <span class="math notranslate nohighlight">\(A\)</span>. Since <span class="math notranslate nohighlight">\(A\)</span> is real-valued, we have that <span class="math notranslate nohighlight">\(\overline{Av} = \bar{\lambda}\bar{v}\)</span>. Then if <span class="math notranslate nohighlight">\(A=A^\top\)</span>, we have</p>
+<div class="math notranslate nohighlight">
+\[
+\bar{v}^\top A v = \bar{v}^\top (\lambda v) = \lambda \bar{v}^\top v
+\]</div>
+<p>and</p>
+<div class="math notranslate nohighlight">
+\[
+\bar{v}^\top A v = \bar{v}^\top A^\top v = (A\bar{v}^\top)v = \bar{\lambda}\bar{v}^\top v.
+\]</div>
+<p>Therefore <span class="math notranslate nohighlight">\(\lambda \bar{v}^\top v = \bar{\lambda}\bar{v}^\top v\)</span> which implies <span class="math notranslate nohighlight">\(\lambda = \bar{\lambda}\)</span>, and so <span class="math notranslate nohighlight">\(\lambda\)</span> must be a real number.</p>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./content"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+</div>
+            
+        </div>
+    </div>
+    <footer class="footer">
+  <p>
+    
+      By Michael W. Mahoney, N. Benjamin Erichson and Ryan Theisen<br/>
+    
+        &copy; Copyright 2021.<br/>
+  </p>
+</footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
+  </body>
+</html>

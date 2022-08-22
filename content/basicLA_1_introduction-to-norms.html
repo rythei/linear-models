@@ -1,0 +1,1124 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>2.1. Introduction to Norms &#8212; Linear Algebra for Data Workbook</title>
+    
+  <link href="../_static/css/theme.css" rel="stylesheet">
+  <link href="../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
+    <script>
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="2.2. An application: approximating integrals with norms and Monte Carlo integration" href="basicLA_1_norms-integration-monte-carlo.html" />
+    <link rel="prev" title="2. Matrices, vectors, and \(\mathbb{R}^n\)" href="basicLA_1_chheader.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../_static/logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Linear Algebra for Data Workbook</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../overview.html">
+   Welcome to Stat 89A
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Background
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="python_chheader.html">
+   1. Python 101
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="python_basics.html">
+     1.1. The Basics
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="python_numpy.html">
+     1.2. Introduction to NumPy
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="python_plotting.html">
+     1.3. MatPlotLib
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Basic Linear Algebra
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="basicLA_1_chheader.html">
+   2. Matrices, vectors, and
+   <span class="math notranslate nohighlight">
+    \(\mathbb{R}^n\)
+   </span>
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     2.1. Introduction to Norms
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="basicLA_1_norms-integration-monte-carlo.html">
+     2.2. An application: approximating integrals with norms and Monte Carlo integration
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="basicLA_1_lp-balls.html">
+     2.3.
+     <span class="math notranslate nohighlight">
+      \(\ell_p\)
+     </span>
+     Balls
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="basicLA_1_classification-with-norms.html">
+     2.4. An application: classifying data points using norms
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="basicLA_2_chheader.html">
+   3. Basics of vectors and vector spaces
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+  <label for="toctree-checkbox-3">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="basicLA_2A_vectorspaces.html">
+     3.1. Vectors and vector spaces
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="basicLA_3_chheader.html">
+   4. Basics of matrices
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+  <label for="toctree-checkbox-4">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="basicLA_3_matrices-and-matrix-operations.html">
+     4.1. Matrices and matrix operations
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="basicLA_3_deconstructing.html">
+     4.2. Deconstructing Matrix Multiplication
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="basicLA_3_powers_of_matrices.html">
+     4.3. Taking Powers of Matrices
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="basicLA_3B_chheader.html">
+   5. Matrices as transformations
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
+  <label for="toctree-checkbox-5">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="basicLA_3_linear_examples_new.html">
+     5.1. Linear and Nonlinear Functions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="basicLA_3_matrices_and_linear_functions.html">
+     5.2. Matrices and Linear Functions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="basicLA_3_injective-and-surjective-functions.html">
+     5.3. Injective, surjective and invertible functions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="basicLA_3_inverses.html">
+     5.4. Left Inverses, Right Inverses, and Inverses
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="basicLA_3_changing_basis.html">
+     5.5. Changing Basis
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="basicLA_4_chheader.html">
+   6. Geometry: angles, orthogonality, and projections
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
+  <label for="toctree-checkbox-6">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="basicLA_4_dot-products-and-angles.html">
+     6.1. Dot products, angles, and orthogonality
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="basicLA_4_QR.html">
+     6.2. Gram–Schmidt and the QR Decomposition
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="basicLA_4_QR_linear_systems.html">
+     6.3. Solving linear systems with the QR decomposition
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="basicLA_4_projections.html">
+     6.4. Projections
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  The EVD, SVD and applications
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="eigenstuff_chheader.html">
+   7. Eigenthings
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/>
+  <label for="toctree-checkbox-7">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="eigenstuff_quadratic-forms.html">
+     7.1. Quadratic forms
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="eigenstuff_eigenthings.html">
+     7.2. Eigenvalues and eigenvectors
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="eigenstuff_eigenthings-special-matrices.html">
+     7.3. The Eigenvalue decomposition for special types of matrices
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="eigenstuff_qr-algorithm.html">
+     7.4. The QR algorithm for finding eigenvalues and eigenvectors
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="eigenstuff_SVD.html">
+     7.5. The Singular Value Decomposition
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="eigenstuff_low-rank-approximation.html">
+     7.6. Low-rank approximation using the SVD
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="applications_chheader.html">
+   8. Applications
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
+  <label for="toctree-checkbox-8">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="applications_PCA.html">
+     8.1. Principal Component Analysis (PCA)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="applications_spectral-clustering.html">
+     8.2. Sprectral Clustering
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="applications_least-squares.html">
+     8.3. Least Squares
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="applications_double-descent.html">
+     8.4. The “double descent” phenomenon
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        <a class="dropdown-buttons"
+            href="../_sources/content/basicLA_1_introduction-to-norms.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download notebook file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/content/basicLA_1_introduction-to-norms.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.md</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/erichson/LinearAlgebra/master?urlpath=tree/content/basicLA_1_introduction-to-norms.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-euclidean-norm">
+   2.1.1. The Euclidean norm
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-1-norm">
+   2.1.2. The
+   <span class="math notranslate nohighlight">
+    \(1\)
+   </span>
+   -norm
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-infty-norm">
+   2.1.3. The
+   <span class="math notranslate nohighlight">
+    \(\infty\)
+   </span>
+   -norm
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#properties-of-norms">
+   2.1.4. Properties of norms
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#scaling-vectors">
+     2.1.4.1. Scaling vectors
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#the-triangle-inequality">
+     2.1.4.2. The triangle inequality
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-p-norms">
+   2.1.5. The
+   <span class="math notranslate nohighlight">
+    \(p\)
+   </span>
+   -norms
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Introduction to Norms</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-euclidean-norm">
+   2.1.1. The Euclidean norm
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-1-norm">
+   2.1.2. The
+   <span class="math notranslate nohighlight">
+    \(1\)
+   </span>
+   -norm
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-infty-norm">
+   2.1.3. The
+   <span class="math notranslate nohighlight">
+    \(\infty\)
+   </span>
+   -norm
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#properties-of-norms">
+   2.1.4. Properties of norms
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#scaling-vectors">
+     2.1.4.1. Scaling vectors
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#the-triangle-inequality">
+     2.1.4.2. The triangle inequality
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-p-norms">
+   2.1.5. The
+   <span class="math notranslate nohighlight">
+    \(p\)
+   </span>
+   -norms
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            
+              <div>
+                
+  <div class="tex2jax_ignore mathjax_ignore section" id="introduction-to-norms">
+<h1><span class="section-number">2.1. </span>Introduction to Norms<a class="headerlink" href="#introduction-to-norms" title="Permalink to this headline">¶</a></h1>
+<p>A <em>norm</em> is a function that measures the “size” of something.
+One example of a norm is the familiar Euclidean norm, which uses the expression <span class="math notranslate nohighlight">\((x_1^2+x_2^2)^{1/2}\)</span> to compute the “size” or “magnitude” of a point <span class="math notranslate nohighlight">\((x_1,x_2)\)</span> in the two-dimensional Euclidean plane.
+If we view that point as a vector, then that is the Euclidean norm of the vector.</p>
+<p>So, let’s start with vectors and norms of vectors.
+(We can have norms for other things, like matrices, functions, etc., but let’s start with vectors and norms of vectors.)
+In linear algebra, <em>vectors</em> are objects that are used to model data that we will work with frequently; and it is common to consider the norm of a vector.</p>
+<p>The Euclidean norm, and its generalization to vectors in <span class="math notranslate nohighlight">\(\mathbb{R}^{n}\)</span>, is particulalry important for linear algebra and data science.
+However, there are other norms, and many of these other norms are also useful.
+So, it is important to be familiar with them and their basic properties.
+Here, we will introduce and work with different types of norms.</p>
+<p>We will talk more later about exactly what vectors are mathematically, but for now and for the sake of computation it is common to think of a vector simply as a array of numbers upon which certain operations can be performed.
+In Python, the most convenient way to store a vector is in a numpy array, such as the following:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
+<span class="n">x</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([1, 2, 3])
+</pre></div>
+</div>
+</div>
+</div>
+<p>Observe that we had to <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">numpy</span></code>.
+This imports the <code class="docutils literal notranslate"><span class="pre">numpy</span></code> package, which is a package that supports multi-dimensional arrays and matrices, including high-level mathematical functions to operate on these arrays.
+Arrays are superficially similar to lists in base Python, but they come equipped with many additional features which will be useful when performing linear algebraic operations.</p>
+<div class="section" id="the-euclidean-norm">
+<h2><span class="section-number">2.1.1. </span>The Euclidean norm<a class="headerlink" href="#the-euclidean-norm" title="Permalink to this headline">¶</a></h2>
+<p>When applied to vectors, a <em>norm</em> function that takes as input a vector and that returns a single non-negative number.
+The most common norm is the so-called <em>Euclidean norm</em>.
+For for a general <span class="math notranslate nohighlight">\(n\)</span>-dimensional vector <span class="math notranslate nohighlight">\(\boldsymbol{x} = (x_1,\dots,x_n)\)</span>, the Euclidean is given by</p>
+<div class="math notranslate nohighlight">
+\[
+\|\boldsymbol{x}\|_2 = \sqrt{\sum_{i=1}^n x_i^2}  .
+\]</div>
+<p>Here, we use the subscript <span class="math notranslate nohighlight">\(2\)</span> since the Euclidean norm is sometimes also called the <em>2-norm</em> or the <em><span class="math notranslate nohighlight">\(\ell_2\)</span>-norm</em>; the reasons for this will become clear shortly.
+This formula may seem unfamiliar now, but it is the “obvious” extension of the familiar Euclidean norm to vectors with <span class="math notranslate nohighlight">\(n\)</span> components.</p>
+<p>If <span class="math notranslate nohighlight">\(n=2\)</span>, then this is simply the <span class="math notranslate nohighlight">\(2\)</span>-dimensional example in the plane:
+for a point <span class="math notranslate nohighlight">\(\boldsymbol{x} = (x_1,x_2)\in \mathbb{R}^2\)</span>, the (Euclidean) length of this vector is just</p>
+<div class="math notranslate nohighlight">
+\[
+\|\boldsymbol{x}\|_2 = \sqrt{\sum_{i=1}^2 x_i^2} = \sqrt{x_1^2 + x_2^2} .
+\]</div>
+<p>This can also be seen as a special case of the Pythagorean Theorem: given a right triangle with side lengths <span class="math notranslate nohighlight">\(x_1\)</span> and <span class="math notranslate nohighlight">\(x_2\)</span>, the length of the hypotenuse is given by <span class="math notranslate nohighlight">\(\|\boldsymbol{x}\|_2\)</span>.</p>
+<p>If <span class="math notranslate nohighlight">\(n=3\)</span>, then this is simply the Euclidean norm of a <span class="math notranslate nohighlight">\(3\)</span>-dimensional point in three-dimensional Euclidean space, i.e.,</p>
+<div class="math notranslate nohighlight">
+\[
+\|\boldsymbol{x}\|_2 = \sqrt{\sum_{i=1}^3 x_i^2}
+\]</div>
+<p>for a vector <span class="math notranslate nohighlight">\(\boldsymbol{x}\)</span> in three-dimensional Euclidean space.
+Here, too, there is a similar interpretation in terms of the Pythagorean Theorem.</p>
+<p>If <span class="math notranslate nohighlight">\(n \ge 4\)</span>, then clearly we can sum up the squares of more than three numbers.
+The point of writing the Euclidean norm in this suggestive way is not just that the same expression holds for any <span class="math notranslate nohighlight">\(n\)</span>, even if <span class="math notranslate nohighlight">\(n \ge 4\)</span>, when it is less easy to visualize these quantities, but also that this expression still gives a norm in those cases.
+Also, less obvious but still true, many of the interpretations in terms of angles, perpendicularity, etc., also hold true.</p>
+<p>Let’s write a Python function using numpy functions to compute the Euclidean <span class="math notranslate nohighlight">\(2\)</span>-norm by explicitly summing over each of the entries and squaring them.
+There are many such functions we could write.
+Let’s start with the following one.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">euclidean_norm</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+  <span class="n">result</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="p">(</span><span class="mf">1.</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">result</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can check that this gives us the correct results on the vector <span class="math notranslate nohighlight">\(\boldsymbol{x} = (1,2,3)\)</span> that we defined earlier:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">euclidean_norm</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>3.7416573867739413
+</pre></div>
+</div>
+</div>
+</div>
+<p>As expected, the result is <span class="math notranslate nohighlight">\(\sqrt{1^2 + 2^2 + 3^2} = \sqrt{14} \approx 3.74\)</span>.</p>
+<p>Let’s parse what the function <code class="docutils literal notranslate"><span class="pre">euclidean_norm</span></code> does.
+First, this function computes the element-wise square of each entry in the vector <span class="math notranslate nohighlight">\(\boldsymbol{x}\)</span>, with <code class="docutils literal notranslate"><span class="pre">x**2</span></code>; then it sums over each of these entries, with <code class="docutils literal notranslate"><span class="pre">np.sum()</span></code>; and then it takes the square root of the result by raising the sum to the power <span class="math notranslate nohighlight">\(1/2\)</span>.
+(Note: here we use <code class="docutils literal notranslate"><span class="pre">1./2</span></code> instead of <code class="docutils literal notranslate"><span class="pre">1/2</span></code> to make sure python parses this as a float rather than an integer.)</p>
+<p>There is also a special function in numpy which we can use to compute the Euclidean norm.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">numpy.linalg</span> <span class="kn">import</span> <span class="n">norm</span>
+
+<span class="n">norm</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>3.7416573867739413
+</pre></div>
+</div>
+</div>
+</div>
+<p>Below, we will see that the <code class="docutils literal notranslate"><span class="pre">norm</span></code> function takes optional arguments – including an important one called <code class="docutils literal notranslate"><span class="pre">ord</span></code> – but with no arguments it computes the Euclidean norm of the input vector.</p>
+</div>
+<div class="section" id="the-1-norm">
+<h2><span class="section-number">2.1.2. </span>The <span class="math notranslate nohighlight">\(1\)</span>-norm<a class="headerlink" href="#the-1-norm" title="Permalink to this headline">¶</a></h2>
+<p>While the Euclidean norm is probably the most common ways to measure the size of a vector, it is not the only way to do so.
+Consider the following, which is known as the <em><span class="math notranslate nohighlight">\(1\)</span>-norm</em> (or <em><span class="math notranslate nohighlight">\(\ell_1\)</span>-norm</em>):
+for any vector <span class="math notranslate nohighlight">\(\boldsymbol{x}=(x_1,\dots,x_n)\)</span>, let</p>
+<div class="math notranslate nohighlight">
+\[
+\|\boldsymbol{x}\|_{1} = \sum_{i=1}^n |x_i|
+\]</div>
+<p>We could write a function to compute the <span class="math notranslate nohighlight">\(1\)</span>-norm of a vector (and you will be asked to do this as a problem).</p>
+<p>For now, let’s use the numpy <code class="docutils literal notranslate"><span class="pre">norm</span></code> function, which allows us to compute the <span class="math notranslate nohighlight">\(1\)</span>-norms of vectors if we provide the correct argument.
+For example,</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The 1-norm of x is </span><span class="si">%f</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">norm</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The 2-norm of x is </span><span class="si">%f</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">norm</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The 1-norm of x is 6.000000
+The 2-norm of x is 3.741657
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here, we used <code class="docutils literal notranslate"><span class="pre">ord=p</span></code> to specify whether we wanted to compute the <span class="math notranslate nohighlight">\(1\)</span>-norm or the <span class="math notranslate nohighlight">\(2\)</span>-norm.</p>
+<p>The two different norms give us two different numbers, i.e., two different different measures of the size of a vector.</p>
+<p>Due to the absolute value, if we change the sign of any of the entries in a vector, the value of its norm does not change.
+(This absolute value was not needed for the Euclidean norm, since the square of any real number is non-negative.)
+For example, if <span class="math notranslate nohighlight">\(\boldsymbol{x}'=(-1,-2,-3)\)</span>, then <span class="math notranslate nohighlight">\(\boldsymbol{x}'\)</span> always has the same norm as <span class="math notranslate nohighlight">\(\boldsymbol{x}\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x_prime</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="o">-</span><span class="mi">3</span><span class="p">])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The 1-norm of x_prime is </span><span class="si">%f</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">norm</span><span class="p">(</span><span class="n">x_prime</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The 2-norm of x_prime is </span><span class="si">%f</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">norm</span><span class="p">(</span><span class="n">x_prime</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The 1-norm of x_prime is 6.000000
+The 2-norm of x_prime is 3.741657
+</pre></div>
+</div>
+</div>
+</div>
+<p>Before moving onto more general properties of norms, let’s introduce one more common and useful norm.</p>
+</div>
+<div class="section" id="the-infty-norm">
+<h2><span class="section-number">2.1.3. </span>The <span class="math notranslate nohighlight">\(\infty\)</span>-norm<a class="headerlink" href="#the-infty-norm" title="Permalink to this headline">¶</a></h2>
+<p>The <span class="math notranslate nohighlight">\(\infty\)</span>-norm (or <span class="math notranslate nohighlight">\(\ell_\infty\)</span>-norm) of a vector is another useful norm to know about.
+For a vector <span class="math notranslate nohighlight">\(\boldsymbol{x}=(x_1,\dots,x_n)\)</span> the <span class="math notranslate nohighlight">\(\infty\)</span>-norm is defined as:</p>
+<div class="math notranslate nohighlight">
+\[
+\|\boldsymbol{x}\|_\infty = \max_{i=1,\dots,n}|x_i|  .
+\]</div>
+<p>That is, the <span class="math notranslate nohighlight">\(\infty\)</span>-norm is simply the maximum absolute value among the entries of <span class="math notranslate nohighlight">\(\boldsymbol{x}\)</span>.</p>
+<p>We can also provide the right argument to numpy’s <code class="docutils literal notranslate"><span class="pre">norm</span></code> function to compute the <span class="math notranslate nohighlight">\(\infty\)</span>-norm:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span> <span class="s1">&#39;The 1-norm of x is </span><span class="si">%f</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">norm</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span> <span class="s1">&#39;The 2-norm of x is </span><span class="si">%f</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">norm</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span> <span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span> <span class="s1">&#39;The infinity-norm of x is </span><span class="si">%f</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">norm</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">)</span> <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The 1-norm of x is 6.000000
+The 2-norm of x is 3.741657
+The infinity-norm of x is 3.000000
+</pre></div>
+</div>
+</div>
+</div>
+<p>As expected, the <span class="math notranslate nohighlight">\(\infty\)</span>-norm of <span class="math notranslate nohighlight">\(\boldsymbol{x}\)</span> is just its largest entry in absolute value: <span class="math notranslate nohighlight">\(3\)</span>.</p>
+<p>Why is the <span class="math notranslate nohighlight">\(\infty\)</span>-norm called the “infinity” norm?
+We will get to that below.</p>
+</div>
+<div class="section" id="properties-of-norms">
+<h2><span class="section-number">2.1.4. </span>Properties of norms<a class="headerlink" href="#properties-of-norms" title="Permalink to this headline">¶</a></h2>
+<p>Norms have several important properties that capture the general notion of “size.”<br />
+As an example, we already saw one of them: norms are invariant to sign changes of any one of the vector’s entries.</p>
+<p>More generally, norms have three important properties.
+In fact, these three properties are the defining properties of a norm.
+They are what a function needs to satisfy to be called a “norm”.</p>
+<ol class="simple">
+<li><p>For any <span class="math notranslate nohighlight">\(x\)</span>, <span class="math notranslate nohighlight">\(\|\boldsymbol{x}\| \ge 0\)</span>, where <span class="math notranslate nohighlight">\(0\in\mathbb{R}\)</span>; and <span class="math notranslate nohighlight">\(\|\boldsymbol{x}\|=0\)</span> if and only if  <span class="math notranslate nohighlight">\(\boldsymbol{x} = 0\)</span>, where this <span class="math notranslate nohighlight">\(0\)</span> is the all-zeros vector, <span class="math notranslate nohighlight">\(0 = (0,\dots,0)\)</span>.
+(This is sometimes called being <em>positive definite</em>.)</p></li>
+<li><p>For any scalar <span class="math notranslate nohighlight">\(\alpha\in\mathbb{R}\)</span>, we have that <span class="math notranslate nohighlight">\(\|\alpha \boldsymbol{x}\| = |\alpha|\cdot\|\boldsymbol{x}\|\)</span>
+(This is sometimes called being <em>absolutely homogeneous</em> or <em>absolutely scalable</em>.)</p></li>
+<li><p>For any vectors <span class="math notranslate nohighlight">\(\boldsymbol{x}, \boldsymbol{y}\)</span>, we have <span class="math notranslate nohighlight">\(\|\boldsymbol{x}+\boldsymbol{y}\|\leq \|\boldsymbol{x}\|+\|\boldsymbol{y}\|\)</span>.
+(This is sometimes called being <em>subadditive</em> or satisfying the <em>triangle inequality</em>.)</p></li>
+</ol>
+<p>To make sense of these properties, we need to say what it means to add two vectors and scale vectors.</p>
+<ul class="simple">
+<li><p>For vectors <span class="math notranslate nohighlight">\(\boldsymbol{x}=(x_1,\dots,x_n), \boldsymbol{y}=(y_1,\dots,y_n)\)</span>, when we write <span class="math notranslate nohighlight">\(\boldsymbol{x}+\boldsymbol{y}\)</span> we mean the new vector <span class="math notranslate nohighlight">\((x_1+y_1,\dots, x_n+y_n)\)</span>.</p></li>
+<li><p>Similarly, if <span class="math notranslate nohighlight">\(\alpha\in\mathbb{R}\)</span> is a scalar, then <span class="math notranslate nohighlight">\(\alpha \boldsymbol{x} = (\alpha x_1, \dots, \alpha x_n)\)</span>.</p></li>
+</ul>
+<p>Both of these operations give us new vectors that also have norms.</p>
+<p>Let’s use numpy to verify two of these properties.</p>
+<div class="section" id="scaling-vectors">
+<h3><span class="section-number">2.1.4.1. </span>Scaling vectors<a class="headerlink" href="#scaling-vectors" title="Permalink to this headline">¶</a></h3>
+<p>Let’s veryify the scalability of norms by absolute values.
+Namely, for any scalar <span class="math notranslate nohighlight">\(\alpha \in \mathbb{R}\)</span> and vector <span class="math notranslate nohighlight">\(\boldsymbol{x} = (x_1,\dots,x_n)\)</span>, we have that <span class="math notranslate nohighlight">\(\|\alpha \boldsymbol{x}\| = |\alpha|\cdot \|\boldsymbol{x}\|\)</span>.</p>
+<p>To do so, let’s define another vector <span class="math notranslate nohighlight">\(\boldsymbol{x}\)</span> for this problem.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>This vectors <span class="math notranslate nohighlight">\(1\)</span>-norm is given by <span class="math notranslate nohighlight">\(12 = |-3| + |-2| + |-1| + |0| + |1|+|2|+|3|\)</span>, as we can verify with code:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">norm1_x</span> <span class="o">=</span> <span class="n">norm</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">norm1_x</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>12.0
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now let’s try scaling this vector by the scalar <span class="math notranslate nohighlight">\(\alpha_1 = 2\)</span>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">alpha1</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">alpha1_x</span> <span class="o">=</span> <span class="n">alpha1</span><span class="o">*</span><span class="n">x</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now let’s compute the norm of the re-scaled version:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">norm1_alpha1_x</span> <span class="o">=</span> <span class="n">norm</span><span class="p">(</span><span class="n">alpha1_x</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">norm1_alpha1_x</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>24.0
+</pre></div>
+</div>
+</div>
+</div>
+<p>As expected, the norm was doubled to <span class="math notranslate nohighlight">\(24\)</span>.</p>
+<p>Now, lets see what happens when we rescale the vector by <span class="math notranslate nohighlight">\(\alpha_2 = -2\)</span>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">alpha2</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span>
+<span class="n">alpha2_x</span> <span class="o">=</span> <span class="n">alpha2</span><span class="o">*</span><span class="n">x</span>
+
+<span class="n">norm1_alpha2_x</span> <span class="o">=</span> <span class="n">norm</span><span class="p">(</span><span class="n">alpha2_x</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">norm1_alpha2_x</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>24.0
+</pre></div>
+</div>
+</div>
+</div>
+<p>We still get the same result!
+This is because when we scale a vector by a scalar <span class="math notranslate nohighlight">\(\alpha\)</span>, the norm is rescaled by the absolute value <span class="math notranslate nohighlight">\(|\alpha|\)</span>.</p>
+</div>
+<div class="section" id="the-triangle-inequality">
+<h3><span class="section-number">2.1.4.2. </span>The triangle inequality<a class="headerlink" href="#the-triangle-inequality" title="Permalink to this headline">¶</a></h3>
+<p>Let’s verify the triangle inequality.</p>
+<p>To do so, let’s first define two vectors <span class="math notranslate nohighlight">\(\boldsymbol{x}\)</span> and <span class="math notranslate nohighlight">\(\boldsymbol{y}\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="o">-</span><span class="mi">5</span><span class="p">])</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">6</span><span class="p">,</span><span class="o">-</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="o">-</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>In numpy, we can easily add these vectors using the normal <code class="docutils literal notranslate"><span class="pre">+</span></code> operation in Python:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x_plus_y</span> <span class="o">=</span> <span class="n">x</span><span class="o">+</span><span class="n">y</span>
+<span class="n">x_plus_y</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([ 5, -5,  5, -5,  5])
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now let’s compute the norms <span class="math notranslate nohighlight">\(\|\boldsymbol{x}\|_2, \|\boldsymbol{y}\|_2\)</span> and <span class="math notranslate nohighlight">\(\|\boldsymbol{x}+\boldsymbol{y}\|_2\)</span>, and verify that the <span class="math notranslate nohighlight">\(2\)</span>-norm satisfies the triangle inequality:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">norm_x</span> <span class="o">=</span> <span class="n">norm</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">norm_y</span> <span class="o">=</span> <span class="n">norm</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">norm_x_plus_y</span> <span class="o">=</span> <span class="n">norm</span><span class="p">(</span><span class="n">x_plus_y</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The 2-norm of x+y is </span><span class="si">%f</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">norm_x_plus_y</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The 2-norm of x plus the norm of y is </span><span class="si">%f</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">norm_x</span> <span class="o">+</span> <span class="n">norm_y</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The 2-norm of x+y is 11.180340
+The 2-norm of x plus the norm of y is 25.582101
+</pre></div>
+</div>
+</div>
+</div>
+<p>Indeed, we see that <span class="math notranslate nohighlight">\(\|\boldsymbol{x}+\boldsymbol{y}\|_2\)</span> is smaller than <span class="math notranslate nohighlight">\(\|\boldsymbol{x}\|_2 + \|\boldsymbol{y}\|_2\)</span>.
+This is also true of the other norms we introduced.
+For example, we can to the same thing with the <span class="math notranslate nohighlight">\(\infty\)</span>-norm:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">norm_x_inf</span> <span class="o">=</span> <span class="n">norm</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">)</span>
+<span class="n">norm_y_inf</span> <span class="o">=</span> <span class="n">norm</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">)</span>
+<span class="n">norm_x_plus_y_inf</span> <span class="o">=</span> <span class="n">norm</span><span class="p">(</span><span class="n">x_plus_y</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The infinity-norm of x+y is </span><span class="si">%f</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">norm_x_plus_y_inf</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The infinity-norm of x plus the infinity-norm of y is </span><span class="si">%f</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">norm_x_inf</span> <span class="o">+</span> <span class="n">norm_y_inf</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The infinity-norm of x+y is 5.000000
+The infinity-norm of x plus the infinity-norm of y is 15.000000
+</pre></div>
+</div>
+</div>
+</div>
+<p>There is also an important <em>reverse triangle inequality</em> which is sometimes useful. It states that for any vectors <span class="math notranslate nohighlight">\(\boldsymbol{x},\boldsymbol{y}\)</span> and norm <span class="math notranslate nohighlight">\(\|\cdot\|\)</span> we have the following inequality: <span class="math notranslate nohighlight">\(\|\boldsymbol{x}-\boldsymbol{y}\|\geq \big| \|\boldsymbol{x}\|-\|\boldsymbol{y}\| \big|\)</span>. This is called the ‘reverse’ triangle inequality because rather than giving an upper bound on the sum/difference of two vectors, it gives us a lower bound. Let’s see an example with the 2-norm. We first compute <span class="math notranslate nohighlight">\(\boldsymbol{x}-\boldsymbol{y}\)</span>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x_minus_y</span> <span class="o">=</span> <span class="n">x</span><span class="o">-</span><span class="n">y</span>
+<span class="n">x_minus_y</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([ -7,   9, -11,  13, -15])
+</pre></div>
+</div>
+</div>
+</div>
+<p>Then we can compute <span class="math notranslate nohighlight">\(\|\boldsymbol{x}-\boldsymbol{y}\|_2\)</span> and <span class="math notranslate nohighlight">\(\big|\|\boldsymbol{x}\|_2-\|\boldsymbol{y}\|_2\big|\)</span>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">norm_x</span> <span class="o">=</span> <span class="n">norm</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">norm_y</span> <span class="o">=</span> <span class="n">norm</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">norm_x_minus_y</span> <span class="o">=</span> <span class="n">norm</span><span class="p">(</span><span class="n">x_minus_y</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The 2-norm of x-y is </span><span class="si">%f</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">norm_x_minus_y</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The absolute value of 2-norm of x minus the 2-norm of y is </span><span class="si">%f</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">norm_x</span> <span class="o">-</span> <span class="n">norm_y</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The 2-norm of x-y is 25.396850
+The absolute value of 2-norm of x minus the 2-norm of y is 10.749704
+</pre></div>
+</div>
+</div>
+</div>
+<p>We see that the second quantity is indeed smaller.</p>
+</div>
+</div>
+<div class="section" id="the-p-norms">
+<h2><span class="section-number">2.1.5. </span>The <span class="math notranslate nohighlight">\(p\)</span>-norms<a class="headerlink" href="#the-p-norms" title="Permalink to this headline">¶</a></h2>
+<p>While the <span class="math notranslate nohighlight">\(\ell_1\)</span> and <span class="math notranslate nohighlight">\(\ell_2\)</span> and <span class="math notranslate nohighlight">\(\ell_\infty\)</span> norms are the most common ways to measure the size of a vector, they are not the only way to do so.
+In fact,
+we can generalize the defining expression for these norms for a <span class="math notranslate nohighlight">\(\boldsymbol{x}=(x_1,\dots,x_n)\)</span> to any number <span class="math notranslate nohighlight">\(p \ge 0\)</span>:
+for any vector <span class="math notranslate nohighlight">\(\boldsymbol{x}=(x_1,\dots,x_n)\)</span>, consider the expression given by:</p>
+<div class="math notranslate nohighlight">
+\[
+\|\boldsymbol{x}\|_p = \left(\sum_{i=1}^n |x_i|^p\right)^{1/p}
+\]</div>
+<p>For <span class="math notranslate nohighlight">\( p \in [0,1)\)</span>, this expression is <em>not</em> a norm; but
+for <span class="math notranslate nohighlight">\( p \in [1,\infty]\)</span>, this expression is a norm.</p>
+<p>Now we see why we call the Euclidean norm the <span class="math notranslate nohighlight">\(2\)</span>-norm: it is simply a special case of the <span class="math notranslate nohighlight">\(p\)</span>-norm when <span class="math notranslate nohighlight">\(p=2\)</span>.
+Similarly, we see why we call the <span class="math notranslate nohighlight">\(1\)</span>-norm the <span class="math notranslate nohighlight">\(1\)</span>-norm: it is simply a special case of the <span class="math notranslate nohighlight">\(p\)</span>-norm when <span class="math notranslate nohighlight">\(p=1\)</span>.
+However, the <span class="math notranslate nohighlight">\(\infty\)</span>-norm looks different.
+Why is it called that?
+Let’s see.</p>
+<p>To do so, let’s use the numpy <code class="docutils literal notranslate"><span class="pre">norm</span></code> function, which also lets us compute the <span class="math notranslate nohighlight">\(p\)</span>-norms of vectors.
+For example,</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The 1-norm of x is </span><span class="si">%f</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">norm</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The 2-norm of x is </span><span class="si">%f</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">norm</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The 3-norm of x is </span><span class="si">%f</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">norm</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="mi">3</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The 1-norm of x is 6.000000
+The 2-norm of x is 3.741657
+The 3-norm of x is 3.301927
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here, we used <code class="docutils literal notranslate"><span class="pre">ord=p</span></code> to specify which <span class="math notranslate nohighlight">\(p\)</span>-norm we wanted to compute.
+As we expect, different norms give us different numbers.</p>
+<p>Also, as we expect, if we change the sign of any of the entries in a vector, the value of its norm does not change.
+For example, if <span class="math notranslate nohighlight">\(\boldsymbol{x}'=(-1,-2,-3)\)</span>, then <span class="math notranslate nohighlight">\(\boldsymbol{x}'\)</span> always has the same norm as <span class="math notranslate nohighlight">\(\boldsymbol{x}\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x_prime</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="o">-</span><span class="mi">3</span><span class="p">])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The 1-norm of x_prime is </span><span class="si">%f</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">norm</span><span class="p">(</span><span class="n">x_prime</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The 2-norm of x_prime is </span><span class="si">%f</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">norm</span><span class="p">(</span><span class="n">x_prime</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The 3-norm of x_prime is </span><span class="si">%f</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">norm</span><span class="p">(</span><span class="n">x_prime</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="mi">3</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The 1-norm of x_prime is 6.000000
+The 2-norm of x_prime is 3.741657
+The 3-norm of x_prime is 3.301927
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s get back to the question of why the <span class="math notranslate nohighlight">\(\infty\)</span>-norm is called the <span class="math notranslate nohighlight">\(\infty\)</span>-norm.</p>
+<p>Let’s test this with our vector <span class="math notranslate nohighlight">\(\boldsymbol{x}=(1,2,3)\)</span>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="o">%</span><span class="k">matplotlib</span> inline
+
+<span class="n">p_max</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">p_range</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">p_max</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">norm_values</span> <span class="o">=</span> <span class="p">[</span><span class="n">norm</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="n">p</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">p_range</span><span class="p">]</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">p_range</span><span class="p">,</span> <span class="n">norm_values</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;p norms&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hlines</span><span class="p">(</span><span class="n">norm</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">),</span> <span class="n">xmin</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">xmax</span><span class="o">=</span><span class="n">p_max</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$\infty$-norm&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;p&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;p-norm value&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/basicLA_1_introduction-to-norms_41_0.png" src="../_images/basicLA_1_introduction-to-norms_41_0.png" />
+</div>
+</div>
+<p>As we see, once <span class="math notranslate nohighlight">\(p\)</span> gets modestly large, it is essentially just giving us the <span class="math notranslate nohighlight">\(\infty\)</span>-norm of the vector.</p>
+<p>That is, you get this norm by looking at the limit of the <span class="math notranslate nohighlight">\(p\)</span>-norms as <span class="math notranslate nohighlight">\(p\to\infty\)</span>!</p>
+<p>Notice also that this plot is strictly decreasing: this is due to the following additional property of <span class="math notranslate nohighlight">\(p\)</span>-norms:</p>
+<ul class="simple">
+<li><p>If <span class="math notranslate nohighlight">\(1\leq p&lt;q\leq \infty\)</span>, then for any vector <span class="math notranslate nohighlight">\(x\in \mathbb{R}^n\)</span>, we have that <span class="math notranslate nohighlight">\(\|\boldsymbol{x}\|_q \leq \|\boldsymbol{x}\|_p\)</span>. In other words, <span class="math notranslate nohighlight">\(p\)</span>-norms are ordered in ‘reverse’ order: larger <span class="math notranslate nohighlight">\(p\)</span> gives a smaller norm.</p></li>
+</ul>
+<p>Later, we will investigate more properties of norms, and see that they have interesting geometric interpretations.</p>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./content"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="basicLA_1_chheader.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title"><span class="section-number">2. </span>Matrices, vectors, and <span class="math notranslate nohighlight">\(\mathbb{R}^n\)</span></p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="basicLA_1_norms-integration-monte-carlo.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><span class="section-number">2.2. </span>An application: approximating integrals with norms and Monte Carlo integration</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            
+        </div>
+    </div>
+    <footer class="footer">
+  <p>
+    
+      By Michael W. Mahoney, N. Benjamin Erichson and Ryan Theisen<br/>
+    
+        &copy; Copyright 2021.<br/>
+  </p>
+</footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
+  </body>
+</html>

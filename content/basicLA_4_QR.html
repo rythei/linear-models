@@ -1,0 +1,812 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>6.2. Gram–Schmidt and the QR Decomposition &#8212; Linear Algebra for Data Workbook</title>
+    
+  <link href="../_static/css/theme.css" rel="stylesheet">
+  <link href="../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
+    <script>
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="6.3. Solving linear systems with the QR decomposition" href="basicLA_4_QR_linear_systems.html" />
+    <link rel="prev" title="6.1. Dot products, angles, and orthogonality" href="basicLA_4_dot-products-and-angles.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../_static/logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Linear Algebra for Data Workbook</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../overview.html">
+   Welcome to Stat 89A
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Background
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="python_chheader.html">
+   1. Python 101
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="python_basics.html">
+     1.1. The Basics
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="python_numpy.html">
+     1.2. Introduction to NumPy
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="python_plotting.html">
+     1.3. MatPlotLib
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Basic Linear Algebra
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="basicLA_1_chheader.html">
+   2. Matrices, vectors, and
+   <span class="math notranslate nohighlight">
+    \(\mathbb{R}^n\)
+   </span>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="basicLA_1_introduction-to-norms.html">
+     2.1. Introduction to Norms
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="basicLA_1_norms-integration-monte-carlo.html">
+     2.2. An application: approximating integrals with norms and Monte Carlo integration
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="basicLA_1_lp-balls.html">
+     2.3.
+     <span class="math notranslate nohighlight">
+      \(\ell_p\)
+     </span>
+     Balls
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="basicLA_1_classification-with-norms.html">
+     2.4. An application: classifying data points using norms
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="basicLA_2_chheader.html">
+   3. Basics of vectors and vector spaces
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+  <label for="toctree-checkbox-3">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="basicLA_2A_vectorspaces.html">
+     3.1. Vectors and vector spaces
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="basicLA_3_chheader.html">
+   4. Basics of matrices
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+  <label for="toctree-checkbox-4">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="basicLA_3_matrices-and-matrix-operations.html">
+     4.1. Matrices and matrix operations
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="basicLA_3_deconstructing.html">
+     4.2. Deconstructing Matrix Multiplication
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="basicLA_3_powers_of_matrices.html">
+     4.3. Taking Powers of Matrices
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="basicLA_3B_chheader.html">
+   5. Matrices as transformations
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
+  <label for="toctree-checkbox-5">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="basicLA_3_linear_examples_new.html">
+     5.1. Linear and Nonlinear Functions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="basicLA_3_matrices_and_linear_functions.html">
+     5.2. Matrices and Linear Functions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="basicLA_3_injective-and-surjective-functions.html">
+     5.3. Injective, surjective and invertible functions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="basicLA_3_inverses.html">
+     5.4. Left Inverses, Right Inverses, and Inverses
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="basicLA_3_changing_basis.html">
+     5.5. Changing Basis
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="basicLA_4_chheader.html">
+   6. Geometry: angles, orthogonality, and projections
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
+  <label for="toctree-checkbox-6">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="basicLA_4_dot-products-and-angles.html">
+     6.1. Dot products, angles, and orthogonality
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     6.2. Gram–Schmidt and the QR Decomposition
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="basicLA_4_QR_linear_systems.html">
+     6.3. Solving linear systems with the QR decomposition
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="basicLA_4_projections.html">
+     6.4. Projections
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  The EVD, SVD and applications
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="eigenstuff_chheader.html">
+   7. Eigenthings
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/>
+  <label for="toctree-checkbox-7">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="eigenstuff_quadratic-forms.html">
+     7.1. Quadratic forms
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="eigenstuff_eigenthings.html">
+     7.2. Eigenvalues and eigenvectors
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="eigenstuff_eigenthings-special-matrices.html">
+     7.3. The Eigenvalue decomposition for special types of matrices
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="eigenstuff_qr-algorithm.html">
+     7.4. The QR algorithm for finding eigenvalues and eigenvectors
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="eigenstuff_SVD.html">
+     7.5. The Singular Value Decomposition
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="eigenstuff_low-rank-approximation.html">
+     7.6. Low-rank approximation using the SVD
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="applications_chheader.html">
+   8. Applications
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/>
+  <label for="toctree-checkbox-8">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="applications_PCA.html">
+     8.1. Principal Component Analysis (PCA)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="applications_spectral-clustering.html">
+     8.2. Sprectral Clustering
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="applications_least-squares.html">
+     8.3. Least Squares
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="applications_double-descent.html">
+     8.4. The “double descent” phenomenon
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        <a class="dropdown-buttons"
+            href="../_sources/content/basicLA_4_QR.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download notebook file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/content/basicLA_4_QR.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.md</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/erichson/LinearAlgebra/master?urlpath=tree/content/basicLA_4_QR.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-gram-schmidt-procedure">
+   6.2.1. The Gram–Schmidt procedure
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#implementing-the-gram-schmidt-procedure-in-python">
+     6.2.1.1. Implementing the Gram–Schmidt procedure in Python
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#from-gram-schmidt-to-qr">
+   6.2.2. From Gram-Schmidt to QR
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#computing-the-qr-decomposition-in-python">
+     6.2.2.1. Computing the QR decomposition in Python
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Gram–Schmidt and the QR Decomposition</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-gram-schmidt-procedure">
+   6.2.1. The Gram–Schmidt procedure
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#implementing-the-gram-schmidt-procedure-in-python">
+     6.2.1.1. Implementing the Gram–Schmidt procedure in Python
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#from-gram-schmidt-to-qr">
+   6.2.2. From Gram-Schmidt to QR
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#computing-the-qr-decomposition-in-python">
+     6.2.2.1. Computing the QR decomposition in Python
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            
+              <div>
+                
+  <div class="tex2jax_ignore mathjax_ignore section" id="gram-schmidt-and-the-qr-decomposition">
+<h1><span class="section-number">6.2. </span>Gram–Schmidt and the QR Decomposition<a class="headerlink" href="#gram-schmidt-and-the-qr-decomposition" title="Permalink to this headline">¶</a></h1>
+<p>In the previous workbook, we saw the definition of an <em>orthogonal set</em> of vectors. Indeed, the set <span class="math notranslate nohighlight">\(V = \{\boldsymbol{v}_1,\dots, \boldsymbol{v}_k\}\)</span> is an <em>orthogonal set</em> if <span class="math notranslate nohighlight">\(\boldsymbol{v}_i^\top \boldsymbol{v}_j = 0\)</span> for all <span class="math notranslate nohighlight">\(i\neq j\)</span>. The set <span class="math notranslate nohighlight">\(V\)</span> is <em>orthonormal</em> if in addition to being orthogonal, we have that <span class="math notranslate nohighlight">\(\|\boldsymbol{v}_i\|_2 = 1\)</span> for all <span class="math notranslate nohighlight">\(i=1,\dots,k\)</span>. Of course, if we have an orthogonal set it is easy to construct an orthonormal set by simply dividing each vector by its norm. Therefore, the hard work lies in finding orthogonal sets.</p>
+<p>In this section, we will study a general procedure for constructing an orthogonal set of vectors from any given set of vectors, and use this method to define an important matrix decomposition called the <em>QR decomposition</em>.</p>
+<div class="section" id="the-gram-schmidt-procedure">
+<h2><span class="section-number">6.2.1. </span>The Gram–Schmidt procedure<a class="headerlink" href="#the-gram-schmidt-procedure" title="Permalink to this headline">¶</a></h2>
+<p>Suppose we have a set of vectors <span class="math notranslate nohighlight">\(\boldsymbol{a}_1, \dots, \boldsymbol{a}_k \in \mathbb{R}^n\)</span>, which we might think of as being the columns of a <span class="math notranslate nohighlight">\(n\times k\)</span> matrix <span class="math notranslate nohighlight">\(\boldsymbol{A}\)</span>. Can we find a set of orthonormal vectors <span class="math notranslate nohighlight">\(\boldsymbol{v}_1,\dots, \boldsymbol{v}_k\)</span> such that <span class="math notranslate nohighlight">\(\text{span}(\boldsymbol{a}_1,\dots, \boldsymbol{a}_k) = \text{span}(\boldsymbol{v}_1,\dots, \boldsymbol{v}_k)\)</span>? It turns out that we can use an algorithm called the <em>Gram–Schmidt procedure</em> (or <em>Gram–Schmidt process</em>) to accomplish this.</p>
+<p>The algorithm procedes as follows. Start with vectors <span class="math notranslate nohighlight">\(\boldsymbol{a}_1,\dots, \boldsymbol{a}_k\)</span>. Then proceed as follows:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\boldsymbol{u}_1 = \boldsymbol{a}_1\)</span>, and set <span class="math notranslate nohighlight">\(\boldsymbol{v}_1 = \frac{\boldsymbol{u}_1}{\|\boldsymbol{u}_1\|_2}\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\boldsymbol{u}_2 = \boldsymbol{a}_2 - \frac{\boldsymbol{a}_2^\top \boldsymbol{u}_1}{\boldsymbol{u}_1^\top \boldsymbol{u}_1}\boldsymbol{u}_1 = \boldsymbol{a}_2 - (\boldsymbol{a}_2^\top \boldsymbol{v}_1)\boldsymbol{v}_1\)</span>, and set <span class="math notranslate nohighlight">\(\boldsymbol{v}_2 = \frac{\boldsymbol{u}_2}{\|\boldsymbol{u}_2\|_2}\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\boldsymbol{u}_3 = \boldsymbol{a}_3 - \frac{\boldsymbol{a}_3^\top \boldsymbol{u}_1}{\boldsymbol{u}_1^\top \boldsymbol{u}_1}\boldsymbol{u}_1 - \frac{\boldsymbol{a}_3^\top \boldsymbol{u}_2}{\boldsymbol{u}_2^\top \boldsymbol{u}_2}\boldsymbol{u}_2 = \boldsymbol{a}_3 - (\boldsymbol{a}_3^\top \boldsymbol{v}_1)\boldsymbol{v}_1 - (\boldsymbol{a}_3^\top \boldsymbol{v}_2)\boldsymbol{v}_2\)</span>, and set <span class="math notranslate nohighlight">\(\boldsymbol{v}_3 = \frac{\boldsymbol{u}_3}{\|\boldsymbol{u}_3\|_2}\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\vdots\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\boldsymbol{u}_k = \boldsymbol{a}_k - \sum_{j=1}^{k-1} \frac{\boldsymbol{a}_k^\top \boldsymbol{u}_j}{\boldsymbol{u}_j^\top \boldsymbol{u}_j}\boldsymbol{u}_j = \boldsymbol{a}_k - \sum_{j=1}^{k-1}(\boldsymbol{a}_k^\top \boldsymbol{v}_j)\boldsymbol{v}_j\)</span>, and set <span class="math notranslate nohighlight">\(\boldsymbol{v}_k = \frac{\boldsymbol{u}_k}{\|\boldsymbol{u}_k\|_2}\)</span></p></li>
+</ul>
+<p>The vectors <span class="math notranslate nohighlight">\(\boldsymbol{u}_1,\dots, \boldsymbol{u}_k\)</span> are really the important ones here: they form an orthogonal set with the same span as <span class="math notranslate nohighlight">\(\boldsymbol{a}_1,\dots, \boldsymbol{a}_k\)</span>. The set <span class="math notranslate nohighlight">\(\boldsymbol{v}_1,\dots,\boldsymbol{v}_k\)</span> are simply the normalized versions of <span class="math notranslate nohighlight">\(\boldsymbol{u}_1,\dots,\boldsymbol{u}_k\)</span>, which are therefore an <em>orthonormal</em> set.</p>
+<p>To see why this procedure works, let’s look at just the first step, and check that <span class="math notranslate nohighlight">\(\boldsymbol{u}_1\)</span> and <span class="math notranslate nohighlight">\(\boldsymbol{u}_2\)</span> are in fact orthogonal. To do this, we want to verify that <span class="math notranslate nohighlight">\(\boldsymbol{u}_1^\top \boldsymbol{u}_2 = 0\)</span>. We have</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+\boldsymbol{u}_1^\top \boldsymbol{u}_2 &amp;= \boldsymbol{a}_1^\top (\boldsymbol{a}_2 - \frac{\boldsymbol{a}_2^\top \boldsymbol{a}_1}{\boldsymbol{a}_1^\top \boldsymbol{a}_1}\boldsymbol{a}_1) \\ &amp;= \boldsymbol{a}_1^\top \boldsymbol{a}_2 - \boldsymbol{a}_1^\top \boldsymbol{a}_1 \frac{\boldsymbol{a}_2^\top \boldsymbol{a}_1}{\boldsymbol{a}_1^\top \boldsymbol{a}_1} = \boldsymbol{a}_1^\top \boldsymbol{a}_2 - \boldsymbol{a}_2^\top \boldsymbol{a}_1 \\&amp;= \boldsymbol{a}_1^\top \boldsymbol{a}_2 - \boldsymbol{a}_1^\top \boldsymbol{a}_2 = 0
+\end{align*}
+\end{split}\]</div>
+<p>In the second to last inequality, we used the fact that <span class="math notranslate nohighlight">\(\boldsymbol{x}^\top \boldsymbol{y} = \boldsymbol{y}^\top \boldsymbol{x}\)</span> for any vectors <span class="math notranslate nohighlight">\(\boldsymbol{x},\boldsymbol{y}\)</span>. The same type of calculation can be used to check that <span class="math notranslate nohighlight">\(\boldsymbol{u}_i^\top \boldsymbol{u}_j = 0\)</span> for any <span class="math notranslate nohighlight">\(i\neq j\)</span>. Thus the vectors are indeed orthogonal. Moreover, we can see that <span class="math notranslate nohighlight">\(\boldsymbol{u}_1,\dots,\boldsymbol{u}_k\)</span> must have the same span as <span class="math notranslate nohighlight">\(\boldsymbol{a}_1,\dots, \boldsymbol{a}_k\)</span>, since <span class="math notranslate nohighlight">\(\boldsymbol{u}_j\)</span> can be written as a linear combination of <span class="math notranslate nohighlight">\(\boldsymbol{a}_1,\dots, \boldsymbol{a}_j\)</span> for any <span class="math notranslate nohighlight">\(j\)</span>.</p>
+<div class="section" id="implementing-the-gram-schmidt-procedure-in-python">
+<h3><span class="section-number">6.2.1.1. </span>Implementing the Gram–Schmidt procedure in Python<a class="headerlink" href="#implementing-the-gram-schmidt-procedure-in-python" title="Permalink to this headline">¶</a></h3>
+<p>Let’s use Python and numpy to implement the Gram–Schmidt algorithm.</p>
+<p>Let’s start with a few helper functions. First, we’ll implement a function which takes vectors <span class="math notranslate nohighlight">\(\boldsymbol{u}\)</span> and <span class="math notranslate nohighlight">\(\boldsymbol{v}\)</span> and computes <span class="math notranslate nohighlight">\(\frac{\boldsymbol{v}^\top \boldsymbol{u}}{\boldsymbol{u}^\top \boldsymbol{u}}\boldsymbol{u}\)</span>. As we will see in a later section, this is the <em>orthogonal projection of <span class="math notranslate nohighlight">\(\boldsymbol{v}\)</span> onto <span class="math notranslate nohighlight">\(\boldsymbol{u}\)</span></em>, so to be consistent with that interpretation, we will call this function <code class="docutils literal notranslate"><span class="pre">project_v_onto_u</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="k">def</span> <span class="nf">project_v_onto_u</span><span class="p">(</span><span class="n">v</span><span class="p">,</span><span class="n">u</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">v</span><span class="p">,</span><span class="n">u</span><span class="p">)</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">u</span><span class="p">,</span><span class="n">u</span><span class="p">))</span><span class="o">*</span><span class="n">u</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Next, let’s define a function <code class="docutils literal notranslate"><span class="pre">normalize</span></code> which takes a vector <span class="math notranslate nohighlight">\(u\)</span> and returns a unit vector in the same direction: <span class="math notranslate nohighlight">\(\boldsymbol{v} = \frac{\boldsymbol{u}}{\|\boldsymbol{u}\|_2}\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">normalize</span><span class="p">(</span><span class="n">u</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">u</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">u</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Finally, let’s define a function <code class="docutils literal notranslate"><span class="pre">gram_schmidt</span></code> which uses our helper functions to compute the orthonormal vectors <span class="math notranslate nohighlight">\(\boldsymbol{v}_1,\dots, \boldsymbol{v}_k\)</span> given a set <span class="math notranslate nohighlight">\(\boldsymbol{a}_1,\dots, \boldsymbol{a}_k\)</span>. To do this, we need to decide how we should take the vectors <span class="math notranslate nohighlight">\(\boldsymbol{a}_1,\dots, \boldsymbol{a}_k\)</span> as inputs. We will choose to assume that the input is a <span class="math notranslate nohighlight">\(n\times k\)</span> matrix <span class="math notranslate nohighlight">\(\boldsymbol{A}\)</span>, which has the vectors <span class="math notranslate nohighlight">\(\boldsymbol{a}_1,\dots, \boldsymbol{a}_k\)</span> as its columns. This will be convenient later on when we compute the QR decomposition. Then we will have our function output a matrix <span class="math notranslate nohighlight">\(\boldsymbol{Q}\)</span> whose columns are <span class="math notranslate nohighlight">\(\boldsymbol{v}_1,\dots, \boldsymbol{v}_k\)</span> – again, this will be convenient for later on.</p>
+<p>Our function will work as follows: we will have an outer for loop which loops through <span class="math notranslate nohighlight">\(i=1,\dots, k\)</span>. Then, we will have an inner for loop which loops through <span class="math notranslate nohighlight">\(j=1,\dots,i-1\)</span> and iteratively subtracts <span class="math notranslate nohighlight">\(\frac{\boldsymbol{a}_i^\top \boldsymbol{u}_j}{\boldsymbol{u}_j^\top \boldsymbol{u}_j}\boldsymbol{u}_j\)</span> from <span class="math notranslate nohighlight">\(\boldsymbol{a}_i\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">gram_schmidt</span><span class="p">(</span><span class="n">A</span><span class="p">):</span>
+    <span class="n">k</span> <span class="o">=</span> <span class="n">A</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">u_list</span> <span class="o">=</span> <span class="p">[]</span> <span class="c1"># initialize a list to store the u vectors</span>
+    <span class="n">u_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">A</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">])</span> <span class="c1"># u1 = a1</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">k</span><span class="p">):</span>
+        <span class="n">ui</span> <span class="o">=</span> <span class="n">A</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span> <span class="c1"># start with ui = ai</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span><span class="p">):</span>
+            <span class="n">ui</span> <span class="o">=</span> <span class="n">ui</span> <span class="o">-</span> <span class="n">project_v_onto_u</span><span class="p">(</span><span class="n">ui</span><span class="p">,</span> <span class="n">u_list</span><span class="p">[</span><span class="n">j</span><span class="p">])</span> <span class="c1"># subtract out all the components (ai^T uj)/(uj^T uj)*uj</span>
+        <span class="n">u_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ui</span><span class="p">)</span> <span class="c1"># add ui to the list of u vectors</span>
+    <span class="n">v_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">normalize</span><span class="p">(</span><span class="n">u</span><span class="p">)</span> <span class="k">for</span> <span class="n">u</span> <span class="ow">in</span> <span class="n">u_list</span><span class="p">]</span> <span class="c1"># normalize all the u vectors</span>
+    <span class="n">Q</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">v_list</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="c1"># store the orthonormal vectors into a matrix Q</span>
+    <span class="k">return</span> <span class="n">Q</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s test our function on a random matrix <span class="math notranslate nohighlight">\(\boldsymbol{A}\)</span>, and make sure that the matrix <span class="math notranslate nohighlight">\(\boldsymbol{Q}\)</span> that we get back does in fact have orthonormal columns – that is, <span class="math notranslate nohighlight">\(\boldsymbol{Q}\)</span> should be an <em>orthogonal matrix</em>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">k</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">n</span> <span class="o">=</span> <span class="mi">10</span>
+
+<span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span> <span class="o">=</span> <span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">k</span><span class="p">))</span>
+<span class="n">Q</span> <span class="o">=</span> <span class="n">gram_schmidt</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Recall that we can check that <span class="math notranslate nohighlight">\(\boldsymbol{Q}\)</span> is an orthogonal matrix by checking if <span class="math notranslate nohighlight">\(\boldsymbol{Q}^\top \boldsymbol{Q} = \boldsymbol{I}\)</span>. Let’s see that this is in fact true. Again, we round to 8 decimals to make the matrix easier to read.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">Q</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">Q</span><span class="p">),</span> <span class="mi">8</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[ 1., -0., -0.,  0.,  0.],
+       [-0.,  1.,  0., -0., -0.],
+       [-0.,  0.,  1.,  0., -0.],
+       [ 0., -0.,  0.,  1.,  0.],
+       [ 0., -0., -0.,  0.,  1.]])
+</pre></div>
+</div>
+</div>
+</div>
+<p>Indeed, we see that <span class="math notranslate nohighlight">\(\boldsymbol{Q}^\top \boldsymbol{Q}\)</span> is in fact the identity matrix.</p>
+<p><strong>Remark:</strong> At this point, it is important to point out that the orthogonal matrix <span class="math notranslate nohighlight">\(\boldsymbol{Q}\)</span> whose columns have the same span as <span class="math notranslate nohighlight">\(\boldsymbol{A}\)</span> is not exactly unique. Indeed, it’s easy to see that if we multiply any of the columns of <span class="math notranslate nohighlight">\(\boldsymbol{Q}\)</span> by <span class="math notranslate nohighlight">\(-1\)</span>, we will have an orthogonal matrix with columns spanning the column space of <span class="math notranslate nohighlight">\(\boldsymbol{A}\)</span>.</p>
+</div>
+</div>
+<div class="section" id="from-gram-schmidt-to-qr">
+<h2><span class="section-number">6.2.2. </span>From Gram-Schmidt to QR<a class="headerlink" href="#from-gram-schmidt-to-qr" title="Permalink to this headline">¶</a></h2>
+<p>Now that we’ve seen how to take the columns of an arbitrary matrix <span class="math notranslate nohighlight">\(\boldsymbol{A}\)</span> and come up with an orthonormal set spanning the column space of <span class="math notranslate nohighlight">\(\boldsymbol{A}\)</span>, we are in a position to introduce one of the most important matrix decompositions in linear algebra: the <em>QR decomposition</em>. In the QR decomposition, we write any matrix <span class="math notranslate nohighlight">\(\boldsymbol{A}\)</span> as a product <span class="math notranslate nohighlight">\(\boldsymbol{A} = \boldsymbol{QR}\)</span> where <span class="math notranslate nohighlight">\(\boldsymbol{Q}\)</span> is an orthogonal matrix, and <span class="math notranslate nohighlight">\(\boldsymbol{R}\)</span> is an upper triangular matrix.</p>
+<p>Let’s start with the orthonormal vectors <span class="math notranslate nohighlight">\(\boldsymbol{v}_1,\dots, \boldsymbol{v}_k\)</span> that we obtain from the Gram-Schmidt procedure. Importantly, we can write the columns of <span class="math notranslate nohighlight">\(\boldsymbol{A}\)</span> as a linear combination of the vectors <span class="math notranslate nohighlight">\(\boldsymbol{v}_1,\dots, \boldsymbol{v}_k\)</span>. To see how this works, note that from the Gram–Schmidt procedure we have for any <span class="math notranslate nohighlight">\(j=1,\dots,k\)</span>,</p>
+<div class="math notranslate nohighlight">
+\[
+\boldsymbol{u}_j = \boldsymbol{a}_j - \sum_{i=1}^{j-1}(\boldsymbol{a}_j^\top \boldsymbol{v}_i)\boldsymbol{v}_i \iff \boldsymbol{a}_j = \boldsymbol{u}_j + \sum_{i=1}^{j-1}(\boldsymbol{a}_j^\top \boldsymbol{v}_i)\boldsymbol{v}_i = \|\boldsymbol{u}_j\|_2\boldsymbol{v}_j +\sum_{i=1}^{j-1}(\boldsymbol{a}_j^\top \boldsymbol{v}_i)\boldsymbol{v}_i
+\]</div>
+<p>Where for the last equality we used the fact that <span class="math notranslate nohighlight">\(\boldsymbol{v}_j = \frac{\boldsymbol{u}_j}{\|\boldsymbol{u}_j\|_2}\)</span>. Now notice that</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+\|\boldsymbol{u}_j\|_2^2 &amp;= \boldsymbol{u}_j^\top \boldsymbol{u}_j = \boldsymbol{u}_j^\top \left(\boldsymbol{a}_j - \sum_{i=1}^{j-1}(\boldsymbol{a}_j^\top \boldsymbol{v}_i)\boldsymbol{v}_i\right) = \boldsymbol{u}_j^\top \boldsymbol{a}_j - \sum_{i=1}^{j-1}(\boldsymbol{a}_j^\top \boldsymbol{v}_i)\underbrace{(\boldsymbol{u}_j^\top \boldsymbol{v}_i)}_{=0}\\&amp;= \boldsymbol{u}_j^\top \boldsymbol{a}_j = \|\boldsymbol{u}_j\|_2(\boldsymbol{v}_j^\top \boldsymbol{a}_j) \implies \|\boldsymbol{u}_j\|_2 = (\boldsymbol{v}_j^\top \boldsymbol{a}_j)
+\end{align*}
+\end{split}\]</div>
+<p>Hence we get the following expression for <span class="math notranslate nohighlight">\(\boldsymbol{a}_j\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+\boldsymbol{a}_j = \|\boldsymbol{u}_j\|_2\boldsymbol{v}_j +\sum_{i=1}^{j-1}(\boldsymbol{a}_j^\top \boldsymbol{v}_i)\boldsymbol{v}_i = (\boldsymbol{a}_j^\top \boldsymbol{v}_j)\boldsymbol{v}_j + \sum_{i=1}^{j-1}(\boldsymbol{a}_j^\top \boldsymbol{v}_i)\boldsymbol{v}_i = \sum_{i=1}^j (\boldsymbol{a}_j^\top \boldsymbol{v}_i)\boldsymbol{v}_i \hspace{20mm} (\star)
+\]</div>
+<p>Therefore <span class="math notranslate nohighlight">\(\boldsymbol{a}_j\)</span> can be written as a linear combination of <span class="math notranslate nohighlight">\(c_1 \boldsymbol{v}_1 + \cdots + c_j\boldsymbol{v}_j\)</span> where <span class="math notranslate nohighlight">\(c_i = (\boldsymbol{a}_j^\top \boldsymbol{v}_i)\)</span>.</p>
+<p>Now let’s collect the coefficients <span class="math notranslate nohighlight">\((\boldsymbol{a}_j^\top \boldsymbol{v}_j)\)</span> into the following matrix:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\boldsymbol{R} = \begin{bmatrix}\boldsymbol{a}_1^\top \boldsymbol{v}_1 &amp; \boldsymbol{a}_2^\top \boldsymbol{v}_1 &amp; \boldsymbol{a}_3^\top \boldsymbol{v}_1&amp;\cdots  \\
+									0 &amp; \boldsymbol{a}_2^\top \boldsymbol{v}_2 &amp;\boldsymbol{a}_3^\top \boldsymbol{v}_2&amp; \cdots \\
+									0 &amp; 0 &amp; \boldsymbol{a}_3^\top \boldsymbol{v}_3 &amp; \cdots \\
+									\vdots &amp; \vdots &amp;\vdots &amp;\ddots
+\end{bmatrix}
+\end{split}\]</div>
+<p>That is, the <span class="math notranslate nohighlight">\(k\times k\)</span> matrix <span class="math notranslate nohighlight">\(\boldsymbol{R}\)</span> whose <span class="math notranslate nohighlight">\((i,j)^{th}\)</span> entry is <span class="math notranslate nohighlight">\(\boldsymbol{a}_j^\top \boldsymbol{v}_i\)</span> if <span class="math notranslate nohighlight">\(i\leq j\)</span>, and <span class="math notranslate nohighlight">\(0\)</span> otherwise (matrices of this form – with zeros below the diagonal – are called <em>upper triangular</em>). Let’s again store the vectors <span class="math notranslate nohighlight">\(\boldsymbol{v}_1,\dots, \boldsymbol{v}_k\)</span> as the columns of a <span class="math notranslate nohighlight">\(n\times k\)</span></p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\boldsymbol{Q} = \begin{bmatrix} | &amp; | &amp;  &amp;| \\ \boldsymbol{v}_1 &amp; \boldsymbol{v}_2 &amp; \cdots &amp; \boldsymbol{v}_k \\ | &amp; | &amp; &amp; |\end{bmatrix}
+\end{split}\]</div>
+<p>Using this notation, we can write the relationship <span class="math notranslate nohighlight">\((\star)\)</span> as <span class="math notranslate nohighlight">\(\boldsymbol{a}_j = \boldsymbol{Q}\boldsymbol{r}_j\)</span>, where <span class="math notranslate nohighlight">\(\boldsymbol{r}_j\)</span> is the <span class="math notranslate nohighlight">\(j^{th}\)</span> column of the matrix <span class="math notranslate nohighlight">\(\boldsymbol{R}\)</span>. In particular then, if we stack all these columns together, we get that</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\boldsymbol{A} = \boldsymbol{QR} = \begin{bmatrix} | &amp; | &amp; &amp;| \\ \boldsymbol{v}_1 &amp; \boldsymbol{v}_2 &amp; \cdots &amp; \boldsymbol{v}_k \\ | &amp; | &amp;  &amp; |\end{bmatrix}\begin{bmatrix}\boldsymbol{a}_1^\top \boldsymbol{v}_1 &amp; \boldsymbol{a}_2^\top \boldsymbol{v}_1 &amp; \boldsymbol{a}_3^\top \boldsymbol{v}_1&amp;\cdots  \\
+									0 &amp; \boldsymbol{a}_2^\top \boldsymbol{v}_2 &amp;\boldsymbol{a}_3^\top \boldsymbol{v}_2&amp; \cdots \\
+									0 &amp; 0 &amp; \boldsymbol{a}_3^\top \boldsymbol{v}_3 &amp; \cdots \\
+									\vdots &amp; \vdots &amp;\vdots &amp;\ddots
+\end{bmatrix}
+\end{split}\]</div>
+<p>This expression – writing <span class="math notranslate nohighlight">\(\boldsymbol{A}\)</span> as a product of an orthogonal matrix <span class="math notranslate nohighlight">\(\boldsymbol{Q}\)</span> and an upper triangular matrix of coefficients <span class="math notranslate nohighlight">\(\boldsymbol{R}\)</span> – is called the <em><span class="math notranslate nohighlight">\(\boldsymbol{QR}\)</span> decomposition of <span class="math notranslate nohighlight">\(\boldsymbol{A}\)</span></em>. In words, this decomposition expresses the columns of <span class="math notranslate nohighlight">\(\boldsymbol{A}\)</span> in terms of an orthogonal basis <span class="math notranslate nohighlight">\(\boldsymbol{Q}\)</span>, which we obtain through Gram–Schmidt.</p>
+<div class="section" id="computing-the-qr-decomposition-in-python">
+<h3><span class="section-number">6.2.2.1. </span>Computing the QR decomposition in Python<a class="headerlink" href="#computing-the-qr-decomposition-in-python" title="Permalink to this headline">¶</a></h3>
+<p>Let’s implement the QR decomposition in Python. Since we’ve already implemented Gram-Schmidt above, we can use that function to obtain the matrix <span class="math notranslate nohighlight">\(\boldsymbol{Q}\)</span>. Thus, all we have left to do is find the upper triangular matrix <span class="math notranslate nohighlight">\(\boldsymbol{R}\)</span>. We could go through and compute all the entries of <span class="math notranslate nohighlight">\(\boldsymbol{R}\)</span> manually, however, if we notice that <span class="math notranslate nohighlight">\(\boldsymbol{Q}^\top \boldsymbol{Q}= \boldsymbol{I}\)</span>, we observe that</p>
+<div class="math notranslate nohighlight">
+\[
+\boldsymbol{A} = \boldsymbol{QR} \iff \boldsymbol{Q}^\top \boldsymbol{A} = \boldsymbol{Q}^\top \boldsymbol{QR} = \boldsymbol{R}
+\]</div>
+<p>Thus we can compute <span class="math notranslate nohighlight">\(\boldsymbol{R}\)</span> immediately by calculating <span class="math notranslate nohighlight">\(\boldsymbol{Q}^\top \boldsymbol{A}\)</span>. Let’s combine all these steps into a single function which computes <span class="math notranslate nohighlight">\(\boldsymbol{Q}\)</span> and <span class="math notranslate nohighlight">\(\boldsymbol{R}\)</span> for any given matrix <span class="math notranslate nohighlight">\(A\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">qr_decomposition</span><span class="p">(</span><span class="n">A</span><span class="p">):</span>
+    <span class="n">Q</span> <span class="o">=</span> <span class="n">gram_schmidt</span><span class="p">(</span><span class="n">A</span><span class="p">)</span> <span class="c1">#use Gram-Schmidt to compute Q</span>
+    <span class="n">R</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">Q</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">A</span><span class="p">)</span> <span class="c1">#find R = Q^TA</span>
+    <span class="k">return</span> <span class="n">Q</span><span class="p">,</span> <span class="n">R</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s test this again on a random matrix <span class="math notranslate nohighlight">\(A\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">k</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">n</span> <span class="o">=</span> <span class="mi">10</span>
+
+<span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span> <span class="o">=</span> <span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">k</span><span class="p">))</span>
+<span class="n">Q</span><span class="p">,</span> <span class="n">R</span> <span class="o">=</span> <span class="n">qr_decomposition</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now let’s check that <span class="math notranslate nohighlight">\(\boldsymbol{R}\)</span> is indeed upper triangular.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">R</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[ 3.87428136, -0.101473  ,  1.58201187, -1.47610838,  0.37796361],
+       [-0.        ,  2.97349935,  1.61867713, -1.0773237 ,  1.55266299],
+       [-0.        ,  0.        ,  3.14342548,  0.15786446,  0.78243606],
+       [ 0.        , -0.        ,  0.        ,  2.81346931,  0.64428791],
+       [-0.        ,  0.        ,  0.        , -0.        ,  3.3282416 ]])
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s also check that <span class="math notranslate nohighlight">\(\boldsymbol{A} = \boldsymbol{QR}\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">Q</span><span class="p">,</span><span class="n">R</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True
+</pre></div>
+</div>
+</div>
+</div>
+<p>Indeed, it does. For this section, we simply focus on the mechanics of the QR decomposition. In the following sections of this chapter, we will see that this is an extremely useful tool.</p>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./content"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="basicLA_4_dot-products-and-angles.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title"><span class="section-number">6.1. </span>Dot products, angles, and orthogonality</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="basicLA_4_QR_linear_systems.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><span class="section-number">6.3. </span>Solving linear systems with the QR decomposition</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            
+        </div>
+    </div>
+    <footer class="footer">
+  <p>
+    
+      By Michael W. Mahoney, N. Benjamin Erichson and Ryan Theisen<br/>
+    
+        &copy; Copyright 2021.<br/>
+  </p>
+</footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
+  </body>
+</html>

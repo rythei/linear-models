@@ -1,0 +1,957 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quadratic forms &#8212; Linear Algebra for Data Workbook</title>
+    
+  <link href="../_static/css/theme.css" rel="stylesheet">
+  <link href="../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
+    <script>
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../_static/logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Linear Algebra for Data Workbook</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../overview.html">
+   Welcome to Stat 89A
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Background
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="python_chheader.html">
+   1. Python 101
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="python_basics.html">
+     1.1. The Basics
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="python_numpy.html">
+     1.2. Introduction to NumPy
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="python_plotting.html">
+     1.3. MatPlotLib
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Basic Linear Algebra
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="basicLA_1_chheader.html">
+   2. Matrices, vectors, and
+   <span class="math notranslate nohighlight">
+    \(\mathbb{R}^n\)
+   </span>
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="basicLA_1_introduction-to-norms.html">
+     2.1. Introduction to Norms
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="basicLA_1_norms-integration-monte-carlo.html">
+     2.2. An application: approximating integrals with norms and Monte Carlo integration
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="basicLA_1_lp-balls.html">
+     2.3.
+     <span class="math notranslate nohighlight">
+      \(\ell_p\)
+     </span>
+     Balls
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="basicLA_1_classification-with-norms.html">
+     2.4. An application: classifying data points using norms
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="basicLA_2_chheader.html">
+   3. Basics of vectors and vector spaces
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+  <label for="toctree-checkbox-3">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="basicLA_2A_vectorspaces.html">
+     3.1. Vectors and vector spaces
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="basicLA_3_chheader.html">
+   4. Basics of matrices
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+  <label for="toctree-checkbox-4">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="basicLA_3_matrices-and-matrix-operations.html">
+     4.1. Matrices and matrix operations
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="basicLA_3_deconstructing.html">
+     4.2. Deconstructing Matrix Multiplication
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="basicLA_3_powers_of_matrices.html">
+     4.3. Taking Powers of Matrices
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="basicLA_3B_chheader.html">
+   5. Matrices as transformations
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
+  <label for="toctree-checkbox-5">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="basicLA_3_linear_examples_new.html">
+     5.1. Linear and Nonlinear Functions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="basicLA_3_matrices_and_linear_functions.html">
+     5.2. Matrices and Linear Functions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="basicLA_3_injective-and-surjective-functions.html">
+     5.3. Injective, surjective and invertible functions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="basicLA_3_inverses.html">
+     5.4. Left Inverses, Right Inverses, and Inverses
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="basicLA_3_changing_basis.html">
+     5.5. Changing Basis
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="basicLA_4_chheader.html">
+   6. Geometry: angles, orthogonality, and projections
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
+  <label for="toctree-checkbox-6">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="basicLA_4_dot-products-and-angles.html">
+     6.1. Dot products, angles, and orthogonality
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="basicLA_4_QR.html">
+     6.2. Gram–Schmidt and the QR Decomposition
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="basicLA_4_QR_linear_systems.html">
+     6.3. Solving linear systems with the QR decomposition
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="basicLA_4_projections.html">
+     6.4. Projections
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        <a class="dropdown-buttons"
+            href="../_sources/content/SpectralThm_1_quadratic-forms.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download notebook file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/content/SpectralThm_1_quadratic-forms.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.md</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/erichson/LinearAlgebra/master?urlpath=tree/content/SpectralThm_1_quadratic-forms.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#visualizing-quadratic-forms">
+   Visualizing quadratic forms
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#positive-definite-negative-definite-and-indefinite-matrices">
+   Positive definite, negative definite, and indefinite matrices
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#finding-extrema-of-quadratic-forms">
+   Finding extrema of quadratic forms
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Quadratic forms</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#visualizing-quadratic-forms">
+   Visualizing quadratic forms
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#positive-definite-negative-definite-and-indefinite-matrices">
+   Positive definite, negative definite, and indefinite matrices
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#finding-extrema-of-quadratic-forms">
+   Finding extrema of quadratic forms
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            
+              <div>
+                
+  <div class="tex2jax_ignore mathjax_ignore section" id="quadratic-forms">
+<h1>Quadratic forms<a class="headerlink" href="#quadratic-forms" title="Permalink to this headline">¶</a></h1>
+<p>In this section, we investigate special functions called <em>quadratic forms</em>. These are functions of the form</p>
+<div class="math notranslate nohighlight">
+\[
+f(\boldsymbol{x}) = \boldsymbol{x^\top Ax}
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(\boldsymbol{x}\in \mathbb{R}^n\)</span> and <span class="math notranslate nohighlight">\(\boldsymbol{A}\)</span> is an <span class="math notranslate nohighlight">\(n\times n\)</span> matrix. To see why such functions are called quadratic forms, let’s look at the case when <span class="math notranslate nohighlight">\(n=1\)</span>. In this case, <span class="math notranslate nohighlight">\(\boldsymbol{A} = a\)</span> and <span class="math notranslate nohighlight">\(x\)</span> are both scalars, and so</p>
+<div class="math notranslate nohighlight">
+\[
+f(x) = ax^2
+\]</div>
+<p>which is of course a usual quadratic. Importantly, depending on whether or not <span class="math notranslate nohighlight">\(a&gt;0\)</span> or <span class="math notranslate nohighlight">\(a&lt;0\)</span>, this quadratic can be “pointing up” or “pointing down”. For example, when <span class="math notranslate nohighlight">\(a=1\)</span> we get</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">xx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span><span class="mf">3.01</span><span class="p">,</span><span class="mf">.01</span><span class="p">)</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">a</span><span class="o">*</span><span class="n">xx</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;ax^2 when a = </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">a</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/SpectralThm_1_quadratic-forms_1_0.png" src="../_images/SpectralThm_1_quadratic-forms_1_0.png" />
+</div>
+</div>
+<p>while when <span class="math notranslate nohighlight">\(a=-1\)</span> we get</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">a</span><span class="o">*</span><span class="n">xx</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;ax^2 when a = </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">a</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/SpectralThm_1_quadratic-forms_3_0.png" src="../_images/SpectralThm_1_quadratic-forms_3_0.png" />
+</div>
+</div>
+<p>For <span class="math notranslate nohighlight">\(n&gt;1\)</span>, we have the following expression for a quadratic form.</p>
+<div class="math notranslate nohighlight">
+\[
+f(\boldsymbol{x}) = \boldsymbol{x^\top A x} = \sum_{i,j=1}^n a_{ij}x_ix_j
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(a_{ij}\)</span> is the <span class="math notranslate nohighlight">\((i,j)^{th}\)</span> entry of <span class="math notranslate nohighlight">\(\boldsymbol{A}\)</span>.</p>
+<p>Let’s look at a few special cases. For example, when the matrix <span class="math notranslate nohighlight">\(\boldsymbol{A}\)</span> is diagonal, then <span class="math notranslate nohighlight">\(a_{ij} = 0\)</span> when <span class="math notranslate nohighlight">\(i\neq j\)</span>, and so we get</p>
+<div class="math notranslate nohighlight">
+\[
+f(\boldsymbol{x}) = \boldsymbol{x^\top A x} = \sum_{i=1}^n a_{ii}x_i^2
+\]</div>
+<p>which looks more like the 1-d quadratic we saw before.</p>
+<div class="section" id="visualizing-quadratic-forms">
+<h2>Visualizing quadratic forms<a class="headerlink" href="#visualizing-quadratic-forms" title="Permalink to this headline">¶</a></h2>
+<p>To get a better intuition for how quadratic forms work, let’s focus on the <span class="math notranslate nohighlight">\(n=2\)</span> case. In this case, our matrix <span class="math notranslate nohighlight">\(\boldsymbol{A}\)</span> is of the form</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\boldsymbol{A} = \begin{pmatrix}a_{11} &amp; a_{12}\\ a_{21} &amp; a_{22}\end{pmatrix}
+\end{split}\]</div>
+<p>and the associated quadratic form is the function</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+f(\boldsymbol{x}) = \boldsymbol{x^\top A x} = \begin{pmatrix} x_1 &amp; x_2\end{pmatrix}\begin{pmatrix}a_{11} &amp; a_{12}\\ a_{21} &amp; a_{22}\end{pmatrix}\begin{pmatrix}x_1\\ x_2\end{pmatrix} = a_{11}x_1^2 + a_{12}x_1x_2 + a_{21}x_2x_1 + a_{22}x_2^2
+\end{split}\]</div>
+<p>Visualizing these functions is possible in <span class="math notranslate nohighlight">\(\mathbb{R}^2\)</span> via a 3-d plot. Let’s look at a simple example with</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\boldsymbol{A}_1= \begin{pmatrix}2 &amp; 0 \\ 0&amp;1\end{pmatrix}
+\end{split}\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">A</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">A</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">x1</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">A</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">x1</span><span class="o">*</span><span class="n">x2</span> <span class="o">+</span> <span class="n">A</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">x2</span><span class="o">*</span><span class="n">x1</span> <span class="o">+</span> <span class="n">A</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">x2</span><span class="o">**</span><span class="mi">2</span>
+
+<span class="n">x1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">x2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+
+<span class="n">X1</span><span class="p">,</span> <span class="n">X2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">)</span>
+
+<span class="n">A1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]])</span>
+<span class="n">X3</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">X1</span><span class="p">,</span><span class="n">X2</span><span class="p">,</span> <span class="n">A1</span><span class="p">)</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">axes</span><span class="p">(</span><span class="n">projection</span><span class="o">=</span><span class="s1">&#39;3d&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">contour3D</span><span class="p">(</span><span class="n">X1</span><span class="p">,</span> <span class="n">X2</span><span class="p">,</span> <span class="n">X3</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;x1&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;x2&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_zlabel</span><span class="p">(</span><span class="s1">&#39;f(x)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/SpectralThm_1_quadratic-forms_5_0.png" src="../_images/SpectralThm_1_quadratic-forms_5_0.png" />
+</div>
+</div>
+<p>Here we see that the quadratic form is a bowl shape, pointing upward. Let’s see when happens when we make the entries of the matrix <span class="math notranslate nohighlight">\(\boldsymbol{A}\)</span> negative, i.e. using the matrix</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\boldsymbol{A}_2= \begin{pmatrix}-2 &amp; 0 \\ 0&amp;-1\end{pmatrix}
+\end{split}\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">A2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">]])</span>
+<span class="n">X3</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">X1</span><span class="p">,</span><span class="n">X2</span><span class="p">,</span><span class="n">A2</span><span class="p">)</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">axes</span><span class="p">(</span><span class="n">projection</span><span class="o">=</span><span class="s1">&#39;3d&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">contour3D</span><span class="p">(</span><span class="n">X1</span><span class="p">,</span> <span class="n">X2</span><span class="p">,</span> <span class="n">X3</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;x1&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;x2&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_zlabel</span><span class="p">(</span><span class="s1">&#39;f(x)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/SpectralThm_1_quadratic-forms_7_0.png" src="../_images/SpectralThm_1_quadratic-forms_7_0.png" />
+</div>
+</div>
+<p>In this case, we get a downward shaped-bowl. These two cases are analogous to the simple 1-d examples, where <span class="math notranslate nohighlight">\(a&gt;0\)</span> or <span class="math notranslate nohighlight">\(a&lt;0\)</span>. However, in 2d we also have a third case: where one of the entries is positive, and the other is negative. For example, let’s consider the matrix</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\boldsymbol{A}_3 = \begin{pmatrix}2&amp;0\\ 0&amp;-1\end{pmatrix}
+\end{split}\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">A3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">]])</span>
+<span class="n">X3</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">X1</span><span class="p">,</span><span class="n">X2</span><span class="p">,</span><span class="n">A3</span><span class="p">)</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">axes</span><span class="p">(</span><span class="n">projection</span><span class="o">=</span><span class="s1">&#39;3d&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">contour3D</span><span class="p">(</span><span class="n">X1</span><span class="p">,</span> <span class="n">X2</span><span class="p">,</span> <span class="n">X3</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;x1&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;x2&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_zlabel</span><span class="p">(</span><span class="s1">&#39;f(x)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/SpectralThm_1_quadratic-forms_9_0.png" src="../_images/SpectralThm_1_quadratic-forms_9_0.png" />
+</div>
+</div>
+<p>In this case, we get neither a bowl up nor a bowl down shape, but rather a hyperbolic surface.</p>
+<p>The last example we will see is a when one of diagonals is equal to zero. For example, the matrix</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\boldsymbol{A}_4 = \begin{pmatrix}2 &amp; 0\\ 0 &amp;0\end{pmatrix}
+\end{split}\]</div>
+<p>Notice that the function <span class="math notranslate nohighlight">\(f(\boldsymbol{x}) = \boldsymbol{x^\top A}_4 \boldsymbol{x} = 2x_1^2\)</span> and hence does not depend on the second coordinate of <span class="math notranslate nohighlight">\(\boldsymbol{x}\)</span> at all. Thus we should see that the plot of <span class="math notranslate nohighlight">\(f(\boldsymbol{x})\)</span> is ‘flat’ along the <span class="math notranslate nohighlight">\(x_2\)</span> axis. Let’s check this.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">A4</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]])</span>
+<span class="n">X3</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">X1</span><span class="p">,</span><span class="n">X2</span><span class="p">,</span><span class="n">A4</span><span class="p">)</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">axes</span><span class="p">(</span><span class="n">projection</span><span class="o">=</span><span class="s1">&#39;3d&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">contour3D</span><span class="p">(</span><span class="n">X1</span><span class="p">,</span> <span class="n">X2</span><span class="p">,</span> <span class="n">X3</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;x1&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;x2&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_zlabel</span><span class="p">(</span><span class="s1">&#39;f(x)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/SpectralThm_1_quadratic-forms_11_0.png" src="../_images/SpectralThm_1_quadratic-forms_11_0.png" />
+</div>
+</div>
+<p>Indeed, we get a parabola-like shape as we vary <span class="math notranslate nohighlight">\(x_1\)</span>, but the plot of <span class="math notranslate nohighlight">\(f\)</span> is constant as we vary <span class="math notranslate nohighlight">\(x_2\)</span> while keeping <span class="math notranslate nohighlight">\(x_1\)</span> fixed.</p>
+<p>Another way to visualize quadratic forms is with looking at the <em>level curves</em> of the function <span class="math notranslate nohighlight">\(f(\boldsymbol{x}) = \boldsymbol{x^\top A x}\)</span>. The <em><span class="math notranslate nohighlight">\(\lambda\)</span>-level curve</em> (or <em>level set</em>) of a function <span class="math notranslate nohighlight">\(f(\boldsymbol{x})\)</span> is the set <span class="math notranslate nohighlight">\(\Omega_\lambda = \{x : f(\boldsymbol{x}) = \lambda\}\)</span>. Level curves are also sometimes called contour plots. Let’s see a few examples of them in python.</p>
+<p>For example, let’s look at <span class="math notranslate nohighlight">\(f(\boldsymbol{x})=\boldsymbol{x^\top A}_1 \boldsymbol{x}\)</span>. We can visualize the level curves of this function as follows.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">x2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+
+<span class="n">A1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]])</span>
+
+<span class="n">X1</span><span class="p">,</span> <span class="n">X2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">)</span>
+<span class="n">X3</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">X1</span><span class="p">,</span><span class="n">X2</span><span class="p">,</span> <span class="n">A1</span><span class="p">)</span>
+
+<span class="n">contours</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">X1</span><span class="p">,</span> <span class="n">X2</span><span class="p">,</span> <span class="n">X3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">clabel</span><span class="p">(</span><span class="n">contours</span><span class="p">,</span> <span class="n">inline</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;x1&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;x2&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/SpectralThm_1_quadratic-forms_13_0.png" src="../_images/SpectralThm_1_quadratic-forms_13_0.png" />
+</div>
+</div>
+<p>Here the level curves of <span class="math notranslate nohighlight">\(f(\boldsymbol{x})\)</span> form ellipses. We see that the values of the function are smallest near the origin, and grow larger as we move farther away from it.</p>
+<p>Let’s see an example with the indefinite matrix <span class="math notranslate nohighlight">\(\boldsymbol{A}_3\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">A3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">]])</span>
+<span class="n">X3</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">X1</span><span class="p">,</span><span class="n">X2</span><span class="p">,</span> <span class="n">A3</span><span class="p">)</span>
+
+<span class="n">contours</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">X1</span><span class="p">,</span> <span class="n">X2</span><span class="p">,</span> <span class="n">X3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">clabel</span><span class="p">(</span><span class="n">contours</span><span class="p">,</span> <span class="n">inline</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;x1&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;x2&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/SpectralThm_1_quadratic-forms_15_0.png" src="../_images/SpectralThm_1_quadratic-forms_15_0.png" />
+</div>
+</div>
+<p>For this matrix, the level curves of the quadratic form <span class="math notranslate nohighlight">\(\boldsymbol{x^\top A}_3 \boldsymbol{x}\)</span> form hyperbolas.</p>
+</div>
+<div class="section" id="positive-definite-negative-definite-and-indefinite-matrices">
+<h2>Positive definite, negative definite, and indefinite matrices<a class="headerlink" href="#positive-definite-negative-definite-and-indefinite-matrices" title="Permalink to this headline">¶</a></h2>
+<p>It turns out that the shapes of these surfaces can be characterized in terms of the <em>definiteness</em> of the matrix <span class="math notranslate nohighlight">\(\boldsymbol{A}\)</span>.</p>
+<p>Let <span class="math notranslate nohighlight">\(\boldsymbol{A}\)</span> be an <span class="math notranslate nohighlight">\(n\times n\)</span> matrix. Then</p>
+<ul class="simple">
+<li><p>The matrix <span class="math notranslate nohighlight">\(\boldsymbol{A}\)</span> is called <em>positive definite</em> if for any <span class="math notranslate nohighlight">\(x\neq 0\)</span>, we have that <span class="math notranslate nohighlight">\(f(\boldsymbol{x}) = \boldsymbol{x^\top A x} &gt;0\)</span>. The matrix <span class="math notranslate nohighlight">\(\boldsymbol{A}\)</span> is called <em>positive semi-definite</em> if for any <span class="math notranslate nohighlight">\(\boldsymbol{x}\neq 0\)</span>, we have that <span class="math notranslate nohighlight">\(f(\boldsymbol{x}) = \boldsymbol{x^\top A x} \geq 0\)</span>.</p></li>
+<li><p>The matrix <span class="math notranslate nohighlight">\(\boldsymbol{A}\)</span> is called <em>negative definite</em> if for any <span class="math notranslate nohighlight">\(\boldsymbol{x}\neq 0\)</span>, we have that <span class="math notranslate nohighlight">\(f(\boldsymbol{x}) = \boldsymbol{x^\top A x}&lt;0\)</span>. The matrix <span class="math notranslate nohighlight">\(\boldsymbol{A}\)</span> is called <em>negative semi-definite</em> if for any <span class="math notranslate nohighlight">\(\boldsymbol{x}\neq 0\)</span>, we have that <span class="math notranslate nohighlight">\(f(\boldsymbol{x}) = \boldsymbol{x^\top A x} \leq 0\)</span>.</p></li>
+<li><p>If the matrix <span class="math notranslate nohighlight">\(\boldsymbol{A}\)</span> is neither positive (semi-)definite nor negative (semi-)definite, then it is called <em>indefinite</em>.</p></li>
+</ul>
+<p>In the above section, the matrix <span class="math notranslate nohighlight">\(\boldsymbol{A}_1\)</span> was an example of a <em>positive definite</em> matrix, <span class="math notranslate nohighlight">\(\boldsymbol{A}_2\)</span> was an example of a <em>negative definite</em> matrix and <span class="math notranslate nohighlight">\(\boldsymbol{A}_3\)</span> was an example of an <em>indefinite</em> matrix.  The matrix <span class="math notranslate nohighlight">\(\boldsymbol{A}_4\)</span> was an example of a (strictly) <em>positive semi-definite</em> matrix. To see why, note that for <span class="math notranslate nohighlight">\(\boldsymbol{x}  = \begin{pmatrix}x_1\\ x_2\end{pmatrix}\neq 0\)</span>, we have</p>
+<div class="math notranslate nohighlight">
+\[
+\boldsymbol{x^\top A}_1 \boldsymbol{x} = 2x_1^2 + x_2^2 &gt;0 \hspace{10mm}\text{and} \hspace{10mm} \boldsymbol{x^\top A}_2 \boldsymbol{x} = -2x_1^2 - x_2^2 &lt;0.
+\]</div>
+<p>On the other hand, for the matrix <span class="math notranslate nohighlight">\(\boldsymbol{A}_3\)</span> let’s see what happens when we look at the vectors <span class="math notranslate nohighlight">\(\boldsymbol{e}_1 = \begin{pmatrix}1\\0\end{pmatrix}\)</span> and <span class="math notranslate nohighlight">\(\boldsymbol{e}_2 = \begin{pmatrix}0\\1\end{pmatrix}\)</span>. Then</p>
+<div class="math notranslate nohighlight">
+\[
+\boldsymbol{e}_1^\top \boldsymbol{A}_3 \boldsymbol{e}_1 = 2
+\]</div>
+<p>but</p>
+<div class="math notranslate nohighlight">
+\[
+\boldsymbol{e}_2^\top \boldsymbol{A}_3 \boldsymbol{e}_2 = -1.
+\]</div>
+<p>Hence the function <span class="math notranslate nohighlight">\(f(\boldsymbol{x}) = \boldsymbol{x^\top A}_3 \boldsymbol{x}\)</span> can be either positive or negative depending on the input vector <span class="math notranslate nohighlight">\(\boldsymbol{x}\)</span>.</p>
+<p>Similarly, we have that <span class="math notranslate nohighlight">\(\boldsymbol{e}_2^\top \boldsymbol{A}_4 \boldsymbol{e}_2= 0\)</span>, and so the function <span class="math notranslate nohighlight">\(f(\boldsymbol{x}) = \boldsymbol{x^\top A}_4 \boldsymbol{x}\)</span> cannot be positive definite.</p>
+<p>Of course, the examples we saw here were all diagonal matrices, but we could just as easily look at matrices which aren’t diagonal.</p>
+<p>Let’s look at examples of positive definite and negative definite matrices which are not diagonal. To do this, a useful trick is to note that for any matrix <span class="math notranslate nohighlight">\(\boldsymbol{A}\)</span>, the matrix <span class="math notranslate nohighlight">\(\boldsymbol{B}_1 = \boldsymbol{A^\top A}\)</span> is always positive semi-definite, while, conversely, the matrix <span class="math notranslate nohighlight">\(\boldsymbol{B}_2 = -\boldsymbol{A^\top A}\)</span> is always negative semi-definite. To see why this is the case, note that</p>
+<div class="math notranslate nohighlight">
+\[
+\boldsymbol{x^\top B}_1 \boldsymbol{x} = \boldsymbol{x^\top A^\top A x} = (\boldsymbol{Ax})^\top \boldsymbol{Ax} = \|\boldsymbol{Ax}\|_2^2 \geq 0
+\]</div>
+<p>and</p>
+<div class="math notranslate nohighlight">
+\[
+\boldsymbol{x^\top B}_2 \boldsymbol{x} = -\boldsymbol{x^\top A^\top A x} = -(\boldsymbol{Ax})^\top \boldsymbol{Ax} = -\|\boldsymbol{Ax}\|_2^2 \leq 0.
+\]</div>
+<p>Furthermore, the matrix <span class="math notranslate nohighlight">\(\boldsymbol{B}_1\)</span> (resp. <span class="math notranslate nohighlight">\(\boldsymbol{B}_2\)</span>) will always be strictly positive (resp. negative) definite whenever <span class="math notranslate nohighlight">\(\boldsymbol{A}\)</span> is has full column rank, that is, whenever <span class="math notranslate nohighlight">\(\boldsymbol{A}\)</span> has linearly independent columns. Let’s see a few examples.</p>
+<p>To generate <span class="math notranslate nohighlight">\(\boldsymbol{B}_1\)</span> and <span class="math notranslate nohighlight">\(\boldsymbol{B}_2\)</span>, we’ll generate a random <span class="math notranslate nohighlight">\(2\times 2\)</span> matrix and compute <span class="math notranslate nohighlight">\(\boldsymbol{B}_1 = \boldsymbol{A^\top A}\)</span> and <span class="math notranslate nohighlight">\(\boldsymbol{B}_2 = -\boldsymbol{A^\top A}\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">1111</span><span class="p">)</span>
+<span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+<span class="n">B1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">A</span><span class="p">)</span>
+<span class="n">B2</span> <span class="o">=</span> <span class="o">-</span><span class="n">B1</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we can visualize the quadratic forms <span class="math notranslate nohighlight">\(\boldsymbol{x^\top B}_1 \boldsymbol{x}\)</span> and <span class="math notranslate nohighlight">\(\boldsymbol{x^\top B}_2 \boldsymbol{x}\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X3</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">X1</span><span class="p">,</span><span class="n">X2</span><span class="p">,</span> <span class="n">B1</span><span class="p">)</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">axes</span><span class="p">(</span><span class="n">projection</span><span class="o">=</span><span class="s1">&#39;3d&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">contour3D</span><span class="p">(</span><span class="n">X1</span><span class="p">,</span> <span class="n">X2</span><span class="p">,</span> <span class="n">X3</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;x1&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;x2&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_zlabel</span><span class="p">(</span><span class="s1">&#39;f(x)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/SpectralThm_1_quadratic-forms_19_0.png" src="../_images/SpectralThm_1_quadratic-forms_19_0.png" />
+</div>
+</div>
+<p>Indeed, since <span class="math notranslate nohighlight">\(\boldsymbol{B}_1\)</span> is positive definite, we see that we get the familiar upward bowl shape.</p>
+<p>Now let’s look at <span class="math notranslate nohighlight">\(f(\boldsymbol{x}) = \boldsymbol{x^\top B}_2 \boldsymbol{x}\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X3</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">X1</span><span class="p">,</span><span class="n">X2</span><span class="p">,</span> <span class="n">B2</span><span class="p">)</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">axes</span><span class="p">(</span><span class="n">projection</span><span class="o">=</span><span class="s1">&#39;3d&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">contour3D</span><span class="p">(</span><span class="n">X1</span><span class="p">,</span> <span class="n">X2</span><span class="p">,</span> <span class="n">X3</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;x1&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;x2&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_zlabel</span><span class="p">(</span><span class="s1">&#39;f(x)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/SpectralThm_1_quadratic-forms_21_0.png" src="../_images/SpectralThm_1_quadratic-forms_21_0.png" />
+</div>
+</div>
+<p>Again, we get the usual downward bowl shape associated with a negative definite matrix.</p>
+<p>Next, let’s see an example of a <em>semi-definite</em> matrix – that is, one for which <span class="math notranslate nohighlight">\(\boldsymbol{x^\top A x} = 0\)</span> for some non-zero vector. Recall that the matrix <span class="math notranslate nohighlight">\(\boldsymbol{A}\)</span> will be will be (positive or negative) semi-definite if the columns of <span class="math notranslate nohighlight">\(\boldsymbol{A}\)</span> are not linearly independent. Let’s use the following example:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\boldsymbol{A} = \begin{pmatrix} 1 &amp; -2 \\ -1 &amp; 2\end{pmatrix}
+\end{split}\]</div>
+<p>Since the second column is <span class="math notranslate nohighlight">\(-2\)</span> times the first column, this matrix will not be strictly positive or negative definite. Let’s see what the function <span class="math notranslate nohighlight">\(f(\boldsymbol{x}) = \boldsymbol{x^\top Ax}\)</span> looks like for this matrix.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">2</span><span class="p">],[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]])</span>
+
+<span class="n">X3</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">X1</span><span class="p">,</span><span class="n">X2</span><span class="p">,</span> <span class="n">A</span><span class="p">)</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">axes</span><span class="p">(</span><span class="n">projection</span><span class="o">=</span><span class="s1">&#39;3d&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">contour3D</span><span class="p">(</span><span class="n">X1</span><span class="p">,</span> <span class="n">X2</span><span class="p">,</span> <span class="n">X3</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;x1&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;x2&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_zlabel</span><span class="p">(</span><span class="s1">&#39;f(x)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/SpectralThm_1_quadratic-forms_23_0.png" src="../_images/SpectralThm_1_quadratic-forms_23_0.png" />
+</div>
+</div>
+<p>Here we obtain an upward-pointing shape, but not quite the bowl shape that we had before. Indeed, it turns out that for any <span class="math notranslate nohighlight">\(x\)</span> in  the subspace</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+S = \{\boldsymbol{x} = \begin{pmatrix}x_1\\ x_2\end{pmatrix} : x_1 = x_2\}
+\end{split}\]</div>
+<p>we have that <span class="math notranslate nohighlight">\(\boldsymbol{x^\top A x} = 0\)</span>. Visually, this is represented by the flat region where the function is equal to zero at the bottom of the bowl. Indeed, it turns out that for this matrix, this flat line at the bottom of the bowl is just the <span class="math notranslate nohighlight">\(x_2 = x_1\)</span> line in the <span class="math notranslate nohighlight">\((x_1,x_2)\)</span> plane.</p>
+</div>
+<div class="section" id="finding-extrema-of-quadratic-forms">
+<h2>Finding extrema of quadratic forms<a class="headerlink" href="#finding-extrema-of-quadratic-forms" title="Permalink to this headline">¶</a></h2>
+<p>For the purposes of this class, we are often interested in finding <em>extrema</em> of quadratic forms <span class="math notranslate nohighlight">\(f(\boldsymbol{x}) = \boldsymbol{x^\top A x}\)</span>, that is maxima or minima of quadratic forms. For positive or negative definite matrices <span class="math notranslate nohighlight">\(\boldsymbol{A}\)</span>, however, if <span class="math notranslate nohighlight">\(\boldsymbol{x}\)</span> is allowed to be an arbitrary vector, <span class="math notranslate nohighlight">\(f(\boldsymbol{x})\)</span> can be made arbitrarily large or small, respectively. Therefore, it is convenient to restricting ourselves to unit vectors <span class="math notranslate nohighlight">\(\boldsymbol{x}\)</span>. Therefore, we consider the following optimization problem:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\max_{\boldsymbol{x}}/\min_\boldsymbol{x} f(\boldsymbol{x}) = \boldsymbol{x^\top A x}\\
+\text{subject to}\;\;\; \|\boldsymbol{x}\|_2^2 = \boldsymbol{x^\top x} = 1
+\end{split}\]</div>
+<p>In 2-d we can easy visualize the function <span class="math notranslate nohighlight">\(f(\boldsymbol{x}) = \boldsymbol{x^\top A x}\)</span> for unit vectors <span class="math notranslate nohighlight">\(\boldsymbol{x}\)</span>. This is because any unit vector <span class="math notranslate nohighlight">\(\boldsymbol{x}\in \mathbb{R}^2\)</span> lies on the unit circle, and is hence of the form <span class="math notranslate nohighlight">\(\boldsymbol{x}(\theta) = \begin{pmatrix}\cos(\theta)\\ \sin(\theta)\end{pmatrix}\)</span>. Let’s try plotting <span class="math notranslate nohighlight">\(f(\boldsymbol{x}(\theta))\)</span> as a function of the <span class="math notranslate nohighlight">\(\theta\)</span>.</p>
+<p>First, let’s draw a random <span class="math notranslate nohighlight">\(2\times 2\)</span> matrix <span class="math notranslate nohighlight">\(\boldsymbol{A}\)</span>, and construct the positive definite matrix <span class="math notranslate nohighlight">\(\boldsymbol{B} = \boldsymbol{A^\top A}\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+<span class="n">B</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">T</span><span class="p">,</span><span class="n">A</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Next, let’s define the function <span class="math notranslate nohighlight">\(g(\theta) = f(\boldsymbol{x}(\theta)) = \boldsymbol{x}(\theta)^\top \boldsymbol{B} \boldsymbol{x}(\theta)\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">g</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">B</span><span class="p">):</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)])</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">B</span><span class="p">,</span><span class="n">x</span><span class="p">))</span>
+
+<span class="n">theta_range</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mf">.01</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">theta_range</span><span class="p">,</span> <span class="p">[</span><span class="n">g</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span><span class="n">B</span><span class="p">)</span> <span class="k">for</span> <span class="n">theta</span> <span class="ow">in</span> <span class="n">theta_range</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;theta&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;f(x(theta))&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/SpectralThm_1_quadratic-forms_27_0.png" src="../_images/SpectralThm_1_quadratic-forms_27_0.png" />
+</div>
+</div>
+<p>Notice that this function is always positive – as expected, since <span class="math notranslate nohighlight">\(B\)</span> is positive definite. We should observe that <span class="math notranslate nohighlight">\(\boldsymbol{x}(\theta)^\top \boldsymbol{B} \boldsymbol{x}(\theta)\)</span> has two extrema: one maximum, and one minimum, both strictly greater than zero. The value of the function at these extrema are special: they are called the <em>eigenvalues</em> of the matrix <span class="math notranslate nohighlight">\(\boldsymbol{B}\)</span>. If <span class="math notranslate nohighlight">\(\theta_{min}, \theta_{max}\)</span> are the values of <span class="math notranslate nohighlight">\(\theta\)</span> at which the minimum/maximum occurs, then the vectors <span class="math notranslate nohighlight">\(\boldsymbol{x}_{min} = \begin{pmatrix}\cos(\theta_{min})\\ \sin(\theta_{min})\end{pmatrix}\)</span> and <span class="math notranslate nohighlight">\(\boldsymbol{x}_{max} = \begin{pmatrix}\cos(\theta_{max})\\ \sin(\theta_{max})\end{pmatrix}\)</span> are called the <em>eigenvectors</em> of the matrix <span class="math notranslate nohighlight">\(\boldsymbol{B}\)</span>.</p>
+<p>We can also look at an example when <span class="math notranslate nohighlight">\(\boldsymbol{B}\)</span> is negative definite.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">B</span> <span class="o">=</span> <span class="o">-</span><span class="n">B</span>
+<span class="n">theta_range</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mf">.01</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">theta_range</span><span class="p">,</span> <span class="p">[</span><span class="n">g</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span><span class="n">B</span><span class="p">)</span> <span class="k">for</span> <span class="n">theta</span> <span class="ow">in</span> <span class="n">theta_range</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;theta&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;f(x(theta))&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/SpectralThm_1_quadratic-forms_29_0.png" src="../_images/SpectralThm_1_quadratic-forms_29_0.png" />
+</div>
+</div>
+<p>This time, the function is always negative, again as we would expect from a negative definite matrix <span class="math notranslate nohighlight">\(\boldsymbol{B}\)</span>. We again also have one maximum and one minimum, again corresponding to the <em>eigenvalues</em> of the matrix <span class="math notranslate nohighlight">\(\boldsymbol{B}\)</span>.</p>
+<p>Let’s also look at an example where the matrix <span class="math notranslate nohighlight">\(\boldsymbol{B}\)</span> is indefinite. For example, consider the matrix</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\boldsymbol{B} = \begin{pmatrix}1 &amp; 2\\ -1 &amp; -4 \end{pmatrix}
+\end{split}\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">B</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">4</span><span class="p">]])</span>
+
+<span class="n">theta_range</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mf">.01</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">theta_range</span><span class="p">,</span> <span class="p">[</span><span class="n">g</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span><span class="n">B</span><span class="p">)</span> <span class="k">for</span> <span class="n">theta</span> <span class="ow">in</span> <span class="n">theta_range</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;theta&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;f(x(theta))&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/SpectralThm_1_quadratic-forms_31_0.png" src="../_images/SpectralThm_1_quadratic-forms_31_0.png" />
+</div>
+</div>
+<p>In this case, the function <span class="math notranslate nohighlight">\(f(\boldsymbol{x}) = \boldsymbol{x^\top B x}\)</span> is sometimes positive and sometimes negative. <span class="math notranslate nohighlight">\(f\)</span> still has one maximum and one minimum; this time the maximum is strictly positive, while the minimum is strictly negative.</p>
+<p>At this point, it should be intuitive the <em>eigenvalues</em> (i.e. the extrema of the function <span class="math notranslate nohighlight">\(f(\boldsymbol{x}) = \boldsymbol{x^\top B x}\)</span>) are always non-negative for a positive semi-definite matrix, always non-positive for a negative semi-definite matrix, and both positive and negative for an indefinite matrix.</p>
+<!-- ### Bonus: Lagrange multipliers
+
+If you're familiar with the method of Lagrange multipliers, this problem can be reframed as optimizing the following:
+
+
+$$
+L(x,\lambda) = x^\top A x - \lambda (x^\top x - 1)
+$$
+
+
+If we take the derivative of this function with respect to $x$ and set it equal to $0$, we get
+
+
+$$
+0 = \nabla_x L(x,\lambda) = 2Ax - 2\lambda x \implies Ax = \lambda x
+$$
+
+
+Thus the maxima of the constrained optimization problem (finding the maximum of $f(x)=x^\top A x$ subject to $\|x\|_2 = 1$) are the solutions of the equation $Ax = \lambda x$. Pairs $(\lambda, x)$ which satisfy this equation are important: they are called _eigenvalues_ and _eigenvectors_ of the matrix $A$.
+
+### Another bonus: completing the square
+
+Sometimes, we are given a function which looks a bit like a quadratic form, say a function that looks like
+
+
+$$
+f(x) = x^\top A x - 2b^\top x
+$$
+
+
+where here $b$ is some vector. Because functions quadratic forms are convenient to work with, we would like to rearrange $f$ so that it looks more like a pure quadratic form (i.e. without the linear term). It turns out that there is a version of completing the square that works even in higher dimensions. Indeed, if $A$ is an invertible matrix, then we can write
+
+
+$$
+f(x) = x^\top A x - 2b^\top x = (x-A^{-1}b)^\top A (x-A^{-1}b) - b^\top A^{-1} b
+$$
+
+
+If we use the change of variable $z= x-A^{-1}b$ and let $c = -b^\top A^{-1}b$, then we can write this as
+
+
+$$
+f(z) = z^\top A z + c
+$$
+
+
+which looks much more convenient to work with. While we won't use this trick immediately, it is frequently useful and worth remembering. --></div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./content"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+</div>
+            
+        </div>
+    </div>
+    <footer class="footer">
+  <p>
+    
+      By Michael W. Mahoney, N. Benjamin Erichson and Ryan Theisen<br/>
+    
+        &copy; Copyright 2021.<br/>
+  </p>
+</footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
+  </body>
+</html>
