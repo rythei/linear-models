@@ -10,5 +10,8 @@ parts:
     - file: content/python_basics/python_numpy
     - file: content/python_basics/python_plotting
   - file: content/basic_linear_regression/chheader
+    sections:
+    - file: content/basic_linear_regression/visualizing_data
+    - file: content/basic_linear_regression/simple_linear_regression
   - file: content/generalizing_linear_regression/chheader
   - file: content/extensions_applications/chheader
