@@ -1,7 +1,7 @@
 format: jb-book
 root: overview
 parts:
-- caption: Basics of Python
+- caption: Linear models
   numbered: true
   chapters:
   - file: content/python_basics/chheader
@@ -9,15 +9,6 @@ parts:
     - file: content/python_basics/python_basics
     - file: content/python_basics/python_numpy
     - file: content/python_basics/python_plotting
-- caption: Basics of Linear Regression
-  numbered: true
-  chapters:
   - file: content/basic_linear_regression/chheader
-- caption: Generalizing linear regression
-  numbered: true
-  chapters:
   - file: content/generalizing_linear_regression/chheader
-- caption: Extensions and applications
-  numbered: true
-  chapters:
   - file: content/extensions_applications/chheader
