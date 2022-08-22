@@ -50,8 +50,8 @@ The infant mortality dataset contains the following information about 105 countr
 For now, let's focus on the variables `infant_mortality` and `income`. A histogram is a common way to visualize the distributions of these features, which we can create using the package `matplotlib`. 
 
 ```{code-cell}
-%matplotlib-inline
 import matplotlib.pyplot as plt
+%matplotlib inline
 
 plt.hist(mortality_data["infant_mortality"], bins=20, density=True)
 plt.xlabel("Infant mortality rate", fontsize=12)

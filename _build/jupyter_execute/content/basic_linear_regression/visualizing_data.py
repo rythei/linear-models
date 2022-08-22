@@ -48,8 +48,8 @@ type(mortality_data)
 # In[4]:
 
 
-get_ipython().run_line_magic('matplotlib', '-inline')
 import matplotlib.pyplot as plt
+get_ipython().run_line_magic('matplotlib', 'inline')
 
 plt.hist(mortality_data["infant_mortality"], bins=20, density=True)
 plt.xlabel("Infant mortality rate", fontsize=12)
