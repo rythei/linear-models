@@ -1,6 +1,6 @@
 # Book settings
-title                       : Linear Algebra for Data Workbook  # The title of the book. Will be placed in the left navbar.
-author                      : Michael W. Mahoney, N. Benjamin Erichson and Ryan Theisen  # The author of the book
+title                       : Stat 151, Linear Models  # The title of the book. Will be placed in the left navbar.
+author                      : Michael W. Mahoney and Ryan Theisen  # The author of the book
 copyright                   : "2021"  # Copyright year to be placed in the footer
 logo                        : "logo.png"  # A path to the book logo
 
