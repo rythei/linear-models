@@ -42,6 +42,8 @@
     <script src="../../_static/copybutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="../../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
     <script>
         const thebe_selector = ".thebe"
@@ -247,6 +249,29 @@
         <!-- Table of contents -->
         <div class="d-none d-md-block col-md-2 bd-toc show noprint">
             
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#computing-correlation">
+   2.2.1. Computing correlation
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#finding-the-line-of-best-fit-by-minimizing-the-sum-of-squares">
+   2.2.2. Finding the line of best fit by minimizing the sum of squares
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#interpreting-the-coefficients-of-a-line-of-best-fit">
+   2.2.3. Interpreting the coefficients of a line of best fit
+  </a>
+ </li>
+</ul>
+
+            </nav>
         </div>
     </div>
 </div>
@@ -259,6 +284,29 @@
                 <div id="print-main-content">
                     <div id="jb-print-toc">
                         
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#computing-correlation">
+   2.2.1. Computing correlation
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#finding-the-line-of-best-fit-by-minimizing-the-sum-of-squares">
+   2.2.2. Finding the line of best fit by minimizing the sum of squares
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#interpreting-the-coefficients-of-a-line-of-best-fit">
+   2.2.3. Interpreting the coefficients of a line of best fit
+  </a>
+ </li>
+</ul>
+
+                        </nav>
                     </div>
                 </div>
             </div>
@@ -267,6 +315,263 @@
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="simple-linear-regression">
 <h1><span class="section-number">2.2. </span>Simple linear regression<a class="headerlink" href="#simple-linear-regression" title="Permalink to this headline">¶</a></h1>
+<p>Let’s return to the infant mortality dataset that we used in the previous section. We again load the dataset using <code class="docutils literal notranslate"><span class="pre">pandas</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="n">mortality_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;datasets/infant_mortality.csv&#39;</span><span class="p">)</span>
+<span class="n">mortality_data</span> <span class="o">=</span> <span class="n">mortality_data</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+<span class="n">mortality_data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>country</th>
+      <th>income</th>
+      <th>infant_mortality</th>
+      <th>region</th>
+      <th>oil</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Australia</td>
+      <td>3426</td>
+      <td>26.7</td>
+      <td>Asia</td>
+      <td>no</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Austria</td>
+      <td>3350</td>
+      <td>23.7</td>
+      <td>Europe</td>
+      <td>no</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Belgium</td>
+      <td>3346</td>
+      <td>17.0</td>
+      <td>Europe</td>
+      <td>no</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Canada</td>
+      <td>4751</td>
+      <td>16.8</td>
+      <td>Americas</td>
+      <td>no</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Denmark</td>
+      <td>5029</td>
+      <td>13.5</td>
+      <td>Europe</td>
+      <td>no</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Now we can transform the features <code class="docutils literal notranslate"><span class="pre">income</span></code> and <code class="docutils literal notranslate"><span class="pre">infant_mortality</span></code> to the log scale, and plot a joint scatter plot of them.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="c1"># calling .to_numpy() on a column of a DataFrame gives you a numpy array back</span>
+<span class="n">log_income</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">mortality_data</span><span class="p">[</span><span class="s2">&quot;income&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">())</span>
+<span class="n">log_infant_mortality</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">mortality_data</span><span class="p">[</span><span class="s2">&quot;infant_mortality&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">())</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">jointplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">log_infant_mortality</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">log_income</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;log(Infant mortality rate)&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;log(Per-capita income)&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/simple_linear_regression_3_0.png" src="../../_images/simple_linear_regression_3_0.png" />
+</div>
+</div>
+<div class="section" id="computing-correlation">
+<h2><span class="section-number">2.2.1. </span>Computing correlation<a class="headerlink" href="#computing-correlation" title="Permalink to this headline">¶</a></h2>
+<p>Suppose we wanted to quantify the negative relationship between log-mortality and log-income. A simple way to do this would be with the Pearson correlation. For two vectors of observations <span class="math notranslate nohighlight">\((x_1,\dots, x_n)\)</span> and <span class="math notranslate nohighlight">\((y_1,\dots,y_n)\)</span>, their Pearson correlation is computed as</p>
+<div class="math notranslate nohighlight">
+\[
+r = \frac{\text{Cov}(X, Y)}{\sqrt{\text{Var}(X)\text{Var}(Y)}} = \frac{\sum_{i=1}^n (x_i - \bar{x})(y_i-\bar{y})}{\sqrt{\sum_{i=1}^n (x_i-\bar{x})^2 \sum_{i=1}^n (y_i - \bar{y})^2}}.
+\]</div>
+<p>Let’s write a simple python function that computes the pearson correlation.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">pearson_corr</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">):</span>
+    <span class="c1"># first compute the means of the two vectors</span>
+    <span class="n">x_bar</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">y_bar</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+
+    <span class="c1"># compute numerator (1/n)*\sum_i (x_i - x_bar)*(y_i - y_bar)</span>
+    <span class="n">cov_xy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">x</span><span class="o">-</span><span class="n">x_bar</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">y</span><span class="o">-</span><span class="n">y_bar</span><span class="p">))</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+    <span class="c1"># compute the variance of x and y</span>
+    <span class="n">var_x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">x</span><span class="o">-</span><span class="n">x_bar</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">var_y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">y</span><span class="o">-</span><span class="n">y_bar</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+
+    <span class="c1"># compute the correlation</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">cov_xy</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">var_x</span><span class="o">*</span><span class="n">var_y</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">r</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we can use this function to compute the correlation between log-income and log-mortality:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">r</span> <span class="o">=</span> <span class="n">pearson_corr</span><span class="p">(</span><span class="n">log_income</span><span class="p">,</span> <span class="n">log_infant_mortality</span><span class="p">)</span>
+<span class="n">r</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-0.7086068160294183
+</pre></div>
+</div>
+</div>
+</div>
+<p>Note that the Pearson correlation is bound between -1 and 1, with -1 indicating a perfect negative relationship between the features, and +1 indicating a perfect positive relationship between the features. Thus the observed value of <span class="math notranslate nohighlight">\(\approx -.71\)</span> suggesting, as we can see visually, a strong negative relationship between log-infant mortality and log-per-capita income.</p>
+<p>Of course, we don’t really need to implement our own python function every time we want to compute the Pearson correlation. It’s conveniently implemented in the <code class="docutils literal notranslate"><span class="pre">scipy.stats</span></code> library in python (which also includes a number of other methods that will be useful for statistics).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">pearsonr</span>
+
+<span class="n">r_2</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">pearsonr</span><span class="p">(</span><span class="n">log_income</span><span class="p">,</span> <span class="n">log_infant_mortality</span><span class="p">)</span>
+<span class="n">r_2</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-0.7086068160294183
+</pre></div>
+</div>
+</div>
+</div>
+<p>Indeed, this method gives us the same result as we got with our own function.</p>
+</div>
+<div class="section" id="finding-the-line-of-best-fit-by-minimizing-the-sum-of-squares">
+<h2><span class="section-number">2.2.2. </span>Finding the line of best fit by minimizing the sum of squares<a class="headerlink" href="#finding-the-line-of-best-fit-by-minimizing-the-sum-of-squares" title="Permalink to this headline">¶</a></h2>
+<p>Instead of just computing the correlation between the two features, we could also try to model the relationship by fitting a line to data. In particular, we want to find numbers <span class="math notranslate nohighlight">\(\alpha\)</span> and <span class="math notranslate nohighlight">\(\beta\)</span> such that</p>
+<div class="math notranslate nohighlight">
+\[
+\log(\text{per-capita income}) \approx \alpha + \beta \cdot \log(\text{infant mortality})
+\]</div>
+<p>To do this, we just need to find the values of <span class="math notranslate nohighlight">\(\alpha\)</span> and <span class="math notranslate nohighlight">\(\beta\)</span>. Let’s denote our obsevations of log-per-capita income by <span class="math notranslate nohighlight">\((x_1,\dots,x_n)\)</span> and those of log-infant mortality as <span class="math notranslate nohighlight">\((y_1,\dots,y_n)\)</span>. Then one way to quantiatively choose <span class="math notranslate nohighlight">\(\alpha,\beta\)</span> is by minimizing the sum of squared errors:</p>
+<div class="math notranslate nohighlight">
+\[
+\text{SSE}(\alpha, \beta) = \frac{1}{n}\sum_{i=1}^n (y_i - (\alpha +\beta x_i))^2
+\]</div>
+<p>With a little bit of calculus, we can check that</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+\frac{\partial}{\partial \alpha}\text{SSE} &amp;= -2\sum_{i=1}^n (y_i - \alpha - \beta x_i) &amp;&amp; \text{and}\\
+\frac{\partial}{\partial \beta}\text{SSE} &amp;= -2\sum_{i=1}^n x_i(y_i - \alpha - \beta x_i)
+\end{align*}
+\end{split}\]</div>
+<p>If we set these two derivatives equal to zero (to find the minimizers), we obtain the estimates <span class="math notranslate nohighlight">\(\hat{\alpha}\)</span> and <span class="math notranslate nohighlight">\(\hat{\beta}\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+\hat{\alpha} &amp;= \bar{y} - \beta \bar{x}\\
+\hat{\beta} &amp;= \frac{\sum_{i=1}^n (x_i - \bar{x})(y_i - \bar{y})}{\sum_{i=1}^n (x_i-\bar{x})^2}
+\end{align*}
+\end{split}\]</div>
+<p>Note that the expression for <span class="math notranslate nohighlight">\(\hat{\beta}\)</span> looks very reminiscent of our equation for the Pearson correlation. Let’s write a python function that takes in two arrays <span class="math notranslate nohighlight">\((x_1,\dots,x_n)\)</span> and <span class="math notranslate nohighlight">\((y_1,\dots,y_n)\)</span> computes the estimates <span class="math notranslate nohighlight">\(\hat{\alpha}\)</span> and <span class="math notranslate nohighlight">\(\hat{\beta}\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">fit_line</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="c1"># first compute the means of the two vectors</span>
+    <span class="n">x_bar</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">y_bar</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+
+    <span class="c1"># compute numerator (1/n)*\sum_i (x_i - x_bar)*(y_i - y_bar)</span>
+    <span class="n">cov_xy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">x</span><span class="o">-</span><span class="n">x_bar</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">y</span><span class="o">-</span><span class="n">y_bar</span><span class="p">))</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+    <span class="c1"># compute the variance of x and y</span>
+    <span class="n">var_x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">x</span><span class="o">-</span><span class="n">x_bar</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+    <span class="c1"># compute beta_hat</span>
+    <span class="n">beta_hat</span> <span class="o">=</span> <span class="n">cov_xy</span><span class="o">/</span><span class="n">var_x</span>
+
+    <span class="c1"># compute alpha_hat</span>
+    <span class="n">alpha_hat</span> <span class="o">=</span> <span class="n">y_bar</span> <span class="o">-</span> <span class="n">beta_hat</span><span class="o">*</span><span class="n">x_bar</span>
+
+    <span class="k">return</span> <span class="n">alpha_hat</span><span class="p">,</span> <span class="n">beta_hat</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now let’s use this to compute the coefficients for the line best fititng our data.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">alpha_hat</span><span class="p">,</span> <span class="n">beta_hat</span> <span class="o">=</span> <span class="n">fit_line</span><span class="p">(</span><span class="n">log_infant_mortality</span><span class="p">,</span> <span class="n">log_income</span><span class="p">)</span>
+<span class="n">alpha_hat</span><span class="p">,</span> <span class="n">beta_hat</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(10.015182459015683, -0.9811044324011452)
+</pre></div>
+</div>
+</div>
+</div>
+<p>The intercept term <span class="math notranslate nohighlight">\(\hat{\alpha} \approx 10.02\)</span> indicates that the best fit line crosses the y-axis at <span class="math notranslate nohighlight">\(y\approx 10.02\)</span>. The coefficient for the slope <span class="math notranslate nohighlight">\(\hat{\beta} \approx -0.98\)</span> again indicates the negative relationship between log-income and log-infant mortality. Let’s overlay this line on top of our joint scatterplot.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">xx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">yy</span> <span class="o">=</span> <span class="n">alpha_hat</span> <span class="o">+</span> <span class="n">beta_hat</span><span class="o">*</span><span class="n">xx</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">log_infant_mortality</span><span class="p">,</span> <span class="n">log_income</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;line of best fit&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;log(Infant mortality rate)&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;log(Per-capita income)&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/simple_linear_regression_15_0.png" src="../../_images/simple_linear_regression_15_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="interpreting-the-coefficients-of-a-line-of-best-fit">
+<h2><span class="section-number">2.2.3. </span>Interpreting the coefficients of a line of best fit<a class="headerlink" href="#interpreting-the-coefficients-of-a-line-of-best-fit" title="Permalink to this headline">¶</a></h2>
+<p><strong>todo</strong></p>
+</div>
 </div>
 
     <script type="text/x-thebe-config">

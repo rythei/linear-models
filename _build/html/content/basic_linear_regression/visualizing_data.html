@@ -42,6 +42,8 @@
     <script src="../../_static/copybutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="../../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
     <script>
         const thebe_selector = ".thebe"
@@ -418,6 +420,14 @@
 </table>
 </div></div></div>
 </div>
+<p>There are a few observations where infant mortality is not reported, so let’s remove these from the dataset.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mortality_data</span> <span class="o">=</span> <span class="n">mortality_data</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
 <p>When you read a dataset in python using <code class="docutils literal notranslate"><span class="pre">pandas</span></code>, it is stored as as <code class="docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> object, which we can check using the <code class="docutils literal notranslate"><span class="pre">type</span></code> function:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -432,7 +442,7 @@
 </div>
 </div>
 <p>Dataframes are very convenient ways to work with data, as we will see throughout this course.</p>
-<p>The infant mortality dataset contains the following information about 105 countries: the per-capita income, the infant mortality rate, its region in the world, and whether or not the country is oil-exporting.</p>
+<p>The infant mortality dataset contains the following information about 101 countries (after removing 4 without available infant mortality rates): the per-capita income, the infant mortality rate, its region in the world, and whether or not the country is oil-exporting.</p>
 </div>
 <div class="section" id="basic-visualization">
 <h2><span class="section-number">2.1.3. </span>Basic visualization<a class="headerlink" href="#basic-visualization" title="Permalink to this headline">¶</a></h2>
@@ -442,7 +452,7 @@
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="o">%</span><span class="k">matplotlib</span> inline
 
-<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">mortality_data</span><span class="p">[</span><span class="s2">&quot;infant_mortality&quot;</span><span class="p">],</span> <span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">mortality_data</span><span class="p">[</span><span class="s2">&quot;infant_mortality&quot;</span><span class="p">],</span> <span class="n">bins</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Infant mortality rate&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Density&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
@@ -450,12 +460,12 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/visualizing_data_7_0.png" src="../../_images/visualizing_data_7_0.png" />
+<img alt="../../_images/visualizing_data_9_0.png" src="../../_images/visualizing_data_9_0.png" />
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">mortality_data</span><span class="p">[</span><span class="s2">&quot;income&quot;</span><span class="p">],</span> <span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">mortality_data</span><span class="p">[</span><span class="s2">&quot;income&quot;</span><span class="p">],</span> <span class="n">bins</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Per-capita income&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Density&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
@@ -463,10 +473,11 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/visualizing_data_8_0.png" src="../../_images/visualizing_data_8_0.png" />
+<img alt="../../_images/visualizing_data_10_0.png" src="../../_images/visualizing_data_10_0.png" />
 </div>
 </div>
-<p>This gives us a sense of the types of values the variables <code class="docutils literal notranslate"><span class="pre">infant_mortality</span></code> and <code class="docutils literal notranslate"><span class="pre">income</span></code> can take on, but what about the relationship between these two features? A simple way to inspect this relationship is by creating a scatter plot.</p>
+<p>A couple things to note from the <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code> side: first, we can specify the number of bins using the <code class="docutils literal notranslate"><span class="pre">bins</span></code> argument – choosing an appropriate number of bins is often important when making qualitative assessments of a distribution. Second, we use this argument <code class="docutils literal notranslate"><span class="pre">density=True</span></code>, which will automatically normalize the distribution so that the sum of the mass in each bin is equal to 1. If we use <code class="docutils literal notranslate"><span class="pre">density=False</span></code> (which is the default), we will instead get the counts of number of samples in each bin on the y-axis.</p>
+<p>These histograms give us a sense of the types of values the variables <code class="docutils literal notranslate"><span class="pre">infant_mortality</span></code> and <code class="docutils literal notranslate"><span class="pre">income</span></code> can take on individually, and we will discuss this more shortly. But what about the relationship between these two features? A simple way to inspect this relationship is by creating a scatter plot.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">mortality_data</span><span class="p">[</span><span class="s2">&quot;infant_mortality&quot;</span><span class="p">],</span> <span class="n">mortality_data</span><span class="p">[</span><span class="s2">&quot;income&quot;</span><span class="p">])</span>
@@ -477,10 +488,26 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/visualizing_data_10_0.png" src="../../_images/visualizing_data_10_0.png" />
+<img alt="../../_images/visualizing_data_12_0.png" src="../../_images/visualizing_data_12_0.png" />
 </div>
 </div>
-<p>From this plot, we observe that, in general, there is a negative relationship between infant mortality rate and per-capita income – richer countries tend to have lower infant mortality rates. However, there are a few outliers: countries that have high income <em>and</em> high infant mortality. We can quickly find these by looking back at the data.</p>
+<p>If we want a slightly prettier figure, we can actually combine the joint scatter plots and the histograms into a single plot using the library <code class="docutils literal notranslate"><span class="pre">seaborn</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">jointplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">mortality_data</span><span class="p">[</span><span class="s2">&quot;infant_mortality&quot;</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">mortality_data</span><span class="p">[</span><span class="s2">&quot;income&quot;</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Infant mortality rate&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Per-capita income&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/visualizing_data_14_0.png" src="../../_images/visualizing_data_14_0.png" />
+</div>
+</div>
+<p>From the joint plot,  we observe that in general there is a negative relationship between infant mortality rate and per-capita income – richer countries tend to have lower infant mortality rates. However, there are a few outliers: countries that have high income <em>and</em> high infant mortality. We can quickly find these by looking back at the data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mortality_data</span><span class="p">[</span><span class="n">mortality_data</span><span class="p">[</span><span class="s2">&quot;infant_mortality&quot;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">280</span><span class="p">]</span>
@@ -556,36 +583,45 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/visualizing_data_14_0.png" src="../../_images/visualizing_data_14_0.png" />
+<img alt="../../_images/visualizing_data_18_0.png" src="../../_images/visualizing_data_18_0.png" />
 </div>
 </div>
 <p>Now the negative relationship we observed below appears to disappear! If we were researchers of infant mortality, this would now provide a new hypothesis ripe for further investigation. In particular, we may want to quantify exactly how much income influences infant mortality rate, and how this quantity changes when we control for whether a country is oil-exporting.</p>
 </div>
 <div class="section" id="transforming-data">
 <h2><span class="section-number">2.1.4. </span>Transforming data<a class="headerlink" href="#transforming-data" title="Permalink to this headline">¶</a></h2>
-<p>Note that while the relationship we observed between infant mortality and per-capita income was indeed decreasing, it was not <em>linear</em> – by which we mean that the data does not appear to lie approximately on a line (we will get to be much more formal about this in subsequent sections).</p>
-<p>This is primarily because the histograms of infant mortality and per-capita income were heavily skewed – meaning that there are many outliers on the high end of either variable. One way that we can mitigate this is by <em>transforming</em> the features. Since the issue is with a few large values, we should consider transformations that “squish” large values. For example we might consider either the square root or log transformations, which both have this property.</p>
-<p>Let’s see what happens to the histograms when we perform these transformations to the per-capita income variable.</p>
+<p>Let’s return again to the histograms we plotted earlier of income and infant mortality. Notice from this histograms that both infant mortality and per-capita income are heavily skewed to the right – meaning that there are many outliers on the high end of either variable. This also distorts the joint plot by making the relationship more exteme on the low income/high mortality and high income/low mortality ends. As we will see later, when we want to build a statistical model for this relationship, it will often make things easier to first remove the skew in our data.</p>
+<p>One way that we can mitigate skew is by <em>transforming</em> the features. Since the issue is with a few large values, we should consider transformations that “squish” large values. For example we might consider one of the following transformations which has this property: <span class="math notranslate nohighlight">\(T(x)=\log(x), T(x) = \sqrt{x}\)</span>  or more generally <span class="math notranslate nohighlight">\(T(x) = |x|^{1/p}\)</span> for <span class="math notranslate nohighlight">\(p\geq 1\)</span>.</p>
+<p>Let’s see what happens to the histograms when we perform these transformations to the per-capita income and infant mortality variables.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
-<span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">nrows</span><span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
-<span class="n">axs</span> <span class="o">=</span> <span class="n">axs</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">nrows</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
 
-<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">mortality_data</span><span class="p">[</span><span class="s2">&quot;income&quot;</span><span class="p">],</span> <span class="n">bins</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;sqrt(per-capita income)&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
-<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Density&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">mortality_data</span><span class="p">[</span><span class="s2">&quot;income&quot;</span><span class="p">]),</span> <span class="n">bins</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;sqrt(per-capita income)&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Density&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
 
-<span class="n">sqrt_income</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">mortality_data</span><span class="p">[</span><span class="s2">&quot;income&quot;</span><span class="p">])</span>
-<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">sqrt_income</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;sqrt(per-capita income)&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
-<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Density&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">mortality_data</span><span class="p">[</span><span class="s2">&quot;income&quot;</span><span class="p">]</span><span class="o">**</span><span class="p">(</span><span class="mf">1.</span><span class="o">/</span><span class="mi">3</span><span class="p">),</span> <span class="n">bins</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;(per-capita income)^(1/3)&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Density&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
 
-<span class="n">log_income</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">mortality_data</span><span class="p">[</span><span class="s2">&quot;income&quot;</span><span class="p">])</span>
-<span class="n">axs</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">log_income</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">axs</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;log(per-capita income)&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
-<span class="n">axs</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Density&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">mortality_data</span><span class="p">[</span><span class="s2">&quot;income&quot;</span><span class="p">]),</span> <span class="n">bins</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;log(per-capita income)&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Density&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">mortality_data</span><span class="p">[</span><span class="s2">&quot;infant_mortality&quot;</span><span class="p">]),</span> <span class="n">bins</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;sqrt(infant mortality)&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Density&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">mortality_data</span><span class="p">[</span><span class="s2">&quot;infant_mortality&quot;</span><span class="p">]</span><span class="o">**</span><span class="p">(</span><span class="mf">1.</span><span class="o">/</span><span class="mi">3</span><span class="p">),</span> <span class="n">bins</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;(infant mortality)^(1./3)&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Density&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">mortality_data</span><span class="p">[</span><span class="s2">&quot;infant_mortality&quot;</span><span class="p">]),</span> <span class="n">bins</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;log(infant mortality)&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Density&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
@@ -593,23 +629,25 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/visualizing_data_16_0.png" src="../../_images/visualizing_data_16_0.png" />
+<img alt="../../_images/visualizing_data_20_0.png" src="../../_images/visualizing_data_20_0.png" />
 </div>
 </div>
-<p>From inspecting these histograms, we see that the square root transformation doesn’t quite resolve the skewness, while the log transformation does. Let’s verify this by plotting a new scatterplot of log-per-capita income versus log-infant mortality.</p>
+<p>From these plots it seems as though the log transformation does the best job of removing skew from the income and infant mortality features. Let’s look at another joint plot of income and infant mortality, but this time on the log scale.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">mortality_data</span><span class="p">[</span><span class="s2">&quot;infant_mortality&quot;</span><span class="p">]),</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">mortality_data</span><span class="p">[</span><span class="s2">&quot;income&quot;</span><span class="p">]))</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;log(infant mortality rate)&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;log(per-capita income)&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">jointplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">mortality_data</span><span class="p">[</span><span class="s2">&quot;infant_mortality&quot;</span><span class="p">]),</span> <span class="n">y</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">mortality_data</span><span class="p">[</span><span class="s2">&quot;income&quot;</span><span class="p">]))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;log(Infant mortality rate)&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;log(Per-capita income)&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/visualizing_data_18_0.png" src="../../_images/visualizing_data_18_0.png" />
+<img alt="../../_images/visualizing_data_22_0.png" src="../../_images/visualizing_data_22_0.png" />
 </div>
 </div>
+<p>With the new transformed features, we can still see the two outliers we identified earlier (Libya and Saudi Arabia), but now the general relationship between log-per-capital income and log-infant mortality appears to be roughly linear. In the next section, we will see that we can use this observation to build a model for the relationship between income and infant mortality.</p>
+<p><strong>add some general rules for how to transform features and how to interpret changes in the transformed features</strong></p>
 </div>
 </div>
 
