@@ -15,7 +15,7 @@ mortality_data = mortality_data.dropna()
 mortality_data.head()
 
 
-# Now we can transform the features `income` and `infant_mortality` to the log scale, and plot a joint scatter plot of them.
+# Now we can transform the features `income` and `infant_mortality` to the (base-10) log scale, and plot a joint scatter plot of them.
 
 # In[2]:
 
@@ -25,12 +25,12 @@ import seaborn as sns
 import numpy as np
 
 # calling .to_numpy() on a column of a DataFrame gives you a numpy array back
-log_income = np.log(mortality_data["income"].to_numpy())
-log_infant_mortality = np.log(mortality_data["infant_mortality"].to_numpy())
+log_income = np.log10(mortality_data["income"].to_numpy())
+log_infant_mortality = np.log10(mortality_data["infant_mortality"].to_numpy())
 
-sns.jointplot(x=log_infant_mortality, y=log_income)
-plt.xlabel("log(Infant mortality rate)", fontsize=12)
-plt.ylabel("log(Per-capita income)", fontsize=12)
+sns.jointplot(x=log_income, y=log_infant_mortality)
+plt.ylabel("log(Infant mortality rate)", fontsize=12)
+plt.xlabel("log(Per-capita income)", fontsize=12)
 plt.show()
 
 
@@ -92,7 +92,7 @@ r_2
 # Instead of just computing the correlation between the two features, we could also try to model the relationship by fitting a line to data. In particular, we want to find numbers $\alpha$ and $\beta$ such that
 # 
 # $$
-# \log(\text{per-capita income}) \approx \alpha + \beta \cdot \log(\text{infant mortality})
+# \log_{10}(\text{infant mortality}) \approx \alpha + \beta \cdot \log_{10}(\text{per-capita income})
 # $$
 # 
 # To do this, we just need to find the values of $\alpha$ and $\beta$. Let's denote our obsevations of log-per-capita income by $(x_1,\dots,x_n)$ and those of log-infant mortality as $(y_1,\dots,y_n)$. Then one way to quantiatively choose $\alpha,\beta$ is by minimizing the sum of squared errors:
@@ -149,18 +149,18 @@ def fit_line(x, y):
 # In[7]:
 
 
-alpha_hat, beta_hat = fit_line(log_infant_mortality, log_income)
+alpha_hat, beta_hat = fit_line(log_income, log_infant_mortality)
 alpha_hat, beta_hat
 
 
-# The intercept term $\hat{\alpha} \approx 10.02$ indicates that the best fit line crosses the y-axis at $y\approx 10.02$. The coefficient for the slope $\hat{\beta} \approx -0.98$ again indicates the negative relationship between log-income and log-infant mortality. Let's overlay this line on top of our joint scatterplot.
+# The intercept term $\hat{\alpha} \approx 7.1$ indicates that the best fit line crosses the y-axis at $y\approx 7.1$. The coefficient for the slope $\hat{\beta} \approx -0.51$ again indicates the negative relationship between log-income and log-infant mortality. Let's overlay this line on top of our joint scatterplot.
 
 # In[8]:
 
 
-xx = np.linspace(2,7,5)
+xx = np.linspace(1,4,5)
 yy = alpha_hat + beta_hat*xx
-plt.scatter(log_infant_mortality, log_income)
+plt.scatter(log_income, log_infant_mortality)
 plt.plot(xx, yy, color='red', linestyle='--', label='line of best fit')
 plt.xlabel("log(Infant mortality rate)", fontsize=12)
 plt.ylabel("log(Per-capita income)", fontsize=12)
@@ -170,4 +170,68 @@ plt.show()
 
 # ## Interpreting the coefficients of a line of best fit
 # 
-# **todo**
+# Before we proceed to explain how to interpret the coefficients of our log-mortality vs log-income regression, let's start with something simpler, where both variables are untransformed. As a simple example, let's consider a simple dataset containing measurements of height and weight.
+
+# In[9]:
+
+
+height_weight_data = pd.read_csv("datasets/height_weight.csv")
+
+
+# Next, let's create a joint plot of height against weight.
+
+# In[10]:
+
+
+height = height_weight_data["height"]
+weight = height_weight_data["weight"]
+
+sns.jointplot(x=weight, y=height)
+plt.ylabel("height (cm)", fontsize=12)
+plt.xlabel("weight (kg)", fontsize=12)
+plt.show()
+
+
+# In this case, we see that neither feature is particularly skewed, and that the trend relating the two appears to be roughly linear. Let's use the function we defined earlier to fit a line to this data.
+
+# In[11]:
+
+
+alpha_hat, beta_hat = fit_line(weight, height)
+print(f"alpha = {alpha_hat}, beta = {beta_hat}")
+
+xx = np.linspace(40,115,4)
+yy = alpha_hat + beta_hat*xx
+plt.scatter(weight, height)
+plt.plot(xx, yy, color='red', linestyle='--', label='line of best fit')
+plt.ylabel("height (cm)", fontsize=12)
+plt.xlabel("weight (kg)", fontsize=12)
+plt.legend()
+plt.show()
+
+
+# We see visually that the line does a reasonable job of fitting the data. Let's now interpret the coefficients. The intercept term is $\hat{\alpha} \approx 137.1$, meaning that, at a weight of 0kg, the function $\hat{\alpha} + \hat{\beta}\text{weight}$ would predict a height of 137cm! Of course, this does not make much sense. As we will discuss in this class, we need to be careful when we interpret such predictions.
+# 
+# Next, let's consider the slope term $\hat{\beta} \approx 0.51$. From the equation $\text{height} \approx \hat{\alpha} + \hat{\beta}\text{weight}$, we see that we can interpret the coefficient $\hat{\beta}$ as follows: for a 1kg change in weight, we expect height to increase by approximately 0.5cm. More generally, the slope coefficient measures the expected _marginal_ change in the Y variable for a unit change in the X variable.
+# 
+# Now let us return to our example of income and infant mortality, where our model was
+# 
+# $$
+# \log_{10}(\text{infant mortality rate}) = 7.14 - 0.51\log_{10}(\text{per-capita income}). 
+# $$
+# 
+# In this case our interpretation is slightly more subtle than in the height-weight example. In particular, it is no longer the case that a $\hat{\beta}$ represents the marginal effect on the Y variable of a unit change in the X variable. Instead, $\hat{\beta}$ represents the marginal effect on the _log_-infant mortality rate of a unit change in _log_-per-capita income. But what does a unit change in log-per-capita income mean? Let's suppose we have two values of income, $x$ and $x'$, such that
+# 
+# $$
+# \log_{10}(x) - \log_{10}(x') = 1 \implies \log_{10}\left(\frac{x}{x'}\right) =1 \implies \frac{x}{x'} = 10.
+# $$
+# 
+# Thus a unit change in (base-10) log-per-capita income corresponds to a _factor of 10_ increase in the original variable! This is generally the case when working with log units: it measures multiplicative changes, rather than additive changes. Since we also transformed the infant mortality rate variable, we need to apply a similar interpretation to it. When log-per-capita income increases by a 1 unit, log-infant mortality decreases by $\approx 1/2$ units. To see what a decrease in log-infant mortality by $1/2$ means, we can check
+# 
+# $$
+# \log_{10}(y) - \log_{10}(y') = -1/2 \implies \frac{y}{y'} = 10^{-1/2} \approx  1/3. 
+# $$
+# 
+# So a decrease in log-infant mortality by $1/2$ correponds to decreasing infant mortality by a factor of approximately 3. Putting everything together, we can interpret the coefficient $\hat{\beta} = 0.51$ in terms of the untransformed variables as follows: increasing per-capita income by a factor of 10 will roughly results in a decrease in infant-mortality rate by a factor of 3. We can make similar interpretations for models that only transform the X variable and not the Y, or vice versa.
+# 
+# It's important to note that when we make statements such as the interpretations above, it is under the assumption that the model we've proposed is approximately correct. At this stage, we do not have the necessary tools to quantitatively evaluate such an assumption, though in the coming sections we will develop a variety of ways to analyze and diagnose the quality of models we fit in a rigorous statistical framework.

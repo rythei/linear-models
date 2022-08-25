@@ -81,9 +81,9 @@ plt.show()
 # In[7]:
 
 
-plt.scatter(mortality_data["infant_mortality"], mortality_data["income"])
-plt.xlabel("Infant mortality rate", fontsize=12)
-plt.ylabel("Per-capita income", fontsize=12)
+plt.scatter(mortality_data["income"], mortality_data["infant_mortality"])
+plt.ylabel("Infant mortality rate", fontsize=12)
+plt.xlabel("Per-capita income", fontsize=12)
 plt.show()
 
 
@@ -94,9 +94,9 @@ plt.show()
 
 import seaborn as sns
 
-sns.jointplot(x=mortality_data["infant_mortality"], y=mortality_data["income"])
-plt.xlabel("Infant mortality rate", fontsize=12)
-plt.ylabel("Per-capita income", fontsize=12)
+sns.jointplot(x=mortality_data["income"], y=mortality_data["infant_mortality"])
+plt.ylabel("Infant mortality rate", fontsize=12)
+plt.xlabel("Per-capita income", fontsize=12)
 plt.show()
 
 
@@ -116,9 +116,9 @@ mortality_data[mortality_data["infant_mortality"] > 280]
 # select only the oil exporting countries
 mortality_data_oil_exporting = mortality_data[mortality_data["oil"] == "yes"]
 
-plt.scatter(mortality_data_oil_exporting["infant_mortality"], mortality_data_oil_exporting["income"])
-plt.xlabel("Infant mortality rate", fontsize=12)
-plt.ylabel("Per-capita income", fontsize=12)
+plt.scatter(mortality_data_oil_exporting["income"], mortality_data_oil_exporting["infant_mortality"])
+plt.ylabel("Infant mortality rate", fontsize=12)
+plt.xlabel("Per-capita income", fontsize=12)
 plt.show()
 
 
@@ -128,7 +128,7 @@ plt.show()
 # 
 # Let's return again to the histograms we plotted earlier of income and infant mortality. Notice from this histograms that both infant mortality and per-capita income are heavily skewed to the right -- meaning that there are many outliers on the high end of either variable. This also distorts the joint plot by making the relationship more exteme on the low income/high mortality and high income/low mortality ends. As we will see later, when we want to build a statistical model for this relationship, it will often make things easier to first remove the skew in our data.
 # 
-# One way that we can mitigate skew is by _transforming_ the features. Since the issue is with a few large values, we should consider transformations that "squish" large values. For example we might consider one of the following transformations which has this property: $T(x)=\log(x), T(x) = \sqrt{x}$  or more generally $T(x) = |x|^{1/p}$ for $p\geq 1$.
+# One way that we can mitigate skew is by _transforming_ the features. Since the issue is with a few large values, we should consider transformations that "squish" large values. For example we might consider one of the following transformations which has this property: $T(x)=\log_{10}(x), T(x) = \sqrt{x}$  or more generally $T(x) = |x|^{1/p}$ for $p\geq 1$.
 # 
 # Let's see what happens to the histograms when we perform these transformations to the per-capita income and infant mortality variables.
 
@@ -147,8 +147,8 @@ axs[0,1].hist(mortality_data["income"]**(1./3), bins=10, density=True)
 axs[0,1].set_xlabel("(per-capita income)^(1/3)", fontsize=12)
 axs[0,1].set_ylabel("Density", fontsize=12)
 
-axs[0,2].hist(np.log(mortality_data["income"]), bins=10, density=True)
-axs[0,2].set_xlabel("log(per-capita income)", fontsize=12)
+axs[0,2].hist(np.log10(mortality_data["income"]), bins=10, density=True)
+axs[0,2].set_xlabel("log10(per-capita income)", fontsize=12)
 axs[0,2].set_ylabel("Density", fontsize=12)
 
 axs[1,0].hist(np.sqrt(mortality_data["infant_mortality"]), bins=10, density=True)
@@ -159,8 +159,8 @@ axs[1,1].hist(mortality_data["infant_mortality"]**(1./3), bins=10, density=True)
 axs[1,1].set_xlabel("(infant mortality)^(1./3)", fontsize=12)
 axs[1,1].set_ylabel("Density", fontsize=12)
 
-axs[1,2].hist(np.log(mortality_data["infant_mortality"]), bins=10, density=True)
-axs[1,2].set_xlabel("log(infant mortality)", fontsize=12)
+axs[1,2].hist(np.log10(mortality_data["infant_mortality"]), bins=10, density=True)
+axs[1,2].set_xlabel("log10(infant mortality)", fontsize=12)
 axs[1,2].set_ylabel("Density", fontsize=12)
 
 plt.tight_layout()
@@ -172,12 +172,12 @@ plt.show()
 # In[12]:
 
 
-sns.jointplot(x=np.log(mortality_data["infant_mortality"]), y=np.log(mortality_data["income"]))
-plt.xlabel("log(Infant mortality rate)", fontsize=12)
-plt.ylabel("log(Per-capita income)", fontsize=12)
+sns.jointplot(x=np.log10(mortality_data["income"]), y=np.log10(mortality_data["infant_mortality"]))
+plt.xlabel("log10(Infant mortality rate)", fontsize=12)
+plt.ylabel("log10(Per-capita income)", fontsize=12)
 plt.show()
 
 
 # With the new transformed features, we can still see the two outliers we identified earlier (Libya and Saudi Arabia), but now the general relationship between log-per-capital income and log-infant mortality appears to be roughly linear. In the next section, we will see that we can use this observation to build a model for the relationship between income and infant mortality.
 # 
-# **add some general rules for how to transform features and how to interpret changes in the transformed features**
+# Before concluding, it's worth noting that there are many other transformations that we could potentially apply to data. For example, in addition to transforming by positive powers, we can consider any arbitrary powers, like $x^{-p} = 1/x^p$, other types of logarithm, e.g. base-2 $\log(x)$ or base-2 $\log_2(x)$, or even exponential functions like $e^x$,  $2^x$ or $10^x$ depending on the nature of skew present in our data. It's important to note that for now, we're choosing this transformations purely visually, but soon we will develop techniques to quantitatively assess that appropriateness of a given transformation.

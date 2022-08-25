@@ -397,7 +397,7 @@
 </table>
 </div></div></div>
 </div>
-<p>Now we can transform the features <code class="docutils literal notranslate"><span class="pre">income</span></code> and <code class="docutils literal notranslate"><span class="pre">infant_mortality</span></code> to the log scale, and plot a joint scatter plot of them.</p>
+<p>Now we can transform the features <code class="docutils literal notranslate"><span class="pre">income</span></code> and <code class="docutils literal notranslate"><span class="pre">infant_mortality</span></code> to the (base-10) log scale, and plot a joint scatter plot of them.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
@@ -405,12 +405,12 @@
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 <span class="c1"># calling .to_numpy() on a column of a DataFrame gives you a numpy array back</span>
-<span class="n">log_income</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">mortality_data</span><span class="p">[</span><span class="s2">&quot;income&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">())</span>
-<span class="n">log_infant_mortality</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">mortality_data</span><span class="p">[</span><span class="s2">&quot;infant_mortality&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">())</span>
+<span class="n">log_income</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">mortality_data</span><span class="p">[</span><span class="s2">&quot;income&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">())</span>
+<span class="n">log_infant_mortality</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">mortality_data</span><span class="p">[</span><span class="s2">&quot;infant_mortality&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">())</span>
 
-<span class="n">sns</span><span class="o">.</span><span class="n">jointplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">log_infant_mortality</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">log_income</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;log(Infant mortality rate)&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;log(Per-capita income)&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">jointplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">log_income</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">log_infant_mortality</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;log(Infant mortality rate)&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;log(Per-capita income)&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -458,7 +458,7 @@ r = \frac{\text{Cov}(X, Y)}{\sqrt{\text{Var}(X)\text{Var}(Y)}} = \frac{\sum_{i=1
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-0.7086068160294183
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-0.7086068160294182
 </pre></div>
 </div>
 </div>
@@ -487,7 +487,7 @@ r = \frac{\text{Cov}(X, Y)}{\sqrt{\text{Var}(X)\text{Var}(Y)}} = \frac{\sum_{i=1
 <p>Instead of just computing the correlation between the two features, we could also try to model the relationship by fitting a line to data. In particular, we want to find numbers <span class="math notranslate nohighlight">\(\alpha\)</span> and <span class="math notranslate nohighlight">\(\beta\)</span> such that</p>
 <div class="math notranslate nohighlight">
 \[
-\log(\text{per-capita income}) \approx \alpha + \beta \cdot \log(\text{infant mortality})
+\log_{10}(\text{infant mortality}) \approx \alpha + \beta \cdot \log_{10}(\text{per-capita income})
 \]</div>
 <p>To do this, we just need to find the values of <span class="math notranslate nohighlight">\(\alpha\)</span> and <span class="math notranslate nohighlight">\(\beta\)</span>. Let’s denote our obsevations of log-per-capita income by <span class="math notranslate nohighlight">\((x_1,\dots,x_n)\)</span> and those of log-infant mortality as <span class="math notranslate nohighlight">\((y_1,\dots,y_n)\)</span>. Then one way to quantiatively choose <span class="math notranslate nohighlight">\(\alpha,\beta\)</span> is by minimizing the sum of squared errors:</p>
 <div class="math notranslate nohighlight">
@@ -538,23 +538,23 @@ r = \frac{\text{Cov}(X, Y)}{\sqrt{\text{Var}(X)\text{Var}(Y)}} = \frac{\sum_{i=1
 <p>Now let’s use this to compute the coefficients for the line best fititng our data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">alpha_hat</span><span class="p">,</span> <span class="n">beta_hat</span> <span class="o">=</span> <span class="n">fit_line</span><span class="p">(</span><span class="n">log_infant_mortality</span><span class="p">,</span> <span class="n">log_income</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">alpha_hat</span><span class="p">,</span> <span class="n">beta_hat</span> <span class="o">=</span> <span class="n">fit_line</span><span class="p">(</span><span class="n">log_income</span><span class="p">,</span> <span class="n">log_infant_mortality</span><span class="p">)</span>
 <span class="n">alpha_hat</span><span class="p">,</span> <span class="n">beta_hat</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(10.015182459015683, -0.9811044324011452)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(3.1033917572495335, -0.5117942628130397)
 </pre></div>
 </div>
 </div>
 </div>
-<p>The intercept term <span class="math notranslate nohighlight">\(\hat{\alpha} \approx 10.02\)</span> indicates that the best fit line crosses the y-axis at <span class="math notranslate nohighlight">\(y\approx 10.02\)</span>. The coefficient for the slope <span class="math notranslate nohighlight">\(\hat{\beta} \approx -0.98\)</span> again indicates the negative relationship between log-income and log-infant mortality. Let’s overlay this line on top of our joint scatterplot.</p>
+<p>The intercept term <span class="math notranslate nohighlight">\(\hat{\alpha} \approx 7.1\)</span> indicates that the best fit line crosses the y-axis at <span class="math notranslate nohighlight">\(y\approx 7.1\)</span>. The coefficient for the slope <span class="math notranslate nohighlight">\(\hat{\beta} \approx -0.51\)</span> again indicates the negative relationship between log-income and log-infant mortality. Let’s overlay this line on top of our joint scatterplot.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">xx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">xx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
 <span class="n">yy</span> <span class="o">=</span> <span class="n">alpha_hat</span> <span class="o">+</span> <span class="n">beta_hat</span><span class="o">*</span><span class="n">xx</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">log_infant_mortality</span><span class="p">,</span> <span class="n">log_income</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">log_income</span><span class="p">,</span> <span class="n">log_infant_mortality</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;line of best fit&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;log(Infant mortality rate)&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;log(Per-capita income)&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
@@ -570,7 +570,74 @@ r = \frac{\text{Cov}(X, Y)}{\sqrt{\text{Var}(X)\text{Var}(Y)}} = \frac{\sum_{i=1
 </div>
 <div class="section" id="interpreting-the-coefficients-of-a-line-of-best-fit">
 <h2><span class="section-number">2.2.3. </span>Interpreting the coefficients of a line of best fit<a class="headerlink" href="#interpreting-the-coefficients-of-a-line-of-best-fit" title="Permalink to this headline">¶</a></h2>
-<p><strong>todo</strong></p>
+<p>Before we proceed to explain how to interpret the coefficients of our log-mortality vs log-income regression, let’s start with something simpler, where both variables are untransformed. As a simple example, let’s consider a simple dataset containing measurements of height and weight.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">height_weight_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;datasets/height_weight.csv&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Next, let’s create a joint plot of height against weight.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">height</span> <span class="o">=</span> <span class="n">height_weight_data</span><span class="p">[</span><span class="s2">&quot;height&quot;</span><span class="p">]</span>
+<span class="n">weight</span> <span class="o">=</span> <span class="n">height_weight_data</span><span class="p">[</span><span class="s2">&quot;weight&quot;</span><span class="p">]</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">jointplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">weight</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">height</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;height (cm)&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;weight (kg)&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/simple_linear_regression_19_0.png" src="../../_images/simple_linear_regression_19_0.png" />
+</div>
+</div>
+<p>In this case, we see that neither feature is particularly skewed, and that the trend relating the two appears to be roughly linear. Let’s use the function we defined earlier to fit a line to this data.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">alpha_hat</span><span class="p">,</span> <span class="n">beta_hat</span> <span class="o">=</span> <span class="n">fit_line</span><span class="p">(</span><span class="n">weight</span><span class="p">,</span> <span class="n">height</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;alpha = </span><span class="si">{</span><span class="n">alpha_hat</span><span class="si">}</span><span class="s2">, beta = </span><span class="si">{</span><span class="n">beta_hat</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">xx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">40</span><span class="p">,</span><span class="mi">115</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">yy</span> <span class="o">=</span> <span class="n">alpha_hat</span> <span class="o">+</span> <span class="n">beta_hat</span><span class="o">*</span><span class="n">xx</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">weight</span><span class="p">,</span> <span class="n">height</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;line of best fit&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;height (cm)&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;weight (kg)&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>alpha = 137.08690903754507, beta = 0.5124931451830912
+</pre></div>
+</div>
+<img alt="../../_images/simple_linear_regression_21_1.png" src="../../_images/simple_linear_regression_21_1.png" />
+</div>
+</div>
+<p>We see visually that the line does a reasonable job of fitting the data. Let’s now interpret the coefficients. The intercept term is <span class="math notranslate nohighlight">\(\hat{\alpha} \approx 137.1\)</span>, meaning that, at a weight of 0kg, the function <span class="math notranslate nohighlight">\(\hat{\alpha} + \hat{\beta}\text{weight}\)</span> would predict a height of 137cm! Of course, this does not make much sense. As we will discuss in this class, we need to be careful when we interpret such predictions.</p>
+<p>Next, let’s consider the slope term <span class="math notranslate nohighlight">\(\hat{\beta} \approx 0.51\)</span>. From the equation <span class="math notranslate nohighlight">\(\text{height} \approx \hat{\alpha} + \hat{\beta}\text{weight}\)</span>, we see that we can interpret the coefficient <span class="math notranslate nohighlight">\(\hat{\beta}\)</span> as follows: for a 1kg change in weight, we expect height to increase by approximately 0.5cm. More generally, the slope coefficient measures the expected <em>marginal</em> change in the Y variable for a unit change in the X variable.</p>
+<p>Now let us return to our example of income and infant mortality, where our model was</p>
+<div class="math notranslate nohighlight">
+\[
+\log_{10}(\text{infant mortality rate}) = 7.14 - 0.51\log_{10}(\text{per-capita income}). 
+\]</div>
+<p>In this case our interpretation is slightly more subtle than in the height-weight example. In particular, it is no longer the case that a <span class="math notranslate nohighlight">\(\hat{\beta}\)</span> represents the marginal effect on the Y variable of a unit change in the X variable. Instead, <span class="math notranslate nohighlight">\(\hat{\beta}\)</span> represents the marginal effect on the <em>log</em>-infant mortality rate of a unit change in <em>log</em>-per-capita income. But what does a unit change in log-per-capita income mean? Let’s suppose we have two values of income, <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(x'\)</span>, such that</p>
+<div class="math notranslate nohighlight">
+\[
+\log_{10}(x) - \log_{10}(x') = 1 \implies \log_{10}\left(\frac{x}{x'}\right) =1 \implies \frac{x}{x'} = 10.
+\]</div>
+<p>Thus a unit change in (base-10) log-per-capita income corresponds to a <em>factor of 10</em> increase in the original variable! This is generally the case when working with log units: it measures multiplicative changes, rather than additive changes. Since we also transformed the infant mortality rate variable, we need to apply a similar interpretation to it. When log-per-capita income increases by a 1 unit, log-infant mortality decreases by <span class="math notranslate nohighlight">\(\approx 1/2\)</span> units. To see what a decrease in log-infant mortality by <span class="math notranslate nohighlight">\(1/2\)</span> means, we can check</p>
+<div class="math notranslate nohighlight">
+\[
+\log_{10}(y) - \log_{10}(y') = -1/2 \implies \frac{y}{y'} = 10^{-1/2} \approx  1/3. 
+\]</div>
+<p>So a decrease in log-infant mortality by <span class="math notranslate nohighlight">\(1/2\)</span> correponds to decreasing infant mortality by a factor of approximately 3. Putting everything together, we can interpret the coefficient <span class="math notranslate nohighlight">\(\hat{\beta} = 0.51\)</span> in terms of the untransformed variables as follows: increasing per-capita income by a factor of 10 will roughly results in a decrease in infant-mortality rate by a factor of 3. We can make similar interpretations for models that only transform the X variable and not the Y, or vice versa.</p>
+<p>It’s important to note that when we make statements such as the interpretations above, it is under the assumption that the model we’ve proposed is approximately correct. At this stage, we do not have the necessary tools to quantitatively evaluate such an assumption, though in the coming sections we will develop a variety of ways to analyze and diagnose the quality of models we fit in a rigorous statistical framework.</p>
 </div>
 </div>
 
