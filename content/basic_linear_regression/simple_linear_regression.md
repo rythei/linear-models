@@ -11,7 +11,11 @@ kernelspec:
   name: python3
 ---
 
+
+
 # Simple linear regression
+
+_Datasets used in throughout this book can be downloaded [here](https://drive.google.com/drive/folders/1OkXMcFo0urN0kSQYH4d75I4V3pnSpV6H?usp=sharing)._
 
 Let's return to the infant mortality dataset that we used in the previous section. We again load the dataset using `pandas`:
 

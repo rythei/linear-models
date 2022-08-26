@@ -3,6 +3,8 @@
 
 # # Simple linear regression
 # 
+# _Datasets used in throughout this book can be downloaded [here](https://drive.google.com/drive/folders/1OkXMcFo0urN0kSQYH4d75I4V3pnSpV6H?usp=sharing)._
+# 
 # Let's return to the infant mortality dataset that we used in the previous section. We again load the dataset using `pandas`:
 
 # In[1]:
@@ -217,7 +219,7 @@ plt.show()
 # Now let us return to our example of income and infant mortality, where our model was
 # 
 # $$
-# \log_{10}(\text{infant mortality rate}) = 7.14 - 0.51\log_{10}(\text{per-capita income}). 
+# \log_{10}(\text{infant mortality rate}) = 7.14 - 0.51\log_{10}(\text{per-capita income}).
 # $$
 # 
 # In this case our interpretation is slightly more subtle than in the height-weight example. In particular, it is no longer the case that a $\hat{\beta}$ represents the marginal effect on the Y variable of a unit change in the X variable. Instead, $\hat{\beta}$ represents the marginal effect on the _log_-infant mortality rate of a unit change in _log_-per-capita income. But what does a unit change in log-per-capita income mean? Let's suppose we have two values of income, $x$ and $x'$, such that
@@ -229,7 +231,7 @@ plt.show()
 # Thus a unit change in (base-10) log-per-capita income corresponds to a _factor of 10_ increase in the original variable! This is generally the case when working with log units: it measures multiplicative changes, rather than additive changes. Since we also transformed the infant mortality rate variable, we need to apply a similar interpretation to it. When log-per-capita income increases by a 1 unit, log-infant mortality decreases by $\approx 1/2$ units. To see what a decrease in log-infant mortality by $1/2$ means, we can check
 # 
 # $$
-# \log_{10}(y) - \log_{10}(y') = -1/2 \implies \frac{y}{y'} = 10^{-1/2} \approx  1/3. 
+# \log_{10}(y) - \log_{10}(y') = -1/2 \implies \frac{y}{y'} = 10^{-1/2} \approx  1/3.
 # $$
 # 
 # So a decrease in log-infant mortality by $1/2$ correponds to decreasing infant mortality by a factor of approximately 3. Putting everything together, we can interpret the coefficient $\hat{\beta} = 0.51$ in terms of the untransformed variables as follows: increasing per-capita income by a factor of 10 will roughly results in a decrease in infant-mortality rate by a factor of 3. We can make similar interpretations for models that only transform the X variable and not the Y, or vice versa.
