@@ -550,7 +550,7 @@ r = \frac{\text{Cov}(X, Y)}{\sqrt{\text{Var}(X)\text{Var}(Y)}} = \frac{\sum_{i=1
 </div>
 </div>
 </div>
-<p>The intercept term <span class="math notranslate nohighlight">\(\hat{\alpha} \approx 7.1\)</span> indicates that the best fit line crosses the y-axis at <span class="math notranslate nohighlight">\(y\approx 7.1\)</span>. The coefficient for the slope <span class="math notranslate nohighlight">\(\hat{\beta} \approx -0.51\)</span> again indicates the negative relationship between log-income and log-infant mortality. Let’s overlay this line on top of our joint scatterplot.</p>
+<p>The intercept term <span class="math notranslate nohighlight">\(\hat{\alpha} \approx 3.1\)</span> indicates that the best fit line crosses the y-axis at <span class="math notranslate nohighlight">\(y\approx 3.1\)</span>. The coefficient for the slope <span class="math notranslate nohighlight">\(\hat{\beta} \approx -0.51\)</span> again indicates the negative relationship between log-income and log-infant mortality. Let’s overlay this line on top of our joint scatterplot.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">xx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
@@ -625,7 +625,7 @@ r = \frac{\text{Cov}(X, Y)}{\sqrt{\text{Var}(X)\text{Var}(Y)}} = \frac{\sum_{i=1
 <p>Now let us return to our example of income and infant mortality, where our model was</p>
 <div class="math notranslate nohighlight">
 \[
-\log_{10}(\text{infant mortality rate}) = 7.14 - 0.51\log_{10}(\text{per-capita income}).
+\log_{10}(\text{infant mortality rate}) = 3.1 - 0.51\log_{10}(\text{per-capita income}).
 \]</div>
 <p>In this case our interpretation is slightly more subtle than in the height-weight example. In particular, it is no longer the case that a <span class="math notranslate nohighlight">\(\hat{\beta}\)</span> represents the marginal effect on the Y variable of a unit change in the X variable. Instead, <span class="math notranslate nohighlight">\(\hat{\beta}\)</span> represents the marginal effect on the <em>log</em>-infant mortality rate of a unit change in <em>log</em>-per-capita income. But what does a unit change in log-per-capita income mean? Let’s suppose we have two values of income, <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(x'\)</span>, such that</p>
 <div class="math notranslate nohighlight">
