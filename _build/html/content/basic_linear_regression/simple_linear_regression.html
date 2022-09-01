@@ -53,7 +53,7 @@
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="3. Generalizing linear regression" href="../generalizing_linear_regression/chheader.html" />
+    <link rel="next" title="2.3. More on simple linear regression" href="simple_linear_regression_cont.html" />
     <link rel="prev" title="2.1. Exploring and visualizing data" href="visualizing_data.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -149,6 +149,11 @@
    <li class="toctree-l2 current active">
     <a class="current reference internal" href="#">
      2.2. Simple linear regression
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="simple_linear_regression_cont.html">
+     2.3. More on simple linear regression
     </a>
    </li>
   </ul>
@@ -495,6 +500,9 @@ r = \frac{\text{Cov}(X, Y)}{\sqrt{\text{Var}(X)\text{Var}(Y)}} = \frac{\sum_{i=1
 \[
 \text{SSE}(\alpha, \beta) = \frac{1}{n}\sum_{i=1}^n (y_i - (\alpha +\beta x_i))^2
 \]</div>
+<blockquote>
+<div><p>Remark: This is not the only choice we could have made. For example, we could have considered minimizing the sum of absolute errors, <span class="math notranslate nohighlight">\(\sum_i |y_i - (\alpha +\beta x_i)|\)</span>. However, using the SSE is mathematically much more convenient (since it is differentiable, and the absolute value is not), and so we will focus on this.</p>
+</div></blockquote>
 <p>With a little bit of calculus, we can check that</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
@@ -550,7 +558,7 @@ r = \frac{\text{Cov}(X, Y)}{\sqrt{\text{Var}(X)\text{Var}(Y)}} = \frac{\sum_{i=1
 </div>
 </div>
 </div>
-<p>The intercept term <span class="math notranslate nohighlight">\(\hat{\alpha} \approx 7.1\)</span> indicates that the best fit line crosses the y-axis at <span class="math notranslate nohighlight">\(y\approx 7.1\)</span>. The coefficient for the slope <span class="math notranslate nohighlight">\(\hat{\beta} \approx -0.51\)</span> again indicates the negative relationship between log-income and log-infant mortality. Let’s overlay this line on top of our joint scatterplot.</p>
+<p>The intercept term <span class="math notranslate nohighlight">\(\hat{\alpha} \approx 3.1\)</span> indicates that the best fit line crosses the y-axis at <span class="math notranslate nohighlight">\(y\approx 3.1\)</span>. The coefficient for the slope <span class="math notranslate nohighlight">\(\hat{\beta} \approx -0.51\)</span> again indicates the negative relationship between log-income and log-infant mortality. Let’s overlay this line on top of our joint scatterplot.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">xx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
@@ -625,7 +633,7 @@ r = \frac{\text{Cov}(X, Y)}{\sqrt{\text{Var}(X)\text{Var}(Y)}} = \frac{\sum_{i=1
 <p>Now let us return to our example of income and infant mortality, where our model was</p>
 <div class="math notranslate nohighlight">
 \[
-\log_{10}(\text{infant mortality rate}) = 7.14 - 0.51\log_{10}(\text{per-capita income}).
+\log_{10}(\text{infant mortality rate}) = 3.1 - 0.51\log_{10}(\text{per-capita income}).
 \]</div>
 <p>In this case our interpretation is slightly more subtle than in the height-weight example. In particular, it is no longer the case that a <span class="math notranslate nohighlight">\(\hat{\beta}\)</span> represents the marginal effect on the Y variable of a unit change in the X variable. Instead, <span class="math notranslate nohighlight">\(\hat{\beta}\)</span> represents the marginal effect on the <em>log</em>-infant mortality rate of a unit change in <em>log</em>-per-capita income. But what does a unit change in log-per-capita income mean? Let’s suppose we have two values of income, <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(x'\)</span>, such that</p>
 <div class="math notranslate nohighlight">
@@ -674,10 +682,10 @@ r = \frac{\text{Cov}(X, Y)}{\sqrt{\text{Var}(X)\text{Var}(Y)}} = \frac{\sum_{i=1
             <p class="prev-next-title"><span class="section-number">2.1. </span>Exploring and visualizing data</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="../generalizing_linear_regression/chheader.html" title="next page">
+    <a class='right-next' id="next-link" href="simple_linear_regression_cont.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title"><span class="section-number">3. </span>Generalizing linear regression</p>
+        <p class="prev-next-title"><span class="section-number">2.3. </span>More on simple linear regression</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>

@@ -103,6 +103,8 @@ r_2
 # \text{SSE}(\alpha, \beta) = \frac{1}{n}\sum_{i=1}^n (y_i - (\alpha +\beta x_i))^2
 # $$
 # 
+# > Remark: This is not the only choice we could have made. For example, we could have considered minimizing the sum of absolute errors, $\sum_i |y_i - (\alpha +\beta x_i)|$. However, using the SSE is mathematically much more convenient (since it is differentiable, and the absolute value is not), and so we will focus on this.
+# 
 # With a little bit of calculus, we can check that
 # 
 # $$
@@ -155,7 +157,7 @@ alpha_hat, beta_hat = fit_line(log_income, log_infant_mortality)
 alpha_hat, beta_hat
 
 
-# The intercept term $\hat{\alpha} \approx 7.1$ indicates that the best fit line crosses the y-axis at $y\approx 7.1$. The coefficient for the slope $\hat{\beta} \approx -0.51$ again indicates the negative relationship between log-income and log-infant mortality. Let's overlay this line on top of our joint scatterplot.
+# The intercept term $\hat{\alpha} \approx 3.1$ indicates that the best fit line crosses the y-axis at $y\approx 3.1$. The coefficient for the slope $\hat{\beta} \approx -0.51$ again indicates the negative relationship between log-income and log-infant mortality. Let's overlay this line on top of our joint scatterplot.
 
 # In[8]:
 
@@ -219,7 +221,7 @@ plt.show()
 # Now let us return to our example of income and infant mortality, where our model was
 # 
 # $$
-# \log_{10}(\text{infant mortality rate}) = 7.14 - 0.51\log_{10}(\text{per-capita income}).
+# \log_{10}(\text{infant mortality rate}) = 3.1 - 0.51\log_{10}(\text{per-capita income}).
 # $$
 # 
 # In this case our interpretation is slightly more subtle than in the height-weight example. In particular, it is no longer the case that a $\hat{\beta}$ represents the marginal effect on the Y variable of a unit change in the X variable. Instead, $\hat{\beta}$ represents the marginal effect on the _log_-infant mortality rate of a unit change in _log_-per-capita income. But what does a unit change in log-per-capita income mean? Let's suppose we have two values of income, $x$ and $x'$, such that
