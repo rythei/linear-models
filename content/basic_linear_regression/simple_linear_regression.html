@@ -53,7 +53,7 @@
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="3. Generalizing linear regression" href="../generalizing_linear_regression/chheader.html" />
+    <link rel="next" title="2.3. More on simple linear regression" href="simple_linear_regression_cont.html" />
     <link rel="prev" title="2.1. Exploring and visualizing data" href="visualizing_data.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -149,6 +149,11 @@
    <li class="toctree-l2 current active">
     <a class="current reference internal" href="#">
      2.2. Simple linear regression
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="simple_linear_regression_cont.html">
+     2.3. More on simple linear regression
     </a>
    </li>
   </ul>
@@ -495,6 +500,9 @@ r = \frac{\text{Cov}(X, Y)}{\sqrt{\text{Var}(X)\text{Var}(Y)}} = \frac{\sum_{i=1
 \[
 \text{SSE}(\alpha, \beta) = \frac{1}{n}\sum_{i=1}^n (y_i - (\alpha +\beta x_i))^2
 \]</div>
+<blockquote>
+<div><p>Remark: This is not the only choice we could have made. For example, we could have considered minimizing the sum of absolute errors, <span class="math notranslate nohighlight">\(\sum_i |y_i - (\alpha +\beta x_i)|\)</span>. However, using the SSE is mathematically much more convenient (since it is differentiable, and the absolute value is not), and so we will focus on this.</p>
+</div></blockquote>
 <p>With a little bit of calculus, we can check that</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
@@ -674,10 +682,10 @@ r = \frac{\text{Cov}(X, Y)}{\sqrt{\text{Var}(X)\text{Var}(Y)}} = \frac{\sum_{i=1
             <p class="prev-next-title"><span class="section-number">2.1. </span>Exploring and visualizing data</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="../generalizing_linear_regression/chheader.html" title="next page">
+    <a class='right-next' id="next-link" href="simple_linear_regression_cont.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title"><span class="section-number">3. </span>Generalizing linear regression</p>
+        <p class="prev-next-title"><span class="section-number">2.3. </span>More on simple linear regression</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>

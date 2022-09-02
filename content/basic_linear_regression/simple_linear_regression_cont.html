@@ -1,0 +1,695 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>2.3. More on simple linear regression &#8212; Stat 151, Linear Models</title>
+    
+  <link href="../../_static/css/theme.css" rel="stylesheet">
+  <link href="../../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../../_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
+    <script>
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="3. Generalizing linear regression" href="../generalizing_linear_regression/chheader.html" />
+    <link rel="prev" title="2.2. Simple linear regression" href="simple_linear_regression.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../../_static/logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Stat 151, Linear Models</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../overview.html">
+   Welcome to Stat 151
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Linear models
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../python_basics/chheader.html">
+   1. Python 101
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_basics/python_basics.html">
+     1.1. The Basics
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_basics/python_numpy.html">
+     1.2. Introduction to NumPy
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_basics/python_plotting.html">
+     1.3. MatPlotLib
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="chheader.html">
+   2. Basics of linear regression
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="visualizing_data.html">
+     2.1. Exploring and visualizing data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="simple_linear_regression.html">
+     2.2. Simple linear regression
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     2.3. More on simple linear regression
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../generalizing_linear_regression/chheader.html">
+   3. Generalizing linear regression
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../extensions_applications/chheader.html">
+   4. Extensions and applications
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        <a class="dropdown-buttons"
+            href="../../_sources/content/basic_linear_regression/simple_linear_regression_cont.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download notebook file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../_sources/content/basic_linear_regression/simple_linear_regression_cont.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.md</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/erichson/LinearAlgebra/master?urlpath=tree/content/basic_linear_regression/simple_linear_regression_cont.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#a-statistical-model-for-linear-regression">
+   2.3.1. A statistical model for linear regression
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#evaluating-the-statistical-model">
+   2.3.2. Evaluating the statistical model
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#fitting-the-model-using-least-squares">
+     2.3.2.1. Fitting the model using least squares
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#inspecting-the-residuals">
+     2.3.2.2. Inspecting the residuals
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#the-rss-tss-and-r-2">
+     2.3.2.3. The RSS, TSS and
+     <span class="math notranslate nohighlight">
+      \(R^2\)
+     </span>
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>More on simple linear regression</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#a-statistical-model-for-linear-regression">
+   2.3.1. A statistical model for linear regression
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#evaluating-the-statistical-model">
+   2.3.2. Evaluating the statistical model
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#fitting-the-model-using-least-squares">
+     2.3.2.1. Fitting the model using least squares
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#inspecting-the-residuals">
+     2.3.2.2. Inspecting the residuals
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#the-rss-tss-and-r-2">
+     2.3.2.3. The RSS, TSS and
+     <span class="math notranslate nohighlight">
+      \(R^2\)
+     </span>
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            
+              <div>
+                
+  <div class="tex2jax_ignore mathjax_ignore section" id="more-on-simple-linear-regression">
+<h1><span class="section-number">2.3. </span>More on simple linear regression<a class="headerlink" href="#more-on-simple-linear-regression" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="a-statistical-model-for-linear-regression">
+<h2><span class="section-number">2.3.1. </span>A statistical model for linear regression<a class="headerlink" href="#a-statistical-model-for-linear-regression" title="Permalink to this headline">¶</a></h2>
+<p>Thus far, we’ve treated fitting a regression model in a mostly heuristic way, by transforming features until the observed trend looks to be approximately linear. This is not ideal, for two primary reasons: first, it does not allow us to easily quantify <em>how</em> linear a trend is, and second, the visual method will quickly become unweidly as soon as we consider multiple predictor variables, which can’t be visualized on a single 2-d plot.</p>
+<p>Thus, let’s return to our simple linear model, and explicitly add in a term to account for noise. Suppose we start with a dataset of observations <span class="math notranslate nohighlight">\((x_1,y_1),\dots,(x_n, y_n)\)</span>, and that we suspect the variables <span class="math notranslate nohighlight">\(y_i\)</span> can be predicted as a linear function of the variables <span class="math notranslate nohighlight">\(x_i\)</span>, subject to some noise. We can write this model as</p>
+<div class="math notranslate nohighlight">
+\[
+y_i = \alpha + \beta x_i + \varepsilon_i
+\]</div>
+<p>The first part of this equation, <span class="math notranslate nohighlight">\(\alpha + \beta x_i\)</span>, is the same equation for a line that we saw earlier. However, now we’ve added a term <span class="math notranslate nohighlight">\(\varepsilon_i\)</span> representing noise, so that our observations don’t lie <em>exactly</em> on a line. Instead, we assume that the observed value of <span class="math notranslate nohighlight">\(y_i\)</span> is equal to the values predicted by the line <span class="math notranslate nohighlight">\(\hat{y}_i = \alpha + \beta x_i\)</span>, plus some noise <span class="math notranslate nohighlight">\(\varepsilon_i\)</span>.</p>
+<p>Typically, we assume that the noise in our models satisfy some basic assumptions:</p>
+<ol class="simple">
+<li><p>The noise is mean zero, so <span class="math notranslate nohighlight">\(\mathbb{E}[\varepsilon_i] = 0\)</span>. This implies that the conditional mean of <span class="math notranslate nohighlight">\(y_i\)</span> given <span class="math notranslate nohighlight">\(x_i\)</span> is a linear function of <span class="math notranslate nohighlight">\(x_i\)</span>, since
+$<span class="math notranslate nohighlight">\(
+\begin{align*}
+\mathbb{E}[y_i \mid x_i] &amp;= \mathbb{E}[\alpha + \beta x_i + \varepsilon_i\mid x_i]\\ &amp;= \alpha + \beta x_i + \underbrace{\mathbb{E}[\varepsilon_i]}_{=0}\\ &amp;= \alpha + \beta x_i
+\end{align*}
+\)</span>$</p></li>
+<li><p>The variance of the noise is the same regardless of the value of <span class="math notranslate nohighlight">\(x_i\)</span>: <span class="math notranslate nohighlight">\(\text{Var}[\varepsilon_i] = \mathbb{E}[(\varepsilon_i - \mathbb{E}[\varepsilon_i])^2] = \mathbb{E}[\varepsilon_i^2] \equiv \sigma^2_\varepsilon\)</span>.</p></li>
+<li><p>The errors are independent and identically distributed across different observations.</p></li>
+</ol>
+<blockquote>
+<div><p>Remark: in this setup, we are treating the observed values of <span class="math notranslate nohighlight">\(y_i\)</span> as random, since they are a linear function plus some noise, but treating the values of <span class="math notranslate nohighlight">\(x_i\)</span> as non-random. That is, we are never explicitly modeling a distribution over <span class="math notranslate nohighlight">\(x\)</span> values.</p>
+</div></blockquote>
+<p>In future sections, we will consider additional assumptions on the error terms <span class="math notranslate nohighlight">\(\varepsilon_i\)</span> (in particular, we will assume that the errors come from a normal distribution), though this is not necessary for this section.</p>
+</div>
+<div class="section" id="evaluating-the-statistical-model">
+<h2><span class="section-number">2.3.2. </span>Evaluating the statistical model<a class="headerlink" href="#evaluating-the-statistical-model" title="Permalink to this headline">¶</a></h2>
+<p>Now that we’ve formalized a statistical model for simple linear regression, we can develop some basic tools to evaluate how good of a fit the linear model is, and whether our statistical assumptions appear to hold.</p>
+<div class="section" id="fitting-the-model-using-least-squares">
+<h3><span class="section-number">2.3.2.1. </span>Fitting the model using least squares<a class="headerlink" href="#fitting-the-model-using-least-squares" title="Permalink to this headline">¶</a></h3>
+<p>Let’s begin by returning to our example of height and weight from the previous section. First, we load in the dataset using <code class="docutils literal notranslate"><span class="pre">pandas</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="n">height_weight_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;datasets/height_weight.csv&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The model we’re going to try to fit is</p>
+<div class="math notranslate nohighlight">
+\[
+\text{height}_i = \alpha + \beta \text{weight}_i + \varepsilon_i.
+\]</div>
+<p>Recall that we found the coefficients <span class="math notranslate nohighlight">\(\alpha,\beta\)</span> by minimizing the sum of squared errors</p>
+<div class="math notranslate nohighlight">
+\[
+\sum_{i=1}^n (y_i - (\alpha+ \beta x_i))^2
+\]</div>
+<p>which, with some calculus, gives the solutions</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+\hat{\alpha} &amp;= \bar{y} - \hat{\beta} \bar{x}\\
+\hat{\beta} &amp;= \frac{\sum_{i=1}^n (x_i - \bar{x})(y_i - \bar{y})}{\sum_{i=1}^n (x_i-\bar{x})^2}
+\end{align*}
+\end{split}\]</div>
+<p>Note that since we found these solutions by minimizing the sum of squared errors, these solutions are often called the <em>least-squares solutions</em> to the linear regression problem.</p>
+<p>Now let’s define the same function as before to find the least-squares coefficients.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="k">def</span> <span class="nf">fit_line</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="c1"># first compute the means of the two vectors</span>
+    <span class="n">x_bar</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">y_bar</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+
+    <span class="c1"># compute numerator (1/n)*\sum_i (x_i - x_bar)*(y_i - y_bar)</span>
+    <span class="n">cov_xy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">x</span><span class="o">-</span><span class="n">x_bar</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">y</span><span class="o">-</span><span class="n">y_bar</span><span class="p">))</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+    <span class="c1"># compute the variance of x and y</span>
+    <span class="n">var_x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">x</span><span class="o">-</span><span class="n">x_bar</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+    <span class="c1"># compute beta_hat</span>
+    <span class="n">beta_hat</span> <span class="o">=</span> <span class="n">cov_xy</span><span class="o">/</span><span class="n">var_x</span>
+
+    <span class="c1"># compute alpha_hat</span>
+    <span class="n">alpha_hat</span> <span class="o">=</span> <span class="n">y_bar</span> <span class="o">-</span> <span class="n">beta_hat</span><span class="o">*</span><span class="n">x_bar</span>
+
+    <span class="k">return</span> <span class="n">alpha_hat</span><span class="p">,</span> <span class="n">beta_hat</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Next, let’s create a joint plot of height against weight, and overlay the fitted regression line.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">weight</span> <span class="o">=</span> <span class="n">height_weight_data</span><span class="p">[</span><span class="s2">&quot;weight&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+<span class="n">height</span> <span class="o">=</span> <span class="n">height_weight_data</span><span class="p">[</span><span class="s2">&quot;height&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+
+<span class="n">alpha_hat</span><span class="p">,</span> <span class="n">beta_hat</span> <span class="o">=</span> <span class="n">fit_line</span><span class="p">(</span><span class="n">weight</span><span class="p">,</span> <span class="n">height</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;alpha = </span><span class="si">{</span><span class="n">alpha_hat</span><span class="si">}</span><span class="s2">, beta = </span><span class="si">{</span><span class="n">beta_hat</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">xx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">40</span><span class="p">,</span><span class="mi">115</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">yy</span> <span class="o">=</span> <span class="n">alpha_hat</span> <span class="o">+</span> <span class="n">beta_hat</span><span class="o">*</span><span class="n">xx</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">weight</span><span class="p">,</span> <span class="n">height</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;line of best fit&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;height (cm)&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;weight (kg)&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>alpha = 137.08690903754507, beta = 0.5124931451830912
+</pre></div>
+</div>
+<img alt="../../_images/simple_linear_regression_cont_5_1.png" src="../../_images/simple_linear_regression_cont_5_1.png" />
+</div>
+</div>
+</div>
+<div class="section" id="inspecting-the-residuals">
+<h3><span class="section-number">2.3.2.2. </span>Inspecting the residuals<a class="headerlink" href="#inspecting-the-residuals" title="Permalink to this headline">¶</a></h3>
+<p>Given a fitted regression model</p>
+<div class="math notranslate nohighlight">
+\[
+\hat{y}_i = \hat{\alpha} + \hat{\beta} x_i,
+\]</div>
+<p>the term quantity <span class="math notranslate nohighlight">\(r_i = y_i - \hat{y}_i\)</span> is called the <span class="math notranslate nohighlight">\(i^{th}\)</span> <em>residual</em>, and measures the error in the prediction of the <span class="math notranslate nohighlight">\(i^{th}\)</span> observation. Note that the residual is a signed quantity, meaning it can be positive or negative depending on whether the observed value <span class="math notranslate nohighlight">\(y_i\)</span> is above or below the fitted line <span class="math notranslate nohighlight">\(\hat{\alpha} + \hat{\beta} x_i\)</span>.</p>
+<p>Note that the residual <span class="math notranslate nohighlight">\(r_i\)</span> is a natural estimate of the observed error value <span class="math notranslate nohighlight">\(\varepsilon_i\)</span>. Therefore, inspecting the residuals can give us information about the distribution of errors in our statistical model.</p>
+<p>First, let’s compute the residuals for the height/weight regression we’ve just performed.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># compute the predicted height values using the linear model</span>
+<span class="n">height_hat</span> <span class="o">=</span> <span class="n">alpha_hat</span> <span class="o">+</span> <span class="n">beta_hat</span><span class="o">*</span><span class="n">weight</span>
+
+<span class="c1"># compute the residuals</span>
+<span class="n">residuals</span> <span class="o">=</span> <span class="n">height</span> <span class="o">-</span> <span class="n">height_hat</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now recall that our first assumption about the errors <span class="math notranslate nohighlight">\(\varepsilon_i\)</span> was that they were mean zero, and from our third assumption they are independent and identically distributed across observations. This means that the residuals should also have mean zero. Let’s compute the mean and see if this is true.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">residual_mean</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">residuals</span><span class="p">)</span>
+<span class="n">residual_mean</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1.736882242969134e-14
+</pre></div>
+</div>
+</div>
+</div>
+<p>Indeed, the mean (up to numerical precision) exactly zero! It turns out that for the least squares fit, this is mathematically always true, since</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+\bar{r} &amp;= \frac{1}{n}\sum_{i=1}^n r_i \\&amp;= \frac{1}{n}\sum_{i=1}^n (y_i - \hat{y_i})\\ &amp;= \bar{y} - \frac{1}{n}\sum_{i=1}^n \hat{y}_i \\ &amp;= \bar{y} -  \frac{1}{n}\sum_{i=1}^n (\hat{\alpha} + \hat{\beta} x_i)\\
+&amp;= \bar{y} - \hat{\alpha} - \hat{\beta}\bar{x}\\
+&amp;= \bar{y} - (\bar{y} - \hat{\beta}\bar{x}) - \hat{\beta}\bar{x}\\
+&amp;= 0
+\end{align*}
+\end{split}\]</div>
+<p>where for the second to last line we used the fact that <span class="math notranslate nohighlight">\(\hat{\alpha} = \bar{y} - \hat{\beta}\bar{x}\)</span>.</p>
+<p>Since the mean is always zero, we can estimate the variance <span class="math notranslate nohighlight">\(\sigma^2_\varepsilon\)</span> of the errors by computing the variance of the residuals, which is given by</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{1}{n}\sum_{i=1}^n (r_i - \bar{r})^2 = \frac{1}{n}\sum_{i=1}^n r_i^2 = \frac{1}{n}\sum_{i=1}^n (y_i - \hat{y}_i)^2.
+\]</div>
+<p>In python, we can find this with the following.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">residual_variance</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">residuals</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">residual_variance</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>32.82880880231438
+</pre></div>
+</div>
+</div>
+</div>
+<p>Note that sometimes we use slightly different estimates for the variance, in particular you may see the quantity</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{1}{n-2}\sum_{i=1}^n r_i^2
+\]</div>
+<p>used instead. When the number of samples <span class="math notranslate nohighlight">\(n\)</span> is reasonably large, the difference is typically negligible. However, we will address these cases later when they arise.</p>
+<p>The variance itself is a bit difficult to interpret, since it is not measured in the same units as the variable height itself. Instead, it is often easier to work with the square root of the variance, the standard deviation (or standard error) of the residuals.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">residual_std</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">residual_variance</span><span class="p">)</span>
+<span class="n">residual_std</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>5.729642990825377
+</pre></div>
+</div>
+</div>
+</div>
+<p>The standard deviation of <span class="math notranslate nohighlight">\(\approx 5.7\)</span> tells us that, on average, our predictions based on the linear model are off by about <span class="math notranslate nohighlight">\(5.7\)</span>kg (or approximately <span class="math notranslate nohighlight">\(11\)</span>lbs).</p>
+<p>In addition to computing individual statistics like the mean and the variance, we can inspect the entire distribution of residuals by plotting a histogram.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">residuals</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Residuals&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/simple_linear_regression_cont_15_0.png" src="../../_images/simple_linear_regression_cont_15_0.png" />
+</div>
+</div>
+<p>From this histogram, it appears that the residuals follow a symmetric distribution with mean zero. It may even be reasonable to assume that these residuals follow a normal distribution. Indeed, soon we will do precisely this, which will give us more tools for evaluating regression models and performing statistical tests.</p>
+</div>
+<div class="section" id="the-rss-tss-and-r-2">
+<h3><span class="section-number">2.3.2.3. </span>The RSS, TSS and <span class="math notranslate nohighlight">\(R^2\)</span><a class="headerlink" href="#the-rss-tss-and-r-2" title="Permalink to this headline">¶</a></h3>
+<p>Besides looking at quantities like the variance or standard deviation of the residuals to assess the quality of fit, it is often useful to consider <em>relative</em> measures of fit. That is, a measure which tells us how much better our fit is than some naive baseline. One such measure is the (squared) correlation coefficient, or <span class="math notranslate nohighlight">\(R^2\)</span>, which we derive here.</p>
+<p>First, we need to define our baseline model. For this, we consider the even simpler model, which predicts <span class="math notranslate nohighlight">\(y_i\)</span> as a constant plus some noise, so</p>
+<div class="math notranslate nohighlight">
+\[
+y_i = \alpha + \varepsilon_i.
+\]</div>
+<p>It turns out that if we fit this model by minimizing <span class="math notranslate nohighlight">\(\sum_i (y_i - \hat{\alpha})^2\)</span>, the solution is <span class="math notranslate nohighlight">\(\hat{\alpha} = \bar{y}\)</span>. We call the total error produced by this model the <em>total sum of squares</em>, or TSS, which is given by</p>
+<div class="math notranslate nohighlight">
+\[
+\text{TSS} = \sum_{i=1}^n (y_i - \bar{y})^2.
+\]</div>
+<p>The <span class="math notranslate nohighlight">\(TSS\)</span> is also a measure of the intrinsic variance in the variable <span class="math notranslate nohighlight">\(Y\)</span>, independent of any predictor variables <span class="math notranslate nohighlight">\(x\)</span>.</p>
+<p>We wish to compare this error to the error from the linear regression model, which is called the <em>residual sum of squares</em>, or RSS, and is given by</p>
+<div class="math notranslate nohighlight">
+\[
+\text{RSS} = \sum_{i=1}^n (y_i - (\hat{\alpha} + \hat{\beta}x_i))^2.
+\]</div>
+<blockquote>
+<div><p>Note that the RSS is really the same thing as the sum of squared errors SSE that we minimized to find the least squares fit. You may see both terms used, though traditionally when discussing regression diagonistics and <span class="math notranslate nohighlight">\(R^2\)</span>, the RSS seems to be the preferred terminology.</p>
+</div></blockquote>
+<p>Now if our linear regression model is any good, we may hope that the difference between these two errors is large. We call this difference the <em>regression sum of squares</em> or RegSS, which is given by</p>
+<div class="math notranslate nohighlight">
+\[
+\text{RegSS} = \text{TSS} - \text{RSS}.
+\]</div>
+<p>The regression sum of squares captures how much the error is reduced by consider the variable <span class="math notranslate nohighlight">\(x\)</span> in the regression. The ratio of RegSS to TSS captures the proportion of error reduced by considering the variable <span class="math notranslate nohighlight">\(x\)</span> in the regression, and is called the <span class="math notranslate nohighlight">\(R^2 = \text{RegSS}/\text{TSS}\)</span>. Intuitively, the <span class="math notranslate nohighlight">\(R^2\)</span> value tells us what proportion of variance in the response variable <span class="math notranslate nohighlight">\(y\)</span> can be explained by considering the predictor variable <span class="math notranslate nohighlight">\(x\)</span>.</p>
+<p>Let’s compute the RSS, TSS, RegSS and <span class="math notranslate nohighlight">\(R^2\)</span> for our height/weight model in python. Let’s start with the total sum of squares.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">height_bar</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">height</span><span class="p">)</span>
+<span class="n">TSS</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">height</span> <span class="o">-</span> <span class="n">height_bar</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Next, we can compute the RSS and the RegSS.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">RSS</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">height</span> <span class="o">-</span> <span class="n">height_hat</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">RegSS</span> <span class="o">=</span> <span class="n">TSS</span> <span class="o">-</span> <span class="n">RSS</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Finally, we can compute the <span class="math notranslate nohighlight">\(R^2\)</span> value.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">R2</span> <span class="o">=</span> <span class="n">RegSS</span><span class="o">/</span><span class="n">TSS</span>
+<span class="n">R2</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.5899403156425961
+</pre></div>
+</div>
+</div>
+</div>
+<p>The <span class="math notranslate nohighlight">\(R^2\)</span> value of <span class="math notranslate nohighlight">\(\approx 0.59\)</span> for this model means that approximately 59% of the observed variance in height can be explained by considering a person’s weight.</p>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./content/basic_linear_regression"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="simple_linear_regression.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title"><span class="section-number">2.2. </span>Simple linear regression</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="../generalizing_linear_regression/chheader.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><span class="section-number">3. </span>Generalizing linear regression</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            
+        </div>
+    </div>
+    <footer class="footer">
+  <p>
+    
+      By Michael W. Mahoney and Ryan Theisen<br/>
+    
+        &copy; Copyright 2021.<br/>
+  </p>
+</footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="../../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
+  </body>
+</html>

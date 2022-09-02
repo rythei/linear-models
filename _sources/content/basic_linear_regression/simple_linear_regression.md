@@ -105,6 +105,8 @@ $$
 \text{SSE}(\alpha, \beta) = \frac{1}{n}\sum_{i=1}^n (y_i - (\alpha +\beta x_i))^2
 $$
 
+> Remark: This is not the only choice we could have made. For example, we could have considered minimizing the sum of absolute errors, $\sum_i |y_i - (\alpha +\beta x_i)|$. However, using the SSE is mathematically much more convenient (since it is differentiable, and the absolute value is not), and so we will focus on this.
+
 With a little bit of calculus, we can check that
 
 $$
