@@ -359,14 +359,9 @@
 y_i = \alpha + \beta x_i + \varepsilon_i
 \]</div>
 <p>The first part of this equation, <span class="math notranslate nohighlight">\(\alpha + \beta x_i\)</span>, is the same equation for a line that we saw earlier. However, now we’ve added a term <span class="math notranslate nohighlight">\(\varepsilon_i\)</span> representing noise, so that our observations don’t lie <em>exactly</em> on a line. Instead, we assume that the observed value of <span class="math notranslate nohighlight">\(y_i\)</span> is equal to the values predicted by the line <span class="math notranslate nohighlight">\(\hat{y}_i = \alpha + \beta x_i\)</span>, plus some noise <span class="math notranslate nohighlight">\(\varepsilon_i\)</span>.</p>
-<p>Typically, we assume that the noise in our models satisfy some basic assumptions:</p>
+<p>Typically, at a minimum we assume the following about the noise in our models:</p>
 <ol class="simple">
-<li><p>The noise is mean zero, so <span class="math notranslate nohighlight">\(\mathbb{E}[\varepsilon_i] = 0\)</span>. This implies that the conditional mean of <span class="math notranslate nohighlight">\(y_i\)</span> given <span class="math notranslate nohighlight">\(x_i\)</span> is a linear function of <span class="math notranslate nohighlight">\(x_i\)</span>, since
-$<span class="math notranslate nohighlight">\(
-\begin{align*}
-\mathbb{E}[y_i \mid x_i] &amp;= \mathbb{E}[\alpha + \beta x_i + \varepsilon_i\mid x_i]\\ &amp;= \alpha + \beta x_i + \underbrace{\mathbb{E}[\varepsilon_i]}_{=0}\\ &amp;= \alpha + \beta x_i
-\end{align*}
-\)</span>$</p></li>
+<li><p>The noise is mean zero, so <span class="math notranslate nohighlight">\(\mathbb{E}[\varepsilon_i] = 0\)</span>. This implies that the conditional mean of <span class="math notranslate nohighlight">\(y_i\)</span> given <span class="math notranslate nohighlight">\(x_i\)</span> is a linear function of <span class="math notranslate nohighlight">\(x_i\)</span>, since <span class="math notranslate nohighlight">\(\mathbb{E}[y_i \mid x_i] = \mathbb{E}[\alpha + \beta x_i + \varepsilon_i\mid x_i] = \alpha + \beta x_i + \mathbb{E}[\varepsilon_i] = \alpha + \beta x_i\)</span></p></li>
 <li><p>The variance of the noise is the same regardless of the value of <span class="math notranslate nohighlight">\(x_i\)</span>: <span class="math notranslate nohighlight">\(\text{Var}[\varepsilon_i] = \mathbb{E}[(\varepsilon_i - \mathbb{E}[\varepsilon_i])^2] = \mathbb{E}[\varepsilon_i^2] \equiv \sigma^2_\varepsilon\)</span>.</p></li>
 <li><p>The errors are independent and identically distributed across different observations.</p></li>
 </ol>

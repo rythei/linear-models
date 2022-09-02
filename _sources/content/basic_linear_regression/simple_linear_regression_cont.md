@@ -24,14 +24,9 @@ $$
 
 The first part of this equation, $\alpha + \beta x_i$, is the same equation for a line that we saw earlier. However, now we've added a term $\varepsilon_i$ representing noise, so that our observations don't lie _exactly_ on a line. Instead, we assume that the observed value of $y_i$ is equal to the values predicted by the line $\hat{y}_i = \alpha + \beta x_i$, plus some noise $\varepsilon_i$.
 
-Typically, we assume that the noise in our models satisfy some basic assumptions:
+Typically, at a minimum we assume the following about the noise in our models:
 
-1. The noise is mean zero, so $\mathbb{E}[\varepsilon_i] = 0$. This implies that the conditional mean of $y_i$ given $x_i$ is a linear function of $x_i$, since
-$$
-\begin{align*}
-\mathbb{E}[y_i \mid x_i] &= \mathbb{E}[\alpha + \beta x_i + \varepsilon_i\mid x_i]\\ &= \alpha + \beta x_i + \underbrace{\mathbb{E}[\varepsilon_i]}_{=0}\\ &= \alpha + \beta x_i
-\end{align*}
-$$
+1. The noise is mean zero, so $\mathbb{E}[\varepsilon_i] = 0$. This implies that the conditional mean of $y_i$ given $x_i$ is a linear function of $x_i$, since $\mathbb{E}[y_i \mid x_i] = \mathbb{E}[\alpha + \beta x_i + \varepsilon_i\mid x_i] = \alpha + \beta x_i + \mathbb{E}[\varepsilon_i] = \alpha + \beta x_i$
 2. The variance of the noise is the same regardless of the value of $x_i$: $\text{Var}[\varepsilon_i] = \mathbb{E}[(\varepsilon_i - \mathbb{E}[\varepsilon_i])^2] = \mathbb{E}[\varepsilon_i^2] \equiv \sigma^2_\varepsilon$.
 3. The errors are independent and identically distributed across different observations.
 
