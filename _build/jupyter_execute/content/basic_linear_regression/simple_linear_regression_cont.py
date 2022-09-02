@@ -163,8 +163,6 @@ residual_mean
 # \end{align*}
 # $$
 # 
-# **note : we could also make the above a homework problem **
-# 
 # where for the second to last line we used the fact that $\hat{\alpha} = \bar{y} - \hat{\beta}\bar{x}$.
 # 
 # 
@@ -276,11 +274,3 @@ R2
 
 
 # The $R^2$ value of $\approx 0.59$ for this model means that approximately 59% of the observed variance in height can be explained by considering a person's weight.
-# 
-# 
-# 
-# ## Problems
-# 
-# 1. Using basic calculus, show that $\text{argmin}_{\alpha} \sum_{i=1}^n (y_i - \alpha)^2 = \bar{y}$.
-# 2. Show that $\text{RSS} \leq \text{TSS}$
-# 3. Show that $TSS - RSS = \sum_{i=1}^n (\hat{y}_i - \bar{y})^2.
