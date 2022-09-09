@@ -65,7 +65,7 @@ v = np.array([4,5,6])
 
 Now we can add them using the usual `+` operation.
 
-```
+```{code-cell}
 u_plus_v = u+v
 print(f"u = {u}")
 print(f"v = {v}")
@@ -85,7 +85,7 @@ That is, $\alpha \boldsymbol{v}$ just means multiplying each entry of $\boldsymb
 ```{code-cell}
 print(f"v = {v}")
 print(f"-1v = {-1*v}")
-print(f"2v = {v}")
+print(f"2v = {2*v}")
 ```
 
 These again give the expected results.

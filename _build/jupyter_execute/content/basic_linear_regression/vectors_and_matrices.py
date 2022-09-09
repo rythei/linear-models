@@ -58,14 +58,16 @@ v = np.array([4,5,6])
 
 
 # Now we can add them using the usual `+` operation.
-# 
-# ```
-# u_plus_v = u+v
-# print(f"u = {u}")
-# print(f"v = {v}")
-# print(f"u+v = {u_plus_v}")
-# ```
-# 
+
+# In[3]:
+
+
+u_plus_v = u+v
+print(f"u = {u}")
+print(f"v = {v}")
+print(f"u+v = {u_plus_v}")
+
+
 # We see that this gives us the expected result.
 # 
 # We can also perform scalar multiplication with vectors. For a vector $\boldsymbol{v} \in \mathbb{R}^n$ and a scalar $\alpha \in \mathbb{R}$, we can define
@@ -76,12 +78,12 @@ v = np.array([4,5,6])
 # 
 # That is, $\alpha \boldsymbol{v}$ just means multiplying each entry of $\boldsymbol{v}$ by $\alpha$. This is similarly each to do in python with arrays. For example,
 
-# In[3]:
+# In[4]:
 
 
 print(f"v = {v}")
 print(f"-1v = {-1*v}")
-print(f"2v = {v}")
+print(f"2v = {2*v}")
 
 
 # These again give the expected results.
@@ -100,7 +102,7 @@ print(f"2v = {v}")
 # 
 # In numpy, we can compute the dot product of two vectors using the function `np.dot`. For example,
 
-# In[4]:
+# In[5]:
 
 
 x = np.array([1,2,3])
@@ -119,7 +121,7 @@ print(x_dot_y)
 # 
 # This matrix can also be defined as a numpy array in python:
 
-# In[5]:
+# In[6]:
 
 
 import numpy as np
@@ -140,7 +142,7 @@ print(A)
 # 
 # In numpy, we can specify a vector as being a column vector by suitably reshaping it.
 
-# In[6]:
+# In[7]:
 
 
 n = 5
@@ -152,7 +154,7 @@ print(x.shape) # explicitly making x a column vector
 
 # Note that by default, numpy stores 1-d arrays as having shape `(n,)`, which is, somewhat subtly, different from a column vector, which has shape `(n,1)`. So to work with a column vector in Python, we have to explictly specify its shape. For many operations we will want to perform, this distinction won't matter much, though for some operations this distinction is in fact important, and so we will want to be careful. We will see examples of this in the coming sections. We can also represent a vector explicitly as a row vector in a similar way.
 
-# In[7]:
+# In[8]:
 
 
 x = x.reshape(1,n)
@@ -175,7 +177,7 @@ print(x.shape) # explicitly making x a row vector
 # 
 # Note that this operation takes a matrix of shape $m\times n$ and returns a matrix of shape $n\times m$. It is easy to find the transpose of a matrix (i.e. numpy array) in Python:
 
-# In[8]:
+# In[9]:
 
 
 print(A.shape)
@@ -185,7 +187,7 @@ print(AT.shape)
 
 # We can also use this to convert between row and column vectors in numpy.
 
-# In[9]:
+# In[10]:
 
 
 x = np.random.normal(size=n)
@@ -209,7 +211,7 @@ print(xT.shape) #row vector
 # 
 # Note that for this operation to be well-defined, we need that the rows of $\boldsymbol{A}$ are of the same dimension as the columns of $\boldsymbol{B}$, or equivalently that the number of columns of $\boldsymbol{A}$ is equal to the number of rows of $\boldsymbol{B}$. Let's see some examples in Python. Note that we can also use the numpy function `np.dot` to perform matrix multiplication.
 
-# In[10]:
+# In[11]:
 
 
 m, n, p = 10,5,3
@@ -222,7 +224,7 @@ print(AB.shape)
 
 # This is an example where the matrix product is well-defined, since the number of columns of $\boldsymbol{A}$ (5) is equal to the number of rows of $\boldsymbol{B}$ (also 5). Let's see an example where this doesn't work.
 
-# In[11]:
+# In[12]:
 
 
 # now the inner dimensions don't match
