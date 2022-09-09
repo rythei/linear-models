@@ -1,0 +1,771 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>2.4. Basic concepts from linear algebra: vectors and matrices &#8212; Stat 151, Linear Models</title>
+    
+  <link href="../../_static/css/theme.css" rel="stylesheet">
+  <link href="../../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../../_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
+    <script>
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="3. Generalizing linear regression" href="../generalizing_linear_regression/chheader.html" />
+    <link rel="prev" title="2.3. More on simple linear regression" href="simple_linear_regression_cont.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../../_static/logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Stat 151, Linear Models</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../overview.html">
+   Welcome to Stat 151
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Linear models
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../python_basics/chheader.html">
+   1. Python 101
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_basics/python_basics.html">
+     1.1. The Basics
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_basics/python_numpy.html">
+     1.2. Introduction to NumPy
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_basics/python_plotting.html">
+     1.3. MatPlotLib
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="chheader.html">
+   2. Basics of linear regression
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="visualizing_data.html">
+     2.1. Exploring and visualizing data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="simple_linear_regression.html">
+     2.2. Simple linear regression
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="simple_linear_regression_cont.html">
+     2.3. More on simple linear regression
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     2.4. Basic concepts from linear algebra: vectors and matrices
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../generalizing_linear_regression/chheader.html">
+   3. Generalizing linear regression
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../extensions_applications/chheader.html">
+   4. Extensions and applications
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        <a class="dropdown-buttons"
+            href="../../_sources/content/basic_linear_regression/vectors_and_matrices.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download notebook file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../_sources/content/basic_linear_regression/vectors_and_matrices.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.md</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/erichson/LinearAlgebra/master?urlpath=tree/content/basic_linear_regression/vectors_and_matrices.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#motivation-linear-regression-with-multiple-predictor-variables">
+   2.4.1. Motivation: linear regression with multiple predictor variables
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#vectors-and-dot-products">
+   2.4.2. Vectors and dot products
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#the-dot-product">
+     2.4.2.1. The dot product
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#matrices-and-multiplication">
+   2.4.3. Matrices and multiplication
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#the-transpose-operation">
+     2.4.3.1. The transpose operation
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#matrix-multiplcation">
+     2.4.3.2. Matrix multiplcation
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#returning-to-the-multiple-linear-regression-model">
+   2.4.4. Returning to the multiple linear regression model
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Basic concepts from linear algebra: vectors and matrices</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#motivation-linear-regression-with-multiple-predictor-variables">
+   2.4.1. Motivation: linear regression with multiple predictor variables
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#vectors-and-dot-products">
+   2.4.2. Vectors and dot products
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#the-dot-product">
+     2.4.2.1. The dot product
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#matrices-and-multiplication">
+   2.4.3. Matrices and multiplication
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#the-transpose-operation">
+     2.4.3.1. The transpose operation
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#matrix-multiplcation">
+     2.4.3.2. Matrix multiplcation
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#returning-to-the-multiple-linear-regression-model">
+   2.4.4. Returning to the multiple linear regression model
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            
+              <div>
+                
+  <div class="tex2jax_ignore mathjax_ignore section" id="basic-concepts-from-linear-algebra-vectors-and-matrices">
+<h1><span class="section-number">2.4. </span>Basic concepts from linear algebra: vectors and matrices<a class="headerlink" href="#basic-concepts-from-linear-algebra-vectors-and-matrices" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="motivation-linear-regression-with-multiple-predictor-variables">
+<h2><span class="section-number">2.4.1. </span>Motivation: linear regression with multiple predictor variables<a class="headerlink" href="#motivation-linear-regression-with-multiple-predictor-variables" title="Permalink to this headline">¶</a></h2>
+<p>Now that we have introduced the simple linear regression model, a natural extension will be to consider multiple predictor variables in a model of the form</p>
+<div class="math notranslate nohighlight">
+\[
+y_i = \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \cdots + \beta_p x_{ip} + \varepsilon_i, \hspace{10mm} (1)
+\]</div>
+<p>where each observation <span class="math notranslate nohighlight">\(i\)</span> is associated with <span class="math notranslate nohighlight">\(p\)</span> different features <span class="math notranslate nohighlight">\(x_{i1},\dots, x_{ip}\)</span>. We will discuss such models extensively throughout the remainder of the course, but in order to do so effectively, we must first review some basic mathematical tools from linear algebra which will be useful in our study.</p>
+</div>
+<div class="section" id="vectors-and-dot-products">
+<h2><span class="section-number">2.4.2. </span>Vectors and dot products<a class="headerlink" href="#vectors-and-dot-products" title="Permalink to this headline">¶</a></h2>
+<p>Central to the study of linear algebra are the concepts of <em>vectors</em> and <em>vector spaces</em>. In general, a vector space is a set <span class="math notranslate nohighlight">\(V\)</span> such that for any two vectors <span class="math notranslate nohighlight">\(u,v \in V\)</span>, we can add the vectors and get a new element <span class="math notranslate nohighlight">\(u+v \in V\)</span>, and we can multiply vectors by a scalar <span class="math notranslate nohighlight">\(\alpha \in \mathbb{R}\)</span> and again get another vector <span class="math notranslate nohighlight">\(\alpha v \in V\)</span>.</p>
+<p>In this course, we will primarily be interested in the most common vector space, <span class="math notranslate nohighlight">\(\mathbb{R}^n\)</span>, which is simply the set of all <span class="math notranslate nohighlight">\(n\)</span>-tuples of real numbers. We can denote a vector <span class="math notranslate nohighlight">\(\boldsymbol{x} \in \mathbb{R}^n\)</span> using the notation</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\boldsymbol{x} = \begin{bmatrix} x_1\\ x_2\\\vdots \\ x_n \end{bmatrix}.
+\end{split}\]</div>
+<p>For example, <span class="math notranslate nohighlight">\(\begin{bmatrix} 1\\ 2\end{bmatrix}\)</span> is a vector in <span class="math notranslate nohighlight">\(\mathbb{R}^2\)</span>, which we can simply think of as a point in the Euclidean plane. In python, we typically will represent vectors using an <code class="docutils literal notranslate"><span class="pre">array</span></code> object from the numpy package. An array can be defined using the following:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># first we have to import the numpy package</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="c1"># define the vector (1,2) as a numpy array</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">])</span>
+<span class="n">x</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([1, 2])
+</pre></div>
+</div>
+</div>
+</div>
+<p>For vectors in <span class="math notranslate nohighlight">\(\mathbb{R}^n\)</span>, we can define vector addition in a simple way: given two vectors</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\boldsymbol{u} = \begin{bmatrix} u_1\\ \vdots \\ u_n\end{bmatrix},\;\;\; \boldsymbol{v} = \begin{bmatrix}v_1\\ \vdots \\ v_n\end{bmatrix},
+\end{split}\]</div>
+<p>we can add them as follows:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\boldsymbol{u} + \boldsymbol{u} = \begin{bmatrix} u_1\\ \vdots \\ u_n\end{bmatrix} + \begin{bmatrix}v_1\\ \vdots \\ v_n\end{bmatrix} = \begin{bmatrix}u_1+ v_1 \\ \vdots \\ u_n + v_n\end{bmatrix}.
+\end{split}\]</div>
+<p>That is, when we add two vectors we just add their corresponding entries. This will of course give us another vector in <span class="math notranslate nohighlight">\(\mathbb{R}^n\)</span> back. Adding two vectors is also easy using arrays in python. Let’s define two arrays <code class="docutils literal notranslate"><span class="pre">u</span></code> and <code class="docutils literal notranslate"><span class="pre">v</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
+<span class="n">v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we can add them using the usual <code class="docutils literal notranslate"><span class="pre">+</span></code> operation.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">u_plus_v</span> <span class="o">=</span> <span class="n">u</span><span class="o">+</span><span class="n">v</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;u = </span><span class="si">{</span><span class="n">u</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;v = </span><span class="si">{</span><span class="n">v</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;u+v = </span><span class="si">{</span><span class="n">u_plus_v</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>u = [1 2 3]
+v = [4 5 6]
+u+v = [5 7 9]
+</pre></div>
+</div>
+</div>
+</div>
+<p>We see that this gives us the expected result.</p>
+<p>We can also perform scalar multiplication with vectors. For a vector <span class="math notranslate nohighlight">\(\boldsymbol{v} \in \mathbb{R}^n\)</span> and a scalar <span class="math notranslate nohighlight">\(\alpha \in \mathbb{R}\)</span>, we can define</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\alpha \boldsymbol{v} = \alpha \begin{bmatrix}v_1\\ \vdots \\ v_n\end{bmatrix} = \begin{bmatrix}\alpha v_1\\ \vdots \\ \alpha v_n\end{bmatrix}.
+\end{split}\]</div>
+<p>That is, <span class="math notranslate nohighlight">\(\alpha \boldsymbol{v}\)</span> just means multiplying each entry of <span class="math notranslate nohighlight">\(\boldsymbol{v}\)</span> by <span class="math notranslate nohighlight">\(\alpha\)</span>. This is similarly each to do in python with arrays. For example,</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;v = </span><span class="si">{</span><span class="n">v</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;-1v = </span><span class="si">{</span><span class="o">-</span><span class="mi">1</span><span class="o">*</span><span class="n">v</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;2v = </span><span class="si">{</span><span class="mi">2</span><span class="o">*</span><span class="n">v</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>v = [4 5 6]
+-1v = [-4 -5 -6]
+2v = [ 8 10 12]
+</pre></div>
+</div>
+</div>
+</div>
+<p>These again give the expected results.</p>
+<div class="section" id="the-dot-product">
+<h3><span class="section-number">2.4.2.1. </span>The dot product<a class="headerlink" href="#the-dot-product" title="Permalink to this headline">¶</a></h3>
+<p>There is one more operation on vectors that will be very important to us called the <em>dot product</em> or <em>inner product</em>. Given two vectors <span class="math notranslate nohighlight">\(\boldsymbol{u},\boldsymbol{v} \in \mathbb{R}^n\)</span>, their dot product is</p>
+<div class="math notranslate nohighlight">
+\[
+\langle \boldsymbol{u},\boldsymbol{v}\rangle = \boldsymbol{u}\cdot \boldsymbol{v} = \sum_{i=1}^n u_iv_i.
+\]</div>
+<p>This returns a single real <em>number</em>, which is the sum <span class="math notranslate nohighlight">\(\sum_{i=1}^n u_iv_i\)</span>, i.e. multiplying and summing up the entries of the two vectors pairwise.</p>
+<blockquote>
+<div><p>Remark: we use two notations for the dot product here, <span class="math notranslate nohighlight">\(\langle \boldsymbol{u},\boldsymbol{v}\rangle\)</span> and <span class="math notranslate nohighlight">\(\boldsymbol{u}\cdot \boldsymbol{v}\)</span> both will be seen commonly, and can be used interchangeably. In fact, the dot product between two vectors is also sometimes written as <span class="math notranslate nohighlight">\(\boldsymbol{u}^\top \boldsymbol{v}\)</span>. This form will make more sense shortly when we discuss matrices.</p>
+</div></blockquote>
+<p>In numpy, we can compute the dot product of two vectors using the function <code class="docutils literal notranslate"><span class="pre">np.dot</span></code>. For example,</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">])</span>
+<span class="n">x_dot_y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span> <span class="c1"># computes 1*4 + 2*5 + 3*6 = 32</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">x_dot_y</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>32
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="matrices-and-multiplication">
+<h2><span class="section-number">2.4.3. </span>Matrices and multiplication<a class="headerlink" href="#matrices-and-multiplication" title="Permalink to this headline">¶</a></h2>
+<p>One way to define a matrix is as follows: an <span class="math notranslate nohighlight">\(m\times n\)</span> matrix <span class="math notranslate nohighlight">\(\boldsymbol{A} \in \mathbb{R}^{m\times n}\)</span>, is an array of real numbers consisting of <span class="math notranslate nohighlight">\(m\)</span> rows and <span class="math notranslate nohighlight">\(n\)</span> columns. For example, the following is a <span class="math notranslate nohighlight">\(2\times 3\)</span> matrix</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\boldsymbol{A} = \begin{bmatrix} 1 &amp; 2 &amp; 3\\ 4 &amp; 5 &amp; 6\end{bmatrix}.
+\end{split}\]</div>
+<p>This matrix can also be defined as a numpy array in python:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">]])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[1 2 3]
+ [4 5 6]]
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can also think of a matrix a collection of vectors in two different ways: first, we can think of it as containing <em>row vectors</em>, <span class="math notranslate nohighlight">\(\begin{bmatrix} 1 &amp; 2 &amp; 3\end{bmatrix}\)</span> and <span class="math notranslate nohighlight">\(\begin{bmatrix} 4&amp;5&amp;6\end{bmatrix}\)</span>. Alternatively, we can think of <span class="math notranslate nohighlight">\(\boldsymbol{A}\)</span> as a collection of <em>column vectors</em> <span class="math notranslate nohighlight">\(\begin{bmatrix}1\\ 4\end{bmatrix}, \begin{bmatrix}2\\ 5\end{bmatrix}, \begin{bmatrix}3\\ 6\end{bmatrix}\)</span>. Sometimes, we will use the notation</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{bmatrix} \boldsymbol{x}_1\\ \vdots \\ \boldsymbol{x}_m \end{bmatrix} \;\;\;\; \text{or}  \;\;\;\; \begin{bmatrix} \boldsymbol{x}_1 &amp; \cdots &amp; \boldsymbol{x}_n \end{bmatrix}
+\end{split}\]</div>
+<p>to denote a <span class="math notranslate nohighlight">\(m\times n\)</span> matrix in terms of its row vectors or column vectors.</p>
+<p>Note that by this definition of a matrix, a vector is simply a special case of a matrix with either just one column or one row. By convention, we usually think of a vector <span class="math notranslate nohighlight">\(\boldsymbol{x}\in \mathbb{R}^n\)</span> as being a <em>column vector</em>, with <span class="math notranslate nohighlight">\(n\)</span> rows and <span class="math notranslate nohighlight">\(1\)</span> column, so that <span class="math notranslate nohighlight">\(\boldsymbol{x}\)</span> is really a <span class="math notranslate nohighlight">\(n\times 1\)</span> matrix.</p>
+<p>In numpy, we can specify a vector as being a column vector by suitably reshaping it.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span> <span class="c1"># generate a random vector of dimension n</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="c1"># defaults to shape (n,)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="c1"># explicitly making x a column vector</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(5,)
+(5, 1)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Note that by default, numpy stores 1-d arrays as having shape <code class="docutils literal notranslate"><span class="pre">(n,)</span></code>, which is, somewhat subtly, different from a column vector, which has shape <code class="docutils literal notranslate"><span class="pre">(n,1)</span></code>. So to work with a column vector in Python, we have to explictly specify its shape. For many operations we will want to perform, this distinction won’t matter much, though for some operations this distinction is in fact important, and so we will want to be careful. We will see examples of this in the coming sections. We can also represent a vector explicitly as a row vector in a similar way.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">n</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="c1"># explicitly making x a row vector</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(1, 5)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Suppose we were given an <span class="math notranslate nohighlight">\(m\times n\)</span> matrix <span class="math notranslate nohighlight">\(\boldsymbol{A}\)</span> of the form</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\boldsymbol{A} = \begin{bmatrix}a_{11}&amp; \cdots &amp;a_{1n}\\ a_{21}&amp;\cdots &amp; a_{2n}\\ \vdots &amp; \ddots &amp; \vdots \\ a_{m1}&amp;\cdots &amp; a_{mn}\end{bmatrix} \in \mathbb{R}^{m\times n}.
+\end{split}\]</div>
+<div class="section" id="the-transpose-operation">
+<h3><span class="section-number">2.4.3.1. </span>The transpose operation<a class="headerlink" href="#the-transpose-operation" title="Permalink to this headline">¶</a></h3>
+<p>One of the most important operations we can perform on such a matrix is to take its <em>transpose</em>, which means to form the <span class="math notranslate nohighlight">\(n\times m\)</span> matrix <span class="math notranslate nohighlight">\(\boldsymbol{A}^\top\)</span> by defining the <span class="math notranslate nohighlight">\(i^{th}\)</span> row of <span class="math notranslate nohighlight">\(\boldsymbol{A}^\top\)</span> be the <span class="math notranslate nohighlight">\(i^{th}\)</span> column of <span class="math notranslate nohighlight">\(\boldsymbol{A}\)</span>. Specifically, this would give us</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\boldsymbol{A}^\top = \begin{bmatrix}a_{11}&amp; \cdots &amp;a_{m1}\\ a_{12}&amp;\cdots &amp; a_{m2}\\ \vdots &amp; \ddots &amp; \vdots \\ a_{1n}&amp;\cdots &amp; a_{mn}\end{bmatrix} \in \mathbb{R}^{n\times m}.
+\end{split}\]</div>
+<p>Note that this operation takes a matrix of shape <span class="math notranslate nohighlight">\(m\times n\)</span> and returns a matrix of shape <span class="math notranslate nohighlight">\(n\times m\)</span>. It is easy to find the transpose of a matrix (i.e. numpy array) in Python:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="n">AT</span> <span class="o">=</span> <span class="n">A</span><span class="o">.</span><span class="n">T</span> <span class="c1"># take the transpose of A</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">AT</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(2, 3)
+(3, 2)
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can also use this to convert between row and column vectors in numpy.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="c1">#column vector</span>
+<span class="n">xT</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">T</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">xT</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="c1">#row vector</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(5, 1)
+(1, 5)
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="matrix-multiplcation">
+<h3><span class="section-number">2.4.3.2. </span>Matrix multiplcation<a class="headerlink" href="#matrix-multiplcation" title="Permalink to this headline">¶</a></h3>
+<p>The second operation on matrices which will we frequently encounter is matrix multiplication.</p>
+<p>Matrix multiplication is really a generalization of the dot product we defined earlier. Given matrices <span class="math notranslate nohighlight">\(\boldsymbol{A}\in \mathbb{R}^{m\times n}\)</span>, with rows <span class="math notranslate nohighlight">\(\boldsymbol{a}_{1:},\dots,\boldsymbol{a}_{m:}\)</span>, and  <span class="math notranslate nohighlight">\(\boldsymbol{B}\in \mathbb{R}^{n\times p}\)</span>, with columns <span class="math notranslate nohighlight">\(\boldsymbol{b}_{:1},\dots, \boldsymbol{b}_{:p}\)</span>, we define the matrix product <span class="math notranslate nohighlight">\(\boldsymbol{AB}\)</span> to be the <span class="math notranslate nohighlight">\(m\times p\)</span> matrix whose <span class="math notranslate nohighlight">\((i,j)^{th}\)</span> entry is</p>
+<div class="math notranslate nohighlight">
+\[
+[\boldsymbol{A}\boldsymbol{B}]_{ij} = \boldsymbol{a}_{i:} \cdot \boldsymbol{b}_{:j}.
+\]</div>
+<p>That is, the <span class="math notranslate nohighlight">\((i,j)^{th}\)</span> entry of the matrix <span class="math notranslate nohighlight">\(\boldsymbol{AB}\)</span> is the dot product of the <span class="math notranslate nohighlight">\(i^{th}\)</span> row of <span class="math notranslate nohighlight">\(\boldsymbol{A}\)</span> with the <span class="math notranslate nohighlight">\(j^{th}\)</span> column of <span class="math notranslate nohighlight">\(\boldsymbol{B}\)</span>.</p>
+<p>Note that for this operation to be well-defined, we need that the rows of <span class="math notranslate nohighlight">\(\boldsymbol{A}\)</span> are of the same dimension as the columns of <span class="math notranslate nohighlight">\(\boldsymbol{B}\)</span>, or equivalently that the number of columns of <span class="math notranslate nohighlight">\(\boldsymbol{A}\)</span> is equal to the number of rows of <span class="math notranslate nohighlight">\(\boldsymbol{B}\)</span>. Let’s see some examples in Python. Note that we can also use the numpy function <code class="docutils literal notranslate"><span class="pre">np.dot</span></code> to perform matrix multiplication.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">p</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">3</span>
+
+<span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="n">n</span><span class="p">))</span>
+<span class="n">B</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">p</span><span class="p">))</span>
+<span class="n">AB</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">B</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">AB</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(10, 3)
+</pre></div>
+</div>
+</div>
+</div>
+<p>This is an example where the matrix product is well-defined, since the number of columns of <span class="math notranslate nohighlight">\(\boldsymbol{A}\)</span> (5) is equal to the number of rows of <span class="math notranslate nohighlight">\(\boldsymbol{B}\)</span> (also 5). Let’s see an example where this doesn’t work.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># now the inner dimensions don&#39;t match</span>
+<span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">p</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span>
+
+<span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="n">n</span><span class="p">))</span>
+<span class="n">B</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="n">p</span><span class="p">))</span>
+<span class="n">AB</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">B</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">AB</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ValueError</span><span class="g g-Whitespace">                                </span>Traceback (most recent call last)
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">12</span><span class="o">-</span><span class="mi">4</span><span class="n">d3c337d16ff</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="n">n</span><span class="p">))</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="n">B</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="n">p</span><span class="p">))</span>
+<span class="ne">----&gt; </span><span class="mi">6</span> <span class="n">AB</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">B</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="nb">print</span><span class="p">(</span><span class="n">AB</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+<span class="nn">~/opt/miniconda3/lib/python3.9/site-packages/numpy/core/overrides.py</span> in <span class="ni">dot</span><span class="nt">(*args, **kwargs)</span>
+
+<span class="ne">ValueError</span>: shapes (10,5) and (4,3) not aligned: 5 (dim 1) != 4 (dim 0)
+</pre></div>
+</div>
+</div>
+</div>
+<p>As we’d expect, numpy gives us an error, because the two matrices are not of coherent dimensions to perform matrix multiplcation.</p>
+</div>
+</div>
+<div class="section" id="returning-to-the-multiple-linear-regression-model">
+<h2><span class="section-number">2.4.4. </span>Returning to the multiple linear regression model<a class="headerlink" href="#returning-to-the-multiple-linear-regression-model" title="Permalink to this headline">¶</a></h2>
+<p>To see why linear algebra is so closely related to the study of linear models of the form <span class="math notranslate nohighlight">\((1)\)</span>, let us define a few special vectors and matrices. Given <span class="math notranslate nohighlight">\(p\)</span> predictor variable <span class="math notranslate nohighlight">\(x_{i1},\dots, x_{ip}\)</span>, define the vector</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\boldsymbol{x}_i = \begin{bmatrix}1\\ x_{i1}\\ x_{i2}\\ \vdots\\ x_{ip}\end{bmatrix}
+\end{split}\]</div>
+<p>as well as the vector of coefficients</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\boldsymbol{\beta} = \begin{bmatrix}\beta_0 \\ \beta_1\\ \beta_2 \\ \vdots\\ \beta_p \end{bmatrix}.
+\end{split}\]</div>
+<p>Then let’s see what happens when we take the dot product of <span class="math notranslate nohighlight">\(\boldsymbol{x}_i\)</span> with <span class="math notranslate nohighlight">\(\boldsymbol{\beta}\)</span>. By definition, this is</p>
+<div class="math notranslate nohighlight">
+\[
+\boldsymbol{\beta}\cdot \boldsymbol{x}_i = \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \cdots + \beta_p x_{ip}
+\]</div>
+<p>This looks exactly the same as the right-hand side of equation (1) (only without the error term <span class="math notranslate nohighlight">\(\varepsilon\)</span>). Note that we cleverly added a 1 to the first entry of the vector <span class="math notranslate nohighlight">\(\boldsymbol{x}_i\)</span> so that it would match up with the intercept term <span class="math notranslate nohighlight">\(\beta_0\)</span> and give us a constant. This means that we can succinctly represent the regression model (1) in vector form as</p>
+<div class="math notranslate nohighlight">
+\[
+y_i = \boldsymbol{\beta}\cdot \boldsymbol{x}_i + \varepsilon_i.
+\]</div>
+<p>Furthermore, we can stack the vectors <span class="math notranslate nohighlight">\(\boldsymbol{x}_1\dots,\boldsymbol{x}_n\)</span> for our <span class="math notranslate nohighlight">\(n\)</span> observations as the row vectors of an <span class="math notranslate nohighlight">\(n\times (p+1)\)</span> matrix <span class="math notranslate nohighlight">\(\boldsymbol{X}\)</span> as follows:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\boldsymbol{X} = \begin{bmatrix} \boldsymbol{x}_1 \\ \boldsymbol{x}_2\\ \vdots\\ \boldsymbol{x}_n\end{bmatrix}
+\end{split}\]</div>
+<p>Also, we can define the vectors</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\boldsymbol{y} = \begin{bmatrix}y_1\\y_2\\ \vdots \\ y_n\end{bmatrix},\;\;\; \boldsymbol{\varepsilon} = \begin{bmatrix}\varepsilon_1\\ \varepsilon_2\\ \vdots \\ \varepsilon_n\end{bmatrix}
+\end{split}\]</div>
+<p>and write the model simultaneously over all <span class="math notranslate nohighlight">\(n\)</span> observations as</p>
+<div class="math notranslate nohighlight">
+\[
+\boldsymbol{y} = \boldsymbol{X\beta} + \boldsymbol{\varepsilon}.
+\]</div>
+<p>Note that at this point, we haven’t done much new – we’ve just defined some mathematical objects and used them to simplify the expression for a linear regression model with multiple predictors. However, in doing so, we will be able to use powerful tools from linear algebra to study such models.</p>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./content/basic_linear_regression"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="simple_linear_regression_cont.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title"><span class="section-number">2.3. </span>More on simple linear regression</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="../generalizing_linear_regression/chheader.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><span class="section-number">3. </span>Generalizing linear regression</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            
+        </div>
+    </div>
+    <footer class="footer">
+  <p>
+    
+      By Michael W. Mahoney and Ryan Theisen<br/>
+    
+        &copy; Copyright 2021.<br/>
+  </p>
+</footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="../../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
+  </body>
+</html>
