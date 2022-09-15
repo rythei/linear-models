@@ -1,0 +1,749 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>2.5. Linear regression with multiple predictors &#8212; Stat 151, Linear Models</title>
+    
+  <link href="../../_static/css/theme.css" rel="stylesheet">
+  <link href="../../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../../_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
+    <script>
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="2.6. More on least squares" href="more_least_squares.html" />
+    <link rel="prev" title="2.4. Basic concepts from linear algebra: vectors and matrices" href="vectors_and_matrices.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../../_static/logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Stat 151, Linear Models</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../overview.html">
+   Welcome to Stat 151
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Linear models
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../python_basics/chheader.html">
+   1. Python 101
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_basics/python_basics.html">
+     1.1. The Basics
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_basics/python_numpy.html">
+     1.2. Introduction to NumPy
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_basics/python_plotting.html">
+     1.3. MatPlotLib
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="chheader.html">
+   2. Basics of linear regression
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="visualizing_data.html">
+     2.1. Exploring and visualizing data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="simple_linear_regression.html">
+     2.2. Simple linear regression
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="simple_linear_regression_cont.html">
+     2.3. More on simple linear regression
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="vectors_and_matrices.html">
+     2.4. Basic concepts from linear algebra: vectors and matrices
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     2.5. Linear regression with multiple predictors
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="more_least_squares.html">
+     2.6. More on least squares
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../generalizing_linear_regression/chheader.html">
+   3. Generalizing linear regression
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../extensions_applications/chheader.html">
+   4. Extensions and applications
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        <a class="dropdown-buttons"
+            href="../../_sources/content/basic_linear_regression/multiple_predictors.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download notebook file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../_sources/content/basic_linear_regression/multiple_predictors.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.md</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/erichson/LinearAlgebra/master?urlpath=tree/content/basic_linear_regression/multiple_predictors.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#solving-the-least-squares-problem">
+   2.5.1. Solving the least squares problem
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#an-example">
+   2.5.2. An example
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#diagnostics-for-multiple-least-squares">
+   2.5.3. Diagnostics for multiple least squares
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Linear regression with multiple predictors</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#solving-the-least-squares-problem">
+   2.5.1. Solving the least squares problem
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#an-example">
+   2.5.2. An example
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#diagnostics-for-multiple-least-squares">
+   2.5.3. Diagnostics for multiple least squares
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            
+              <div>
+                
+  <div class="tex2jax_ignore mathjax_ignore section" id="linear-regression-with-multiple-predictors">
+<h1><span class="section-number">2.5. </span>Linear regression with multiple predictors<a class="headerlink" href="#linear-regression-with-multiple-predictors" title="Permalink to this headline">¶</a></h1>
+<p><em>Datasets used in throughout this book can be downloaded <a class="reference external" href="https://drive.google.com/drive/folders/1OkXMcFo0urN0kSQYH4d75I4V3pnSpV6H?usp=sharing">here</a>.</em></p>
+<p>Let us continue our discussion of linear regression with multiple predictor variables. In this case, we want to model a response <span class="math notranslate nohighlight">\(y_i\)</span> as a linear combination of <span class="math notranslate nohighlight">\(p\)</span> predictor variables <span class="math notranslate nohighlight">\(x_{i1},\dots, x_{ip}\)</span> plus some noise:</p>
+<div class="math notranslate nohighlight">
+\[
+y_i = \beta_0 + \beta_1 x_{i1} + \cdots + \beta_p x_{ip} + \varepsilon_i.
+\]</div>
+<p>As we saw in the previous section, this can be written concisely for all <span class="math notranslate nohighlight">\(n\)</span> observations simultaneously as</p>
+<div class="math notranslate nohighlight">
+\[
+\boldsymbol{y} = \boldsymbol{X\beta} + \boldsymbol{\varepsilon}.
+\]</div>
+<p>Like in the single predictor case, our objective will be to minimize the sum of squared errors:</p>
+<div class="math notranslate nohighlight">
+\[
+ \sum_{i=1}^n (y_i - \boldsymbol{\beta}\cdot \boldsymbol{x}_i)^2 = \sum_{i=1}^n (y_i - \hat{y}_i)^2
+\]</div>
+<p>Conveniently, this can be written in terms of the squared Euclidean norm:</p>
+<div class="math notranslate nohighlight">
+\[
+\sum_{i=1}^n (y_i - \hat{y}_i)^2 = \|\boldsymbol{y} - \hat{\boldsymbol{y}}\|_2^2 = \|\boldsymbol{y} - \boldsymbol{X\beta}\|_2^2
+\]</div>
+<p>where</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\boldsymbol{X} = \begin{bmatrix} \boldsymbol{x}_1 \\ \boldsymbol{x}_2\\ \vdots\\ \boldsymbol{x}_n\end{bmatrix} \in \mathbb{R}^{n\times (p+1)}
+\end{split}\]</div>
+<p>(where recall we made the first entry of each row <span class="math notranslate nohighlight">\(\boldsymbol{x}_i\)</span> 1 to account for the intercept term) and</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\boldsymbol{\beta} = \begin{bmatrix}\beta_0 \\ \beta_1\\ \beta_2 \\ \vdots\\ \beta_p \end{bmatrix} \in \mathbb{R}^{p+1},\;\;\; \boldsymbol{y} = \begin{bmatrix}y_1\\y_2\\ \vdots \\ y_n\end{bmatrix}\in \mathbb{R}^n,\;\;\; \boldsymbol{\varepsilon} = \begin{bmatrix}\varepsilon_1\\ \varepsilon_2\\ \vdots \\ \varepsilon_n\end{bmatrix}\in \mathbb{R}^n.
+\end{split}\]</div>
+<div class="section" id="solving-the-least-squares-problem">
+<h2><span class="section-number">2.5.1. </span>Solving the least squares problem<a class="headerlink" href="#solving-the-least-squares-problem" title="Permalink to this headline">¶</a></h2>
+<p>In the single predictor case, we individually took derivates with respect to <span class="math notranslate nohighlight">\(\beta_0\)</span> and <span class="math notranslate nohighlight">\(\beta_1\)</span> and set these equal to zero to find the least squares solutions. We could do the same here as well, however we can simplify the calculations considerably by using some basic formulas from matrix calculus:</p>
+<ol class="simple">
+<li><p>For vectors <span class="math notranslate nohighlight">\(\boldsymbol{x},\boldsymbol{y}\)</span>, <span class="math notranslate nohighlight">\(\frac{d}{d\boldsymbol{x}} \boldsymbol{x}\cdot \boldsymbol{y}= \boldsymbol{y}\)</span>.</p></li>
+<li><p>For a symmetric matrix <span class="math notranslate nohighlight">\(\boldsymbol{A}\)</span> (meaning that <span class="math notranslate nohighlight">\(\boldsymbol{A}^\top = \boldsymbol{A}\)</span>), we have <span class="math notranslate nohighlight">\(\frac{d}{d\boldsymbol{x}} \boldsymbol{x}\cdot \boldsymbol{Ax} = 2\boldsymbol{Ax}\)</span>.</p></li>
+</ol>
+<p>Now using our fact from the previous section that <span class="math notranslate nohighlight">\(\|\boldsymbol{a}\|_2^2 = \boldsymbol{a}\cdot \boldsymbol{a}\)</span>, using a bit of algebra (mostly the distributive property) we can write</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+\|\boldsymbol{y} - \boldsymbol{X\beta}\|_2^2 &amp;= (\boldsymbol{y} - \boldsymbol{X\beta})\cdot (\boldsymbol{y} - \boldsymbol{X\beta})\\
+&amp;= \boldsymbol{y}\cdot \boldsymbol{y} - 2\boldsymbol{y}\cdot \boldsymbol{X\boldsymbol{\beta}} + \boldsymbol{\beta}\cdot \boldsymbol{X^\top X \beta}
+\end{align*}
+\end{split}\]</div>
+<p>Now using our derivate formulas from above, we have</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+\frac{d}{d\boldsymbol{\beta}} \|\boldsymbol{y} - \boldsymbol{X\beta}\|_2^2 =&amp; \frac{d}{d\boldsymbol{\beta}}\{\boldsymbol{y}\cdot \boldsymbol{y} - 2\boldsymbol{y}\cdot \boldsymbol{X\boldsymbol{\beta}} + \boldsymbol{\beta}\cdot \boldsymbol{X^\top X \beta} \} \\
+&amp;= -2\boldsymbol{X^\top y} + 2\boldsymbol{X^\top X\beta} = 0
+\end{align*}
+\end{split}\]</div>
+<p>Solving this, we obtain an important set of equations called the <em>normal equations</em>:</p>
+<div class="math notranslate nohighlight">
+\[
+\boldsymbol{X^\top X\beta} = \boldsymbol{X^\top y} \hspace{10mm} (1)
+\]</div>
+<p>To find the solution <span class="math notranslate nohighlight">\(\widehat{\boldsymbol{\beta}}\)</span>, we have to somehow solve the normal equations for <span class="math notranslate nohighlight">\(\boldsymbol{\beta}\)</span>. For now, we will focus on the simplest case when <span class="math notranslate nohighlight">\(\boldsymbol{X^\top X}\)</span> is an invertible matrix, in which case we can simply multiply both sides of <span class="math notranslate nohighlight">\((1)\)</span> by <span class="math notranslate nohighlight">\((\boldsymbol{X^\top X})^{-1}\)</span> to get</p>
+<div class="math notranslate nohighlight">
+\[
+\widehat{\boldsymbol{\beta}} = (\boldsymbol{X^\top X})^{-1}\boldsymbol{X^\top y}.
+\]</div>
+<p>This formula gives the most standard form of the solution to the problem <span class="math notranslate nohighlight">\(\min_{\boldsymbol{\beta}} \|\boldsymbol{y} - \boldsymbol{X\beta}\|_2^2\)</span>.</p>
+<p>Before proceeding to some examples, let’s define a function which takes in a data matrix <span class="math notranslate nohighlight">\(\boldsymbol{X}\)</span> and a vector of responses <span class="math notranslate nohighlight">\(\boldsymbol{y}\)</span>, and returns the least squares solution <span class="math notranslate nohighlight">\(\widehat{\boldsymbol{\beta}}\)</span>. To do this, we will use numpy’s functions <code class="docutils literal notranslate"><span class="pre">np.dot</span></code> and <code class="docutils literal notranslate"><span class="pre">np.linalg.inv</span></code> (to compute <span class="math notranslate nohighlight">\((\boldsymbol{X^\top X})^{-1}\)</span>).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="k">def</span> <span class="nf">fit_linear_regression</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="c1"># compute X^TX</span>
+    <span class="n">XTX</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">X</span><span class="p">)</span>
+
+    <span class="c1"># compute the inverse of X^TX</span>
+    <span class="n">XTX_inverse</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">XTX</span><span class="p">)</span>
+
+    <span class="c1"># compute X^Ty</span>
+    <span class="n">XTy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+    <span class="c1"># compute the least squares coefficients beta = (X^TX)^{-1}X^Ty</span>
+    <span class="n">beta_hat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">XTX_inverse</span><span class="p">,</span> <span class="n">XTy</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">beta_hat</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now that we’ve written code to fit a generic multiple linear regression model, let’s see an example with an actual dataset.</p>
+</div>
+<div class="section" id="an-example">
+<h2><span class="section-number">2.5.2. </span>An example<a class="headerlink" href="#an-example" title="Permalink to this headline">¶</a></h2>
+<p>As an example, we will use the California housing dataset, which can be loaded using <code class="docutils literal notranslate"><span class="pre">pandas</span></code> with the following.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;datasets/california_housing.csv&quot;</span><span class="p">)</span>
+<span class="n">dataset</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>MedInc</th>
+      <th>HouseAge</th>
+      <th>AveRooms</th>
+      <th>AveBedrms</th>
+      <th>Population</th>
+      <th>AveOccup</th>
+      <th>Latitude</th>
+      <th>Longitude</th>
+      <th>MedHouseVal</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>8.3252</td>
+      <td>41.0</td>
+      <td>6.984127</td>
+      <td>1.023810</td>
+      <td>322.0</td>
+      <td>2.555556</td>
+      <td>37.88</td>
+      <td>-122.23</td>
+      <td>4.526</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>8.3014</td>
+      <td>21.0</td>
+      <td>6.238137</td>
+      <td>0.971880</td>
+      <td>2401.0</td>
+      <td>2.109842</td>
+      <td>37.86</td>
+      <td>-122.22</td>
+      <td>3.585</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>7.2574</td>
+      <td>52.0</td>
+      <td>8.288136</td>
+      <td>1.073446</td>
+      <td>496.0</td>
+      <td>2.802260</td>
+      <td>37.85</td>
+      <td>-122.24</td>
+      <td>3.521</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>5.6431</td>
+      <td>52.0</td>
+      <td>5.817352</td>
+      <td>1.073059</td>
+      <td>558.0</td>
+      <td>2.547945</td>
+      <td>37.85</td>
+      <td>-122.25</td>
+      <td>3.413</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>3.8462</td>
+      <td>52.0</td>
+      <td>6.281853</td>
+      <td>1.081081</td>
+      <td>565.0</td>
+      <td>2.181467</td>
+      <td>37.85</td>
+      <td>-122.25</td>
+      <td>3.422</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>This dataset contains features describing houses in the state of California, such as the average number of rooms in a house and the median income of persons in a given house, as well as a variable <code class="docutils literal notranslate"><span class="pre">MedHouseVal</span></code> describing the median house value in a given region (measured in $100,000 units). Let’s first visualize our data to get a sense of whether or not any of the variables seem to be obviously skewed (in which case we might want to transform them). The python package <code class="docutils literal notranslate"><span class="pre">seaborn</span></code> let’s us do this conveniently with the following code:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">PairGrid</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">map_offdiag</span><span class="p">(</span><span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">map_diag</span><span class="p">(</span><span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.PairGrid at 0x7fb0f1eed0a0&gt;
+</pre></div>
+</div>
+<img alt="../../_images/multiple_predictors_5_1.png" src="../../_images/multiple_predictors_5_1.png" />
+</div>
+</div>
+<p>On the diagonals, we see histograms of each of the individual features. On the <span class="math notranslate nohighlight">\((i,j)^{th}\)</span> off-diagonal, we get scatterplots of feature <span class="math notranslate nohighlight">\(j\)</span> against feature <span class="math notranslate nohighlight">\(i\)</span>. We observe that some of the features may be slightly skewed, which we could resolve by transforming them in some way. However, to keep the model simple for the sake of this example, we will keep with the features in their original units.</p>
+<p>Before we actually fit a regression model, let’s gather the data into a numpy arrays so that they are easier to work with.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># first get all the columns except for the response, MedHouseVal</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">[[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">dataset</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">c</span><span class="o">!=</span><span class="s2">&quot;MedHouseVal&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">[</span><span class="s2">&quot;MedHouseVal&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(20640, 8) (20640,)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Next, we need to add a column of 1’s to the <code class="docutils literal notranslate"><span class="pre">X</span></code> array to account for the intercept term. This can be done easily with the following:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># create a (n, 1) array of all ones</span>
+<span class="n">ones</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># add this array as a new column of X</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">([</span><span class="n">ones</span><span class="p">,</span> <span class="n">X</span><span class="p">])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(20640, 9)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we can use our method <code class="docutils literal notranslate"><span class="pre">fit_linear_regression</span></code> that we wrote above to actually fit the model.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">beta_hat</span> <span class="o">=</span> <span class="n">fit_linear_regression</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s inspect the coefficients for each of the features:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># get all the names of the columns</span>
+<span class="n">feature_names</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Intercept&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">dataset</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">c</span><span class="o">!=</span><span class="s2">&quot;MedHouseVal&quot;</span><span class="p">]</span>
+
+<span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">coeff</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">feature_names</span><span class="p">,</span> <span class="n">beta_hat</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">coeff</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept: -36.9419202074223
+MedInc: 0.4366932931336578
+HouseAge: 0.009435778033198616
+AveRooms: -0.10732204139006285
+AveBedrms: 0.64506569351758
+Population: -3.976389421277496e-06
+AveOccup: -0.0037865426549637538
+Latitude: -0.4213143775293986
+Longitude: -0.43451375467742537
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we can directly interpret the coefficients. For example, we see that the coefficient for population is almost zero, meaning that the house prices don’t seem to depend on how large the population of the area around the house is. On the other hand, features like <code class="docutils literal notranslate"><span class="pre">MedInc</span></code> (median income) and <code class="docutils literal notranslate"><span class="pre">AvgBedrms</span></code> (average # bedrooms) seems to significantly increase the price of homes. Interestingly, the coefficients for latitude and longitude are both negative, indicating that the more north and east you go in California, the less expensive the houses.</p>
+</div>
+<div class="section" id="diagnostics-for-multiple-least-squares">
+<h2><span class="section-number">2.5.3. </span>Diagnostics for multiple least squares<a class="headerlink" href="#diagnostics-for-multiple-least-squares" title="Permalink to this headline">¶</a></h2>
+<p>In the simple linear regression setting, we developed a few diagnostic tools that we can use to assess the fit of a linear regression model, for by inspecting residuals and computing the <span class="math notranslate nohighlight">\(R^2\)</span>. For this section, denote <span class="math notranslate nohighlight">\(\hat{\boldsymbol{\beta}}\)</span> the fitted least squares parameters and let <span class="math notranslate nohighlight">\(\boldsymbol{X}, \boldsymbol{y}\)</span> be the data the model was fit to. Then the fitted response values are given by</p>
+<div class="math notranslate nohighlight">
+\[
+\hat{\boldsymbol{y}} = \boldsymbol{X}\hat{\boldsymbol{\beta}}.
+\]</div>
+<p>Like in the single predictor case, we can define the residual sum of squares</p>
+<div class="math notranslate nohighlight">
+\[
+\text{RSS} = \sum_{i=1}^n (y_i - \hat{y}_i)^2
+\]</div>
+<p>and the total sum of squares</p>
+<div class="math notranslate nohighlight">
+\[
+\text{TSS} = \sum_{i=1}^n (y_i - \bar{y})^2
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(\bar{y} = \sum_{i=1}^n y_i\)</span>. Likewise, the regression sum of squares is again</p>
+<div class="math notranslate nohighlight">
+\[
+\text{RegSS} = \text{TSS} - \text{RSS}
+\]</div>
+<p>Given these, the definition of the <span class="math notranslate nohighlight">\(R^2\)</span> from the single predictor case immediately carries over to the multiple linear regression case, and is given by</p>
+<div class="math notranslate nohighlight">
+\[
+R^2 = \frac{\text{RegSS}}{\text{TSS}}.
+\]</div>
+<p>Let’s compute the <span class="math notranslate nohighlight">\(R^2\)</span> for the model we’ve just fit above. First, we need the fitted values <span class="math notranslate nohighlight">\(\hat{\boldsymbol{y}}\)</span>, and the mean response <span class="math notranslate nohighlight">\(\bar{y}\)</span>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y_bar</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+<span class="n">y_hat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">beta_hat</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we can compute the RSS, TSS and RegSS,</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">RSS</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">y</span><span class="o">-</span><span class="n">y_hat</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">TSS</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">y</span><span class="o">-</span><span class="n">y_bar</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">RegSS</span> <span class="o">=</span> <span class="n">TSS</span><span class="o">-</span><span class="n">RSS</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Finally, we can get the <span class="math notranslate nohighlight">\(R^2\)</span>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">R2</span> <span class="o">=</span> <span class="n">RegSS</span><span class="o">/</span><span class="n">TSS</span>
+<span class="n">R2</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.6062326851998051
+</pre></div>
+</div>
+</div>
+</div>
+<p>The <span class="math notranslate nohighlight">\(R^2\)</span> is <span class="math notranslate nohighlight">\(\approx 0.6\)</span>, meaning that this model is able to explain about 60% of the variance in the house prices.</p>
+<p>Note: there are many other things that we could explore here. For example, it would be good to try various transformations of our features, or perhaps seeing if using only a subset of the features can produce a similar quality model.</p>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./content/basic_linear_regression"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="vectors_and_matrices.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title"><span class="section-number">2.4. </span>Basic concepts from linear algebra: vectors and matrices</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="more_least_squares.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><span class="section-number">2.6. </span>More on least squares</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            
+        </div>
+    </div>
+    <footer class="footer">
+  <p>
+    
+      By Michael W. Mahoney and Ryan Theisen<br/>
+    
+        &copy; Copyright 2021.<br/>
+  </p>
+</footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="../../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
+  </body>
+</html>

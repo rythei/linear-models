@@ -111,6 +111,74 @@ x_dot_y = np.dot(x,y) # computes 1*4 + 2*5 + 3*6 = 32
 print(x_dot_y)
 
 
+# ### Vector norms
+# 
+# Another important operation that we can do with vectors is to compute their _norm_. A norm is a function that measures the "size" of something.
+# One example of a norm is the familiar Euclidean norm, which uses the expression $(x_1^2+x_2^2)^{1/2}$ to compute the "size" or "magnitude" of a point $\begin{bmatrix}x_1 \\ x_2\end{bmatrix}$ in the two-dimensional Euclidean plane. If we view that point as a vector, then that is the Euclidean norm of the vector.
+# 
+# The generalization of this notion of length to $n$ dimensions gives us the Euclidean norm, which is the most important vector norm used in practice. For a vector
+# 
+# $$
+# \boldsymbol{x} = \begin{bmatrix}x_1\\\vdots\\ x_n\end{bmatrix},
+# $$
+# 
+# it's Euclidean norm can be computed as
+# 
+# $$
+# \|\boldsymbol{x}\|_2 = \sqrt{\sum_{i=1}^n x_i^2}.
+# $$
+# 
+# > Remark: we use the notation $\|\cdot\|_2$ to indicate the Euclidean norm as it is often also referred to as the "2-norm". This is because it can be viewed as part of a family of norms called the $p$-norms. For $p\geq 1$, the $p$-norm of a vector $\boldsymbol{x}$ is given by $(\sum_{i=1}^n |x_i|^p)^{1/p}$.
+# 
+# Note that, importantly, the Euclidean norm squared is simply the dot product of $\boldsymbol{x}$ with itself, since
+# 
+# $$
+# \|\boldsymbol{x}\|_2^2 = \sum_{i=1}^n x_i^2 = \boldsymbol{x}\cdot \boldsymbol{x}.
+# $$
+# 
+# This would give us one way to compute the Euclidean norm in python, by using numpy's `dot` function again:
+
+# In[6]:
+
+
+norm_x_v1 = np.sqrt(np.dot(x,x))
+norm_x_v1
+
+
+# However, we can also use numpy's built in function for computing norms as follows:
+
+# In[7]:
+
+
+norm_x_v2 = np.linalg.norm(x, ord=2)
+norm_x_v2
+
+
+# Note that here we specify `ord=2` to make sure python knows we are referring to the 2-norm (however this is also the default, so we don't technically need to specify it).
+# 
+# Norms also give us a way to measure the distance between two vectors, by considering
+# 
+# $$
+# \|\boldsymbol{x}-\boldsymbol{y}\|_2
+# $$
+# 
+# for two vectors $\boldsymbol{x}, \boldsymbol{y}$.
+# 
+# Another norm that we will encounter in this class is the 1-norm, which is simply the sum of the abolute values of the entries in a vector:
+# 
+# $$
+# \|\boldsymbol{x}\|_1 = \sum_{i=1}^n |x_i|.
+# $$
+# 
+# This can similary be computed using numpy's norm function:
+
+# In[8]:
+
+
+norm1_x = np.linalg.norm(x, ord=1)
+norm1_x
+
+
 # ## Matrices and multiplication
 # 
 # One way to define a matrix is as follows: an $m\times n$ matrix $\boldsymbol{A} \in \mathbb{R}^{m\times n}$, is an array of real numbers consisting of $m$ rows and $n$ columns. For example, the following is a $2\times 3$ matrix
@@ -121,7 +189,7 @@ print(x_dot_y)
 # 
 # This matrix can also be defined as a numpy array in python:
 
-# In[6]:
+# In[9]:
 
 
 import numpy as np
@@ -142,7 +210,7 @@ print(A)
 # 
 # In numpy, we can specify a vector as being a column vector by suitably reshaping it.
 
-# In[7]:
+# In[10]:
 
 
 n = 5
@@ -154,7 +222,7 @@ print(x.shape) # explicitly making x a column vector
 
 # Note that by default, numpy stores 1-d arrays as having shape `(n,)`, which is, somewhat subtly, different from a column vector, which has shape `(n,1)`. So to work with a column vector in Python, we have to explictly specify its shape. For many operations we will want to perform, this distinction won't matter much, though for some operations this distinction is in fact important, and so we will want to be careful. We will see examples of this in the coming sections. We can also represent a vector explicitly as a row vector in a similar way.
 
-# In[8]:
+# In[11]:
 
 
 x = x.reshape(1,n)
@@ -177,7 +245,7 @@ print(x.shape) # explicitly making x a row vector
 # 
 # Note that this operation takes a matrix of shape $m\times n$ and returns a matrix of shape $n\times m$. It is easy to find the transpose of a matrix (i.e. numpy array) in Python:
 
-# In[9]:
+# In[12]:
 
 
 print(A.shape)
@@ -187,7 +255,7 @@ print(AT.shape)
 
 # We can also use this to convert between row and column vectors in numpy.
 
-# In[10]:
+# In[13]:
 
 
 x = np.random.normal(size=n)
@@ -211,7 +279,7 @@ print(xT.shape) #row vector
 # 
 # Note that for this operation to be well-defined, we need that the rows of $\boldsymbol{A}$ are of the same dimension as the columns of $\boldsymbol{B}$, or equivalently that the number of columns of $\boldsymbol{A}$ is equal to the number of rows of $\boldsymbol{B}$. Let's see some examples in Python. Note that we can also use the numpy function `np.dot` to perform matrix multiplication.
 
-# In[11]:
+# In[14]:
 
 
 m, n, p = 10,5,3
@@ -224,7 +292,7 @@ print(AB.shape)
 
 # This is an example where the matrix product is well-defined, since the number of columns of $\boldsymbol{A}$ (5) is equal to the number of rows of $\boldsymbol{B}$ (also 5). Let's see an example where this doesn't work.
 
-# In[12]:
+# In[15]:
 
 
 # now the inner dimensions don't match
@@ -238,6 +306,17 @@ print(AB.shape)
 
 # As we'd expect, numpy gives us an error, because the two matrices are not of coherent dimensions to perform matrix multiplcation.
 # 
+# An important special case of matrix multiplication is when the matrix on the right only has a single column, so is really a vector. This gives us matrix-vector multiplication, which is performed as follows, for a $m\times n$ matrix $\boldsymbol{A}$ and $n$-dimensional vector $\boldsymbol{x}$:
+# 
+# $$
+# \boldsymbol{Ax} = \begin{bmatrix}a_{11} & \cdots & a_{1n}\\ \vdots & \ddots & \vdots \\ a_{m1} & \cdots & a_{mn}\end{bmatrix}\begin{bmatrix}x_1\\ \vdots \\ x_n\end{bmatrix} = \begin{bmatrix}\boldsymbol{a}_{1:}\cdot \boldsymbol{x}\\ \vdots \\ \boldsymbol{a}_{m:}\cdot \boldsymbol{x}\end{bmatrix}
+# $$
+# 
+# Note that $\boldsymbol{Ax}$ gives us an $m$-dimensional vector back. A useful fact about matrix-vector multiplication is that it can be represented as a linear combination of the columns of $\boldsymbol{A}$, i.e.
+# 
+# $$
+# \boldsymbol{Ax} = x_1 \boldsymbol{a}_{:1} + \cdots + x_n \boldsymbol{a}_{:n}.
+# $$
 # 
 # 
 # ## Returning to the multiple linear regression model

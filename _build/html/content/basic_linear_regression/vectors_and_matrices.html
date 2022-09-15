@@ -53,7 +53,7 @@
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="3. Generalizing linear regression" href="../generalizing_linear_regression/chheader.html" />
+    <link rel="next" title="2.5. Linear regression with multiple predictors" href="multiple_predictors.html" />
     <link rel="prev" title="2.3. More on simple linear regression" href="simple_linear_regression_cont.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -159,6 +159,16 @@
    <li class="toctree-l2 current active">
     <a class="current reference internal" href="#">
      2.4. Basic concepts from linear algebra: vectors and matrices
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="multiple_predictors.html">
+     2.5. Linear regression with multiple predictors
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="more_least_squares.html">
+     2.6. More on least squares
     </a>
    </li>
   </ul>
@@ -279,6 +289,11 @@
      2.4.2.1. The dot product
     </a>
    </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#vector-norms">
+     2.4.2.2. Vector norms
+    </a>
+   </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -336,6 +351,11 @@
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#the-dot-product">
      2.4.2.1. The dot product
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#vector-norms">
+     2.4.2.2. Vector norms
     </a>
    </li>
   </ul>
@@ -497,6 +517,83 @@ u+v = [5 7 9]
 </div>
 </div>
 </div>
+<div class="section" id="vector-norms">
+<h3><span class="section-number">2.4.2.2. </span>Vector norms<a class="headerlink" href="#vector-norms" title="Permalink to this headline">¶</a></h3>
+<p>Another important operation that we can do with vectors is to compute their <em>norm</em>. A norm is a function that measures the “size” of something.
+One example of a norm is the familiar Euclidean norm, which uses the expression <span class="math notranslate nohighlight">\((x_1^2+x_2^2)^{1/2}\)</span> to compute the “size” or “magnitude” of a point <span class="math notranslate nohighlight">\(\begin{bmatrix}x_1 \\ x_2\end{bmatrix}\)</span> in the two-dimensional Euclidean plane. If we view that point as a vector, then that is the Euclidean norm of the vector.</p>
+<p>The generalization of this notion of length to <span class="math notranslate nohighlight">\(n\)</span> dimensions gives us the Euclidean norm, which is the most important vector norm used in practice. For a vector</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\boldsymbol{x} = \begin{bmatrix}x_1\\\vdots\\ x_n\end{bmatrix},
+\end{split}\]</div>
+<p>it’s Euclidean norm can be computed as</p>
+<div class="math notranslate nohighlight">
+\[
+\|\boldsymbol{x}\|_2 = \sqrt{\sum_{i=1}^n x_i^2}.
+\]</div>
+<blockquote>
+<div><p>Remark: we use the notation <span class="math notranslate nohighlight">\(\|\cdot\|_2\)</span> to indicate the Euclidean norm as it is often also referred to as the “2-norm”. This is because it can be viewed as part of a family of norms called the <span class="math notranslate nohighlight">\(p\)</span>-norms. For <span class="math notranslate nohighlight">\(p\geq 1\)</span>, the <span class="math notranslate nohighlight">\(p\)</span>-norm of a vector <span class="math notranslate nohighlight">\(\boldsymbol{x}\)</span> is given by <span class="math notranslate nohighlight">\((\sum_{i=1}^n |x_i|^p)^{1/p}\)</span>.</p>
+</div></blockquote>
+<p>Note that, importantly, the Euclidean norm squared is simply the dot product of <span class="math notranslate nohighlight">\(\boldsymbol{x}\)</span> with itself, since</p>
+<div class="math notranslate nohighlight">
+\[
+\|\boldsymbol{x}\|_2^2 = \sum_{i=1}^n x_i^2 = \boldsymbol{x}\cdot \boldsymbol{x}.
+\]</div>
+<p>This would give us one way to compute the Euclidean norm in python, by using numpy’s <code class="docutils literal notranslate"><span class="pre">dot</span></code> function again:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">norm_x_v1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">x</span><span class="p">))</span>
+<span class="n">norm_x_v1</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>3.7416573867739413
+</pre></div>
+</div>
+</div>
+</div>
+<p>However, we can also use numpy’s built in function for computing norms as follows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">norm_x_v2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">norm_x_v2</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>3.7416573867739413
+</pre></div>
+</div>
+</div>
+</div>
+<p>Note that here we specify <code class="docutils literal notranslate"><span class="pre">ord=2</span></code> to make sure python knows we are referring to the 2-norm (however this is also the default, so we don’t technically need to specify it).</p>
+<p>Norms also give us a way to measure the distance between two vectors, by considering</p>
+<div class="math notranslate nohighlight">
+\[
+\|\boldsymbol{x}-\boldsymbol{y}\|_2
+\]</div>
+<p>for two vectors <span class="math notranslate nohighlight">\(\boldsymbol{x}, \boldsymbol{y}\)</span>.</p>
+<p>Another norm that we will encounter in this class is the 1-norm, which is simply the sum of the abolute values of the entries in a vector:</p>
+<div class="math notranslate nohighlight">
+\[
+\|\boldsymbol{x}\|_1 = \sum_{i=1}^n |x_i|.
+\]</div>
+<p>This can similary be computed using numpy’s norm function:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">norm1_x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">norm1_x</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>6.0
+</pre></div>
+</div>
+</div>
+</div>
+</div>
 </div>
 <div class="section" id="matrices-and-multiplication">
 <h2><span class="section-number">2.4.3. </span>Matrices and multiplication<a class="headerlink" href="#matrices-and-multiplication" title="Permalink to this headline">¶</a></h2>
@@ -651,7 +748,7 @@ u+v = [5 7 9]
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">ValueError</span><span class="g g-Whitespace">                                </span>Traceback (most recent call last)
-<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">12</span><span class="o">-</span><span class="mi">4</span><span class="n">d3c337d16ff</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">15</span><span class="o">-</span><span class="mi">4</span><span class="n">d3c337d16ff</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
 <span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="n">n</span><span class="p">))</span>
 <span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="n">B</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="n">p</span><span class="p">))</span>
 <span class="ne">----&gt; </span><span class="mi">6</span> <span class="n">AB</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">B</span><span class="p">)</span>
@@ -665,6 +762,16 @@ u+v = [5 7 9]
 </div>
 </div>
 <p>As we’d expect, numpy gives us an error, because the two matrices are not of coherent dimensions to perform matrix multiplcation.</p>
+<p>An important special case of matrix multiplication is when the matrix on the right only has a single column, so is really a vector. This gives us matrix-vector multiplication, which is performed as follows, for a <span class="math notranslate nohighlight">\(m\times n\)</span> matrix <span class="math notranslate nohighlight">\(\boldsymbol{A}\)</span> and <span class="math notranslate nohighlight">\(n\)</span>-dimensional vector <span class="math notranslate nohighlight">\(\boldsymbol{x}\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\boldsymbol{Ax} = \begin{bmatrix}a_{11} &amp; \cdots &amp; a_{1n}\\ \vdots &amp; \ddots &amp; \vdots \\ a_{m1} &amp; \cdots &amp; a_{mn}\end{bmatrix}\begin{bmatrix}x_1\\ \vdots \\ x_n\end{bmatrix} = \begin{bmatrix}\boldsymbol{a}_{1:}\cdot \boldsymbol{x}\\ \vdots \\ \boldsymbol{a}_{m:}\cdot \boldsymbol{x}\end{bmatrix}
+\end{split}\]</div>
+<p>Note that <span class="math notranslate nohighlight">\(\boldsymbol{Ax}\)</span> gives us an <span class="math notranslate nohighlight">\(m\)</span>-dimensional vector back. A useful fact about matrix-vector multiplication is that it can be represented as a linear combination of the columns of <span class="math notranslate nohighlight">\(\boldsymbol{A}\)</span>, i.e.</p>
+<div class="math notranslate nohighlight">
+\[
+\boldsymbol{Ax} = x_1 \boldsymbol{a}_{:1} + \cdots + x_n \boldsymbol{a}_{:n}.
+\]</div>
 </div>
 </div>
 <div class="section" id="returning-to-the-multiple-linear-regression-model">
@@ -740,10 +847,10 @@ y_i = \boldsymbol{\beta}\cdot \boldsymbol{x}_i + \varepsilon_i.
             <p class="prev-next-title"><span class="section-number">2.3. </span>More on simple linear regression</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="../generalizing_linear_regression/chheader.html" title="next page">
+    <a class='right-next' id="next-link" href="multiple_predictors.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title"><span class="section-number">3. </span>Generalizing linear regression</p>
+        <p class="prev-next-title"><span class="section-number">2.5. </span>Linear regression with multiple predictors</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>

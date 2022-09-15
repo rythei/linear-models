@@ -12,6 +12,9 @@ kernelspec:
 ---
 
 # More on simple linear regression
+
+_Datasets used in throughout this book can be downloaded [here](https://drive.google.com/drive/folders/1OkXMcFo0urN0kSQYH4d75I4V3pnSpV6H?usp=sharing)._
+
 ## A statistical model for linear regression
 
 Thus far, we've treated fitting a regression model in a mostly heuristic way, by transforming features until the observed trend looks to be approximately linear. This is not ideal, for two primary reasons: first, it does not allow us to easily quantify _how_ linear a trend is, and second, the visual method will quickly become unweidly as soon as we consider multiple predictor variables, which can't be visualized on a single 2-d plot.
