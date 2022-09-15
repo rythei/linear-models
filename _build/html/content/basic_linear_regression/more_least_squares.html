@@ -280,17 +280,17 @@
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#solving-the-least-squares-problem-using-the-qr-decomposition">
+   2.6.2. Solving the least squares problem using the QR decomposition
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#what-happens-when-boldsymbol-x-top-x-is-not-invertible">
-   2.6.2. What happens when
+   2.6.3. What happens when
    <span class="math notranslate nohighlight">
     \(\boldsymbol{X^\top X}\)
    </span>
    is not invertible?
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#methods-to-solve-the-normal-equations">
-   2.6.3. Methods to solve the normal equations
   </a>
  </li>
 </ul>
@@ -319,17 +319,17 @@
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#solving-the-least-squares-problem-using-the-qr-decomposition">
+   2.6.2. Solving the least squares problem using the QR decomposition
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#what-happens-when-boldsymbol-x-top-x-is-not-invertible">
-   2.6.2. What happens when
+   2.6.3. What happens when
    <span class="math notranslate nohighlight">
     \(\boldsymbol{X^\top X}\)
    </span>
    is not invertible?
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#methods-to-solve-the-normal-equations">
-   2.6.3. Methods to solve the normal equations
   </a>
  </li>
 </ul>
@@ -343,14 +343,99 @@
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="more-on-least-squares">
 <h1><span class="section-number">2.6. </span>More on least squares<a class="headerlink" href="#more-on-least-squares" title="Permalink to this headline">¶</a></h1>
+<p>In the last section, we derived and implemented the solution to the least squares problem</p>
+<div class="math notranslate nohighlight">
+\[
+\min_{\boldsymbol{\beta}} \|\boldsymbol{y}-\boldsymbol{X\beta}\|_2^2 \hspace{10mm} (1)
+\]</div>
+<p>which we found (with some calculus) to be satisfied by any vector <span class="math notranslate nohighlight">\(\boldsymbol{\beta}\)</span> satisfying the <em>normal equations</em>:</p>
+<div class="math notranslate nohighlight">
+\[
+\boldsymbol{X^\top X\beta} = \boldsymbol{X^\top y}. \hspace{10mm} (2)
+\]</div>
+<p>In this section, we investigate the properties of this solution a bit more, emphasizing the linear algebraic properties of this problem and its solution(s).</p>
 <div class="section" id="the-linear-algebra-of-the-least-squares-solution">
 <h2><span class="section-number">2.6.1. </span>The linear algebra of the least squares solution<a class="headerlink" href="#the-linear-algebra-of-the-least-squares-solution" title="Permalink to this headline">¶</a></h2>
+<p>In the simplest case, when the data matrix <span class="math notranslate nohighlight">\(\boldsymbol{X^\top X}\)</span> is invertible, the least squares problem <span class="math notranslate nohighlight">\((1)\)</span> has a unique solution, obtained by multiplying either side of <span class="math notranslate nohighlight">\((2)\)</span> by <span class="math notranslate nohighlight">\((\boldsymbol{X^\top X})^{-1}\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+\hat{\boldsymbol{\beta}} = (\boldsymbol{X^\top X})^{-1}\boldsymbol{X^\top y}.
+\]</div>
+<p>In this case, we can easily find the fitted values <span class="math notranslate nohighlight">\(\hat{\boldsymbol{y}}\)</span> by simply multiplying <span class="math notranslate nohighlight">\(\hat{\boldsymbol{\beta}}\)</span> on the left by <span class="math notranslate nohighlight">\(\boldsymbol{X}\)</span>. This gives</p>
+<div class="math notranslate nohighlight">
+\[
+\hat{\boldsymbol{y}} = \boldsymbol{X}\hat{\boldsymbol{\beta}} = \boldsymbol{X}(\boldsymbol{X^\top X})^{-1}\boldsymbol{X^\top y}.
+\]</div>
+<p>In the context of linear regression, the matrix <span class="math notranslate nohighlight">\(\boldsymbol{X}(\boldsymbol{X^\top X})^{-1}\boldsymbol{X^\top}\)</span> is sometimes called the “hat matrix”, since it “puts the hat on” the vector <span class="math notranslate nohighlight">\(\boldsymbol{y}\)</span>. However, this matrix is also of more general interest in linear algebra: it is a special matrix which performs a very particular opertation. The matrix <span class="math notranslate nohighlight">\(\boldsymbol{P} = \boldsymbol{X}(\boldsymbol{X^\top X})^{-1}\boldsymbol{X^\top}\)</span> is called the projection onto the <em>column space</em> of <span class="math notranslate nohighlight">\(\boldsymbol{X}\)</span>. To understand what this means, we must first define what we mean by the column space.</p>
+<p>Given a set of vectors <span class="math notranslate nohighlight">\(\boldsymbol{v}_1,\dots, \boldsymbol{v}_p\)</span>, the <em>span</em> of <span class="math notranslate nohighlight">\(\boldsymbol{v}_1,\dots, \boldsymbol{v}_p\)</span> is the vector space given by all linear combinations of these vectors:</p>
+<div class="math notranslate nohighlight">
+\[
+\text{span}(\boldsymbol{v}_1,\dots,\boldsymbol{v}_p) = \left\{\boldsymbol{x} : \boldsymbol{x} = \sum_{j=1}^p \alpha_j \boldsymbol{v}_j,\; \text{for some } \alpha_1,\dots,\alpha_p \in \mathbb{R}\right\}
+  \]</div>
+<p>Then given a matrix <span class="math notranslate nohighlight">\(\boldsymbol{X}\)</span> with column <span class="math notranslate nohighlight">\(\boldsymbol{x}_1,\dots, \boldsymbol{x}_p\)</span>, the column space of <span class="math notranslate nohighlight">\(\boldsymbol{X}\)</span>, denoted <span class="math notranslate nohighlight">\(\text{col}(\boldsymbol{X})\)</span> is simply the <span class="math notranslate nohighlight">\(\boldsymbol{x}_1,\dots, \boldsymbol{x}_p\)</span>. The <em>projection</em> onto the column space <span class="math notranslate nohighlight">\(\boldsymbol{X}\)</span> is the matrix <span class="math notranslate nohighlight">\(\boldsymbol{P}\)</span> which, when applied to a vector <span class="math notranslate nohighlight">\(\boldsymbol{y}\)</span>, returns the nearest vector in <span class="math notranslate nohighlight">\(\text{col}(\boldsymbol{X})\)</span>.</p>
+<p>In 2-d, there is a simple picture which illustrates this concept. Imagine a single vector, say, <span class="math notranslate nohighlight">\(\boldsymbol{x} = \begin{bmatrix}1\\ 1\end{bmatrix}\)</span>, which we think of as a matrix with a single column. Then the column space of <span class="math notranslate nohighlight">\(\boldsymbol{x}\)</span> is simply the set of all vectors of the form <span class="math notranslate nohighlight">\(\alpha \begin{bmatrix}1\\ 1\end{bmatrix} = \begin{bmatrix}\alpha \\ \alpha \end{bmatrix}\)</span> for <span class="math notranslate nohighlight">\(\alpha \in \mathbb{R}\)</span>. Visually, this corresponds to a line through the origin with slope 1, i.e. the <span class="math notranslate nohighlight">\(y=x\)</span> line. Let’s visualize this in python.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">xx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">xx</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;span([1,1])&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">&quot;equal&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Now let’s consider another vector in <span class="math notranslate nohighlight">\(\mathbb{R}^2\)</span>, say <span class="math notranslate nohighlight">\(\boldsymbol{u}= \begin{bmatrix}-1\\ 1\end{bmatrix}\)</span>, which we can add to this plot as a point.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;[2,1]&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">xx</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;span([1,1])&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">&quot;equal&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The (orthogonal) projection of <span class="math notranslate nohighlight">\(\boldsymbol{u}\)</span> onto <span class="math notranslate nohighlight">\(\text{span}(\boldsymbol{x})\)</span> is defined to be the nearest <span class="math notranslate nohighlight">\(\boldsymbol{u}' \in \text{span}(\boldsymbol{x})\)</span> to <span class="math notranslate nohighlight">\(\boldsymbol{u}\)</span>. Formally,</p>
+<div class="math notranslate nohighlight">
+\[
+\min_{\boldsymbol{u}' \in \text{span}(\boldsymbol{x})} \|\boldsymbol{u} - \boldsymbol{u}'\|_2^2 = \min_{\alpha \in \mathbb{R}} \|\boldsymbol{u} - \alpha \boldsymbol{x}\|_2^2.
+\]</div>
+<p>This now looks just like a toy version of our least squares problem! The solution is given by</p>
+<div class="math notranslate nohighlight">
+\[
+\hat{\boldsymbol{u}}' = \frac{\boldsymbol{xx}^\top}{\boldsymbol{x^\top x}}\boldsymbol{u}
+\]</div>
+<p>which corresponds to</p>
+<div class="math notranslate nohighlight">
+\[
+\hat{\alpha} = \frac{\boldsymbol{x^\top u}}{\boldsymbol{x^\top x}}.
+\]</div>
+<p>In our example, <span class="math notranslate nohighlight">\(\boldsymbol{x} = \begin{bmatrix}1\\ 1\end{bmatrix}\)</span> and <span class="math notranslate nohighlight">\(\boldsymbol{u} = \begin{bmatrix}-1\\ 1\end{bmatrix}\)</span>, so</p>
+<div class="math notranslate nohighlight">
+\[
+\hat{\alpha} = 0
+\]</div>
+<p>and therefore the projection of <span class="math notranslate nohighlight">\(\boldsymbol{u}\)</span> onto <span class="math notranslate nohighlight">\(\text{span}(\boldsymbol{x})\)</span> is given by</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\hat{\boldsymbol{u}}' = \hat{\alpha}\boldsymbol{x} = \begin{bmatrix}0\\ 0\end{bmatrix}
+\end{split}\]</div>
+<p>Let’s visualize this on our plot.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;[-1,1]&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">([</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;projection of [-1,1] onto span([1,1])&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">xx</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;span([1,1])&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">&quot;equal&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>In the context of the least squares problem this means the following: the fitted values <span class="math notranslate nohighlight">\(\hat{\boldsymbol{y}}\)</span> are the <em>projection</em> of the response vector <span class="math notranslate nohighlight">\(\boldsymbol{y}\)</span> onto the span of the columns of <span class="math notranslate nohighlight">\(\boldsymbol{X}\)</span>. This fact is important not only for mathematical intuition, but because it can help us design methods for solving least squares problems in practice. We discuss one such method next.</p>
+</div>
+<div class="section" id="solving-the-least-squares-problem-using-the-qr-decomposition">
+<h2><span class="section-number">2.6.2. </span>Solving the least squares problem using the QR decomposition<a class="headerlink" href="#solving-the-least-squares-problem-using-the-qr-decomposition" title="Permalink to this headline">¶</a></h2>
+<p>The largest computational burden in performing least squares comes from computing the inverse of the matrix <span class="math notranslate nohighlight">\(\boldsymbol{X^\top X}\)</span>. In particular when the number of features <span class="math notranslate nohighlight">\(p\)</span> is large, this can be expensive, numerically unstable or not otherwise not feasible. In these situations, we would like to have algorithms to find <span class="math notranslate nohighlight">\(\hat{\boldsymbol{\beta}}\)</span> (or perhaps at least the fitted values <span class="math notranslate nohighlight">\(\hat{\boldsymbol{y})}\)</span> without having to explicitly compute <span class="math notranslate nohighlight">\((\boldsymbol{X^\top X})^{-1}\)</span>.</p>
+<p>In this section, we show that the <em>QR decomposition</em> can be used to find both <span class="math notranslate nohighlight">\(\hat{\boldsymbol{\beta}}\)</span> and <span class="math notranslate nohighlight">\(\boldsymbol{y}\)</span> without ever having to explicitly compute the matrix <span class="math notranslate nohighlight">\((\boldsymbol{X^\top X})^{-1}\)</span>. The QR decomposition of an <span class="math notranslate nohighlight">\(n\times p\)</span> matrix <span class="math notranslate nohighlight">\(\boldsymbol{X}\)</span> is a decomposition of <span class="math notranslate nohighlight">\(\boldsymbol{X}\)</span> into two matrices <span class="math notranslate nohighlight">\(\boldsymbol{Q}, \boldsymbol{R}\)</span> such that <span class="math notranslate nohighlight">\(\boldsymbol{X} = \boldsymbol{QR}\)</span> and <span class="math notranslate nohighlight">\(\boldsymbol{R}\)</span> is an upper triangular matrix, and <span class="math notranslate nohighlight">\(\boldsymbol{Q}\)</span> is an <em>orthogonal</em> matrix such that <span class="math notranslate nohighlight">\(\boldsymbol{Q^\top Q} = \boldsymbol{I}\)</span> (the identity matrix.)</p>
 </div>
 <div class="section" id="what-happens-when-boldsymbol-x-top-x-is-not-invertible">
-<h2><span class="section-number">2.6.2. </span>What happens when <span class="math notranslate nohighlight">\(\boldsymbol{X^\top X}\)</span> is not invertible?<a class="headerlink" href="#what-happens-when-boldsymbol-x-top-x-is-not-invertible" title="Permalink to this headline">¶</a></h2>
-</div>
-<div class="section" id="methods-to-solve-the-normal-equations">
-<h2><span class="section-number">2.6.3. </span>Methods to solve the normal equations<a class="headerlink" href="#methods-to-solve-the-normal-equations" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">2.6.3. </span>What happens when <span class="math notranslate nohighlight">\(\boldsymbol{X^\top X}\)</span> is not invertible?<a class="headerlink" href="#what-happens-when-boldsymbol-x-top-x-is-not-invertible" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 
