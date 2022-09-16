@@ -161,6 +161,16 @@
      2.4. Basic concepts from linear algebra: vectors and matrices
     </a>
    </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basic_linear_regression/multiple_predictors.html">
+     2.5. Linear regression with multiple predictors
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basic_linear_regression/more_least_squares.html">
+     2.6. More on least squares
+    </a>
+   </li>
   </ul>
  </li>
  <li class="toctree-l1">
@@ -545,8 +555,8 @@ There are several ways how we can do this.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 524 ms, sys: 463 ms, total: 987 ms
-Wall time: 497 ms
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 435 ms, sys: 227 ms, total: 662 ms
+Wall time: 496 ms
 </pre></div>
 </div>
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>49999995000000
@@ -563,8 +573,8 @@ Instead, we can use NumPy to do the same operation much faster.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 12.1 ms, sys: 11.7 ms, total: 23.8 ms
-Wall time: 23.7 ms
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 13.1 ms, sys: 14 ms, total: 27.1 ms
+Wall time: 27 ms
 </pre></div>
 </div>
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>49999995000000
@@ -1437,7 +1447,7 @@ v^T w = v_{1}w_{1}+v_{2}w_{2}+\dots+v_{n}w_{n}
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 87 µs, sys: 15 µs, total: 102 µs
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 129 µs, sys: 11 µs, total: 140 µs
 Wall time: 49.1 µs
 </pre></div>
 </div>
@@ -1455,7 +1465,7 @@ Instead, we can use numpy’s build in function to compute the inner product.</p
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 47 µs, sys: 19 µs, total: 66 µs
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 23 µs, sys: 26 µs, total: 49 µs
 Wall time: 22.9 µs
 </pre></div>
 </div>
