@@ -374,7 +374,9 @@
   \]</div>
 <p>Then given a matrix <span class="math notranslate nohighlight">\(\boldsymbol{X}\)</span> with column <span class="math notranslate nohighlight">\(\boldsymbol{x}_1,\dots, \boldsymbol{x}_p\)</span>, the column space of <span class="math notranslate nohighlight">\(\boldsymbol{X}\)</span>, denoted <span class="math notranslate nohighlight">\(\text{col}(\boldsymbol{X})\)</span> is simply the <span class="math notranslate nohighlight">\(\boldsymbol{x}_1,\dots, \boldsymbol{x}_p\)</span>. The <em>projection</em> onto the column space <span class="math notranslate nohighlight">\(\boldsymbol{X}\)</span> is the matrix <span class="math notranslate nohighlight">\(\boldsymbol{P}\)</span> which, when applied to a vector <span class="math notranslate nohighlight">\(\boldsymbol{y}\)</span>, returns the nearest vector in <span class="math notranslate nohighlight">\(\text{col}(\boldsymbol{X})\)</span>.</p>
 <p>In 2-d, there is a simple picture which illustrates this concept. Imagine a single vector, say, <span class="math notranslate nohighlight">\(\boldsymbol{x} = \begin{bmatrix}1\\ 1\end{bmatrix}\)</span>, which we think of as a matrix with a single column. Then the column space of <span class="math notranslate nohighlight">\(\boldsymbol{x}\)</span> is simply the set of all vectors of the form <span class="math notranslate nohighlight">\(\alpha \begin{bmatrix}1\\ 1\end{bmatrix} = \begin{bmatrix}\alpha \\ \alpha \end{bmatrix}\)</span> for <span class="math notranslate nohighlight">\(\alpha \in \mathbb{R}\)</span>. Visually, this corresponds to a line through the origin with slope 1, i.e. the <span class="math notranslate nohighlight">\(y=x\)</span> line. Let’s visualize this in python.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
 <span class="n">xx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span>
@@ -385,13 +387,25 @@
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/more_least_squares_1_0.png" src="../../_images/more_least_squares_1_0.png" />
+</div>
+</div>
 <p>Now let’s consider another vector in <span class="math notranslate nohighlight">\(\mathbb{R}^2\)</span>, say <span class="math notranslate nohighlight">\(\boldsymbol{u}= \begin{bmatrix}-1\\ 1\end{bmatrix}\)</span>, which we can add to this plot as a point.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;[2,1]&#39;</span><span class="p">)</span>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;[-1,1]&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">xx</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;span([1,1])&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">&quot;equal&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/more_least_squares_3_0.png" src="../../_images/more_least_squares_3_0.png" />
+</div>
 </div>
 <p>The (orthogonal) projection of <span class="math notranslate nohighlight">\(\boldsymbol{u}\)</span> onto <span class="math notranslate nohighlight">\(\text{span}(\boldsymbol{x})\)</span> is defined to be the nearest <span class="math notranslate nohighlight">\(\boldsymbol{u}' \in \text{span}(\boldsymbol{x})\)</span> to <span class="math notranslate nohighlight">\(\boldsymbol{u}\)</span>. Formally,</p>
 <div class="math notranslate nohighlight">
@@ -419,23 +433,315 @@
 \hat{\boldsymbol{u}}' = \hat{\alpha}\boldsymbol{x} = \begin{bmatrix}0\\ 0\end{bmatrix}
 \end{split}\]</div>
 <p>Let’s visualize this on our plot.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;[-1,1]&#39;</span><span class="p">)</span>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;[-1,1]&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">([</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;projection of [-1,1] onto span([1,1])&#39;</span><span class="p">)</span>
+
+<span class="c1"># this line just plots an arrow to illustrate the action that is happening to</span>
+<span class="c1"># [-1,1] when it is projected onto span([1,1])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">quiver</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="o">*</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s1">&#39;xy&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;orange&#39;</span><span class="p">)</span>
+
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">xx</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;span([1,1])&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">&quot;equal&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/more_least_squares_5_0.png" src="../../_images/more_least_squares_5_0.png" />
+</div>
+</div>
 <p>In the context of the least squares problem this means the following: the fitted values <span class="math notranslate nohighlight">\(\hat{\boldsymbol{y}}\)</span> are the <em>projection</em> of the response vector <span class="math notranslate nohighlight">\(\boldsymbol{y}\)</span> onto the span of the columns of <span class="math notranslate nohighlight">\(\boldsymbol{X}\)</span>. This fact is important not only for mathematical intuition, but because it can help us design methods for solving least squares problems in practice. We discuss one such method next.</p>
 </div>
 <div class="section" id="solving-the-least-squares-problem-using-the-qr-decomposition">
 <h2><span class="section-number">2.6.2. </span>Solving the least squares problem using the QR decomposition<a class="headerlink" href="#solving-the-least-squares-problem-using-the-qr-decomposition" title="Permalink to this headline">¶</a></h2>
 <p>The largest computational burden in performing least squares comes from computing the inverse of the matrix <span class="math notranslate nohighlight">\(\boldsymbol{X^\top X}\)</span>. In particular when the number of features <span class="math notranslate nohighlight">\(p\)</span> is large, this can be expensive, numerically unstable or not otherwise not feasible. In these situations, we would like to have algorithms to find <span class="math notranslate nohighlight">\(\hat{\boldsymbol{\beta}}\)</span> (or perhaps at least the fitted values <span class="math notranslate nohighlight">\(\hat{\boldsymbol{y})}\)</span> without having to explicitly compute <span class="math notranslate nohighlight">\((\boldsymbol{X^\top X})^{-1}\)</span>.</p>
-<p>In this section, we show that the <em>QR decomposition</em> can be used to find both <span class="math notranslate nohighlight">\(\hat{\boldsymbol{\beta}}\)</span> and <span class="math notranslate nohighlight">\(\boldsymbol{y}\)</span> without ever having to explicitly compute the matrix <span class="math notranslate nohighlight">\((\boldsymbol{X^\top X})^{-1}\)</span>. The QR decomposition of an <span class="math notranslate nohighlight">\(n\times p\)</span> matrix <span class="math notranslate nohighlight">\(\boldsymbol{X}\)</span> is a decomposition of <span class="math notranslate nohighlight">\(\boldsymbol{X}\)</span> into two matrices <span class="math notranslate nohighlight">\(\boldsymbol{Q}, \boldsymbol{R}\)</span> such that <span class="math notranslate nohighlight">\(\boldsymbol{X} = \boldsymbol{QR}\)</span> and <span class="math notranslate nohighlight">\(\boldsymbol{R}\)</span> is an upper triangular matrix, and <span class="math notranslate nohighlight">\(\boldsymbol{Q}\)</span> is an <em>orthogonal</em> matrix such that <span class="math notranslate nohighlight">\(\boldsymbol{Q^\top Q} = \boldsymbol{I}\)</span> (the identity matrix.)</p>
+<p>In this section, we show that the <em>QR decomposition</em> can be used to find both <span class="math notranslate nohighlight">\(\hat{\boldsymbol{\beta}}\)</span> and <span class="math notranslate nohighlight">\(\hat{\boldsymbol{y}}\)</span> without ever having to explicitly compute the matrix <span class="math notranslate nohighlight">\((\boldsymbol{X^\top X})^{-1}\)</span>. The QR decomposition of an <span class="math notranslate nohighlight">\(n\times p\)</span> matrix <span class="math notranslate nohighlight">\(\boldsymbol{X}\)</span> is a decomposition of <span class="math notranslate nohighlight">\(\boldsymbol{X}\)</span> into two matrices <span class="math notranslate nohighlight">\(\boldsymbol{Q}, \boldsymbol{R}\)</span> such that <span class="math notranslate nohighlight">\(\boldsymbol{X} = \boldsymbol{QR}\)</span> and <span class="math notranslate nohighlight">\(\boldsymbol{R}\)</span> is an upper triangular matrix, and <span class="math notranslate nohighlight">\(\boldsymbol{Q}\)</span> is an <em>orthogonal</em> matrix such that <span class="math notranslate nohighlight">\(\boldsymbol{Q^\top Q} = \boldsymbol{I}\)</span> (the identity matrix.)</p>
+<p>Let’s look at a toy example in python with the matrix</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\boldsymbol{X} = \begin{bmatrix} 1 &amp; 2\\ -1 &amp; 0\\ 1 &amp; 1\end{bmatrix}
+\end{split}\]</div>
+<p>First, we define this as a numpy array.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+              <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+              <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[ 1  2]
+ [-1  0]
+ [ 1  1]]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we can compute the QR decomposition using the function <code class="docutils literal notranslate"><span class="pre">np.linalg.qr</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Q</span><span class="p">,</span> <span class="n">R</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">qr</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>This returns two matrices: the first, <span class="math notranslate nohighlight">\(\boldsymbol{Q}\)</span> is orthogonal, which we can check by calculating <span class="math notranslate nohighlight">\(\boldsymbol{Q^\top Q}\)</span>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">Q</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">Q</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">4</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[1. 0.]
+ [0. 1.]]
+</pre></div>
+</div>
+</div>
+</div>
+<p>As expected, this gives us the identity matrix. The matrix <span class="math notranslate nohighlight">\(\boldsymbol{R}\)</span> is upper triangular, meaning that <span class="math notranslate nohighlight">\(\boldsymbol{R}_{ij} = 0\)</span> for <span class="math notranslate nohighlight">\(j&lt;i\)</span>. We can also print this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">R</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[-1.73205081 -1.73205081]
+ [ 0.         -1.41421356]]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s see how we can use the QR decomposition to find both the fitted values <span class="math notranslate nohighlight">\(\hat{\boldsymbol{y}}\)</span> as well as the actual coefficients <span class="math notranslate nohighlight">\(\hat{\boldsymbol{\beta}}\)</span>, without ever having to call <code class="docutils literal notranslate"><span class="pre">np.linalg.inv</span></code>.</p>
+<p>To illustrate these ideas, we will use the same California housing dataset that we used in the previous section.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="c1"># load in the dataset</span>
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;datasets/california_housing.csv&quot;</span><span class="p">)</span>
+
+<span class="c1"># extract the features and the response</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">[[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">dataset</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">c</span><span class="o">!=</span><span class="s2">&quot;MedHouseVal&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">[</span><span class="s2">&quot;MedHouseVal&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+
+<span class="c1"># create a (n, 1) array of all ones</span>
+<span class="n">ones</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># add this array as a new column of X</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">([</span><span class="n">ones</span><span class="p">,</span> <span class="n">X</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Finding <span class="math notranslate nohighlight">\(\hat{\boldsymbol{y}}\)</span>.</strong> Let’s start with finding <span class="math notranslate nohighlight">\(\hat{\boldsymbol{y}}\)</span>. Recall that this is given by</p>
+<div class="math notranslate nohighlight">
+\[
+\hat{\boldsymbol{y}} = \boldsymbol{X}(\boldsymbol{X^\top X})^{-1}\boldsymbol{X^\top y}.
+\]</div>
+<p>Let’s start by plugging in <span class="math notranslate nohighlight">\(\boldsymbol{X} = \boldsymbol{QR}\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+\hat{\boldsymbol{y}} &amp;= \boldsymbol{X}(\boldsymbol{X^\top X})^{-1}\boldsymbol{X^\top y}\\
+&amp;= \boldsymbol{QR}(\boldsymbol{(QR)^\top QR})^{-1}\boldsymbol{(QR)^\top y}\\
+&amp;= \boldsymbol{QR}(\boldsymbol{R^\top \underbrace{Q^\top Q}_{=\boldsymbol{I}}R})^{-1}\boldsymbol{R^\top\boldsymbol{Q}^\top y}\\
+&amp;= \boldsymbol{Q}\underbrace{\boldsymbol{RR}^{-1}}_{=\boldsymbol{I}}\underbrace{(\boldsymbol{R^\top})^{-1}\boldsymbol{R}^\top}_{=\boldsymbol{I}}\boldsymbol{Q}^\top \boldsymbol{y}\\
+&amp;= \boldsymbol{QQ}^\top \boldsymbol{y}.
+\end{align*}
+\end{split}\]</div>
+<p>Thus we see that we can find the fitted values can be computed just using the <span class="math notranslate nohighlight">\(\boldsymbol{Q}\)</span> matrix from the QR decomposition! In fact, the expression <span class="math notranslate nohighlight">\(\boldsymbol{QQ^\top}\)</span> is just another way of representing the “hat” matrix <span class="math notranslate nohighlight">\(\boldsymbol{X}(\boldsymbol{X^\top X})^{-1} \boldsymbol{X^\top y}\)</span>. This is convenient, because (as promised) we can compute <span class="math notranslate nohighlight">\(\hat{\boldsymbol{y}}\)</span> without having to explicitly invert <span class="math notranslate nohighlight">\(\boldsymbol{X^\top X}\)</span>. Let’s do this for our housing dataset. (We won’t actually print out the full <code class="docutils literal notranslate"><span class="pre">y_hat</span></code> array, as this would be very large.)</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Q</span><span class="p">,</span> <span class="n">R</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">qr</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="n">QQT</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">Q</span><span class="p">,</span> <span class="n">Q</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+<span class="n">y_hat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">QQT</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">y_hat</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(20640,)
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Finding <span class="math notranslate nohighlight">\(\hat{\boldsymbol{\beta}}\)</span> using QR and backsubstitution.</strong> Next, we show that the QR decomposition can be used with another algorithm, called backsubstitution, to explicitly find the coefficients <span class="math notranslate nohighlight">\(\hat{\boldsymbol{\beta}}\)</span> without ever having to invert <span class="math notranslate nohighlight">\(\boldsymbol{X^\top X}\)</span>. To do this, recall that <span class="math notranslate nohighlight">\(\hat{\boldsymbol{\beta}}\)</span> is the vector <span class="math notranslate nohighlight">\(\boldsymbol{\beta}\)</span> which satisfies the normal equations:</p>
+<div class="math notranslate nohighlight">
+\[
+\boldsymbol{X^\top X\beta} = \boldsymbol{X^\top y}.
+\]</div>
+<p>If we again plug in the QR decomposition of <span class="math notranslate nohighlight">\(\boldsymbol{X}\)</span> into this equation and simplify, it’s possible to show that the normal equations can be equivalently expressed as</p>
+<div class="math notranslate nohighlight">
+\[
+\boldsymbol{R\beta} = \boldsymbol{Q^\top y}. \hspace{10mm} (3)
+\]</div>
+<p>While this looks like we haven’t done too much to help – just replaced the names of the matrices in the equations – what is important is that the matrix <span class="math notranslate nohighlight">\(\boldsymbol{R}\)</span> is now upper triangular. This makes solving equations like <span class="math notranslate nohighlight">\((3)\)</span> considerably easier using an intuitive algorithm called backsubstitution. To see how backsubstitution works, let’s first recognize that <span class="math notranslate nohighlight">\((3)\)</span> defines a system of equations that might look something like the following:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+x_1 - x_2 + 2x_3 &amp;= 2\\
+3x_2 - x_3 &amp;= 1\\
+2x_3 &amp;= 2
+\end{align*}
+\end{split}\]</div>
+<p>This system is “triangular”, since each equation contains fewer terms than the previous equations. Intuitively, the best way to solve this is by starting at the last equation to easily get <span class="math notranslate nohighlight">\(x_3 = 1\)</span>, plugging this into the second equation to get <span class="math notranslate nohighlight">\(x_2 = 2/3\)</span>, and then plugging both of these into the first equation to get <span class="math notranslate nohighlight">\(x_1 = 2/3\)</span>. This algorithm can in fact be formalized into an algorithm which is simple to implement on a computer called <em>backsubstitution</em>.</p>
+<p>We won’t discuss details of how the algorithm is implemented here, but it can be easily accessed in python using the function <code class="docutils literal notranslate"><span class="pre">scipy.linalg.solve_triangular(R,</span> <span class="pre">v)</span></code> in the python package <code class="docutils literal notranslate"><span class="pre">scipy</span></code>. This function takes in a triangular matrix <span class="math notranslate nohighlight">\(\boldsymbol{R}\)</span> and a vector <span class="math notranslate nohighlight">\(\boldsymbol{v}\)</span>, and returns an array <span class="math notranslate nohighlight">\(\boldsymbol{u}\)</span> satisfying <span class="math notranslate nohighlight">\(\boldsymbol{Ru} = \boldsymbol{v}\)</span>. In our case, <span class="math notranslate nohighlight">\(\boldsymbol{R}\)</span> comes from the QR decomposition of <span class="math notranslate nohighlight">\(\boldsymbol{X}\)</span>, and <span class="math notranslate nohighlight">\(\boldsymbol{v} = \boldsymbol{Q^\top y}\)</span>. Let’s use this to get the coefficients of the California housing model.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.linalg</span> <span class="kn">import</span> <span class="n">solve_triangular</span>
+
+<span class="n">v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">Q</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">beta_hat</span> <span class="o">=</span> <span class="n">solve_triangular</span><span class="p">(</span><span class="n">R</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+
+<span class="c1"># get all the names of the columns</span>
+<span class="n">feature_names</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Intercept&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">dataset</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">c</span><span class="o">!=</span><span class="s2">&quot;MedHouseVal&quot;</span><span class="p">]</span>
+
+<span class="c1"># print the coefficients</span>
+<span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">coeff</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">feature_names</span><span class="p">,</span> <span class="n">beta_hat</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">coeff</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept: -36.941920207184054
+MedInc: 0.43669329313432714
+HouseAge: 0.00943577803323834
+AveRooms: -0.10732204139090604
+AveBedrms: 0.6450656935198206
+Population: -3.976389421212714e-06
+AveOccup: -0.003786542654970943
+Latitude: -0.4213143775271393
+Longitude: -0.4345137546747741
+</pre></div>
+</div>
+</div>
+</div>
+<p>Indeed, this method gives us the same solution as before!</p>
 </div>
 <div class="section" id="what-happens-when-boldsymbol-x-top-x-is-not-invertible">
 <h2><span class="section-number">2.6.3. </span>What happens when <span class="math notranslate nohighlight">\(\boldsymbol{X^\top X}\)</span> is not invertible?<a class="headerlink" href="#what-happens-when-boldsymbol-x-top-x-is-not-invertible" title="Permalink to this headline">¶</a></h2>
+<p>The QR method described above is an effective method for solving the least squares problem when the inverse of <span class="math notranslate nohighlight">\(\boldsymbol{X^\top X}\)</span> technically exists, but is computationally difficult to compute. However, there are also examples of data matrices <span class="math notranslate nohighlight">\(\boldsymbol{X}\)</span> for which the inverse doesn’t exist at all. In these cases, even the QR-based methods will not work.</p>
+<p>Let’s understand how this situation can arise. Mathematically, the inverse of <span class="math notranslate nohighlight">\(\boldsymbol{X^\top X}\)</span> will exist whenever the data matrix <span class="math notranslate nohighlight">\(\boldsymbol{X}\)</span> is full column rank. Conversely, if <span class="math notranslate nohighlight">\(\boldsymbol{X^\top X}\)</span> is not invertible, it means that <span class="math notranslate nohighlight">\(\boldsymbol{X}\)</span> is not full rank, and in particular that the columns of <span class="math notranslate nohighlight">\(\boldsymbol{X}\)</span> are <em>linearly dependent</em>, meaning that at least one of features can be written as a linear combination of some of the other features. When this occurs, it means that the normal equations</p>
+<div class="math notranslate nohighlight">
+\[
+\boldsymbol{X^\top X \beta} = \boldsymbol{X^\top y}
+\]</div>
+<p>actually have many valid solutions, and so we cannot uniquely determine the coefficients <span class="math notranslate nohighlight">\(\hat{\boldsymbol{\beta}}\)</span>. Later in this course, we will discuss a variety of techniques for handling this situation – notably, the Ridge and LASSO approaches to regression, which resolve this problem by adding <em>regularization</em>. Here, we briefly discuss an alternative which is primarily motivated by linear algebra, and less commonly used in statistical applications (though it has been studied more recently). In the case when the normal equations have many solutions, one needs to use some heuristic to pick one of these. A reasonable option to is pick the <span class="math notranslate nohighlight">\(\boldsymbol{\beta}\)</span> satisfying <span class="math notranslate nohighlight">\((2)\)</span> that has the smallest norm. Formally this problem becomes:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+\min_{\boldsymbol{\beta}}\;\; &amp; \|\boldsymbol{\beta}\|_2\\
+\text{such that}\;\;  &amp; \boldsymbol{X^\top X\beta} = \boldsymbol{X^\top y}
+\end{align*}
+\end{split}\]</div>
+<p>It turns out the solution to this problem is given by <span class="math notranslate nohighlight">\(\hat{\boldsymbol{\beta}} = \boldsymbol{X}^\dagger y\)</span> where <span class="math notranslate nohighlight">\(\boldsymbol{X}^\dagger\)</span> is called the Moore-Penrose pseudo-inverse of <span class="math notranslate nohighlight">\(\boldsymbol{X}\)</span>. The pseudo-inverse can be defined an calculated using the singular value decomposition (you can find details <a class="reference external" href="https://en.wikipedia.org/wiki/Moore%E2%80%93Penrose_inverse">here</a>), though for the sake of this notebook we will use an implementation included in the numpy function <code class="docutils literal notranslate"><span class="pre">np.linalg.pinv</span></code>.</p>
+<p>Let’s first construct a data matrix <span class="math notranslate nohighlight">\(\boldsymbol{X}\)</span> for which <span class="math notranslate nohighlight">\((\boldsymbol{X^\top X})^{-1}\)</span> doesn’t exist. A simple way to do this is to make a data matrix for which there are more features <span class="math notranslate nohighlight">\(p\)</span> than number of observations <span class="math notranslate nohighlight">\(n\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">p</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="n">n</span> <span class="o">=</span> <span class="mi">30</span>
+
+<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">p</span><span class="p">))</span>
+<span class="n">beta_true</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="n">p</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">beta_true</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Next, let’s verify that <code class="docutils literal notranslate"><span class="pre">np.linalg.inv</span></code> doesn’t work when we try and invert <span class="math notranslate nohighlight">\(\boldsymbol{X^\top X}\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">XTX</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">X</span><span class="p">)</span>
+<span class="n">XTX_inv</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">XTX</span><span class="p">)</span>
+<span class="n">XTX_inv</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[ 4.88661020e+14, -1.78667944e+14, -7.59975988e+14, ...,
+         2.93897736e+14, -4.77062171e+14, -3.16709496e+14],
+       [ 2.45335019e+14, -1.49504624e+14, -3.68830832e+14, ...,
+         2.10458186e+14, -2.27358308e+14, -1.59635051e+14],
+       [ 2.53072593e+14,  5.35603002e+13, -2.93481583e+14, ...,
+         1.45753071e+14, -1.55954354e+14, -1.33087505e+14],
+       ...,
+       [ 7.63734304e+14, -6.86534089e+13, -9.67512672e+14, ...,
+         5.02106695e+14, -5.58676575e+14, -4.63086471e+14],
+       [ 2.43494754e+14, -6.04417297e+12, -2.34767847e+14, ...,
+         1.29706186e+14, -1.19566105e+14, -1.21203601e+14],
+       [-3.24427583e+14,  6.51295887e+13,  4.26020626e+14, ...,
+        -2.37458528e+14,  2.50483599e+14,  1.94755675e+14]])
+</pre></div>
+</div>
+</div>
+</div>
+<p>Notice that while the function doesn’t actually give us an error, the numbers in <span class="math notranslate nohighlight">\((\boldsymbol{X^\top X})^{-1}\)</span> are extremely large (numerically effectively infinity), indicating that there is in fact probably something wrong. (This is a particularly insidious case, where we might naively apply a numpy function and get no error, even though something is going very wrong.)</p>
+<p>We can verify that this isn’t correct by checking that <span class="math notranslate nohighlight">\(\boldsymbol{X^\top X}(\boldsymbol{X^\top X})^{-1}\)</span> isn’t actually the identity matrix:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">XTX</span><span class="p">,</span> <span class="n">XTX_inv</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[ 5.4375  , -0.203125,  7.125   , ...,  0.9375  , -5.6875  ,
+         0.84375 ],
+       [ 0.125   ,  1.421875, -2.5     , ..., -0.8125  ,  0.1875  ,
+        -1.      ],
+       [ 4.25    ,  0.125   ,  3.25    , ...,  1.75    , -1.      ,
+         0.5     ],
+       ...,
+       [-5.75    , -0.28125 ,  1.75    , ..., -0.625   ,  8.25    ,
+        -4.      ],
+       [ 0.      ,  0.5625  ,  6.125   , ..., -0.375   ,  0.75    ,
+        -0.6875  ],
+       [ 2.      ,  0.      ,  8.      , ...,  0.      ,  4.      ,
+        -1.      ]])
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can also check that using this inverse won’t give us a correct solution to the normal equations.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">beta_hat_bad</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">XTX_inv</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span>
+
+<span class="c1"># check if (XTX beta_hat) == XTy</span>
+<span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">XTX</span><span class="p">,</span> <span class="n">beta_hat_bad</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>False
+</pre></div>
+</div>
+</div>
+</div>
+<p>This returns false, because <span class="math notranslate nohighlight">\(\boldsymbol{X^\top X\beta} \neq \boldsymbol{X^\top y}\)</span>, verifying that this didn’t actually give us a valid solution to the normal equations.</p>
+<p>Instead, we can find a valid solution <span class="math notranslate nohighlight">\(\hat{\boldsymbol{\beta}}\)</span> using the pseudo-inverse and the numpy function <code class="docutils literal notranslate"><span class="pre">np.linalg.pinv</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X_pinv</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">pinv</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="n">beta_hat_good</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X_pinv</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+<span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">XTX</span><span class="p">,</span> <span class="n">beta_hat_good</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True
+</pre></div>
+</div>
+</div>
+</div>
+<p>This now works, meaning that the pseudo-inverse did give us a valid solution to the normal equations.</p>
 </div>
 </div>
 
