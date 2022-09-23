@@ -17,5 +17,6 @@ parts:
     - file: content/basic_linear_regression/vectors_and_matrices
     - file: content/basic_linear_regression/multiple_predictors
     - file: content/basic_linear_regression/more_least_squares
+    - file: content/basic_linear_regression/maximum_likelihood_estimation
   - file: content/generalizing_linear_regression/chheader
   - file: content/extensions_applications/chheader

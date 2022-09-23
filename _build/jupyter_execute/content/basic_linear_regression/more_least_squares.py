@@ -207,7 +207,7 @@ X = np.hstack([ones, X])
 # \end{align*}
 # $$
 # 
-# Thus we see that we can find the fitted values can be computed just using the $\boldsymbol{Q}$ matrix from the QR decomposition! In fact, the expression $\boldsymbol{QQ^\top}$ is just another way of representing the "hat" matrix $\boldsymbol{X}(\boldsymbol{X^\top X})^{-1} \boldsymbol{X^\top y}$. This is convenient, because (as promised) we can compute $\hat{\boldsymbol{y}}$ without having to explicitly invert $\boldsymbol{X^\top X}$. Let's do this for our housing dataset. (We won't actually print out the full `y_hat` array, as this would be very large.)
+# Thus we see that we can find the fitted values can be computed just using the $\boldsymbol{Q}$ matrix from the QR decomposition! In fact, the expression $\boldsymbol{QQ^\top}$ is just another way of representing the "hat" matrix $\boldsymbol{X}(\boldsymbol{X^\top X})^{-1} \boldsymbol{X^\top}$. This is convenient, because (as promised) we can compute $\hat{\boldsymbol{y}}$ without having to explicitly invert $\boldsymbol{X^\top X}$. Let's do this for our housing dataset. (We won't actually print out the full `y_hat` array, as this would be very large.)
 
 # In[9]:
 
@@ -281,7 +281,7 @@ for name, coeff in zip(feature_names, beta_hat):
 # \end{align*}
 # $$
 # 
-# It turns out the solution to this problem is given by $\hat{\boldsymbol{\beta}} = \boldsymbol{X}^\dagger y$ where $\boldsymbol{X}^\dagger$ is called the Moore-Penrose pseudo-inverse of $\boldsymbol{X}$. The pseudo-inverse can be defined an calculated using the singular value decomposition (you can find details [here](https://en.wikipedia.org/wiki/Moore–Penrose_inverse)), though for the sake of this notebook we will use an implementation included in the numpy function `np.linalg.pinv`.
+# It turns out the solution to this problem is given by $\hat{\boldsymbol{\beta}} = \boldsymbol{X}^\dagger y$ where $\boldsymbol{X}^\dagger$ is called the Moore-Penrose pseudo-inverse of $\boldsymbol{X}$. The pseudo-inverse can be defined and calculated using the singular value decomposition (you can find details [here](https://en.wikipedia.org/wiki/Moore–Penrose_inverse)), though for the sake of this notebook we will use an implementation included in the numpy function `np.linalg.pinv`.
 # 
 # Let's first construct a data matrix $\boldsymbol{X}$ for which $(\boldsymbol{X^\top X})^{-1}$ doesn't exist. A simple way to do this is to make a data matrix for which there are more features $p$ than number of observations $n$.
 
