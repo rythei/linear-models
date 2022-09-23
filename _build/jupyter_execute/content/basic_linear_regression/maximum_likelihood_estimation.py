@@ -233,7 +233,7 @@ plt.show()
 # \end{align*}
 # $$
 # 
-# This becomes a linear combination of two terms: the first is $\boldsymbol{\beta}_\star$, or the "true" regression parameters, which we assume have generated our data. The second is $(\boldsymbol{X^\top X})^{-1} \boldsymbol{X^\top\varepsilon}$, which is really just a linear transformation of the Gaussian random vector $\boldsymbol{\varepsilon}$, which itself will follow a normal distribution. Let's figure out what its parameters are. Since $\mathbb{E}[\boldsymbol{\varepsilon}] = 0$, we have
+# Here $(i)$ holds because we are assuming that there is some true underlying linear model, i.e. that $\boldsymbol{y} = \boldsymbol{X\beta}_\star + \boldsymbol{\varepsilon}$ for some unknown parameters $\boldsymbol{\beta}_\star$. Under this assumption, we get a linear combination of two terms: the first is $\boldsymbol{\beta}_\star$, or the "true" regression parameters, which we assume have generated our data. The second is $(\boldsymbol{X^\top X})^{-1} \boldsymbol{X^\top\varepsilon}$, which is really just a linear transformation of the Gaussian random vector $\boldsymbol{\varepsilon}$, which itself will follow a normal distribution. Let's figure out what its parameters are. Since $\mathbb{E}[\boldsymbol{\varepsilon}] = 0$, we have
 # 
 # $$
 # \mathbb{E}[(\boldsymbol{X^\top X})^{-1} \boldsymbol{X^\top\varepsilon}] = 0.
