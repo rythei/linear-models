@@ -53,7 +53,7 @@
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="3. Generalizing linear regression" href="../generalizing_linear_regression/chheader.html" />
+    <link rel="next" title="2.7. Maximum likelihood estimation" href="maximum_likelihood_estimation.html" />
     <link rel="prev" title="2.5. Linear regression with multiple predictors" href="multiple_predictors.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -169,6 +169,11 @@
    <li class="toctree-l2 current active">
     <a class="current reference internal" href="#">
      2.6. More on least squares
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="maximum_likelihood_estimation.html">
+     2.7. Maximum likelihood estimation
     </a>
    </li>
   </ul>
@@ -556,7 +561,7 @@
 &amp;= \boldsymbol{QQ}^\top \boldsymbol{y}.
 \end{align*}
 \end{split}\]</div>
-<p>Thus we see that we can find the fitted values can be computed just using the <span class="math notranslate nohighlight">\(\boldsymbol{Q}\)</span> matrix from the QR decomposition! In fact, the expression <span class="math notranslate nohighlight">\(\boldsymbol{QQ^\top}\)</span> is just another way of representing the “hat” matrix <span class="math notranslate nohighlight">\(\boldsymbol{X}(\boldsymbol{X^\top X})^{-1} \boldsymbol{X^\top y}\)</span>. This is convenient, because (as promised) we can compute <span class="math notranslate nohighlight">\(\hat{\boldsymbol{y}}\)</span> without having to explicitly invert <span class="math notranslate nohighlight">\(\boldsymbol{X^\top X}\)</span>. Let’s do this for our housing dataset. (We won’t actually print out the full <code class="docutils literal notranslate"><span class="pre">y_hat</span></code> array, as this would be very large.)</p>
+<p>Thus we see that we can find the fitted values can be computed just using the <span class="math notranslate nohighlight">\(\boldsymbol{Q}\)</span> matrix from the QR decomposition! In fact, the expression <span class="math notranslate nohighlight">\(\boldsymbol{QQ^\top}\)</span> is just another way of representing the “hat” matrix <span class="math notranslate nohighlight">\(\boldsymbol{X}(\boldsymbol{X^\top X})^{-1} \boldsymbol{X^\top}\)</span>. This is convenient, because (as promised) we can compute <span class="math notranslate nohighlight">\(\hat{\boldsymbol{y}}\)</span> without having to explicitly invert <span class="math notranslate nohighlight">\(\boldsymbol{X^\top X}\)</span>. Let’s do this for our housing dataset. (We won’t actually print out the full <code class="docutils literal notranslate"><span class="pre">y_hat</span></code> array, as this would be very large.)</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Q</span><span class="p">,</span> <span class="n">R</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">qr</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
@@ -641,7 +646,7 @@ Longitude: -0.4345137546747741
 \text{such that}\;\;  &amp; \boldsymbol{X^\top X\beta} = \boldsymbol{X^\top y}
 \end{align*}
 \end{split}\]</div>
-<p>It turns out the solution to this problem is given by <span class="math notranslate nohighlight">\(\hat{\boldsymbol{\beta}} = \boldsymbol{X}^\dagger y\)</span> where <span class="math notranslate nohighlight">\(\boldsymbol{X}^\dagger\)</span> is called the Moore-Penrose pseudo-inverse of <span class="math notranslate nohighlight">\(\boldsymbol{X}\)</span>. The pseudo-inverse can be defined an calculated using the singular value decomposition (you can find details <a class="reference external" href="https://en.wikipedia.org/wiki/Moore%E2%80%93Penrose_inverse">here</a>), though for the sake of this notebook we will use an implementation included in the numpy function <code class="docutils literal notranslate"><span class="pre">np.linalg.pinv</span></code>.</p>
+<p>It turns out the solution to this problem is given by <span class="math notranslate nohighlight">\(\hat{\boldsymbol{\beta}} = \boldsymbol{X}^\dagger y\)</span> where <span class="math notranslate nohighlight">\(\boldsymbol{X}^\dagger\)</span> is called the Moore-Penrose pseudo-inverse of <span class="math notranslate nohighlight">\(\boldsymbol{X}\)</span>. The pseudo-inverse can be defined and calculated using the singular value decomposition (you can find details <a class="reference external" href="https://en.wikipedia.org/wiki/Moore%E2%80%93Penrose_inverse">here</a>), though for the sake of this notebook we will use an implementation included in the numpy function <code class="docutils literal notranslate"><span class="pre">np.linalg.pinv</span></code>.</p>
 <p>Let’s first construct a data matrix <span class="math notranslate nohighlight">\(\boldsymbol{X}\)</span> for which <span class="math notranslate nohighlight">\((\boldsymbol{X^\top X})^{-1}\)</span> doesn’t exist. A simple way to do this is to make a data matrix for which there are more features <span class="math notranslate nohighlight">\(p\)</span> than number of observations <span class="math notranslate nohighlight">\(n\)</span>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -665,19 +670,19 @@ Longitude: -0.4345137546747741
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[-3.94245417e+14, -1.29480647e+13,  1.64013503e+13, ...,
-        -9.36392285e+13, -8.08261137e+13, -1.29645802e+14],
-       [ 2.10441397e+14,  4.19597000e+13,  4.24951390e+12, ...,
-        -3.07926419e+13,  1.38362690e+13,  1.18243897e+14],
-       [ 1.18480783e+14,  9.08941397e+13, -5.46800237e+13, ...,
-         4.67040892e+13,  1.21133859e+14, -2.53252448e+13],
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[-8.21380866e+13,  1.03080550e+14,  3.20338632e+13, ...,
+        -1.90310321e+13, -4.10727063e+13, -5.60589091e+13],
+       [-3.81787802e+13,  5.13327927e+13, -2.34746599e+13, ...,
+         1.36011341e+13,  2.86637228e+13, -4.64520872e+13],
+       [ 3.15590872e+13, -5.65568521e+13, -7.00853519e+13, ...,
+        -1.14526426e+13, -2.99583755e+13, -3.57815367e+13],
        ...,
-       [-2.67106292e+14, -1.15421996e+13, -1.29719942e+13, ...,
-        -1.02576247e+13,  1.32996351e+13, -1.81405172e+14],
-       [-1.45097094e+14,  3.04878217e+13, -3.06833132e+13, ...,
-        -1.18493057e+13,  1.85550964e+13, -1.29900597e+14],
-       [-2.41453266e+13, -7.42612494e+13,  7.38874765e+13, ...,
-        -3.35734339e+13, -1.07360532e+14,  5.84599474e+13]])
+       [ 1.94701919e+13, -5.79904928e+13,  3.11166684e+13, ...,
+        -1.40485298e+13, -1.15061414e+13,  5.73670057e+13],
+       [-7.96693792e+13,  1.46158770e+14, -8.54985577e+13, ...,
+        -8.64731401e+13, -7.92562362e+13, -1.37016791e+14],
+       [-2.88248391e+13,  9.15245809e+13, -1.75558804e+13, ...,
+        -1.74990884e+13, -9.67554915e+13, -1.27923968e+13]])
 </pre></div>
 </div>
 </div>
@@ -691,19 +696,19 @@ Longitude: -0.4345137546747741
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[-0.75      ,  0.09375   ,  0.        , ...,  0.859375  ,
-        -0.625     , -0.4375    ],
-       [-0.25      , -0.375     ,  0.5       , ..., -0.0625    ,
-        -0.25      , -0.375     ],
-       [ 1.21875   ,  0.3125    ,  0.875     , ...,  0.625     ,
-        -0.25      ,  0.625     ],
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[ 0.93359375,  2.75      , -0.66210938, ..., -0.08789062,
+        -0.140625  , -0.8828125 ],
+       [ 0.046875  ,  0.078125  , -0.34179688, ...,  0.51757812,
+         0.1875    ,  0.4609375 ],
+       [-0.68359375,  0.203125  ,  1.890625  , ..., -0.55859375,
+         0.75      ,  0.39648438],
        ...,
-       [-1.48046875, -0.140625  , -0.15625   , ...,  1.234375  ,
-        -0.28125   , -1.03125   ],
-       [ 1.08984375, -0.046875  , -0.078125  , ..., -0.34375   ,
-         0.15625   , -0.40625   ],
-       [-1.5       , -1.5       ,  0.5       , ..., -0.25      ,
-        -0.5       ,  1.        ]])
+       [-0.34375   ,  1.0625    , -0.3125    , ...,  0.84375   ,
+         0.        ,  0.453125  ],
+       [ 0.375     , -0.875     , -0.53125   , ...,  0.234375  ,
+         1.125     ,  0.140625  ],
+       [-0.25      ,  1.        , -0.5       , ...,  0.125     ,
+         0.        ,  0.9375    ]])
 </pre></div>
 </div>
 </div>
@@ -777,10 +782,10 @@ Longitude: -0.4345137546747741
             <p class="prev-next-title"><span class="section-number">2.5. </span>Linear regression with multiple predictors</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="../generalizing_linear_regression/chheader.html" title="next page">
+    <a class='right-next' id="next-link" href="maximum_likelihood_estimation.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title"><span class="section-number">3. </span>Generalizing linear regression</p>
+        <p class="prev-next-title"><span class="section-number">2.7. </span>Maximum likelihood estimation</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>
