@@ -1,0 +1,983 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>2.8. Hypothesis testing for the Gaussian model &#8212; Stat 151, Linear Models</title>
+    
+  <link href="../../_static/css/theme.css" rel="stylesheet">
+  <link href="../../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../../_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
+    <script>
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="3. Generalizing linear regression" href="../generalizing_linear_regression/chheader.html" />
+    <link rel="prev" title="2.7. Maximum likelihood estimation" href="maximum_likelihood_estimation.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../../_static/logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Stat 151, Linear Models</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../overview.html">
+   Welcome to Stat 151
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Linear models
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../python_basics/chheader.html">
+   1. Python 101
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_basics/python_basics.html">
+     1.1. The Basics
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_basics/python_numpy.html">
+     1.2. Introduction to NumPy
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_basics/python_plotting.html">
+     1.3. MatPlotLib
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="chheader.html">
+   2. Basics of linear regression
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="visualizing_data.html">
+     2.1. Exploring and visualizing data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="simple_linear_regression.html">
+     2.2. Simple linear regression
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="simple_linear_regression_cont.html">
+     2.3. More on simple linear regression
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="vectors_and_matrices.html">
+     2.4. Basic concepts from linear algebra: vectors and matrices
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="multiple_predictors.html">
+     2.5. Linear regression with multiple predictors
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="more_least_squares.html">
+     2.6. More on least squares
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="maximum_likelihood_estimation.html">
+     2.7. Maximum likelihood estimation
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     2.8. Hypothesis testing for the Gaussian model
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../generalizing_linear_regression/chheader.html">
+   3. Generalizing linear regression
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../extensions_applications/chheader.html">
+   4. Extensions and applications
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        <a class="dropdown-buttons"
+            href="../../_sources/content/basic_linear_regression/hypothesis_testing.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download notebook file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../_sources/content/basic_linear_regression/hypothesis_testing.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.md</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/erichson/LinearAlgebra/master?urlpath=tree/content/basic_linear_regression/hypothesis_testing.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#a-t-test-for-the-hypothesis-beta-j-0">
+   2.8.1. A
+   <span class="math notranslate nohighlight">
+    \(t\)
+   </span>
+   test for the hypothesis
+   <span class="math notranslate nohighlight">
+    \(\beta_j = 0\)
+   </span>
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#an-f-test-for-joint-hypotheses-over-the-coefficients">
+   2.8.2. An
+   <span class="math notranslate nohighlight">
+    \(F\)
+   </span>
+   test for joint hypotheses over the coefficients
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#proof-of-the-fact-that-n-p-hat-sigma-2-sigma-2-sim-chi-2-n-p">
+   2.8.3. Proof of the fact that
+   <span class="math notranslate nohighlight">
+    \((n-p)\hat{\sigma}^2/\sigma^2 \sim \chi^2(n-p)\)
+   </span>
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Hypothesis testing for the Gaussian model</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#a-t-test-for-the-hypothesis-beta-j-0">
+   2.8.1. A
+   <span class="math notranslate nohighlight">
+    \(t\)
+   </span>
+   test for the hypothesis
+   <span class="math notranslate nohighlight">
+    \(\beta_j = 0\)
+   </span>
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#an-f-test-for-joint-hypotheses-over-the-coefficients">
+   2.8.2. An
+   <span class="math notranslate nohighlight">
+    \(F\)
+   </span>
+   test for joint hypotheses over the coefficients
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#proof-of-the-fact-that-n-p-hat-sigma-2-sigma-2-sim-chi-2-n-p">
+   2.8.3. Proof of the fact that
+   <span class="math notranslate nohighlight">
+    \((n-p)\hat{\sigma}^2/\sigma^2 \sim \chi^2(n-p)\)
+   </span>
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            
+              <div>
+                
+  <div class="tex2jax_ignore mathjax_ignore section" id="hypothesis-testing-for-the-gaussian-model">
+<h1><span class="section-number">2.8. </span>Hypothesis testing for the Gaussian model<a class="headerlink" href="#hypothesis-testing-for-the-gaussian-model" title="Permalink to this headline">¶</a></h1>
+<p>In this section, we will show that, under the assumption that the Gaussian model is true, we can perform various forms of statistical inference on a fitted linear regression model. In particular, in this section, we will focus on performing hypothesis testing on the coefficients <span class="math notranslate nohighlight">\(\hat{\boldsymbol{\beta}}\)</span>, though the same ideas can be extended to do other forms of inference, such as obtaining confidence intervals.</p>
+<p>We will derive two types of hypothesis tests:</p>
+<ol class="simple">
+<li><p>A <span class="math notranslate nohighlight">\(t\)</span>-test for an individual coefficient <span class="math notranslate nohighlight">\(\hat{\beta}_j\)</span>, and</p></li>
+<li><p>An <span class="math notranslate nohighlight">\(F\)</span>-test for a subset of coefficients <span class="math notranslate nohighlight">\(\hat{\beta}_{j_1},\dots,\hat{\beta}_{j_k}\)</span>.</p></li>
+</ol>
+<p>Recall that for the Gaussian model of linear regression, we assume that the responses <span class="math notranslate nohighlight">\(y_i\)</span> are generated as</p>
+<div class="math notranslate nohighlight">
+\[
+y_i = \boldsymbol{\beta}\cdot \boldsymbol{x}_i + \varepsilon_i
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(\varepsilon_i \sim N(0,\sigma^2)\)</span>. Under this assumption, we saw that the least squares coefficients <span class="math notranslate nohighlight">\(\hat{\boldsymbol{\beta}} = (\boldsymbol{X^\top X})^{-1}\boldsymbol{X^\top y}\)</span> be distributed as</p>
+<div class="math notranslate nohighlight">
+\[
+\hat{\boldsymbol{\beta}}\mid \boldsymbol{X} \sim N(\boldsymbol{\beta}, \sigma^2 \boldsymbol{X^\top X}^{-1}). \hspace{10mm} (1)
+\]</div>
+<p>In the following sections, we will use this fact to derive the aformentioned hypothesis tests. As working example, we will again use the fish toxicity dataset that we’ve used in the previous section. We load this dataset below.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;datasets/qsar_fish_toxicity.csv&quot;</span><span class="p">)</span>
+<span class="n">dataset</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>CIC0</th>
+      <th>SM1_Dz(Z)</th>
+      <th>GATS1i</th>
+      <th>NdsCH</th>
+      <th>NdssC</th>
+      <th>MLOGP</th>
+      <th>LC50</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>3.260</td>
+      <td>0.829</td>
+      <td>1.676</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1.453</td>
+      <td>3.770</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2.189</td>
+      <td>0.580</td>
+      <td>0.863</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1.348</td>
+      <td>3.115</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2.125</td>
+      <td>0.638</td>
+      <td>0.831</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1.348</td>
+      <td>3.531</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>3.027</td>
+      <td>0.331</td>
+      <td>1.472</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1.807</td>
+      <td>3.510</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2.094</td>
+      <td>0.827</td>
+      <td>0.860</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1.886</td>
+      <td>5.390</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>As usual, we will extract the response as a numpy array, and the other features as another array, adding a column of 1’s to account for the intercept term in the regression.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="c1"># extract the data</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">[</span><span class="s2">&quot;LC50&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+<span class="n">cols</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">dataset</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">c</span><span class="o">!=</span><span class="s2">&quot;LC50&quot;</span><span class="p">]</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">[</span><span class="n">cols</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+
+<span class="c1"># add a column of ones to the X matrix</span>
+<span class="n">ones</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">([</span><span class="n">ones</span><span class="p">,</span> <span class="n">X</span><span class="p">])</span>
+
+<span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">y</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>((908, 7), (908,))
+</pre></div>
+</div>
+</div>
+</div>
+<p>We will compare the output of our own code with that of the standard package for fitting statistical models in python, called <code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>. This output will look similar to almost any other statistical software for fitting a linear model, such as <code class="docutils literal notranslate"><span class="pre">lm</span></code> in R.</p>
+<p>To fit the model using <code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>, we simply run:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">statsmodels.api</span> <span class="k">as</span> <span class="nn">sm</span>
+
+<span class="n">results</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">OLS</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">X</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">results</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="simpletable">
+<caption>OLS Regression Results</caption>
+<tr>
+  <th>Dep. Variable:</th>            <td>y</td>        <th>  R-squared:         </th> <td>   0.577</td> 
+</tr>
+<tr>
+  <th>Model:</th>                   <td>OLS</td>       <th>  Adj. R-squared:    </th> <td>   0.574</td> 
+</tr>
+<tr>
+  <th>Method:</th>             <td>Least Squares</td>  <th>  F-statistic:       </th> <td>   205.0</td> 
+</tr>
+<tr>
+  <th>Date:</th>             <td>Fri, 30 Sep 2022</td> <th>  Prob (F-statistic):</th> <td>1.33e-164</td>
+</tr>
+<tr>
+  <th>Time:</th>                 <td>00:53:30</td>     <th>  Log-Likelihood:    </th> <td> -1238.0</td> 
+</tr>
+<tr>
+  <th>No. Observations:</th>      <td>   908</td>      <th>  AIC:               </th> <td>   2490.</td> 
+</tr>
+<tr>
+  <th>Df Residuals:</th>          <td>   901</td>      <th>  BIC:               </th> <td>   2524.</td> 
+</tr>
+<tr>
+  <th>Df Model:</th>              <td>     6</td>      <th>                     </th>     <td> </td>    
+</tr>
+<tr>
+  <th>Covariance Type:</th>      <td>nonrobust</td>    <th>                     </th>     <td> </td>    
+</tr>
+</table>
+<table class="simpletable">
+<tr>
+    <td></td>       <th>coef</th>     <th>std err</th>      <th>t</th>      <th>P>|t|</th>  <th>[0.025</th>    <th>0.975]</th>  
+</tr>
+<tr>
+  <th>const</th> <td>    2.1746</td> <td>    0.181</td> <td>   12.000</td> <td> 0.000</td> <td>    1.819</td> <td>    2.530</td>
+</tr>
+<tr>
+  <th>x1</th>    <td>    0.3856</td> <td>    0.061</td> <td>    6.333</td> <td> 0.000</td> <td>    0.266</td> <td>    0.505</td>
+</tr>
+<tr>
+  <th>x2</th>    <td>    1.2556</td> <td>    0.087</td> <td>   14.430</td> <td> 0.000</td> <td>    1.085</td> <td>    1.426</td>
+</tr>
+<tr>
+  <th>x3</th>    <td>   -0.7464</td> <td>    0.101</td> <td>   -7.365</td> <td> 0.000</td> <td>   -0.945</td> <td>   -0.548</td>
+</tr>
+<tr>
+  <th>x4</th>    <td>    0.4136</td> <td>    0.054</td> <td>    7.644</td> <td> 0.000</td> <td>    0.307</td> <td>    0.520</td>
+</tr>
+<tr>
+  <th>x5</th>    <td>    0.0643</td> <td>    0.041</td> <td>    1.583</td> <td> 0.114</td> <td>   -0.015</td> <td>    0.144</td>
+</tr>
+<tr>
+  <th>x6</th>    <td>    0.3901</td> <td>    0.034</td> <td>   11.555</td> <td> 0.000</td> <td>    0.324</td> <td>    0.456</td>
+</tr>
+</table>
+<table class="simpletable">
+<tr>
+  <th>Omnibus:</th>       <td>100.278</td> <th>  Durbin-Watson:     </th> <td>   1.979</td>
+</tr>
+<tr>
+  <th>Prob(Omnibus):</th> <td> 0.000</td>  <th>  Jarque-Bera (JB):  </th> <td> 379.239</td>
+</tr>
+<tr>
+  <th>Skew:</th>          <td> 0.468</td>  <th>  Prob(JB):          </th> <td>4.46e-83</td>
+</tr>
+<tr>
+  <th>Kurtosis:</th>      <td> 6.024</td>  <th>  Cond. No.          </th> <td>    25.9</td>
+</tr>
+</table><br/><br/>Notes:<br/>[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.</div></div>
+</div>
+<p>Now let’s fit the model manually, and make sure we can recover the same coefficients (you could also check that the methods we’ve introduced for computing the <span class="math notranslate nohighlight">\(R^2\)</span> and adjusted <span class="math notranslate nohighlight">\(R^2\)</span> also match this output).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">XTX</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">X</span><span class="p">)</span>
+<span class="n">XTX_inv</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">XTX</span><span class="p">)</span>
+<span class="n">beta_hat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">XTX_inv</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span>
+<span class="n">beta_hat</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([ 2.17456016,  0.38562621,  1.25562193, -0.74641356,  0.41355009,
+        0.06433409,  0.39005251])
+</pre></div>
+</div>
+</div>
+</div>
+<p>Indeed, these coefficients are exactly the same as the expected output.</p>
+<div class="section" id="a-t-test-for-the-hypothesis-beta-j-0">
+<h2><span class="section-number">2.8.1. </span>A <span class="math notranslate nohighlight">\(t\)</span> test for the hypothesis <span class="math notranslate nohighlight">\(\beta_j = 0\)</span><a class="headerlink" href="#a-t-test-for-the-hypothesis-beta-j-0" title="Permalink to this headline">¶</a></h2>
+<p>The first hypothesis test we will develop is for the null hypothesis that <em>one</em> of the coefficients, say <span class="math notranslate nohighlight">\(\beta_j\)</span> is equal to <span class="math notranslate nohighlight">\(0\)</span>. This corresponds to the fact that feature <span class="math notranslate nohighlight">\(j\)</span> in the regression is not predictive of the response <span class="math notranslate nohighlight">\(y\)</span>. Formally, we can write this hypothesis as follows:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+H_0: \beta_j = 0\\
+H_a: \beta_j \neq 0
+\end{align*}
+\end{split}\]</div>
+<p>To begin, let’s suppose that the variance <span class="math notranslate nohighlight">\(\sigma^2\)</span> of the errors were known. Then in this case, we can use the fact, from (1), that</p>
+<div class="math notranslate nohighlight">
+\[
+\hat{\beta}_j \sim N(\beta_j, \sigma^2 (\boldsymbol{X^\top X})_{jj}^{-1}).
+\]</div>
+<p>Under the null hypothesis <span class="math notranslate nohighlight">\(\beta_j = 0\)</span>, this becomes <span class="math notranslate nohighlight">\(\beta_j \sim N(0,\sigma^2 (\boldsymbol{X^\top X})^{-1})\)</span>, and so in particular we can compute the statistic</p>
+<div class="math notranslate nohighlight">
+\[
+\hat{z}_j = \frac{\hat{\beta}_j}{\sqrt{\sigma^2 (X^\top X)^{-1}_{jj}}}
+\]</div>
+<p>and obtain the usual <span class="math notranslate nohighlight">\(p\)</span>-value by computing <span class="math notranslate nohighlight">\(P(|Z| &gt; |\hat{z}_j|)\)</span>, where <span class="math notranslate nohighlight">\(Z\sim N(0,1)\)</span>.</p>
+<p>While simple, this test won’t quite be correct in practice, as we don’t actually know the true variance <span class="math notranslate nohighlight">\(\sigma^2\)</span>. Instead, we must estimate this variance using the data. To do this, we will use the estimator</p>
+<div class="math notranslate nohighlight">
+\[
+\hat{\sigma}^2 = \frac{1}{n-p}\|\boldsymbol{y} - \boldsymbol{X}\hat{\boldsymbol{\beta}}\|_2^2.
+\]</div>
+<p>Note that this is slightly different than the maximum likelihood estimate of the variance that we derived in the previous section; choosing to scale by <span class="math notranslate nohighlight">\(1/(n-p)\)</span> ensures that <span class="math notranslate nohighlight">\(\hat{\sigma}^2\)</span> is an unbiased estimate of <span class="math notranslate nohighlight">\(\sigma^2\)</span>.</p>
+<p>Before we can return to hypothesis testing, we first need one more fact regarding the distribution of <span class="math notranslate nohighlight">\(\hat{\sigma}^2\)</span>, namely that it is distributed as</p>
+<div class="math notranslate nohighlight">
+\[
+(n-p)\hat{\sigma}^2/\sigma^2 \sim \chi^2(n-p).
+\]</div>
+<p>At the bottom of this section, we walk through a sketch of a proof of this fact using some basic linear algebra. In the meantime, we can use this fact to define a slightly different statistic to <span class="math notranslate nohighlight">\(\hat{z}\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+\hat{t}_j = \frac{\hat{\beta}_j}{\sqrt{\hat{\sigma}(\boldsymbol{X^\top X})^{-1}_{jj}}} = \frac{\hat{\beta}_j/\sqrt{\sigma^2 (\boldsymbol{X^\top X})^{-1}_{jj}}}{\hat{\sigma}/\sigma}
+\]</div>
+<p>The numerator <span class="math notranslate nohighlight">\(\hat{\beta}_j/\sqrt{\sigma^2 (\boldsymbol{X^\top X})^{-1}_{jj}}\)</span> is exactly <span class="math notranslate nohighlight">\(\hat{z}\)</span>, which we saw under the null hypothesis <span class="math notranslate nohighlight">\(\beta_j = 0\)</span> follows a standard normal distribution. The denominator of <span class="math notranslate nohighlight">\(\hat{t}\)</span> is equal to</p>
+<div class="math notranslate nohighlight">
+\[
+\sqrt{\frac{(n-p)\hat{\sigma}^2/\sigma^2}{n-p}}
+\]</div>
+<p>which is exactly the square root of a <span class="math notranslate nohighlight">\(\chi^2(n-p)\)</span> distribution divided by its degrees of freedom, <span class="math notranslate nohighlight">\(n-p\)</span>. This means that <span class="math notranslate nohighlight">\(\hat{t}_j\)</span> will follow a <span class="math notranslate nohighlight">\(t\)</span>-distribution with degrees of freedom <span class="math notranslate nohighlight">\(n-p\)</span>. Thus when <span class="math notranslate nohighlight">\(\sigma^2\)</span> is unknown, we can test the null hypothesis <span class="math notranslate nohighlight">\(\beta_j = 0\)</span> by computing the <span class="math notranslate nohighlight">\(p\)</span>-value <span class="math notranslate nohighlight">\(P(|T| &gt; |\hat{t}_j|)\)</span> where <span class="math notranslate nohighlight">\(T \sim t(n-p)\)</span>.</p>
+<p>Now that we’ve derived the <span class="math notranslate nohighlight">\(t\)</span>-test for testing <span class="math notranslate nohighlight">\(\beta_j = 0\)</span>, let’s try to implement these ourselves. Let’s begin by computing the estimate <span class="math notranslate nohighlight">\(\hat{\sigma}^2\)</span> of the variance.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y_hat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">beta_hat</span><span class="p">)</span>
+<span class="n">sigma2_hat</span> <span class="o">=</span> <span class="mf">1.</span><span class="o">/</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">y</span><span class="o">-</span><span class="n">y_hat</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Next, we can compute the <span class="math notranslate nohighlight">\(t\)</span> statistics for each of the coefficients.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cols</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;intercept&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">cols</span>
+<span class="n">t_stats</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+    <span class="n">sigma2_hat_j</span> <span class="o">=</span> <span class="n">sigma2_hat</span><span class="o">*</span><span class="n">XTX_inv</span><span class="p">[</span><span class="n">j</span><span class="p">,</span><span class="n">j</span><span class="p">]</span>
+    <span class="n">t_stat_j</span> <span class="o">=</span> <span class="n">beta_hat</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">sigma2_hat_j</span><span class="p">)</span>
+    <span class="n">t_stats</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">t_stat_j</span><span class="p">)</span>
+
+<span class="n">t_stats</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[11.999849483001165,
+ 6.332941663429568,
+ 14.42982493526401,
+ -7.364942208856185,
+ 7.64350660082139,
+ 1.5830826156649147,
+ 11.554631959310724]
+</pre></div>
+</div>
+</div>
+</div>
+<p>These again produce the same output as the table from <code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>! Finally, we can use <code class="docutils literal notranslate"><span class="pre">scipy</span></code> to compute probabilities under the <span class="math notranslate nohighlight">\(t\)</span> distribution to get the desired <span class="math notranslate nohighlight">\(p\)</span>-values.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">t</span>
+<span class="n">p_vals</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">t_dist</span> <span class="o">=</span> <span class="n">t</span><span class="p">(</span><span class="n">df</span><span class="o">=</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+
+<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+    <span class="n">p_val_j</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">t_dist</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">t_stats</span><span class="p">[</span><span class="n">j</span><span class="p">]))</span>
+    <span class="n">p_vals</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">p_val_j</span><span class="p">)</span>
+
+<span class="n">p_vals</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[0.0,
+ 3.7913205908068903e-10,
+ 0.0,
+ 1.9999999999996,
+ 5.395683899678261e-14,
+ 0.11375356116631785,
+ 0.0]
+</pre></div>
+</div>
+</div>
+</div>
+<p>These again match the results from the <code class="docutils literal notranslate"><span class="pre">statsmodels</span></code> implementation. To make this a bit clearer, let’s organize all the outputs we’ve had so far into a nice table.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">regression_outputs</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">&quot;variable&quot;</span><span class="p">:</span> <span class="n">cols</span><span class="p">,</span> <span class="s2">&quot;coefficient&quot;</span><span class="p">:</span> <span class="n">beta_hat</span><span class="p">,</span> <span class="s2">&quot;t-stat&quot;</span><span class="p">:</span> <span class="n">t_stats</span><span class="p">,</span> <span class="s2">&quot;p-value&quot;</span><span class="p">:</span> <span class="n">p_vals</span><span class="p">})</span>
+<span class="n">regression_outputs</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>variable</th>
+      <th>coefficient</th>
+      <th>t-stat</th>
+      <th>p-value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>intercept</td>
+      <td>2.174560</td>
+      <td>11.999849</td>
+      <td>0.000000e+00</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>CIC0</td>
+      <td>0.385626</td>
+      <td>6.332942</td>
+      <td>3.791321e-10</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>SM1_Dz(Z)</td>
+      <td>1.255622</td>
+      <td>14.429825</td>
+      <td>0.000000e+00</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>GATS1i</td>
+      <td>-0.746414</td>
+      <td>-7.364942</td>
+      <td>2.000000e+00</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>NdsCH</td>
+      <td>0.413550</td>
+      <td>7.643507</td>
+      <td>5.395684e-14</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>NdssC</td>
+      <td>0.064334</td>
+      <td>1.583083</td>
+      <td>1.137536e-01</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>MLOGP</td>
+      <td>0.390053</td>
+      <td>11.554632</td>
+      <td>0.000000e+00</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Let’s now actually interpret what the results of these <span class="math notranslate nohighlight">\(t\)</span>-tests mean. To do this, let’s suppose we’ve set a significance threshold of <span class="math notranslate nohighlight">\(0.05\)</span>. Then for each <em>individual</em> coefficient, with the exception of the chemical descriptor <code class="docutils literal notranslate"><span class="pre">NdssC</span></code> (measuring the counts of certain atom-types in a molecule), we reject the null hypothesis that the coefficient is equal to zero.</p>
+<p>Assuming the Gaussian model is correct, these are valid <span class="math notranslate nohighlight">\(p\)</span>-values for testing each one of these coefficients individually. However, we need to be careful when interpreting more than one of these tests at a time. To understand why, suppose we wanted to test whether both <span class="math notranslate nohighlight">\(\beta_1 = 0\)</span> <em>and</em> <span class="math notranslate nohighlight">\(\beta_2 = 0\)</span>. This hypothesis fails when <em>either one</em> of <span class="math notranslate nohighlight">\(\beta_1\)</span> or <span class="math notranslate nohighlight">\(\beta_2\)</span> is different from zero. The <span class="math notranslate nohighlight">\(p\)</span>-values we obtain give us the probability that a randomly drawn <span class="math notranslate nohighlight">\(\hat{t}_1\)</span> and a randomly drawm <span class="math notranslate nohighlight">\(\hat{t}_2\)</span> from the <span class="math notranslate nohighlight">\(t\)</span> distribution are at least as extreme as their observed values, but to test the hypothesis that <span class="math notranslate nohighlight">\(\beta_1 = 0\)</span> <em>and</em> <span class="math notranslate nohighlight">\(\beta_2 = 0\)</span> what we really need is</p>
+<div class="math notranslate nohighlight">
+\[
+P(|T| &gt; |\hat{t}_1| \text{  or  } |T| &gt; |\hat{t}_2|).
+\]</div>
+<p>It is entirely possible that even if the <span class="math notranslate nohighlight">\(p\)</span>-value for <span class="math notranslate nohighlight">\(\hat{t}_1\)</span> and the <span class="math notranslate nohighlight">\(p\)</span>-value for <span class="math notranslate nohighlight">\(\hat{t}_2\)</span> are both below some significance threshold, the above probability is not. This is called the problem of <em>multiple hypothesis testing</em> or <em>multiple comparisons</em>. There are simple ways to correct for this (e.g. by multiplying the <span class="math notranslate nohighlight">\(p\)</span>-values by the number of hypotheses to be tested, called a <a class="reference external" href="https://en.wikipedia.org/wiki/Bonferroni_correction">Bonferroni correction</a>), though in the following section we will see that there is a much better way to compute a joint hypothesis over the coefficients, using an <span class="math notranslate nohighlight">\(F\)</span>-test.</p>
+</div>
+<div class="section" id="an-f-test-for-joint-hypotheses-over-the-coefficients">
+<h2><span class="section-number">2.8.2. </span>An <span class="math notranslate nohighlight">\(F\)</span> test for joint hypotheses over the coefficients<a class="headerlink" href="#an-f-test-for-joint-hypotheses-over-the-coefficients" title="Permalink to this headline">¶</a></h2>
+<p>In this subsection, we will describe a method for testing the hypothesis</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align}
+&amp;H_0: \beta_1=\beta_2=\cdots = \beta_p = 0\\
+&amp;H_a: \text{At least one $\beta_j \neq 0$} \hspace{10mm} (2)
+\end{align}
+\end{split}\]</div>
+<p>However, the methods presented here can easily be extended to more general hypotheses of the form</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+&amp;H_0: \beta_{j_1}= c_1, \; \beta_{j_2}= c_2, \cdots, = \beta_{j_k} = c_k\\
+&amp;H_a: \text{At least one $\beta_{j_l} \neq 0$}
+\end{align*}
+\end{split}\]</div>
+<p>where now <span class="math notranslate nohighlight">\(j_1,\dots,j_k \subseteq \{1,\dots,p\}\)</span> are a subset of the features, and <span class="math notranslate nohighlight">\(c_1,\dots,c_k\)</span> are any set of hypothesized values.</p>
+<p>To test the hypothesis <span class="math notranslate nohighlight">\((2)\)</span>, we need to first develop a reasonable test statistic. Let’s suppose that the null hypothesis that <span class="math notranslate nohighlight">\(\beta_1=\cdots=\beta_p=0\)</span> is true. In this case</p>
+<div class="math notranslate nohighlight">
+\[
+y_i = \beta_0 + \varepsilon_i.
+\]</div>
+<p>If this were the case, we would expect the responses <span class="math notranslate nohighlight">\(y_i\)</span> to look like normally distributed noise around the constant value <span class="math notranslate nohighlight">\(\bar{y}\)</span>, and the predictions <span class="math notranslate nohighlight">\(\hat{y}_i = \hat{\boldsymbol{\beta}}\cdot \boldsymbol{x}_i\)</span> shouldn’t be much better than this. On the other hand, if the null hypothesis is not true – and at least one of the coefficients from zero – then the predictions <span class="math notranslate nohighlight">\(\hat{y}_i\)</span> should be significantly better than the naive estimate <span class="math notranslate nohighlight">\(\bar{y}\)</span>.</p>
+<p>To compare these two scenarios, we could compare the value <span class="math notranslate nohighlight">\(\|y_i - \bar{y}\|_2^2\)</span> (which we have previously called the TSS) to the value of <span class="math notranslate nohighlight">\(\|y_i - \hat{y}_i\|_2^2\)</span> (previously called the RSS). If the TSS is significantly larger than the RSS, then we would have evidence that the intercept-only model (corresponding to the null hypothesis <span class="math notranslate nohighlight">\(\beta_1=\cdots=\beta_p=0\)</span>) probably isn’t true. One way to do this would be to look at the ratio</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{\text{TSS}}{\text{RSS}}
+\]</div>
+<p>In practice, it is more standard however to modify this statistic a bit. Since <span class="math notranslate nohighlight">\(\text{TSS} = \text{RegSS} + \text{RSS}\)</span>, We could write the statistic as</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{\text{TSS}}{\text{RSS}} = \frac{\text{RegSS} + \text{RSS}}{\text{RSS}} = 1+ \frac{\text{RegSS}}{RSS}.
+\]</div>
+<p>In this case, we could equivalently test whether <span class="math notranslate nohighlight">\(\text{RegSS}/\text{RSS}\)</span> is significantly greater than zero. Importantly, it’s possible to show that a) the RSS and RegSS are statistically independent, and 2) that under <span class="math notranslate nohighlight">\(H_0\)</span>, <span class="math notranslate nohighlight">\(\text{RegSS} = \|\hat{y}_i - \bar{y}\|_2^2 \sim \chi^2(p-1)\)</span> and, and we showed in the previous section, that <span class="math notranslate nohighlight">\(\text{RSS} = \|y_i - \hat{y}_i\|_2^2 \sim \chi^2(n-p)\)</span>. With this known, we define the <span class="math notranslate nohighlight">\(F\)</span> statistic</p>
+<div class="math notranslate nohighlight">
+\[
+\hat{F} = \frac{\|\hat{y}_i - \bar{y}\|_2^2/(p-1)}{\|y_i-\hat{y}_i\|_2^2/(n-p)}.
+\]</div>
+<p>This is exactly the ratio of two chi-squared distributions, each divided by their degrees of freedom. By definition, this will follow and <span class="math notranslate nohighlight">\(F(p-1,n-p)\)</span> distribution. From this statistic, a p-value can be obtained by computing <span class="math notranslate nohighlight">\(P(F &gt; \hat{F})\)</span>. Let’s return to the fish toxicity example and actually compute this statistic.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y_bar</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+
+<span class="n">regss</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">y_hat</span> <span class="o">-</span> <span class="n">y_bar</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">rss</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">y</span><span class="o">-</span><span class="n">y_hat</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">F_hat</span> <span class="o">=</span> <span class="p">(</span><span class="n">regss</span><span class="o">/</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span><span class="o">/</span><span class="p">(</span><span class="n">rss</span><span class="o">/</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+<span class="n">F_hat</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>204.9746012507883
+</pre></div>
+</div>
+</div>
+</div>
+<p>This again matches the <span class="math notranslate nohighlight">\(F\)</span>-statistic entry from the <code class="docutils literal notranslate"><span class="pre">statsmodels</span></code> output! Finally, we can use this statistic to compute a <span class="math notranslate nohighlight">\(p\)</span>-value from the <span class="math notranslate nohighlight">\(F\)</span> distribution.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">f</span>
+
+<span class="n">f_dist</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">dfn</span><span class="o">=</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="n">dfd</span><span class="o">=</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+<span class="n">p_val</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">f_dist</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">F_hat</span><span class="p">))</span>
+<span class="n">p_val</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1.1102230246251565e-16
+</pre></div>
+</div>
+</div>
+</div>
+<p>Again we obtain the same <span class="math notranslate nohighlight">\(p\)</span>-value as the <code class="docutils literal notranslate"><span class="pre">statsmodels</span></code> output (zero). This means that we have confidence, at any significance threshold, that at least one of the coefficients is different from zero. In some settings, this is verification that the model we are studying is non-trivial: we’ve found evidence that <em>some</em> variable is a non-trivial predictor of the response. However, if we needed to find out which variables it is, we would need to return to our <span class="math notranslate nohighlight">\(t\)</span>-tests and provide the appropriate correction for testing multiple hypotheses.</p>
+<p>Of course, everything we’ve covered so far relies upon the fact that the Gaussian model is correct. This involves to assumptions (either of which failing to hold would make the tests derived here meangless): i) that the true model is actually linear, and ii) that the errors are normally distributed. Soon, we will introduce diagnostic tools that can be used to assess to what extent these assumptions actually appear to hold, which should always been used before interpreting the outputs of hypothesis tests.</p>
+</div>
+<div class="section" id="proof-of-the-fact-that-n-p-hat-sigma-2-sigma-2-sim-chi-2-n-p">
+<h2><span class="section-number">2.8.3. </span>Proof of the fact that <span class="math notranslate nohighlight">\((n-p)\hat{\sigma}^2/\sigma^2 \sim \chi^2(n-p)\)</span><a class="headerlink" href="#proof-of-the-fact-that-n-p-hat-sigma-2-sigma-2-sim-chi-2-n-p" title="Permalink to this headline">¶</a></h2>
+<p>To begin, define the residual vector</p>
+<div class="math notranslate nohighlight">
+\[
+\boldsymbol{r} = \boldsymbol{y} - \hat{\boldsymbol{y}} = (\boldsymbol{I}-\boldsymbol{X}(\boldsymbol{X^\top X})^{-1}\boldsymbol{X^\top})\boldsymbol{y} = \boldsymbol{Qy}
+\]</div>
+<p>where we define the matrix <span class="math notranslate nohighlight">\(\boldsymbol{Q} = \boldsymbol{I}-\boldsymbol{X}(\boldsymbol{X^\top X})^{-1}\boldsymbol{X^\top}\)</span>. Note that <span class="math notranslate nohighlight">\(\boldsymbol{Q}\)</span> is a projection matrix onto the orthogonal complement of the column space of <span class="math notranslate nohighlight">\(\boldsymbol{X}\)</span>, which will be a subspace of dimension <span class="math notranslate nohighlight">\(n-p\)</span>. This means that</p>
+<div class="math notranslate nohighlight">
+\[
+(n-p)\hat{\sigma}^2 = \|\boldsymbol{r}\|_2^2 = \boldsymbol{y}^\top \boldsymbol{Q} \boldsymbol{y}.
+\]</div>
+<p>Now let’s write the eigenvalue decomposition <span class="math notranslate nohighlight">\(\boldsymbol{Q} = \boldsymbol{VDV}^\top\)</span>, where <span class="math notranslate nohighlight">\(\boldsymbol{V}\)</span> is an orthogonal matrix, meaning <span class="math notranslate nohighlight">\(\boldsymbol{V^\top V} = \boldsymbol{VV^\top} = \boldsymbol{I}\)</span>. Moreover, it is a fact that since <span class="math notranslate nohighlight">\(\boldsymbol{Q}\)</span> is a projection onto a subspace of dimension <span class="math notranslate nohighlight">\(n-p\)</span>, we will also have that</p>
+<div class="math notranslate nohighlight">
+\[
+\boldsymbol{D} = \text{diag}(\underbrace{1,\dots, 1}_{\times (n-p)}, \underbrace{0,\dots, 0}_{\times p}).
+\]</div>
+<p>We can use the orthogonal matrix <span class="math notranslate nohighlight">\(\boldsymbol{V}\)</span> to construct a transformed version of our residuals: <span class="math notranslate nohighlight">\(\boldsymbol{z} = \boldsymbol{V^\top r}\)</span>.</p>
+<p>Importantly, this <span class="math notranslate nohighlight">\(\boldsymbol{p}\)</span> has the same norm as <span class="math notranslate nohighlight">\(\boldsymbol{r}\)</span>, since</p>
+<div class="math notranslate nohighlight">
+\[
+\|\boldsymbol{z}\|_2^2 = \boldsymbol{r^\top V V^\top r} = \boldsymbol{r^\top r} = \|\boldsymbol{r}\|_2^2.
+\]</div>
+<p>Moreover, it’s possible to show that <span class="math notranslate nohighlight">\(\boldsymbol{z} \sim N(0, \sigma^2 \boldsymbol{D})\)</span>, and so</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+(n-p)\frac{\hat{\sigma}^2}{\sigma^2} &amp;= \frac{1}{\sigma^2}\|\boldsymbol{r}\|_2^2 = \frac{1}{\sigma^2}\|\boldsymbol{z}\|_2^2\\
+&amp;=\frac{1}{\sigma^2}\sum_{j=1}^{n-p} z_i^2 = \sum_{j=1}^p \left(\frac{z_i}{\sigma}\right)^2
+\end{align*}
+\end{split}\]</div>
+<p>Since <span class="math notranslate nohighlight">\(z_i\sim N(0,\sigma^2)\)</span>, we have that <span class="math notranslate nohighlight">\(z_i/\sigma \sim N(0,1)\)</span>, and so <span class="math notranslate nohighlight">\((n-p)\frac{\hat{\sigma}^2}{\sigma^2}\)</span> is exactly the sum of <span class="math notranslate nohighlight">\(n-p\)</span> squared independent standard normal random variables, and hence follows a <span class="math notranslate nohighlight">\(\chi^2(n-p)\)</span> distribution.</p>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./content/basic_linear_regression"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="maximum_likelihood_estimation.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title"><span class="section-number">2.7. </span>Maximum likelihood estimation</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="../generalizing_linear_regression/chheader.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><span class="section-number">3. </span>Generalizing linear regression</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            
+        </div>
+    </div>
+    <footer class="footer">
+  <p>
+    
+      By Michael W. Mahoney and Ryan Theisen<br/>
+    
+        &copy; Copyright 2021.<br/>
+  </p>
+</footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="../../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
+  </body>
+</html>

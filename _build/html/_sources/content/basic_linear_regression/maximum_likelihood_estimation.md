@@ -226,6 +226,8 @@ $$
 \hat{\sigma}^2 = \frac{1}{n}\sum_{i=1}^n (y_i - \boldsymbol{\beta}\cdot \boldsymbol{x}_i)^2 = \frac{1}{n}\|\boldsymbol{y}-\hat{\boldsymbol{y}}\|_2^2.
 $$
 
+> Remark: we will often work with a different estimator of the variance, namely $\hat{\sigma}^2 = \frac{1}{n-p}\|\boldsymbol{y}-\hat{\boldsymbol{y}}\|_2^2$. The reason for the scaling $1/(n-p)$ is that it makes this version of $\hat{\sigma}^2$ an _unbiased_ estimate of $\sigma^2$, in the sense that $\mathbb{E}[\hat{\sigma}^2] = \sigma^2$.
+
 While none of this is particularly new -- we obtain the same quantities we got before ever explicitly introducing the Gaussian model -- we can now do some additional cool things. For example, we can actually derive the distribution of the parameters $\hat{\boldsymbol{\beta}}$. To do this, note that $\hat{\boldsymbol{\beta}}$ is a linear function of $\boldsymbol{y}$, hence
 
 $$
@@ -270,7 +272,7 @@ dataset = pd.read_csv("datasets/qsar_fish_toxicity.csv")
 dataset.head()
 ```
 
-As usual, we will extract the response as a numpy array, and the other two features (`age` and `education_years`) as another array, adding a column of 1's to account for the intercept term in the regression.
+As usual, we will extract the response as a numpy array, and the other as another array, adding a column of 1's to account for the intercept term in the regression.
 
 ```{code-cell}
 # extract the data
