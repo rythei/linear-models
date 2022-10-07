@@ -19,5 +19,6 @@ parts:
     - file: content/basic_linear_regression/more_least_squares
     - file: content/basic_linear_regression/maximum_likelihood_estimation
     - file: content/basic_linear_regression/hypothesis_testing
+    - file: content/basic_linear_regression/diagnostics
   - file: content/generalizing_linear_regression/chheader
   - file: content/extensions_applications/chheader
