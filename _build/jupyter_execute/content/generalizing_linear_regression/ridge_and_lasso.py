@@ -35,7 +35,7 @@ X0 = np.random.normal(size=(n,p-1))
 xp = np.sum(X0, axis=1).reshape(n,1) + 1e-8*np.random.normal(size=(n,1))
 X = np.hstack((X0, xp))
 beta_star = np.random.normal(size=p)
-y = np.dot(X, beta_star) + 2**np.random.normal(size=n)
+y = np.dot(X, beta_star) + 2*np.random.normal(size=n)
 
 
 # Now let's actually fit the regression model and inspect the results. We'll do this using the `statsmodels` package.
@@ -67,7 +67,7 @@ results.summary()
 # 
 # In general, adding penalty terms of this form will force the solution to be "smaller" in size. The constant $\lambda$ (called the "regularization parameter") controls how much this size is penalized: larger $\lambda$ will result in smaller weights. In the next sections, we discuss Ridge and LASSO in more detail, and will see how changing the regularization parameter $\lambda$ effects the solutions obtained from these methods.
 # 
-# ## Ridge Regression
+# ## Ridge regression
 # 
 # For a given regularization parameter $\lambda$, the Ridge solution $\hat{\boldsymbol{\beta}}_{RR}(\lambda)$ is defined as the solution to the following problem:
 # 
@@ -84,8 +84,9 @@ results.summary()
 # \hat{\boldsymbol{\beta}}_{RR}(\lambda) = (\boldsymbol{X^\top X} + \lambda I)^{-1}\boldsymbol{X^\top y}.
 # $$
 # 
+# Importantly, the Ridge regression solution _always_ exists, and is unique, regardless of whether $\boldsymbol{X^\top X}$ is invertible or not. This is because for any $\lambda > 0$, the matrix $\boldsymbol{X^\top X} + \lambda I$ is always full rank.
 # 
-# As we have claimed, the Ridge solution will make the coefficients of smaller as $\lambda$ increases. Let's check that this is indeed the case on our synthetic example defined above, and see that reasonable choices of $\lambda$ result in much better behaved solutions. First, we'll define a simple python function which computes the Ridge Regression solution.
+# As we have claimed, the Ridge solution will make the coefficients of smaller as $\lambda$ increases. Let's check that this is indeed the case on our synthetic example defined above, and see that reasonable choices of $\lambda$ result in much better behaved solutions. First, we'll define a simple python function which computes the Ridge regression solution.
 
 # In[3]:
 
@@ -150,15 +151,15 @@ plt.show()
 
 # From these plots, we can make a few important observations. First, the solutions are all much better in than the OLS solution, as seen in the plot on the right. For small $\lambda$, the error $\|\boldsymbol{\beta}_\star - \hat{\boldsymbol{\beta}}_{RR}(\lambda)\|_2^2$ is actually reasonably small -- and in fact reaches a minimum at the best possible regularization parameter $\lambda_*$. As $\lambda$ increases, however, we start to overcorrect, and the coefficients become closer and closer to zero, and the error correspondingly starts to increase. In general, this is a tradeoff that will always exist, and requires careful choice of the regularization parameter $\lambda$. Next, we discuss how this tradeoff comes about.
 # 
-# To understand the performance of the Ridge Regression solution, and how it performs as a function of $\lambda$, we consider the bias-variance decomposition:
+# To understand the performance of the Ridge regression solution, and how it performs as a function of $\lambda$, we consider the bias-variance decomposition:
 # 
 # $$
 # \text{MSE}(\hat{\boldsymbol{\beta}}_{RR}(\lambda)) = \text{Bias}^2(\hat{\boldsymbol{\beta}}_{RR}(\lambda)) + \text{Var}(\hat{\boldsymbol{\beta}}_{RR}(\lambda))
 # $$
 # 
-# Intuitively, higher $\lambda$ should make the variance of $\hat{\boldsymbol{\beta}}_{RR}(\lambda)$ smaller, while making the bias bigger (since it is biasing the estimator toward zero). Fortunately, both the bias and the variance have closed form solutions for Ridge Regression.
+# Intuitively, higher $\lambda$ should make the variance of $\hat{\boldsymbol{\beta}}_{RR}(\lambda)$ smaller, while making the bias bigger (since it is biasing the estimator toward zero). Fortunately, both the bias and the variance have closed form solutions for Ridge regression.
 # 
-# Similar to OLS regression, where $\text{Var}(\hat{\boldsymbol{\beta}}_{OLS}) = \sigma^2 (\boldsymbol{X^\top X})^{-1}$, the variance of the Ridge Regression solution is given by (assuming the errors are normally distribution):
+# Similar to OLS regression, where $\text{Var}(\hat{\boldsymbol{\beta}}_{OLS}) = \sigma^2 (\boldsymbol{X^\top X})^{-1}$, the variance of the Ridge regression solution is given by (assuming the errors are normally distribution):
 # 
 # $$
 # \text{Var}(\hat{\boldsymbol{\beta}}_{RR}(\lambda)) = \sigma^2 (\boldsymbol{X^\top X} + \lambda \boldsymbol{I})^{-1}\boldsymbol{X^\top X}(\boldsymbol{X^\top X} + \lambda \boldsymbol{I})^{-1}.
@@ -194,7 +195,6 @@ for j in range(RR_solutions.shape[1]):
     axs[0].plot(lamb_range, bias_RR[:, j]**2, color=colors[j], marker='o', label=f'j={j}')
     axs[1].plot(lamb_range, var_RR[:, j], color=colors[j], marker='o', label=f'j={j}')
 
-axs[0].hlines(0, 0, np.max(lamb_range), color="black", linestyle='--')
 axs[0].set_xlabel("Lambda", fontsize=12)
 axs[0].set_ylabel("Squared Bias", fontsize=12)
 axs[0].legend()
@@ -209,12 +209,104 @@ plt.show()
 
 # These plots indeed confirm our suspicion: for large $\lambda$, the squared bias eventually becomes large (as the coefficients are forced to zero), while the variance becomes smaller. However, this still leaves the question of how to select $\lambda$ in a practical setting, when we don't know $\boldsymbol{\beta}_\star$. In practice, the selection of $\lambda$ is typically done using a hold-out set of data, or a technique called cross-validation. This will be explored in an upcoming homework assignment.
 # 
-# /* ## The LASSO
+# ## The LASSO
 # 
-# LASSO regression looks very similar to Ridge Regression at first glance; the solution $\hat{\boldsymbol{\beta}}_{LASSO}(\lambda)$ is given by
+# LASSO regression looks very similar to Ridge regression at first glance; the solution $\hat{\boldsymbol{\beta}}_{LASSO}(\lambda)$ is given by
 # 
 # $$
 # \hat{\boldsymbol{\beta}}_{LASSO}(\lambda) = \arg\min_{\boldsymbol{\beta}} \|\boldsymbol{X\beta} - \boldsymbol{y}\|_2^2 + \lambda \|\boldsymbol{\beta}\|_1
 # $$
 # 
-# The primary difference from Ridge is that we have replaced the penalty term with the 1-norm $\|\boldsymbol{\beta}\|_1$.  */
+# The primary difference from Ridge is that we have replaced the penalty term with the 1-norm $\|\boldsymbol{\beta}\|_1$; this is done for a very specific reason related to the geometry of the $1$-norm. In particular, the LASSO is explicitly designed to induce _sparsity_ in the solution $\hat{\boldsymbol{\beta}}_{LASSO}(\lambda)$, meaning that only a few of the coefficients are non-zero, while the rest are set *exactly* equal to zero. Below we give a heuristic explanation of how LASSO works -- there is a formal mathematical theory for the LASSO, but it is quite technical and beyond the scope of this course.
+# 
+# | ![](figs/lasso_vs_ridge.png) |
+# |:--:|
+# |**Figure 1: Illustration of LASSO vs Ridge solutions**|
+# 
+#  The green shaded regions in the plots in Figure 1 represent the sets $\{\boldsymbol{\beta} : \|\boldsymbol{\beta}\|_1 \leq s\}$ (left) and $\{\boldsymbol{\beta} : \|\boldsymbol{\beta}\|_2 \leq s\}$ (right), i.e. the sets of possible solutions where the $1$ and $2$ norms are smaller than some given threshold $s$. By penalizing one of these norms, we are effectively constraining ourselves to one of these sets. Note that in contrast to the $2$-norm set (which is a circle), the $1$-norm set has the shape of a diamond.  The red ellipses are the level sets of the squared error $\|\boldsymbol{X\beta} - \boldsymbol{y}\|_2^2$, and the Ridge or LASSO solutions will occur exactly where these ellipses are tangent to the green sets. Because the $1$-norm sets form a diamond, these tangents tend to occur at one of the points of the diamond, which will lead to solutions with some entries equal to zero.
+# 
+# In contrast to the Ridge regression solution, where we saw that the coefficients get smoothly smaller as we increase $\lambda$. In LASSO, instead more coefficients become set to zero as $\lambda$ increases.
+# 
+# Unlike Ridge regression, the LASSO problem does not have any closed form solution (this is because, unlike the $2$-norm, the $1$-norm is not differentiable). However, it is possible to show that it does have a solution which exists and is unique, and there have been many algorithms developed to efficiently find the solution $\hat{\boldsymbol{\beta}}_{LASSO}(\lambda)$ numerically.
+# 
+# To illustrate the behavior of the LASSO solution, we will construct a different simulated dataset. We will generate an $n\times p$ matrix $\boldsymbol{X}$ randomly, this time with $n < p$ (so $\boldsymbol{X^\top X}$ is actually not invertible, not just poorly conditioned). However, the "true" coefficient vector $\boldsymbol{\beta}_\star$ will be chosen to be sparse, with only $\alpha$ fraction of its entries non-zero. We do this in the following cell.
+
+# In[8]:
+
+
+alpha = 0.5
+n, p = 75, 100
+n_nonzero = int(alpha*p)
+
+X = np.random.normal(size=(n,p))
+
+# start with all zeros
+beta_star = np.zeros(shape=p)
+
+# randomly select alpha*p features to be nonzero and fill these in with normal random variables
+random_ix = np.random.choice(len(beta_star), n_nonzero, replace=False)
+beta_star[random_ix] = np.random.normal(size=n_nonzero)
+
+y = np.dot(X, beta_star) + 2*np.random.normal(size=n)
+
+
+# Next, we will make the same plots of the coefficients and errors as a function of $\lambda$. To make the plot visible, we will pick 5 of the coefficients randomly. To fit the LASSO models, we will use an implementation given in the python package `scikit-learn`.
+
+# In[9]:
+
+
+from sklearn.linear_model import Lasso
+lamb_range = np.exp(np.arange(-8, 2, 0.5))
+
+lasso_solutions = []
+for lamb in lamb_range:
+    beta_hat_lasso_curr = Lasso(lamb).fit(X, y).coef_
+    lasso_solutions.append(beta_hat_lasso_curr)
+lasso_solutions = np.array(lasso_solutions)
+errors = [np.linalg.norm(sol-beta_star)**2 for sol in lasso_solutions]
+
+import matplotlib.pyplot as plt
+
+colors = ["red", "blue", "green", "orange", "purple"]
+
+fig, axs = plt.subplots(1, 2, figsize=(10,3))
+axs = axs.flatten()
+for j in range(5):
+    axs[0].plot(lamb_range, lasso_solutions[:, j], color=colors[j], marker='o', label=f'j={j}')
+    axs[0].hlines(beta_star[j], 0, np.max(lamb_range), color=colors[j], linestyle='--')
+
+axs[0].hlines(0, 0, np.max(lamb_range), color="black", linestyle='--')
+axs[0].set_xlabel("Lambda", fontsize=12)
+axs[0].set_ylabel("Coefficient", fontsize=12)
+axs[0].legend()
+axs[0].set_xscale('log')
+
+axs[1].plot(lamb_range, errors, marker='o')
+axs[1].set_xlabel("Lambda", fontsize=12)
+axs[1].set_ylabel(r"$\|\beta_* - \hat{\beta}(\lambda)\|^2$", fontsize=12)
+axs[1].set_xscale('log')
+plt.tight_layout()
+plt.show()
+
+
+# These plots are in some since similar to the plots for Ridge regression: the coefficients become smaller as $\lambda$ becomes larger, and the error $\|\boldsymbol{\beta}_\star - \hat{\boldsymbol{\beta}}_{LASSO}(\lambda)\|_2^2$ has a minimum at a "best" regularization parameter $\lambda_\star$. However, in contrast to the Ridge coefficients, which smoothly decreased to zero as a function of $\lambda$, the LASSO coefficients become _exactly_ equal to zero. Ideally, these coefficients which are set to zero by LASSO overlap with the coefficients in $\boldsymbol{\beta}_\star$ which are _actually_ zero. Let's check this as a function of $\lambda$ again.
+
+# In[10]:
+
+
+overlaps = []
+for ix in range(len(lamb_range)):
+    beta_hat_lasso_curr = lasso_solutions[ix]
+    overlap = np.sum((beta_hat_lasso_curr == 0)*(np.array(beta_star) == 0))/len(beta_star[beta_star==0])
+    overlaps.append(overlap)
+
+plt.plot(lamb_range, overlaps, marker='o')
+plt.xlabel("Lambda", fontsize=12)
+plt.ylabel(r"% Sparse Indexes Predicted", fontsize=12)
+plt.xscale('log')
+plt.show()
+
+
+# As we increase $\lambda$, we recover a larger and larger fraction of the correct sparse indices -- this is expected, since all the coefficients will eventually become zero for large enough $\lambda$.
+# 
+# So when should we use LASSO versus Ridge? We will often use Ridge regression in situations where we don't have any particular reason to suspect that some of the coefficients might be zero, but instead as general regularization to deal with having many predictors and/or a poorly conditioned data matrix $\boldsymbol{X}$. Instead, LASSO should mostly be used when we have a suspicion that the true coefficients are actually sparse. Indeed, we can think of LASSO as a form of variable selection, at each value of $\lambda$ it picks a subset of the most meaningful features (the ones with non-zero coefficients). This happens in many real-world settings: for example, LASSO is used to analyze large gene-expression datasets, where many thousands of genes may be measured, and a researcher suspects that only a few are relevant to the response, but unsure _which_ genes exactly.
