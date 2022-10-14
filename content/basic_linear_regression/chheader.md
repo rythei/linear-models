@@ -16,7 +16,7 @@ kernelspec:
 In this section we will cover:
 
 1. Exploratory data analysis
-2. Simple regression 
+2. Simple regression
 3. Review of linear algebra
-4. Linear regression  
-5. Inference and testing for linear regression
+4. Linear regression
+5. Inference, testing and diagnostics for linear regression
