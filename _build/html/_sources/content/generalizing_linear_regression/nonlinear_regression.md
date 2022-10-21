@@ -63,13 +63,14 @@ We do this in the following cell.
 ```{code-cell}
 import numpy as np
 import matplotlib.pyplot as plt
+np.random.seed(100)
 
 f_star = lambda x: 4*x + 3*np.cos(2*np.pi*x)
 
 n = 30
 x = np.random.uniform(-1,1,size=n)
 x_test = np.linspace(-1,1,1000)
-y = f_star(x) + np.random.normal(size=n)
+y = f_star(x) + 2*np.random.normal(size=n)
 
 plt.scatter(x, y)
 plt.plot(x_test, f_star(x_test), label=r"$f_\star$", color="black", linestyle="--")
@@ -107,7 +108,7 @@ As we can see, our fitted model does a pretty reasonable job of approximating th
 
 ```{code-cell}
 fig, axs = plt.subplots(1,2, figsize=(12,4))
-p_range = range(1,20,1) 
+p_range = range(1,15,1) 
 
 mses = []
 for p in p_range:
@@ -175,6 +176,7 @@ cbar.ax.set_yticklabels([round(l,2) for l in lamb_range[::10]])
 plt.scatter(x, y)
 plt.plot(x_test, f_star(x_test), label=r"$f_\star$", color="black", linestyle="--")
 plt.legend()
+plt.ylim(-10,10)
 plt.tight_layout()
 plt.show()
 ```
@@ -182,18 +184,19 @@ plt.show()
 As we can see from this plot, the solutions indeed become "simpler" as $\lambda$ gets bigger. We can also plot the errors (MSEs) as a function of $\lambda$ to see which value is theoretically best.
 
 ```{code-cell}
+lamb_best = lamb_range[np.argmin(mses)]
+print(f"best value of lambda is {lamb_best}")
 plt.plot(lamb_range, mses)
 plt.xlabel("$\lambda$", fontsize=12)
 plt.ylabel("MSE", fontsize=12)
 plt.show()
 ```
 
-In turns out that the best MSE in this case actually occurs at the smallest $\lambda$ value, here $0.001$. What would happen though if we made $\lambda$ infinitesimally small? Would the solution get better? This limit is exactly what the MP solutions gives us, so let's plot the MP solution versus the $\hat{\boldsymbol{\beta}}_{RR}(\lambda = 0.001)$ solution to see how they compare.
+In turns out that the best MSE in this case occurs at $\lambda \approx 0.14$. We also see that for $\lambda$ very small, the MSEs get significantly larger; in the limit, this corresponds exactly to the MSE of the MP solution. So, let's plot the MP solution versus the $\hat{\boldsymbol{\beta}}_{RR}(\lambda = 0.14)$ solution to see how they compare.
 
 ```{code-cell}
-lamb = 0.001
 Xp = polynomial_features(x, p=p) # generate feature matrix
-beta_hat_RR = np.linalg.inv(Xp.T@Xp + lamb*np.eye(Xp.shape[1]))@Xp.T@y # get RR coefficients
+beta_hat_RR = np.linalg.inv(Xp.T@Xp + lamb_best*np.eye(Xp.shape[1]))@Xp.T@y # get RR coefficients
 beta_hat_MP = np.linalg.pinv(Xp)@y
 # make predictions on test samples to compare the fitted function
 Xp_test = polynomial_features(x_test, p=p)
@@ -210,6 +213,190 @@ plt.tight_layout()
 plt.show()
 ```
 
-Amazingly, the MP solution performs completely different than the Ridge solution at $\lambda = 0.001$! It completely overfits the data, and does a very poor job of approximating the true regression function $f_\star$. We also observe another interesting point with the MP solution: it actually _perfectly_ predicts on each of the data points it was fit on. Indeed, it will always do this: when $p>n$, the Moore-Penrose pseudo-inverse is guaranteed to satisfy $\boldsymbol{X}\hat{\boldsymbol{\beta}}_{MP} = \boldsymbol{XX}^\dagger \boldsymbol{y} = \boldsymbol{y}$ (mathematically, this is because it will be a right inverse for the matrix $\boldsymbol{X}$).
+As we can see, the MP solution performs completely different than the Ridge solution at $\lambda = 0.14$! It completely overfits the data, and does a very poor job of approximating the true regression function $f_\star$. We also observe another interesting point with the MP solution: it actually _perfectly_ predicts on each of the data points it was fit on. Indeed, it will always do this: when $p>n$, the Moore-Penrose pseudo-inverse is guaranteed to satisfy $\boldsymbol{X}\hat{\boldsymbol{\beta}}_{MP} = \boldsymbol{XX}^\dagger \boldsymbol{y} = \boldsymbol{y}$ (mathematically, this is because it will be a right inverse for the matrix $\boldsymbol{X}$). This phenomenon is referred to as "interpolation", which is sometimes conflated with the concept of overfitting. This is not always the case; in the homework, we will investigate a very interesting (and only recently understood) phenomenon called "double descent", in which performance actually _improves_ when we interpolate the data.
 
 ## Kernel ridge regression
+
+So far, we've seen that the techniques from linear regression can be extended to non-linear function by fitting polynomials in one dimension. This general idea can be extended beyond polynomials and to multi-dimensional inputs. Consider for example when we have two features $\boldsymbol{x} = (x_1, x_2)\in \mathbb{R}^2$. Then one might define the feature map $\phi(\boldsymbol{x})= (1, x_1,x_2,x_1x_2, x_1^2, x_2^2)$ and fit the quadratic
+
+$$
+f(\boldsymbol{x}) = \beta_0 + \beta_1 x_1 + \beta_2x_2 + \beta_2x_1x_2 + \beta_4x_1^2 + \beta_5x_2^2 = \boldsymbol{\beta} \cdot \phi(\boldsymbol{x}).
+$$
+
+More generally, given features $\boldsymbol{x}\in \mathbb{R}^p$ and a feature map $\phi:\mathbb{R}^p \to \mathbb{R}^N$, we can always fit the model $f\boldsymbol{x}) = \boldsymbol{\beta}^\top \phi(\boldsymbol{x})$ using the usual techniques we have from linear regression.  Here we call $\mathbb{R}^N$ the _feature space_. 
+
+To fit such a model to data $\boldsymbol{X}\in \mathbb{R}^{n\times p},\boldsymbol{y}\in \mathbb{R}^n$, we might hope to use our usual least-squares estimator 
+
+$$
+\hat{\boldsymbol{\beta}} = \arg\min_{\boldsymbol{\beta}in \mathbb{R}^N}\|\boldsymbol{y} - \phi(\boldsymbol{X})\boldsymbol{\beta}\|_2^2
+$$
+
+where here $\phi(\boldsymbol{X})\in \mathbb{R}^{n\times N}$ is the matrix whose $i$th row is $\phi(\boldsymbol{x}_i)\in \mathbb{R}^N$. Unfortunately, similar to what we saw with the polynomials, when $N > n$, the matrix $\phi(\boldsymbol{X})$ won't be full rank, and so we won't be able to  invert the matrix $\phi(\boldsymbol{X})^\top \phi(\boldsymbol{X})$ to find the least squares solution. In this case, a natural solution is to consider the regularized problem 
+
+$$
+\hat{\boldsymbol{\beta}}(\lambda) = \arg\min_{\boldsymbol{\beta}\in \mathbb{R}^N} \|\boldsymbol{y} - \phi(\boldsymbol{X})\boldsymbol{\beta}\|_2^2 + \lambda \|\boldsymbol{\beta}\|_2^2.
+$$
+
+As we've seen, this will yield the solution
+
+$$
+\hat{\boldsymbol{\beta}}(\lambda) = (\phi(\boldsymbol{X})^\top \phi(\boldsymbol{X}) + \lambda \boldsymbol{I})^{-1}\phi(\boldsymbol{X})^\top \boldsymbol{y}
+$$
+
+which always exists. 
+
+However, we now have another problem on our hands: we have to invert the matrix $\phi(\boldsymbol{X})^\top \phi(\boldsymbol{X}) + \lambda \boldsymbol{I}$, which can be very large when $N$ is big. Fortunately, there is a way to get around this problem, using something known as the _kernel trick_.
+
+Given a feature map $\phi: \mathbb{R}^p \to \mathbb{R}^N$, define the associated kernel function $k: \mathbb{R}^p\times \mathbb{R}^p \to \mathbb{R}$ by
+
+$$
+k(\boldsymbol{x},\boldsymbol{x}') = \langle \phi(\boldsymbol{x}),\phi(\boldsymbol{x}')\rangle.
+$$
+
+**Example.** Consider the feature map $\phi(x_1,x_2) = (x_1^2, x_2^2, \sqrt{2}x_1x_2)$. Then 
+
+$$
+k(\boldsymbol{x},\boldsymbol{y}) = \langle \phi(\boldsymbol{x}), \phi(\boldsymbol{y})\rangle = x_1^2y_1^2 + x_2^2y_2^2 + 2x_1x_2y_1y_2 = (\boldsymbol{x} \cdot\boldsymbol{y})^2.
+$$
+
+The "kernel trick" is captured by the following fundamental result in kernel method, called the _representer theorem_. 
+
+**Theorem (representer theorem)**. The function $\hat{f}(\boldsymbol{x}) = \hat{\boldsymbol{\beta}}^\top \phi(\boldsymbol{x})$ resulting from the optimization problem
+
+$$
+\hat{\boldsymbol{\beta}}(\lambda) = \arg\min_{\boldsymbol{\beta}\in \mathbb{R}^N} \|\boldsymbol{y} - \phi(\boldsymbol{X})\boldsymbol{\beta}\|_2^2 + \lambda \|\boldsymbol{\beta}\|_2^2
+$$
+
+is always of the form $\hat{f}(\boldsymbol{x}) = \sum_{i=1}^n \hat{\alpha}_i k(\boldsymbol{x},\boldsymbol{x}_i)$, where
+
+$$
+\hat{\boldsymbol{\alpha}}(\lambda) = (\boldsymbol{K} + \lambda\boldsymbol{I})^{-1}\boldsymbol{y}.
+$$
+
+This means we only need to work with the $n\times n$ matrix of dot products $\boldsymbol{K}$ (which is called the Gram matrix, or the kernel matrix), which is much more efficient than working with the $N\times N$ matrix $\phi(\boldsymbol{X})^\top \phi(\boldsymbol{X})$ when $N \gg n$. Now that we've found $\hat{\boldsymbol{\alpha}}$, we can get our fitted model
+
+$$
+\hat{f}(\boldsymbol{x}) = \sum_{i=1}^n \hat{\alpha}_i k(\boldsymbol{x},\boldsymbol{x}_i).
+$$
+
+Note that this means we can fit models with features maps $\phi$ _without ever having to work with feature map itself_. Instead, we just need access to the kernel function $k$. This is known as the kernel trick, because in many situations the kernel function $k$ may be simple even when the feature map $\phi$ is very high dimensional, and intractable to work with in practice. The general method of working with a kernel $k$ rather than explicitly with a feature map $\phi$ is called the "kernel trick", and the specific method for regression presented here is called _kernel ridge regression_. Kernel ridge regression allows us to fit a very broad set of different functions using essentially the exact same tools as linear ridge regression.
+
+Let's see a real-world example. The `EGFR_bioactivity` dataset contains bioactivity data for $n = 2000$ different drugs, each represented by a molecular "fingerprints", which here is a binary vector of length $p = 512$ indicating in each dimension whether the molecule contains a particular substructure or not. The response `y` is a measurement of how active each drug is against a particular protein (called EGFR) that it is targeting. The goal with this dataset is to build a model to predict this bioactivity from the features of the molecules. We load the dataset below.
+
+```{code-cell}
+import pickle 
+
+with open('datasets/EGFR_bioactivity.pkl', 'rb') as f:
+    data = pickle.load(f)
+    
+X = data["X"]
+y = data["y"]
+X.shape, y.shape
+```
+
+To fit a kernel ridge regression model to this data, we first need to choose a kernel function $k$. For molecular fingerprints, a choice that is commonly made is the Jaccard kernel, which for two binary vectors $\boldsymbol{x},\boldsymbol{x}'$ is given by 
+
+$$
+k_{Jaccard}(\boldsymbol{x},\boldsymbol{x}') = \frac{\boldsymbol{x}\cdot \boldsymbol{x}'}{\|\boldsymbol{x}\|^2_2 +\|\boldsymbol{x}'\|_2^2 - \boldsymbol{x}\cdot\boldsymbol{x}' }
+$$
+
+For comparison, we will also use the linear kernel
+
+$$
+k_{linear}(\boldsymbol{x}, \boldsymbol{x}') = \boldsymbol{x}\cdot \boldsymbol{x}',
+$$
+
+which corresponds to doing usual linear ridge regression.
+
+Let's define a couple python functions that can compute these kernel for us. (These functions are designed to compute the entire kernel matrix, not just the value for single pair $\boldsymbol{x},\boldsymbol{x}'$.)
+
+```{code-cell}
+def k_jaccard(X, Y=None):
+    if Y is None:
+        Y = X
+    prod = np.dot(X, Y.T)
+    norm_X = (np.linalg.norm(X, axis=1)**2).reshape(-1,1)
+    norm_Y = (np.linalg.norm(Y, axis=1)**2).reshape(-1,1)
+    return prod / (norm_X + norm_Y.T - prod)
+
+def k_linear(X, Y=None):
+    if Y is None:
+        Y = X
+    return np.dot(X, Y.T)
+```
+
+To fit the parameter $\lambda$, we will need to split the data into two subsets: 1800 points are used for fitting the models, and 200 are used as a validation set to estimate the MSE for various values of the regularization parameter $\lambda$. We do this split below.
+
+```{code-cell}
+train_ix = np.random.choice(X.shape[0], 1800, replace=False)
+test_ix = [j for j in range(X.shape[0]) if j not in train_ix]
+X_train, y_train = X[train_ix], y[train_ix]
+X_test, y_test = X[test_ix], y[test_ix]
+```
+
+Let's also define a function to fit the kernel ridge regression model.
+
+```{code-cell}
+def fit_krr(K, y, lamb):
+    return np.linalg.inv(K+lamb*np.eye(K.shape[0]))@y
+```
+
+Now we can fit the models across a range of $\lambda$ values.
+
+```{code-cell}
+lamb_range = np.exp(np.linspace(-10,6,20))
+
+K_jaccard_train = k_jaccard(X_train)
+K_jaccard_test = k_jaccard(X_test, X_train)
+K_linear_train = k_linear(X_train)
+K_linear_test = k_linear(X_test, X_train)
+mses_jaccard = []
+mses_linear = []
+
+for lamb in lamb_range:
+    alpha_hat_jaccard = fit_krr(K_jaccard_train, y_train, lamb)
+    alpha_hat_linear = fit_krr(K_linear_train, y_train, lamb)
+    y_hat_jaccard = K_jaccard_test@alpha_hat_jaccard 
+    y_hat_linear = K_linear_test@alpha_hat_linear
+    mses_jaccard.append(np.mean((y_test-y_hat_jaccard)**2))
+    mses_linear.append(np.mean((y_test-y_hat_linear)**2))
+
+plt.plot(lamb_range, mses_jaccard, label="Jaccard kernel", marker='o')
+plt.plot(lamb_range, mses_linear, label="Linear kernel", marker='o')
+plt.legend()
+plt.ylabel("MSE", fontsize=14)
+plt.xlabel("$\lambda$", fontsize=14)
+plt.xscale("log")
+plt.ylim(0,2)
+plt.show()
+```
+
+Interestingly, the optimal value of $\lambda$ for the linear kernel (i.e. normal ridge regression) is almost two orders of magnitude higher than that for the model using the Jaccard kernel. Moreover, the Jaccard model attains lower MSE on the validation set. This is but one example of when using a kernel that's not linear can improve performance in function estimation.
+
+Before concluding this section, it is important to note a few cautions in fitting nonlinear models. First, a nonlinear model is not _always_ better. In particular, as we've seen in many examples throughout this workbook, there are many real world datasets for which a linear model _is_ appropriate. Second, a downside to working with a nonlinear model is that we lose a great deal of interpretability. In linear regression, the coefficients are easily interpretable: $\hat{\beta}_j$ corresponds to the margin effect on the response of a unit change in feature $j$. This makes performing e.g. hypothesis tests natural. With complicated nonlinearities, we can no longer make such interpretations, which make performing statistical influence less meaningful. Nevertheless, when the priority is function approximation, nonlinear regression methods like kernel ridge regression can be effective tools.  
+
+## Appendix: choosing kernels
+
+An important choice that we need to make when using kernel ridge regression is to pick the kernel function $k$. Here we will see a few examples of kernels. Typically, we interpret kernels as measures of similarity.
+
+Perhaps the most commonly used kernel is the **Gaussian RBF kernel**:
+
+$$
+k(\boldsymbol{x},\boldsymbol{x}') = \exp(-\gamma \|\boldsymbol{x}-\boldsymbol{x}'\|_2^2)
+$$
+
+where $\gamma>0$ is a _bandwidth_ parameter that is chosen by the user. Larger $\gamma$ corresponds to "localizing" more around individual points, since the similarity decays quickly as $\|\boldsymbol{x}-\boldsymbol{x}'\|_2^2$ grows. On the other hand, smaller $\gamma$ makes the similarity decay more slowly as $\|\boldsymbol{x}-\boldsymbol{x}'\|_2^2$ grows. In practice, we tend to choose the parameter $\gamma$ using cross validation.
+
+Another kernel that one might use is the **Laplace kernel**:
+
+$$
+k(\boldsymbol{x},\boldsymbol{x}') = \exp(-\gamma \|\boldsymbol{x}-\boldsymbol{x}'\|_1)
+$$
+
+We could also use **polynomial kernels**:
+
+$$
+k(\boldsymbol{x},\boldsymbol{x}') = (\gamma \langle \boldsymbol{x}, \boldsymbol{x}'\rangle + 1)^p
+$$
+
+Here the degree $p$ also needs to be chosen by the user.

@@ -316,6 +316,11 @@
    3.2.2. Kernel ridge regression
   </a>
  </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#appendix-choosing-kernels">
+   3.2.3. Appendix: choosing kernels
+  </a>
+ </li>
 </ul>
 
             </nav>
@@ -344,6 +349,11 @@
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#kernel-ridge-regression">
    3.2.2. Kernel ridge regression
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#appendix-choosing-kernels">
+   3.2.3. Appendix: choosing kernels
   </a>
  </li>
 </ul>
@@ -400,13 +410,14 @@ y = f_\star(x) + \varepsilon.
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
 
 <span class="n">f_star</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="mi">4</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="mi">3</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">x</span><span class="p">)</span>
 
 <span class="n">n</span> <span class="o">=</span> <span class="mi">30</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
 <span class="n">x_test</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1000</span><span class="p">)</span>
-<span class="n">y</span> <span class="o">=</span> <span class="n">f_star</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">f_star</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_test</span><span class="p">,</span> <span class="n">f_star</span><span class="p">(</span><span class="n">x_test</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$f_\star$&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">)</span>
@@ -456,7 +467,7 @@ y = f_\star(x) + \varepsilon.
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
-<span class="n">p_range</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">20</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> 
+<span class="n">p_range</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">15</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> 
 
 <span class="n">mses</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">p_range</span><span class="p">:</span>
@@ -526,6 +537,7 @@ y = f_\star(x) + \varepsilon.
 <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_test</span><span class="p">,</span> <span class="n">f_star</span><span class="p">(</span><span class="n">x_test</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$f_\star$&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
@@ -538,7 +550,9 @@ y = f_\star(x) + \varepsilon.
 <p>As we can see from this plot, the solutions indeed become “simpler” as <span class="math notranslate nohighlight">\(\lambda\)</span> gets bigger. We can also plot the errors (MSEs) as a function of <span class="math notranslate nohighlight">\(\lambda\)</span> to see which value is theoretically best.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">lamb_range</span><span class="p">,</span> <span class="n">mses</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lamb_best</span> <span class="o">=</span> <span class="n">lamb_range</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">mses</span><span class="p">)]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;best value of lambda is </span><span class="si">{</span><span class="n">lamb_best</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">lamb_range</span><span class="p">,</span> <span class="n">mses</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;$\lambda$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;MSE&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
@@ -546,15 +560,17 @@ y = f_\star(x) + \varepsilon.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/nonlinear_regression_11_0.png" src="../../_images/nonlinear_regression_11_0.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>best value of lambda is 0.141
+</pre></div>
+</div>
+<img alt="../../_images/nonlinear_regression_11_1.png" src="../../_images/nonlinear_regression_11_1.png" />
 </div>
 </div>
-<p>In turns out that the best MSE in this case actually occurs at the smallest <span class="math notranslate nohighlight">\(\lambda\)</span> value, here <span class="math notranslate nohighlight">\(0.001\)</span>. What would happen though if we made <span class="math notranslate nohighlight">\(\lambda\)</span> infinitesimally small? Would the solution get better? This limit is exactly what the MP solutions gives us, so let’s plot the MP solution versus the <span class="math notranslate nohighlight">\(\hat{\boldsymbol{\beta}}_{RR}(\lambda = 0.001)\)</span> solution to see how they compare.</p>
+<p>In turns out that the best MSE in this case occurs at <span class="math notranslate nohighlight">\(\lambda \approx 0.14\)</span>. We also see that for <span class="math notranslate nohighlight">\(\lambda\)</span> very small, the MSEs get significantly larger; in the limit, this corresponds exactly to the MSE of the MP solution. So, let’s plot the MP solution versus the <span class="math notranslate nohighlight">\(\hat{\boldsymbol{\beta}}_{RR}(\lambda = 0.14)\)</span> solution to see how they compare.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lamb</span> <span class="o">=</span> <span class="mf">0.001</span>
-<span class="n">Xp</span> <span class="o">=</span> <span class="n">polynomial_features</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="n">p</span><span class="p">)</span> <span class="c1"># generate feature matrix</span>
-<span class="n">beta_hat_RR</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">Xp</span><span class="o">.</span><span class="n">T</span><span class="nd">@Xp</span> <span class="o">+</span> <span class="n">lamb</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">Xp</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span><span class="nd">@Xp</span><span class="o">.</span><span class="n">T</span><span class="nd">@y</span> <span class="c1"># get RR coefficients</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Xp</span> <span class="o">=</span> <span class="n">polynomial_features</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="n">p</span><span class="p">)</span> <span class="c1"># generate feature matrix</span>
+<span class="n">beta_hat_RR</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">Xp</span><span class="o">.</span><span class="n">T</span><span class="nd">@Xp</span> <span class="o">+</span> <span class="n">lamb_best</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">Xp</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span><span class="nd">@Xp</span><span class="o">.</span><span class="n">T</span><span class="nd">@y</span> <span class="c1"># get RR coefficients</span>
 <span class="n">beta_hat_MP</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">pinv</span><span class="p">(</span><span class="n">Xp</span><span class="p">)</span><span class="nd">@y</span>
 <span class="c1"># make predictions on test samples to compare the fitted function</span>
 <span class="n">Xp_test</span> <span class="o">=</span> <span class="n">polynomial_features</span><span class="p">(</span><span class="n">x_test</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="n">p</span><span class="p">)</span>
@@ -576,10 +592,188 @@ y = f_\star(x) + \varepsilon.
 <img alt="../../_images/nonlinear_regression_13_0.png" src="../../_images/nonlinear_regression_13_0.png" />
 </div>
 </div>
-<p>Amazingly, the MP solution performs completely different than the Ridge solution at <span class="math notranslate nohighlight">\(\lambda = 0.001\)</span>! It completely overfits the data, and does a very poor job of approximating the true regression function <span class="math notranslate nohighlight">\(f_\star\)</span>. We also observe another interesting point with the MP solution: it actually <em>perfectly</em> predicts on each of the data points it was fit on. Indeed, it will always do this: when <span class="math notranslate nohighlight">\(p&gt;n\)</span>, the Moore-Penrose pseudo-inverse is guaranteed to satisfy <span class="math notranslate nohighlight">\(\boldsymbol{X}\hat{\boldsymbol{\beta}}_{MP} = \boldsymbol{XX}^\dagger \boldsymbol{y} = \boldsymbol{y}\)</span> (mathematically, this is because it will be a right inverse for the matrix <span class="math notranslate nohighlight">\(\boldsymbol{X}\)</span>).</p>
+<p>As we can see, the MP solution performs completely different than the Ridge solution at <span class="math notranslate nohighlight">\(\lambda = 0.14\)</span>! It completely overfits the data, and does a very poor job of approximating the true regression function <span class="math notranslate nohighlight">\(f_\star\)</span>. We also observe another interesting point with the MP solution: it actually <em>perfectly</em> predicts on each of the data points it was fit on. Indeed, it will always do this: when <span class="math notranslate nohighlight">\(p&gt;n\)</span>, the Moore-Penrose pseudo-inverse is guaranteed to satisfy <span class="math notranslate nohighlight">\(\boldsymbol{X}\hat{\boldsymbol{\beta}}_{MP} = \boldsymbol{XX}^\dagger \boldsymbol{y} = \boldsymbol{y}\)</span> (mathematically, this is because it will be a right inverse for the matrix <span class="math notranslate nohighlight">\(\boldsymbol{X}\)</span>). This phenomenon is referred to as “interpolation”, which is sometimes conflated with the concept of overfitting. This is not always the case; in the homework, we will investigate a very interesting (and only recently understood) phenomenon called “double descent”, in which performance actually <em>improves</em> when we interpolate the data.</p>
 </div>
 <div class="section" id="kernel-ridge-regression">
 <h2><span class="section-number">3.2.2. </span>Kernel ridge regression<a class="headerlink" href="#kernel-ridge-regression" title="Permalink to this headline">¶</a></h2>
+<p>So far, we’ve seen that the techniques from linear regression can be extended to non-linear function by fitting polynomials in one dimension. This general idea can be extended beyond polynomials and to multi-dimensional inputs. Consider for example when we have two features <span class="math notranslate nohighlight">\(\boldsymbol{x} = (x_1, x_2)\in \mathbb{R}^2\)</span>. Then one might define the feature map <span class="math notranslate nohighlight">\(\phi(\boldsymbol{x})= (1, x_1,x_2,x_1x_2, x_1^2, x_2^2)\)</span> and fit the quadratic</p>
+<div class="math notranslate nohighlight">
+\[
+f(\boldsymbol{x}) = \beta_0 + \beta_1 x_1 + \beta_2x_2 + \beta_2x_1x_2 + \beta_4x_1^2 + \beta_5x_2^2 = \boldsymbol{\beta} \cdot \phi(\boldsymbol{x}).
+\]</div>
+<p>More generally, given features <span class="math notranslate nohighlight">\(\boldsymbol{x}\in \mathbb{R}^p\)</span> and a feature map <span class="math notranslate nohighlight">\(\phi:\mathbb{R}^p \to \mathbb{R}^N\)</span>, we can always fit the model <span class="math notranslate nohighlight">\(f\boldsymbol{x}) = \boldsymbol{\beta}^\top \phi(\boldsymbol{x})\)</span> using the usual techniques we have from linear regression.  Here we call <span class="math notranslate nohighlight">\(\mathbb{R}^N\)</span> the <em>feature space</em>.</p>
+<p>To fit such a model to data <span class="math notranslate nohighlight">\(\boldsymbol{X}\in \mathbb{R}^{n\times p},\boldsymbol{y}\in \mathbb{R}^n\)</span>, we might hope to use our usual least-squares estimator</p>
+<div class="math notranslate nohighlight">
+\[
+\hat{\boldsymbol{\beta}} = \arg\min_{\boldsymbol{\beta}in \mathbb{R}^N}\|\boldsymbol{y} - \phi(\boldsymbol{X})\boldsymbol{\beta}\|_2^2
+\]</div>
+<p>where here <span class="math notranslate nohighlight">\(\phi(\boldsymbol{X})\in \mathbb{R}^{n\times N}\)</span> is the matrix whose <span class="math notranslate nohighlight">\(i\)</span>th row is <span class="math notranslate nohighlight">\(\phi(\boldsymbol{x}_i)\in \mathbb{R}^N\)</span>. Unfortunately, similar to what we saw with the polynomials, when <span class="math notranslate nohighlight">\(N &gt; n\)</span>, the matrix <span class="math notranslate nohighlight">\(\phi(\boldsymbol{X})\)</span> won’t be full rank, and so we won’t be able to  invert the matrix <span class="math notranslate nohighlight">\(\phi(\boldsymbol{X})^\top \phi(\boldsymbol{X})\)</span> to find the least squares solution. In this case, a natural solution is to consider the regularized problem</p>
+<div class="math notranslate nohighlight">
+\[
+\hat{\boldsymbol{\beta}}(\lambda) = \arg\min_{\boldsymbol{\beta}\in \mathbb{R}^N} \|\boldsymbol{y} - \phi(\boldsymbol{X})\boldsymbol{\beta}\|_2^2 + \lambda \|\boldsymbol{\beta}\|_2^2.
+\]</div>
+<p>As we’ve seen, this will yield the solution</p>
+<div class="math notranslate nohighlight">
+\[
+\hat{\boldsymbol{\beta}}(\lambda) = (\phi(\boldsymbol{X})^\top \phi(\boldsymbol{X}) + \lambda \boldsymbol{I})^{-1}\phi(\boldsymbol{X})^\top \boldsymbol{y}
+\]</div>
+<p>which always exists.</p>
+<p>However, we now have another problem on our hands: we have to invert the matrix <span class="math notranslate nohighlight">\(\phi(\boldsymbol{X})^\top \phi(\boldsymbol{X}) + \lambda \boldsymbol{I}\)</span>, which can be very large when <span class="math notranslate nohighlight">\(N\)</span> is big. Fortunately, there is a way to get around this problem, using something known as the <em>kernel trick</em>.</p>
+<p>Given a feature map <span class="math notranslate nohighlight">\(\phi: \mathbb{R}^p \to \mathbb{R}^N\)</span>, define the associated kernel function <span class="math notranslate nohighlight">\(k: \mathbb{R}^p\times \mathbb{R}^p \to \mathbb{R}\)</span> by</p>
+<div class="math notranslate nohighlight">
+\[
+k(\boldsymbol{x},\boldsymbol{x}') = \langle \phi(\boldsymbol{x}),\phi(\boldsymbol{x}')\rangle.
+\]</div>
+<p><strong>Example.</strong> Consider the feature map <span class="math notranslate nohighlight">\(\phi(x_1,x_2) = (x_1^2, x_2^2, \sqrt{2}x_1x_2)\)</span>. Then</p>
+<div class="math notranslate nohighlight">
+\[
+k(\boldsymbol{x},\boldsymbol{y}) = \langle \phi(\boldsymbol{x}), \phi(\boldsymbol{y})\rangle = x_1^2y_1^2 + x_2^2y_2^2 + 2x_1x_2y_1y_2 = (\boldsymbol{x} \cdot\boldsymbol{y})^2.
+\]</div>
+<p>The “kernel trick” is captured by the following fundamental result in kernel method, called the <em>representer theorem</em>.</p>
+<p><strong>Theorem (representer theorem)</strong>. The function <span class="math notranslate nohighlight">\(\hat{f}(\boldsymbol{x}) = \hat{\boldsymbol{\beta}}^\top \phi(\boldsymbol{x})\)</span> resulting from the optimization problem</p>
+<div class="math notranslate nohighlight">
+\[
+\hat{\boldsymbol{\beta}}(\lambda) = \arg\min_{\boldsymbol{\beta}\in \mathbb{R}^N} \|\boldsymbol{y} - \phi(\boldsymbol{X})\boldsymbol{\beta}\|_2^2 + \lambda \|\boldsymbol{\beta}\|_2^2
+\]</div>
+<p>is always of the form <span class="math notranslate nohighlight">\(\hat{f}(\boldsymbol{x}) = \sum_{i=1}^n \hat{\alpha}_i k(\boldsymbol{x},\boldsymbol{x}_i)\)</span>, where</p>
+<div class="math notranslate nohighlight">
+\[
+\hat{\boldsymbol{\alpha}}(\lambda) = (\boldsymbol{K} + \lambda\boldsymbol{I})^{-1}\boldsymbol{y}.
+\]</div>
+<p>This means we only need to work with the <span class="math notranslate nohighlight">\(n\times n\)</span> matrix of dot products <span class="math notranslate nohighlight">\(\boldsymbol{K}\)</span> (which is called the Gram matrix, or the kernel matrix), which is much more efficient than working with the <span class="math notranslate nohighlight">\(N\times N\)</span> matrix <span class="math notranslate nohighlight">\(\phi(\boldsymbol{X})^\top \phi(\boldsymbol{X})\)</span> when <span class="math notranslate nohighlight">\(N \gg n\)</span>. Now that we’ve found <span class="math notranslate nohighlight">\(\hat{\boldsymbol{\alpha}}\)</span>, we can get our fitted model</p>
+<div class="math notranslate nohighlight">
+\[
+\hat{f}(\boldsymbol{x}) = \sum_{i=1}^n \hat{\alpha}_i k(\boldsymbol{x},\boldsymbol{x}_i).
+\]</div>
+<p>Note that this means we can fit models with features maps <span class="math notranslate nohighlight">\(\phi\)</span> <em>without ever having to work with feature map itself</em>. Instead, we just need access to the kernel function <span class="math notranslate nohighlight">\(k\)</span>. This is known as the kernel trick, because in many situations the kernel function <span class="math notranslate nohighlight">\(k\)</span> may be simple even when the feature map <span class="math notranslate nohighlight">\(\phi\)</span> is very high dimensional, and intractable to work with in practice. The general method of working with a kernel <span class="math notranslate nohighlight">\(k\)</span> rather than explicitly with a feature map <span class="math notranslate nohighlight">\(\phi\)</span> is called the “kernel trick”, and the specific method for regression presented here is called <em>kernel ridge regression</em>. Kernel ridge regression allows us to fit a very broad set of different functions using essentially the exact same tools as linear ridge regression.</p>
+<p>Let’s see a real-world example. The <code class="docutils literal notranslate"><span class="pre">EGFR_bioactivity</span></code> dataset contains bioactivity data for <span class="math notranslate nohighlight">\(n = 2000\)</span> different drugs, each represented by a molecular “fingerprints”, which here is a binary vector of length <span class="math notranslate nohighlight">\(p = 512\)</span> indicating in each dimension whether the molecule contains a particular substructure or not. The response <code class="docutils literal notranslate"><span class="pre">y</span></code> is a measurement of how active each drug is against a particular protein (called EGFR) that it is targeting. The goal with this dataset is to build a model to predict this bioactivity from the features of the molecules. We load the dataset below.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pickle</span> 
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;datasets/EGFR_bioactivity.pkl&#39;</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    
+<span class="n">X</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;X&quot;</span><span class="p">]</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;y&quot;</span><span class="p">]</span>
+<span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">y</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>((2000, 512), (2000,))
+</pre></div>
+</div>
+</div>
+</div>
+<p>To fit a kernel ridge regression model to this data, we first need to choose a kernel function <span class="math notranslate nohighlight">\(k\)</span>. For molecular fingerprints, a choice that is commonly made is the Jaccard kernel, which for two binary vectors <span class="math notranslate nohighlight">\(\boldsymbol{x},\boldsymbol{x}'\)</span> is given by</p>
+<div class="math notranslate nohighlight">
+\[
+k_{Jaccard}(\boldsymbol{x},\boldsymbol{x}') = \frac{\boldsymbol{x}\cdot \boldsymbol{x}'}{\|\boldsymbol{x}\|^2_2 +\|\boldsymbol{x}'\|_2^2 - \boldsymbol{x}\cdot\boldsymbol{x}' }
+\]</div>
+<p>For comparison, we will also use the linear kernel</p>
+<div class="math notranslate nohighlight">
+\[
+k_{linear}(\boldsymbol{x}, \boldsymbol{x}') = \boldsymbol{x}\cdot \boldsymbol{x}',
+\]</div>
+<p>which corresponds to doing usual linear ridge regression.</p>
+<p>Let’s define a couple python functions that can compute these kernel for us. (These functions are designed to compute the entire kernel matrix, not just the value for single pair <span class="math notranslate nohighlight">\(\boldsymbol{x},\boldsymbol{x}'\)</span>.)</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">k_jaccard</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">Y</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">Y</span> <span class="o">=</span> <span class="n">X</span>
+    <span class="n">prod</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+    <span class="n">norm_X</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">norm_Y</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">prod</span> <span class="o">/</span> <span class="p">(</span><span class="n">norm_X</span> <span class="o">+</span> <span class="n">norm_Y</span><span class="o">.</span><span class="n">T</span> <span class="o">-</span> <span class="n">prod</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">k_linear</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">Y</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">Y</span> <span class="o">=</span> <span class="n">X</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>To fit the parameter <span class="math notranslate nohighlight">\(\lambda\)</span>, we will need to split the data into two subsets: 1800 points are used for fitting the models, and 200 are used as a validation set to estimate the MSE for various values of the regularization parameter <span class="math notranslate nohighlight">\(\lambda\)</span>. We do this split below.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">train_ix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1800</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">test_ix</span> <span class="o">=</span> <span class="p">[</span><span class="n">j</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="k">if</span> <span class="n">j</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">train_ix</span><span class="p">]</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">train_ix</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="n">train_ix</span><span class="p">]</span>
+<span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">test_ix</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="n">test_ix</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s also define a function to fit the kernel ridge regression model.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">fit_krr</span><span class="p">(</span><span class="n">K</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">lamb</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">K</span><span class="o">+</span><span class="n">lamb</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">K</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span><span class="nd">@y</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we can fit the models across a range of <span class="math notranslate nohighlight">\(\lambda\)</span> values.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lamb_range</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">20</span><span class="p">))</span>
+
+<span class="n">K_jaccard_train</span> <span class="o">=</span> <span class="n">k_jaccard</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
+<span class="n">K_jaccard_test</span> <span class="o">=</span> <span class="n">k_jaccard</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">X_train</span><span class="p">)</span>
+<span class="n">K_linear_train</span> <span class="o">=</span> <span class="n">k_linear</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
+<span class="n">K_linear_test</span> <span class="o">=</span> <span class="n">k_linear</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">X_train</span><span class="p">)</span>
+<span class="n">mses_jaccard</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">mses_linear</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">lamb</span> <span class="ow">in</span> <span class="n">lamb_range</span><span class="p">:</span>
+    <span class="n">alpha_hat_jaccard</span> <span class="o">=</span> <span class="n">fit_krr</span><span class="p">(</span><span class="n">K_jaccard_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">lamb</span><span class="p">)</span>
+    <span class="n">alpha_hat_linear</span> <span class="o">=</span> <span class="n">fit_krr</span><span class="p">(</span><span class="n">K_linear_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">lamb</span><span class="p">)</span>
+    <span class="n">y_hat_jaccard</span> <span class="o">=</span> <span class="n">K_jaccard_test</span><span class="nd">@alpha_hat_jaccard</span> 
+    <span class="n">y_hat_linear</span> <span class="o">=</span> <span class="n">K_linear_test</span><span class="nd">@alpha_hat_linear</span>
+    <span class="n">mses_jaccard</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">((</span><span class="n">y_test</span><span class="o">-</span><span class="n">y_hat_jaccard</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>
+    <span class="n">mses_linear</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">((</span><span class="n">y_test</span><span class="o">-</span><span class="n">y_hat_linear</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">lamb_range</span><span class="p">,</span> <span class="n">mses_jaccard</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Jaccard kernel&quot;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">lamb_range</span><span class="p">,</span> <span class="n">mses_linear</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Linear kernel&quot;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;MSE&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;$\lambda$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xscale</span><span class="p">(</span><span class="s2">&quot;log&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/nonlinear_regression_23_0.png" src="../../_images/nonlinear_regression_23_0.png" />
+</div>
+</div>
+<p>Interestingly, the optimal value of <span class="math notranslate nohighlight">\(\lambda\)</span> for the linear kernel (i.e. normal ridge regression) is almost two orders of magnitude higher than that for the model using the Jaccard kernel. Moreover, the Jaccard model attains lower MSE on the validation set. This is but one example of when using a kernel that’s not linear can improve performance in function estimation.</p>
+<p>Before concluding this section, it is important to note a few cautions in fitting nonlinear models. First, a nonlinear model is not <em>always</em> better. In particular, as we’ve seen in many examples throughout this workbook, there are many real world datasets for which a linear model <em>is</em> appropriate. Second, a downside to working with a nonlinear model is that we lose a great deal of interpretability. In linear regression, the coefficients are easily interpretable: <span class="math notranslate nohighlight">\(\hat{\beta}_j\)</span> corresponds to the margin effect on the response of a unit change in feature <span class="math notranslate nohighlight">\(j\)</span>. This makes performing e.g. hypothesis tests natural. With complicated nonlinearities, we can no longer make such interpretations, which make performing statistical influence less meaningful. Nevertheless, when the priority is function approximation, nonlinear regression methods like kernel ridge regression can be effective tools.</p>
+</div>
+<div class="section" id="appendix-choosing-kernels">
+<h2><span class="section-number">3.2.3. </span>Appendix: choosing kernels<a class="headerlink" href="#appendix-choosing-kernels" title="Permalink to this headline">¶</a></h2>
+<p>An important choice that we need to make when using kernel ridge regression is to pick the kernel function <span class="math notranslate nohighlight">\(k\)</span>. Here we will see a few examples of kernels. Typically, we interpret kernels as measures of similarity.</p>
+<p>Perhaps the most commonly used kernel is the <strong>Gaussian RBF kernel</strong>:</p>
+<div class="math notranslate nohighlight">
+\[
+k(\boldsymbol{x},\boldsymbol{x}') = \exp(-\gamma \|\boldsymbol{x}-\boldsymbol{x}'\|_2^2)
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(\gamma&gt;0\)</span> is a <em>bandwidth</em> parameter that is chosen by the user. Larger <span class="math notranslate nohighlight">\(\gamma\)</span> corresponds to “localizing” more around individual points, since the similarity decays quickly as <span class="math notranslate nohighlight">\(\|\boldsymbol{x}-\boldsymbol{x}'\|_2^2\)</span> grows. On the other hand, smaller <span class="math notranslate nohighlight">\(\gamma\)</span> makes the similarity decay more slowly as <span class="math notranslate nohighlight">\(\|\boldsymbol{x}-\boldsymbol{x}'\|_2^2\)</span> grows. In practice, we tend to choose the parameter <span class="math notranslate nohighlight">\(\gamma\)</span> using cross validation.</p>
+<p>Another kernel that one might use is the <strong>Laplace kernel</strong>:</p>
+<div class="math notranslate nohighlight">
+\[
+k(\boldsymbol{x},\boldsymbol{x}') = \exp(-\gamma \|\boldsymbol{x}-\boldsymbol{x}'\|_1)
+\]</div>
+<p>We could also use <strong>polynomial kernels</strong>:</p>
+<div class="math notranslate nohighlight">
+\[
+k(\boldsymbol{x},\boldsymbol{x}') = (\gamma \langle \boldsymbol{x}, \boldsymbol{x}'\rangle + 1)^p
+\]</div>
+<p>Here the degree <span class="math notranslate nohighlight">\(p\)</span> also needs to be chosen by the user.</p>
 </div>
 </div>
 
