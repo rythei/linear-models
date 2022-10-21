@@ -181,12 +181,34 @@
      2.8. Hypothesis testing for the Gaussian model
     </a>
    </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="diagnostics.html">
+     2.9. Diagnostics for linear regression
+    </a>
+   </li>
   </ul>
  </li>
- <li class="toctree-l1">
+ <li class="toctree-l1 has-children">
   <a class="reference internal" href="../generalizing_linear_regression/chheader.html">
    3. Generalizing linear regression
   </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+  <label for="toctree-checkbox-3">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../generalizing_linear_regression/ridge_and_lasso.html">
+     3.1. Regularizing regression: LASSO and Ridge
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../generalizing_linear_regression/nonlinear_regression.html">
+     3.2. Fitting nonlinear functions: polynomial regression and kernel ridge regression
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../extensions_applications/chheader.html">
@@ -377,23 +399,23 @@ L(\boldsymbol{\theta}; z_1,\dots,z_n) = \prod_{i=1}^n p_{\boldsymbol{\theta}}(z_
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[-7.49890058 -5.29356972  0.66037694 -1.63288261 -3.68322126 -0.57610778
-  0.32984028 -4.16142256 -4.76235824 -2.61660245 -1.00640746 -3.25804733
- -1.79216125 -4.22373711 -2.41295194 -4.94131821 -2.53473825 -3.34699192
- -5.83514371 -4.33092957 -2.78616939 -1.42957849  1.56348443 -0.00911886
- -5.06348312 -1.87106249 -2.27707103 -1.76200685 -3.36725606 -0.09971371
-  0.74352894  1.32708024 -1.22352462  2.81397736 -1.41336864 -0.18524048
- -2.15011741 -1.15675531 -0.19902255  0.72769527  0.80415255 -2.62087043
- -1.06824608  0.44401177 -2.67077263 -3.96512414 -1.8156304  -1.79429039
- -3.65085684 -1.6819979  -2.44896342 -0.0962941  -1.1308399   0.76921111
- -0.61875198 -1.3421844  -1.3115301  -1.88114697  0.49084384  1.32307389
- -1.58671498 -2.98686093 -1.92409474 -2.16994785  0.48359669  0.62959272
-  1.29637915 -3.13673659 -0.74933773 -0.23744481 -1.36196417 -0.18685628
-  1.44290192  2.32536179 -0.95613073 -4.53134961 -7.24031777 -3.34554788
- -1.97943449  2.01003955 -0.35168544 -1.60110235 -1.09708505 -1.60980259
- -4.70771339 -2.01029967 -1.52713853 -0.1971693  -0.70427002  0.19086324
- -1.40828412 -3.54493284 -3.43947881 -8.1672276   0.29217904 -4.14044533
- -1.72275765 -2.15809523  0.2797047   0.0423337 ]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[-2.47149902  0.32829703 -3.6661262  -2.70921415 -5.78887272 -2.86864159
+  0.58301776 -1.95398668  1.47190294 -1.20980345 -0.17147287 -1.75786064
+ -2.05214647 -4.13602176 -2.8748474  -5.52178467 -1.20576053 -1.80428063
+  1.46337587 -1.76563685 -2.41022691  1.41857565 -1.21063228 -5.66857251
+  2.03824498  3.38452283 -1.08957792 -4.80830061 -1.40791955 -4.06129851
+ -3.03228057 -3.37748892 -2.13993965 -1.3441577  -4.14592152  0.08807507
+ -2.82509852 -4.37029782 -0.50226268 -0.15963962 -2.46539365 -2.304832
+  2.0004206  -1.41866516 -1.41561459 -1.92258359 -4.83483989  0.02763911
+ -2.29157042 -4.36653623 -0.85523256 -3.48172541 -4.35795494 -3.5676197
+ -3.03632503 -1.71993488 -1.20436206  0.13595672 -0.46613257 -5.76905989
+ -4.19153186 -2.86836527 -0.74114321  0.3111373   0.05316292 -0.3767429
+ -3.485489   -1.46333835 -0.71397744  1.21213739 -1.96825428 -4.6405879
+ -3.05224162 -2.69697089 -0.61734334 -0.23550487  4.02907361 -6.38270638
+ -1.18216347 -2.83430578 -1.43640627 -2.28190623 -1.86665499  0.06978459
+ -1.69614725 -0.35493883 -2.81719308 -1.75846928 -2.93391307 -4.94978323
+ -3.29691481 -1.99881462 -2.3402222  -1.57171798 -5.08122274 -4.38989901
+ -2.8177606  -2.43990874 -0.83916009 -2.48383315]
 </pre></div>
 </div>
 </div>
@@ -442,7 +464,7 @@ L(\mu,\sigma^2;z_1,\dots,z_n) = \prod_{i=1}^n p_{\mu,\sigma^2}(z_i) = (2\pi \sig
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(-1.6678847803156638, 4.450159786502175)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(-1.9618016185961702, 3.969560119543649)
 </pre></div>
 </div>
 </div>

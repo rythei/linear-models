@@ -21,7 +21,7 @@
 # 
 # Let's illustrate this with an example. In the following cell, we construct a data matrix $\boldsymbol{X}$ that is intentionally poorly conditioned. We construct this dataset as follows:
 # 1. We generate a random matrix $\boldsymbol{X}_0 \in \mathbb{R}^{n\times (p-1)}$.
-# 2. We create a new column $\boldsymbol{x}_p = \sum_{j=1}^{p-1} \boldsymbol{x}_j + \boldsymbol{\xi}$, and set $\boldsymbol{X} = [\boldsymbol{X}_0, \boldsymbol{x}_p]$. This matrix is _almost_ not full rank, which will suffice to make the inverse of $\boldsymbol{X^\top X}$ be very "bad".
+# 2. We create a new column $\boldsymbol{x}_p = \sum_{j=1}^{p-1} \boldsymbol{x}_j + \boldsymbol{\xi}$, where $\boldsymbol{\xi}$ is some very small noise, and set $\boldsymbol{X} = [\boldsymbol{X}_0, \boldsymbol{x}_p]$. This matrix is _almost_ not full rank, which will suffice to make the inverse of $\boldsymbol{X^\top X}$ be very "bad".
 # 3. Finally, we generate the responses $\boldsymbol{y}$ as usual using a linear model $\boldsymbol{y} = \boldsymbol{X\beta}_\star + \boldsymbol{\varepsilon}$.
 
 # In[1]:
@@ -219,9 +219,9 @@ plt.show()
 # 
 # The primary difference from Ridge is that we have replaced the penalty term with the 1-norm $\|\boldsymbol{\beta}\|_1$; this is done for a very specific reason related to the geometry of the $1$-norm. In particular, the LASSO is explicitly designed to induce _sparsity_ in the solution $\hat{\boldsymbol{\beta}}_{LASSO}(\lambda)$, meaning that only a few of the coefficients are non-zero, while the rest are set *exactly* equal to zero. Below we give a heuristic explanation of how LASSO works -- there is a formal mathematical theory for the LASSO, but it is quite technical and beyond the scope of this course.
 # 
-# | ![](figs/lasso_vs_ridge.png) |
-# |:--:|
-# |**Figure 1: Illustration of LASSO vs Ridge solutions**|
+# |              ![](figs/lasso_vs_ridge.png)              |
+# | :----------------------------------------------------: |
+# | **Figure 1: Illustration of LASSO vs Ridge solutions** |
 # 
 #  The green shaded regions in the plots in Figure 1 represent the sets $\{\boldsymbol{\beta} : \|\boldsymbol{\beta}\|_1 \leq s\}$ (left) and $\{\boldsymbol{\beta} : \|\boldsymbol{\beta}\|_2 \leq s\}$ (right), i.e. the sets of possible solutions where the $1$ and $2$ norms are smaller than some given threshold $s$. By penalizing one of these norms, we are effectively constraining ourselves to one of these sets. Note that in contrast to the $2$-norm set (which is a circle), the $1$-norm set has the shape of a diamond.  The red ellipses are the level sets of the squared error $\|\boldsymbol{X\beta} - \boldsymbol{y}\|_2^2$, and the Ridge or LASSO solutions will occur exactly where these ellipses are tangent to the green sets. Because the $1$-norm sets form a diamond, these tangents tend to occur at one of the points of the diamond, which will lead to solutions with some entries equal to zero.
 # 

@@ -53,7 +53,7 @@
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="4. Extensions and applications" href="../extensions_applications/chheader.html" />
+    <link rel="next" title="3.2. Fitting nonlinear functions: polynomial regression and kernel ridge regression" href="nonlinear_regression.html" />
     <link rel="prev" title="3. Generalizing linear regression" href="chheader.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -201,6 +201,11 @@
    <li class="toctree-l2 current active">
     <a class="current reference internal" href="#">
      3.1. Regularizing regression: LASSO and Ridge
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="nonlinear_regression.html">
+     3.2. Fitting nonlinear functions: polynomial regression and kernel ridge regression
     </a>
    </li>
   </ul>
@@ -378,7 +383,7 @@
 <p>Let’s illustrate this with an example. In the following cell, we construct a data matrix <span class="math notranslate nohighlight">\(\boldsymbol{X}\)</span> that is intentionally poorly conditioned. We construct this dataset as follows:</p>
 <ol class="simple">
 <li><p>We generate a random matrix <span class="math notranslate nohighlight">\(\boldsymbol{X}_0 \in \mathbb{R}^{n\times (p-1)}\)</span>.</p></li>
-<li><p>We create a new column <span class="math notranslate nohighlight">\(\boldsymbol{x}_p = \sum_{j=1}^{p-1} \boldsymbol{x}_j + \boldsymbol{\xi}\)</span>, and set <span class="math notranslate nohighlight">\(\boldsymbol{X} = [\boldsymbol{X}_0, \boldsymbol{x}_p]\)</span>. This matrix is <em>almost</em> not full rank, which will suffice to make the inverse of <span class="math notranslate nohighlight">\(\boldsymbol{X^\top X}\)</span> be very “bad”.</p></li>
+<li><p>We create a new column <span class="math notranslate nohighlight">\(\boldsymbol{x}_p = \sum_{j=1}^{p-1} \boldsymbol{x}_j + \boldsymbol{\xi}\)</span>, where <span class="math notranslate nohighlight">\(\boldsymbol{\xi}\)</span> is some very small noise, and set <span class="math notranslate nohighlight">\(\boldsymbol{X} = [\boldsymbol{X}_0, \boldsymbol{x}_p]\)</span>. This matrix is <em>almost</em> not full rank, which will suffice to make the inverse of <span class="math notranslate nohighlight">\(\boldsymbol{X^\top X}\)</span> be very “bad”.</p></li>
 <li><p>Finally, we generate the responses <span class="math notranslate nohighlight">\(\boldsymbol{y}\)</span> as usual using a linear model <span class="math notranslate nohighlight">\(\boldsymbol{y} = \boldsymbol{X\beta}_\star + \boldsymbol{\varepsilon}\)</span>.</p></li>
 </ol>
 <div class="cell docutils container">
@@ -419,10 +424,10 @@
   <th>Method:</th>             <td>Least Squares</td>  <th>  F-statistic:       </th>          <td>   17.58</td>
 </tr>
 <tr>
-  <th>Date:</th>             <td>Fri, 14 Oct 2022</td> <th>  Prob (F-statistic):</th>          <td>1.26e-09</td>
+  <th>Date:</th>             <td>Thu, 20 Oct 2022</td> <th>  Prob (F-statistic):</th>          <td>1.26e-09</td>
 </tr>
 <tr>
-  <th>Time:</th>                 <td>00:09:10</td>     <th>  Log-Likelihood:    </th>          <td> -102.57</td>
+  <th>Time:</th>                 <td>19:06:46</td>     <th>  Log-Likelihood:    </th>          <td> -102.57</td>
 </tr>
 <tr>
   <th>No. Observations:</th>      <td>    50</td>      <th>  AIC:               </th>          <td>   215.1</td>
@@ -792,10 +797,10 @@
             <p class="prev-next-title"><span class="section-number">3. </span>Generalizing linear regression</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="../extensions_applications/chheader.html" title="next page">
+    <a class='right-next' id="next-link" href="nonlinear_regression.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title"><span class="section-number">4. </span>Extensions and applications</p>
+        <p class="prev-next-title"><span class="section-number">3.2. </span>Fitting nonlinear functions: polynomial regression and kernel ridge regression</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>
