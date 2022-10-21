@@ -181,12 +181,34 @@
      2.8. Hypothesis testing for the Gaussian model
     </a>
    </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basic_linear_regression/diagnostics.html">
+     2.9. Diagnostics for linear regression
+    </a>
+   </li>
   </ul>
  </li>
- <li class="toctree-l1">
+ <li class="toctree-l1 has-children">
   <a class="reference internal" href="../generalizing_linear_regression/chheader.html">
    3. Generalizing linear regression
   </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+  <label for="toctree-checkbox-3">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../generalizing_linear_regression/ridge_and_lasso.html">
+     3.1. Regularizing regression: LASSO and Ridge
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../generalizing_linear_regression/nonlinear_regression.html">
+     3.2. Fitting nonlinear functions: polynomial regression and kernel ridge regression
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="../extensions_applications/chheader.html">
@@ -623,10 +645,10 @@
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>points:
-[[0.36996187 0.03938841 0.67844221 0.22892128 0.85971121 0.88668024
-  0.70052826 0.19512877 0.68536093 0.61652156]
- [0.48705853 0.52438237 0.42182197 0.34542763 0.06741938 0.03462943
-  0.87165085 0.72603612 0.54463447 0.28523823]]
+[[0.75349354 0.3707689  0.62279986 0.69120575 0.28711289 0.09079489
+  0.62031214 0.07939689 0.83643645 0.97603329]
+ [0.05620226 0.70340436 0.16644491 0.13784355 0.71315098 0.31821596
+  0.82720927 0.95824672 0.49348428 0.32878381]]
 
 points has shape (2, 10)
 </pre></div>
@@ -647,12 +669,12 @@ points has shape (2, 10)
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>xs (shape: (10,)):
-[0.36996187 0.03938841 0.67844221 0.22892128 0.85971121 0.88668024
- 0.70052826 0.19512877 0.68536093 0.61652156]
+[0.75349354 0.3707689  0.62279986 0.69120575 0.28711289 0.09079489
+ 0.62031214 0.07939689 0.83643645 0.97603329]
 
 ys (shape: (10,)):
-[0.48705853 0.52438237 0.42182197 0.34542763 0.06741938 0.03462943
- 0.87165085 0.72603612 0.54463447 0.28523823]
+[0.05620226 0.70340436 0.16644491 0.13784355 0.71315098 0.31821596
+ 0.82720927 0.95824672 0.49348428 0.32878381]
 </pre></div>
 </div>
 </div>
