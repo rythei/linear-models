@@ -254,7 +254,7 @@ FNR = n_false_neg/n_pos
 print(f"TPR: {round(TPR,3)}, FPR: {round(FPR,3)}, TNR: {round(TNR,3)}, FNR: {round(FNR,3)}")
 
 
-# These rates all seem fine, but let's suppose that we wanted to be _really_ sure that we didn't have many false negatives -- say, a false negative rate of less than 1% (equivalently, to require the TPR to be greater than 99%). One way to achieve this is to change the threshold $t$ to something other than $1/2$. For example, suppose we set the threshold $t$ to be 0. Then, by definition of $C_t$, _every_ point would be classified as a positive example, and hence our FNR would be equal to $0$. Of course, this isn't a good idea as we will lose all discriminative power. However, perhaps some value between $0$ and $1/2$ would yield a favorable tradeoff between false positive and true positive rates. One way to visualize this tradeoff is by using a _reciever operating characteristic_ (or ROC) curve. The ROC curve is constructed as follows:
+# In this example, we have a false negative rate of approximately $15\%$ -- this means that in about $15\%$ of cases when a tumor is malignant, the model incorrectly predicts that it is benign (i.e., not dangerous). Let's suppose (quite reasonably, in this case) that we wanted to be _really_ sure that we didn't have many false negatives -- say, a false negative rate of less than 1% (equivalently, to require the TPR to be greater than 99%). One way to achieve this is to change the threshold $t$ to something other than $1/2$. For example, suppose we set the threshold $t$ to be 0. Then, by definition of $C_t$, _every_ point would be classified as a positive example, and hence our FNR would be equal to $0$. Of course, this isn't a good idea as we will lose all discriminative power. However, perhaps some value between $0$ and $1/2$ would yield a favorable tradeoff between false positive and true positive rates. One way to visualize this tradeoff is by using a _reciever operating characteristic_ (or ROC) curve. The ROC curve is constructed as follows:
 # 
 # - For a grid of $t$ values between $0$ and $1$, compute $\text{FPR}(t)$ and $\text{TPR}(t)$, the false positive and true positive rates of the classifier $C_t$.
 # - Plot $\text{FPR}(t)$ against $\text{TPR}(t)$. 
@@ -269,16 +269,20 @@ import matplotlib.pyplot as plt
 
 FPRs, TPRs, _ = roc_curve(y_test, p_hat_test)
 
-plt.plot(FPRs, TPRs, marker='o')
-plt.plot([0,1], [0,1], color='black', linestyle='--')
+plt.vlines(0,0,1, color='green', label="perfect classifier")
+plt.hlines(1,0,1, color='green')
+plt.plot([0,1], [0,1], color='red', linestyle='--', label="random classifier")
+plt.plot(FPRs, TPRs, marker='o', color="blue", label="logistic regression model")
+plt.fill_between(FPRs, [0]*len(TPRs), TPRs, color="blue", alpha=0.2, label="AUC")
 plt.xlabel("False Positive Rate", fontsize=14)
 plt.ylabel("True Positive Rate", fontsize=14)
+plt.legend()
 plt.show()
 
 
-# This plot shows an increasing curve representing a tradeoff between false positives and true postives: as we get a larger true positive rate, we must also accept more false positives. For example, to get 99% TPR, we have to tolerate approximately a 20% false positive rate. 
+# This plot shows an increasing curve representing a tradeoff between false positives and true postives: as we get a larger true positive rate, we must also accept more false positives. For example, to get 99% TPR, we have to tolerate approximately a 35% false positive rate.
 # 
-# How do we assess how "good" an ROC curve is? In the best case, we could get a 100% TPR with a 0% FPR. In this case, the ROC curve would just trace up the left axis across the top of the plot. In the worst case, we could have a random classifier, which randomly predicts either 0 or 1 for every datapoint. In this case, the ROC curve would look like the $y=x$ line in the $[0,1]\times [0,1]$ box (visualized on the plot). This gives us an idea for how we can summarize an entire ROC curve: we can compute the _area under the ROC curve_ (called the AUC, or AU-ROC). The ideal classifier would have a score of $1$ under the metric (i.e. the area of the entire box), while the random classifier would have an AUC of $1/2$. The closer our AUC is to one, the more favorable the tradeoff between the TPR and FPR. We can estimate the AUC in python using the following.
+# How do we assess how "good" an ROC curve is? In the best case, we could get a 100% TPR with a 0% FPR. In this case, the ROC curve would just trace up the left axis across the top of the plot (the green curve in the plot). In the worst case, we could have a random classifier, which randomly predicts either 0 or 1 for every datapoint. In this case, the ROC curve would look like the $y=x$ line in the $[0,1]\times [0,1]$ box (the red line in the plot). This gives us an idea for how we can summarize an entire ROC curve: we can compute the _area under the ROC curve_ (called the AUC, or AU-ROC). The ideal classifier would have a score of $1$ under this metric (i.e. the area of the entire box), while the random classifier would have an AUC of $1/2$. The closer our AUC is to one, the more favorable the tradeoff between the TPR and FPR. We can estimate the AUC in python using the following.
 
 # In[10]:
 
@@ -289,7 +293,11 @@ AUC = auc(FPRs, TPRs)
 AUC
 
 
-# We see here that we get an AUC of $\approx 0.97$, which would be considered very high. In other settings, an AUC of $>0.85$ might be considered good, though the exact interpretation will depend on the application.  
+# We see here that we get an AUC of $\approx 0.97$, which would be considered very high. In other settings, an AUC of $>0.85$ might be considered good, though the exact interpretation will depend on the application. 
+# 
+# ## Conclusion
+# 
+# In this section, we introduced the logistic regression model for modeling binary response variable, and covered some basic techniques for evaluating these models. Below, we cover some details of how we can fit logistic regression models (and many other types of models) using an algorithm called Newton's method. In the next section, we will discuss GLMs more generally.
 # 
 # ## Bonus: Newton's method for fitting logistic regression
 #  
@@ -345,7 +353,7 @@ def hess_l(X, y, beta):
     """
     computes Hessian of logistic negative log likelihood
     """
-    # make W = diag(p(x_1; beta),...,p(x_n; beta))
+    # make W = diag(p(x1)*(1-p(x1)),...,p(xn)*(1-p(xn)))
     p = logit(np.dot(X,beta))
     W = np.diag(p*(1 - p))
     return X.T@W@X

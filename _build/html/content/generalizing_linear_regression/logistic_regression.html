@@ -327,8 +327,13 @@
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#conclusion">
+   3.3.4. Conclusion
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#bonus-newton-s-method-for-fitting-logistic-regression">
-   3.3.4. Bonus: Newton’s method for fitting logistic regression
+   3.3.5. Bonus: Newton’s method for fitting logistic regression
   </a>
  </li>
 </ul>
@@ -367,8 +372,13 @@
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#conclusion">
+   3.3.4. Conclusion
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#bonus-newton-s-method-for-fitting-logistic-regression">
-   3.3.4. Bonus: Newton’s method for fitting logistic regression
+   3.3.5. Bonus: Newton’s method for fitting logistic regression
   </a>
  </li>
 </ul>
@@ -480,7 +490,6 @@ L(\boldsymbol{\beta}; (\boldsymbol{x}_i,y_i)_{i=1}^n) = \prod_{i=1}^n  p_{\bolds
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>Unnamed: 0</th>
       <th>diagnosis</th>
       <th>mean radius</th>
       <th>mean texture</th>
@@ -490,6 +499,7 @@ L(\boldsymbol{\beta}; (\boldsymbol{x}_i,y_i)_{i=1}^n) = \prod_{i=1}^n  p_{\bolds
       <th>mean compactness</th>
       <th>mean concavity</th>
       <th>mean concave points</th>
+      <th>mean symmetry</th>
       <th>...</th>
       <th>worst radius</th>
       <th>worst texture</th>
@@ -506,8 +516,7 @@ L(\boldsymbol{\beta}; (\boldsymbol{x}_i,y_i)_{i=1}^n) = \prod_{i=1}^n  p_{\bolds
   <tbody>
     <tr>
       <th>0</th>
-      <td>0</td>
-      <td>0</td>
+      <td>1</td>
       <td>17.99</td>
       <td>10.38</td>
       <td>122.80</td>
@@ -516,6 +525,7 @@ L(\boldsymbol{\beta}; (\boldsymbol{x}_i,y_i)_{i=1}^n) = \prod_{i=1}^n  p_{\bolds
       <td>0.27760</td>
       <td>0.3001</td>
       <td>0.14710</td>
+      <td>0.2419</td>
       <td>...</td>
       <td>25.38</td>
       <td>17.33</td>
@@ -531,7 +541,6 @@ L(\boldsymbol{\beta}; (\boldsymbol{x}_i,y_i)_{i=1}^n) = \prod_{i=1}^n  p_{\bolds
     <tr>
       <th>1</th>
       <td>1</td>
-      <td>0</td>
       <td>20.57</td>
       <td>17.77</td>
       <td>132.90</td>
@@ -540,6 +549,7 @@ L(\boldsymbol{\beta}; (\boldsymbol{x}_i,y_i)_{i=1}^n) = \prod_{i=1}^n  p_{\bolds
       <td>0.07864</td>
       <td>0.0869</td>
       <td>0.07017</td>
+      <td>0.1812</td>
       <td>...</td>
       <td>24.99</td>
       <td>23.41</td>
@@ -554,8 +564,7 @@ L(\boldsymbol{\beta}; (\boldsymbol{x}_i,y_i)_{i=1}^n) = \prod_{i=1}^n  p_{\bolds
     </tr>
     <tr>
       <th>2</th>
-      <td>2</td>
-      <td>0</td>
+      <td>1</td>
       <td>19.69</td>
       <td>21.25</td>
       <td>130.00</td>
@@ -564,6 +573,7 @@ L(\boldsymbol{\beta}; (\boldsymbol{x}_i,y_i)_{i=1}^n) = \prod_{i=1}^n  p_{\bolds
       <td>0.15990</td>
       <td>0.1974</td>
       <td>0.12790</td>
+      <td>0.2069</td>
       <td>...</td>
       <td>23.57</td>
       <td>25.53</td>
@@ -578,8 +588,7 @@ L(\boldsymbol{\beta}; (\boldsymbol{x}_i,y_i)_{i=1}^n) = \prod_{i=1}^n  p_{\bolds
     </tr>
     <tr>
       <th>3</th>
-      <td>3</td>
-      <td>0</td>
+      <td>1</td>
       <td>11.42</td>
       <td>20.38</td>
       <td>77.58</td>
@@ -588,6 +597,7 @@ L(\boldsymbol{\beta}; (\boldsymbol{x}_i,y_i)_{i=1}^n) = \prod_{i=1}^n  p_{\bolds
       <td>0.28390</td>
       <td>0.2414</td>
       <td>0.10520</td>
+      <td>0.2597</td>
       <td>...</td>
       <td>14.91</td>
       <td>26.50</td>
@@ -602,8 +612,7 @@ L(\boldsymbol{\beta}; (\boldsymbol{x}_i,y_i)_{i=1}^n) = \prod_{i=1}^n  p_{\bolds
     </tr>
     <tr>
       <th>4</th>
-      <td>4</td>
-      <td>0</td>
+      <td>1</td>
       <td>20.29</td>
       <td>14.34</td>
       <td>135.10</td>
@@ -612,6 +621,7 @@ L(\boldsymbol{\beta}; (\boldsymbol{x}_i,y_i)_{i=1}^n) = \prod_{i=1}^n  p_{\bolds
       <td>0.13280</td>
       <td>0.1980</td>
       <td>0.10430</td>
+      <td>0.1809</td>
       <td>...</td>
       <td>22.54</td>
       <td>16.67</td>
@@ -626,7 +636,7 @@ L(\boldsymbol{\beta}; (\boldsymbol{x}_i,y_i)_{i=1}^n) = \prod_{i=1}^n  p_{\bolds
     </tr>
   </tbody>
 </table>
-<p>5 rows × 32 columns</p>
+<p>5 rows × 31 columns</p>
 </div></div></div>
 </div>
 <p>The column <code class="docutils literal notranslate"><span class="pre">diagnosis</span></code> contains our response, and the ramining columns contain various features. For the sake of this example, we will restrict ourselves to a subset of the features.</p>
@@ -707,7 +717,7 @@ L(\boldsymbol{\beta}; (\boldsymbol{x}_i,y_i)_{i=1}^n) = \prod_{i=1}^n  p_{\bolds
   <th>Date:</th>            <td>Thu, 27 Oct 2022</td> <th>  Pseudo R-squ.:     </th>   <td>0.8143</td>  
 </tr>
 <tr>
-  <th>Time:</th>                <td>16:06:55</td>     <th>  Log-Likelihood:    </th>  <td> -57.327</td> 
+  <th>Time:</th>                <td>19:43:17</td>     <th>  Log-Likelihood:    </th>  <td> -57.327</td> 
 </tr>
 <tr>
   <th>converged:</th>             <td>True</td>       <th>  LL-Null:           </th>  <td> -308.77</td> 
@@ -721,43 +731,43 @@ L(\boldsymbol{\beta}; (\boldsymbol{x}_i,y_i)_{i=1}^n) = \prod_{i=1}^n  p_{\bolds
     <td></td>       <th>coef</th>     <th>std err</th>      <th>z</th>      <th>P>|z|</th>  <th>[0.025</th>    <th>0.975]</th>  
 </tr>
 <tr>
-  <th>const</th> <td>   38.0525</td> <td>   10.556</td> <td>    3.605</td> <td> 0.000</td> <td>   17.363</td> <td>   58.742</td>
+  <th>const</th> <td>  -38.0525</td> <td>   10.556</td> <td>   -3.605</td> <td> 0.000</td> <td>  -58.742</td> <td>  -17.363</td>
 </tr>
 <tr>
-  <th>x1</th>    <td>   -1.0621</td> <td>    0.277</td> <td>   -3.835</td> <td> 0.000</td> <td>   -1.605</td> <td>   -0.519</td>
+  <th>x1</th>    <td>    1.0621</td> <td>    0.277</td> <td>    3.835</td> <td> 0.000</td> <td>    0.519</td> <td>    1.605</td>
 </tr>
 <tr>
-  <th>x2</th>    <td>   -0.4361</td> <td>    0.085</td> <td>   -5.109</td> <td> 0.000</td> <td>   -0.603</td> <td>   -0.269</td>
+  <th>x2</th>    <td>    0.4361</td> <td>    0.085</td> <td>    5.109</td> <td> 0.000</td> <td>    0.269</td> <td>    0.603</td>
 </tr>
 <tr>
-  <th>x3</th>    <td>  -43.5993</td> <td>   38.289</td> <td>   -1.139</td> <td> 0.255</td> <td> -118.645</td> <td>   31.447</td>
+  <th>x3</th>    <td>   43.5993</td> <td>   38.289</td> <td>    1.139</td> <td> 0.255</td> <td>  -31.447</td> <td>  118.645</td>
 </tr>
 <tr>
-  <th>x4</th>    <td>  -42.0605</td> <td>   22.336</td> <td>   -1.883</td> <td> 0.060</td> <td>  -85.839</td> <td>    1.718</td>
+  <th>x4</th>    <td>   42.0605</td> <td>   22.336</td> <td>    1.883</td> <td> 0.060</td> <td>   -1.718</td> <td>   85.839</td>
 </tr>
 <tr>
-  <th>x5</th>    <td>  -20.0628</td> <td>   15.632</td> <td>   -1.283</td> <td> 0.199</td> <td>  -50.701</td> <td>   10.575</td>
+  <th>x5</th>    <td>   20.0628</td> <td>   15.632</td> <td>    1.283</td> <td> 0.199</td> <td>  -10.575</td> <td>   50.701</td>
 </tr>
 <tr>
-  <th>x6</th>    <td>  -34.4038</td> <td>  127.147</td> <td>   -0.271</td> <td> 0.787</td> <td> -283.607</td> <td>  214.799</td>
+  <th>x6</th>    <td>   34.4038</td> <td>  127.147</td> <td>    0.271</td> <td> 0.787</td> <td> -214.799</td> <td>  283.607</td>
 </tr>
 <tr>
-  <th>x7</th>    <td>  -10.5655</td> <td>    3.060</td> <td>   -3.453</td> <td> 0.001</td> <td>  -16.563</td> <td>   -4.568</td>
+  <th>x7</th>    <td>   10.5655</td> <td>    3.060</td> <td>    3.453</td> <td> 0.001</td> <td>    4.568</td> <td>   16.563</td>
 </tr>
 <tr>
-  <th>x8</th>    <td>    1.2429</td> <td>    0.708</td> <td>    1.756</td> <td> 0.079</td> <td>   -0.144</td> <td>    2.630</td>
+  <th>x8</th>    <td>   -1.2429</td> <td>    0.708</td> <td>   -1.756</td> <td> 0.079</td> <td>   -2.630</td> <td>    0.144</td>
 </tr>
 <tr>
-  <th>x9</th>    <td>    2.0025</td> <td>  111.843</td> <td>    0.018</td> <td> 0.986</td> <td> -217.206</td> <td>  221.211</td>
+  <th>x9</th>    <td>   -2.0025</td> <td>  111.843</td> <td>   -0.018</td> <td> 0.986</td> <td> -221.211</td> <td>  217.206</td>
 </tr>
 <tr>
-  <th>x10</th>   <td>   -3.6880</td> <td>   40.481</td> <td>   -0.091</td> <td> 0.927</td> <td>  -83.030</td> <td>   75.654</td>
+  <th>x10</th>   <td>    3.6880</td> <td>   40.481</td> <td>    0.091</td> <td> 0.927</td> <td>  -75.654</td> <td>   83.030</td>
 </tr>
 <tr>
-  <th>x11</th>   <td>   52.5009</td> <td>   56.204</td> <td>    0.934</td> <td> 0.350</td> <td>  -57.656</td> <td>  162.658</td>
+  <th>x11</th>   <td>  -52.5009</td> <td>   56.204</td> <td>   -0.934</td> <td> 0.350</td> <td> -162.658</td> <td>   57.656</td>
 </tr>
 <tr>
-  <th>x12</th>   <td>  585.9642</td> <td>  314.301</td> <td>    1.864</td> <td> 0.062</td> <td>  -30.054</td> <td> 1201.983</td>
+  <th>x12</th>   <td> -585.9642</td> <td>  314.301</td> <td>   -1.864</td> <td> 0.062</td> <td>-1201.983</td> <td>   30.054</td>
 </tr>
 </table><br/><br/>Possibly complete quasi-separation: A fraction 0.26 of observations can be<br/>perfectly predicted. This might indicate that there is complete<br/>quasi-separation. In this case some parameters will not be identified.</div></div>
 </div>
@@ -821,7 +831,7 @@ p_{\hat{\boldsymbol{\beta}}}(\boldsymbol{x}) = P(y=1\mid \boldsymbol{x},\hat{\bo
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span># Malignant: 357, # Benign: 212
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span># Malignant: 212, # Benign: 357
 </pre></div>
 </div>
 </div>
@@ -864,10 +874,10 @@ p_{\hat{\boldsymbol{\beta}}}(\boldsymbol{x}) = P(y=1\mid \boldsymbol{x},\hat{\bo
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span># True Positives: 58
-# False Positives: 6
-# True Negatives: 33
-# False Negatives: 3
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span># True Positives: 33
+# False Positives: 3
+# True Negatives: 58
+# False Negatives: 6
 </pre></div>
 </div>
 </div>
@@ -888,12 +898,12 @@ p_{\hat{\boldsymbol{\beta}}}(\boldsymbol{x}) = P(y=1\mid \boldsymbol{x},\hat{\bo
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>TPR: 0.951, FPR: 0.154, TNR: 0.846, FNR: 0.049
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>TPR: 0.846, FPR: 0.049, TNR: 0.951, FNR: 0.154
 </pre></div>
 </div>
 </div>
 </div>
-<p>These rates all seem fine, but let’s suppose that we wanted to be <em>really</em> sure that we didn’t have many false negatives – say, a false negative rate of less than 1% (equivalently, to require the TPR to be greater than 99%). One way to achieve this is to change the threshold <span class="math notranslate nohighlight">\(t\)</span> to something other than <span class="math notranslate nohighlight">\(1/2\)</span>. For example, suppose we set the threshold <span class="math notranslate nohighlight">\(t\)</span> to be 0. Then, by definition of <span class="math notranslate nohighlight">\(C_t\)</span>, <em>every</em> point would be classified as a positive example, and hence our FNR would be equal to <span class="math notranslate nohighlight">\(0\)</span>. Of course, this isn’t a good idea as we will lose all discriminative power. However, perhaps some value between <span class="math notranslate nohighlight">\(0\)</span> and <span class="math notranslate nohighlight">\(1/2\)</span> would yield a favorable tradeoff between false positive and true positive rates. One way to visualize this tradeoff is by using a <em>reciever operating characteristic</em> (or ROC) curve. The ROC curve is constructed as follows:</p>
+<p>In this example, we have a false negative rate of approximately <span class="math notranslate nohighlight">\(15\%\)</span> – this means that in about <span class="math notranslate nohighlight">\(15\%\)</span> of cases when a tumor is malignant, the model incorrectly predicts that it is benign (i.e., not dangerous). Let’s suppose (quite reasonably, in this case) that we wanted to be <em>really</em> sure that we didn’t have many false negatives – say, a false negative rate of less than 1% (equivalently, to require the TPR to be greater than 99%). One way to achieve this is to change the threshold <span class="math notranslate nohighlight">\(t\)</span> to something other than <span class="math notranslate nohighlight">\(1/2\)</span>. For example, suppose we set the threshold <span class="math notranslate nohighlight">\(t\)</span> to be 0. Then, by definition of <span class="math notranslate nohighlight">\(C_t\)</span>, <em>every</em> point would be classified as a positive example, and hence our FNR would be equal to <span class="math notranslate nohighlight">\(0\)</span>. Of course, this isn’t a good idea as we will lose all discriminative power. However, perhaps some value between <span class="math notranslate nohighlight">\(0\)</span> and <span class="math notranslate nohighlight">\(1/2\)</span> would yield a favorable tradeoff between false positive and true positive rates. One way to visualize this tradeoff is by using a <em>reciever operating characteristic</em> (or ROC) curve. The ROC curve is constructed as follows:</p>
 <ul class="simple">
 <li><p>For a grid of <span class="math notranslate nohighlight">\(t\)</span> values between <span class="math notranslate nohighlight">\(0\)</span> and <span class="math notranslate nohighlight">\(1\)</span>, compute <span class="math notranslate nohighlight">\(\text{FPR}(t)\)</span> and <span class="math notranslate nohighlight">\(\text{TPR}(t)\)</span>, the false positive and true positive rates of the classifier <span class="math notranslate nohighlight">\(C_t\)</span>.</p></li>
 <li><p>Plot <span class="math notranslate nohighlight">\(\text{FPR}(t)\)</span> against <span class="math notranslate nohighlight">\(\text{TPR}(t)\)</span>.</p></li>
@@ -906,10 +916,14 @@ p_{\hat{\boldsymbol{\beta}}}(\boldsymbol{x}) = P(y=1\mid \boldsymbol{x},\hat{\bo
 
 <span class="n">FPRs</span><span class="p">,</span> <span class="n">TPRs</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">roc_curve</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">p_hat_test</span><span class="p">)</span>
 
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">FPRs</span><span class="p">,</span> <span class="n">TPRs</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">vlines</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;perfect classifier&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hlines</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;random classifier&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">FPRs</span><span class="p">,</span> <span class="n">TPRs</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;logistic regression model&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">FPRs</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">TPRs</span><span class="p">),</span> <span class="n">TPRs</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;AUC&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;False Positive Rate&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;True Positive Rate&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -918,8 +932,8 @@ p_{\hat{\boldsymbol{\beta}}}(\boldsymbol{x}) = P(y=1\mid \boldsymbol{x},\hat{\bo
 <img alt="../../_images/logistic_regression_17_0.png" src="../../_images/logistic_regression_17_0.png" />
 </div>
 </div>
-<p>This plot shows an increasing curve representing a tradeoff between false positives and true postives: as we get a larger true positive rate, we must also accept more false positives. For example, to get 99% TPR, we have to tolerate approximately a 20% false positive rate.</p>
-<p>How do we assess how “good” an ROC curve is? In the best case, we could get a 100% TPR with a 0% FPR. In this case, the ROC curve would just trace up the left axis across the top of the plot. In the worst case, we could have a random classifier, which randomly predicts either 0 or 1 for every datapoint. In this case, the ROC curve would look like the <span class="math notranslate nohighlight">\(y=x\)</span> line in the <span class="math notranslate nohighlight">\([0,1]\times [0,1]\)</span> box (visualized on the plot). This gives us an idea for how we can summarize an entire ROC curve: we can compute the <em>area under the ROC curve</em> (called the AUC, or AU-ROC). The ideal classifier would have a score of <span class="math notranslate nohighlight">\(1\)</span> under the metric (i.e. the area of the entire box), while the random classifier would have an AUC of <span class="math notranslate nohighlight">\(1/2\)</span>. The closer our AUC is to one, the more favorable the tradeoff between the TPR and FPR. We can estimate the AUC in python using the following.</p>
+<p>This plot shows an increasing curve representing a tradeoff between false positives and true postives: as we get a larger true positive rate, we must also accept more false positives. For example, to get 99% TPR, we have to tolerate approximately a 35% false positive rate.</p>
+<p>How do we assess how “good” an ROC curve is? In the best case, we could get a 100% TPR with a 0% FPR. In this case, the ROC curve would just trace up the left axis across the top of the plot (the green curve in the plot). In the worst case, we could have a random classifier, which randomly predicts either 0 or 1 for every datapoint. In this case, the ROC curve would look like the <span class="math notranslate nohighlight">\(y=x\)</span> line in the <span class="math notranslate nohighlight">\([0,1]\times [0,1]\)</span> box (the red line in the plot). This gives us an idea for how we can summarize an entire ROC curve: we can compute the <em>area under the ROC curve</em> (called the AUC, or AU-ROC). The ideal classifier would have a score of <span class="math notranslate nohighlight">\(1\)</span> under this metric (i.e. the area of the entire box), while the random classifier would have an AUC of <span class="math notranslate nohighlight">\(1/2\)</span>. The closer our AUC is to one, the more favorable the tradeoff between the TPR and FPR. We can estimate the AUC in python using the following.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">auc</span>
@@ -937,8 +951,12 @@ p_{\hat{\boldsymbol{\beta}}}(\boldsymbol{x}) = P(y=1\mid \boldsymbol{x},\hat{\bo
 </div>
 <p>We see here that we get an AUC of <span class="math notranslate nohighlight">\(\approx 0.97\)</span>, which would be considered very high. In other settings, an AUC of <span class="math notranslate nohighlight">\(&gt;0.85\)</span> might be considered good, though the exact interpretation will depend on the application.</p>
 </div>
+<div class="section" id="conclusion">
+<h2><span class="section-number">3.3.4. </span>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this headline">¶</a></h2>
+<p>In this section, we introduced the logistic regression model for modeling binary response variable, and covered some basic techniques for evaluating these models. Below, we cover some details of how we can fit logistic regression models (and many other types of models) using an algorithm called Newton’s method. In the next section, we will discuss GLMs more generally.</p>
+</div>
 <div class="section" id="bonus-newton-s-method-for-fitting-logistic-regression">
-<h2><span class="section-number">3.3.4. </span>Bonus: Newton’s method for fitting logistic regression<a class="headerlink" href="#bonus-newton-s-method-for-fitting-logistic-regression" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">3.3.5. </span>Bonus: Newton’s method for fitting logistic regression<a class="headerlink" href="#bonus-newton-s-method-for-fitting-logistic-regression" title="Permalink to this headline">¶</a></h2>
 <p>Newton’s method is a general procedure for finding zeros of a function <span class="math notranslate nohighlight">\(g:\mathbb{R}^d\to\mathbb{R}^d\)</span>. The general iterations are of the form:</p>
 <div class="math notranslate nohighlight">
 \[
@@ -984,7 +1002,7 @@ p_{\hat{\boldsymbol{\beta}}}(\boldsymbol{x}) = P(y=1\mid \boldsymbol{x},\hat{\bo
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    computes Hessian of logistic negative log likelihood</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="c1"># make W = diag(p(x_1; beta),...,p(x_n; beta))</span>
+    <span class="c1"># make W = diag(p(x1)*(1-p(x1)),...,p(xn)*(1-p(xn)))</span>
     <span class="n">p</span> <span class="o">=</span> <span class="n">logit</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">beta</span><span class="p">))</span>
     <span class="n">W</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">p</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">p</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="nd">@W@X</span>
@@ -1013,10 +1031,10 @@ p_{\hat{\boldsymbol{\beta}}}(\boldsymbol{x}) = P(y=1\mid \boldsymbol{x},\hat{\bo
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([ 3.80525182e+01, -1.06212694e+00, -4.36064998e-01, -4.35993059e+01,
-       -4.20604582e+01, -2.00627628e+01, -3.44037893e+01, -1.05654954e+01,
-        1.24290288e+00,  2.00248431e+00, -3.68797130e+00,  5.25008539e+01,
-        5.85964176e+02])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([-3.80525182e+01,  1.06212694e+00,  4.36064998e-01,  4.35993059e+01,
+        4.20604582e+01,  2.00627628e+01,  3.44037893e+01,  1.05654954e+01,
+       -1.24290288e+00, -2.00248431e+00,  3.68797130e+00, -5.25008539e+01,
+       -5.85964176e+02])
 </pre></div>
 </div>
 </div>
