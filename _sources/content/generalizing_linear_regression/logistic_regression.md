@@ -32,11 +32,11 @@ $$
 \mathbb{E}[y \mid \boldsymbol{x},\boldsymbol{\beta}] = \boldsymbol{\beta}\cdot\phi(\boldsymbol{x})\;\;\;\; \text{ and }\;\;\;\; \text{Var}[y\mid \boldsymbol{x},\boldsymbol{\beta}] = \sigma^2.
 $$ 
 
-For example, when we assume $\varepsilon \sim N(0,\sigma^2)$, we found that $y\mid \boldsymbol{x},\boldsymbol{\beta} \sim N(\boldsymbol{\beta}\cdot \phi(\boldsymbol{x}), \sigma^2)$. This is often a natural model for a continuous response variables.
+For example, when we assume $\varepsilon \sim N(0,\sigma^2)$, we found that $y\mid \boldsymbol{x},\boldsymbol{\beta} \sim N(\boldsymbol{\beta}\cdot \phi(\boldsymbol{x}), \sigma^2)$. This is often a natural model for continuous response variables.
 
 In many practical situations, however, we may be interested in predicting a response variable which does not take on continuous values. For example, which might want to build a model to predict whether or not an individual will default on a loan, given a variety of attributes of the individual. In this case, $y\in \{\text{default}, \text{no default}\}$. Or, we might want to estimate the number of calls a call center will recieve, given features like the time of day, whether, etc, in which case $y\in \{0,1,2,\dots\}$. In both of these cases, the reponse $y$ takes on discrete values, in which case the model $(1)$ is no longer suited to the problem.
 
-_Generalized linear models_ (or GLMs) are a framework for modeling more general types of response variables. The step is to define a _link function_ $g$ such that
+_Generalized linear models_ (or GLMs) are a framework for modeling more general types of response variables. The key step is to define a _link function_ $g$ such that
 
 $$
 g(\mathbb{E}[y\mid \boldsymbol{x},\boldsymbol{\beta}]) = \boldsymbol{\beta}\cdot \boldsymbol{x}.
@@ -46,7 +46,7 @@ Note that linear regression is just a special case of this where $g(z) = z$ is t
 
 ## Logistic regression
 
-Consider a prediction problem with a binary response variable $y\in \{0,1\}$ (here we model the outcome as either 0 or 1, though you can think of these as encodings for whatever binary response we want, e.g. "default" vs "no default", "dog" vs "cat", etc.). In logistic regression, we directly model the probability of an observation being in either class using the _logistic function_:
+Consider a prediction problem with a binary response variable $y\in \{0,1\}$ (here we model the outcome as either 0 or 1, though you can think of these as encodings for whatever binary response we want, e.g. "default" vs "no default", "dog" vs "cat", etc.). A natural way to model this is to assume $y\mid \boldsymbol{x} \sim \text{Bernoulli}$. In logistic regression, we directly model the probability of an observation being in class 1 using the _logistic function_:
 
 $$
 \mathbb{E}[y\mid \boldsymbol{x},\boldsymbol{\beta}] = P(y= 1\mid \boldsymbol{x},\boldsymbol{\beta}) = \frac{1}{1+e^{-\boldsymbol{\beta}\cdot \boldsymbol{x}}}.
@@ -264,7 +264,7 @@ FPRs, TPRs, _ = roc_curve(y_test, p_hat_test)
 plt.vlines(0,0,1, color='green', label="perfect classifier")
 plt.hlines(1,0,1, color='green')
 plt.plot([0,1], [0,1], color='red', linestyle='--', label="random classifier")
-plt.plot(FPRs, TPRs, marker='o', color="blue", label="logistic regression model")
+plt.plot(FPRs, TPRs, color="blue", label="logistic regression model")
 plt.fill_between(FPRs, [0]*len(TPRs), TPRs, color="blue", alpha=0.2, label="AUC")
 plt.xlabel("False Positive Rate", fontsize=14)
 plt.ylabel("True Positive Rate", fontsize=14)
