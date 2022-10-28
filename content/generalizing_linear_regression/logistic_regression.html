@@ -1,0 +1,1106 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>3.3. GLMs part 1: logistic regression &#8212; Stat 151, Linear Models</title>
+    
+  <link href="../../_static/css/theme.css" rel="stylesheet">
+  <link href="../../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../../_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
+    <script>
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="4. Extensions and applications" href="../extensions_applications/chheader.html" />
+    <link rel="prev" title="3.2. Fitting nonlinear functions: polynomial regression and kernel ridge regression" href="nonlinear_regression.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../../_static/logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Stat 151, Linear Models</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../overview.html">
+   Welcome to Stat 151
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Linear models
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../python_basics/chheader.html">
+   1. Python 101
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_basics/python_basics.html">
+     1.1. The Basics
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_basics/python_numpy.html">
+     1.2. Introduction to NumPy
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_basics/python_plotting.html">
+     1.3. MatPlotLib
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../basic_linear_regression/chheader.html">
+   2. Basics of linear regression
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basic_linear_regression/visualizing_data.html">
+     2.1. Exploring and visualizing data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basic_linear_regression/simple_linear_regression.html">
+     2.2. Simple linear regression
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basic_linear_regression/simple_linear_regression_cont.html">
+     2.3. More on simple linear regression
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basic_linear_regression/vectors_and_matrices.html">
+     2.4. Basic concepts from linear algebra: vectors and matrices
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basic_linear_regression/multiple_predictors.html">
+     2.5. Linear regression with multiple predictors
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basic_linear_regression/more_least_squares.html">
+     2.6. More on least squares
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basic_linear_regression/maximum_likelihood_estimation.html">
+     2.7. Maximum likelihood estimation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basic_linear_regression/hypothesis_testing.html">
+     2.8. Hypothesis testing for the Gaussian model
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basic_linear_regression/diagnostics.html">
+     2.9. Diagnostics for linear regression
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="chheader.html">
+   3. Generalizing linear regression
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+  <label for="toctree-checkbox-3">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="ridge_and_lasso.html">
+     3.1. Regularizing regression: LASSO and Ridge
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="nonlinear_regression.html">
+     3.2. Fitting nonlinear functions: polynomial regression and kernel ridge regression
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     3.3. GLMs part 1: logistic regression
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../extensions_applications/chheader.html">
+   4. Extensions and applications
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        <a class="dropdown-buttons"
+            href="../../_sources/content/generalizing_linear_regression/logistic_regression.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download notebook file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../_sources/content/generalizing_linear_regression/logistic_regression.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.md</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/erichson/LinearAlgebra/master?urlpath=tree/content/generalizing_linear_regression/logistic_regression.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#overview">
+   3.3.1. Overview
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#logistic-regression">
+   3.3.2. Logistic regression
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#evaluating-classification-models">
+   3.3.3. Evaluating classification models
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#conclusion">
+   3.3.4. Conclusion
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#bonus-newton-s-method-for-fitting-logistic-regression">
+   3.3.5. Bonus: Newton’s method for fitting logistic regression
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>GLMs part 1: logistic regression</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#overview">
+   3.3.1. Overview
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#logistic-regression">
+   3.3.2. Logistic regression
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#evaluating-classification-models">
+   3.3.3. Evaluating classification models
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#conclusion">
+   3.3.4. Conclusion
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#bonus-newton-s-method-for-fitting-logistic-regression">
+   3.3.5. Bonus: Newton’s method for fitting logistic regression
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            
+              <div>
+                
+  <div class="tex2jax_ignore mathjax_ignore section" id="glms-part-1-logistic-regression">
+<h1><span class="section-number">3.3. </span>GLMs part 1: logistic regression<a class="headerlink" href="#glms-part-1-logistic-regression" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2><span class="section-number">3.3.1. </span>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>So far in this course, we’ve covered methods for modeling a <em>continuous</em> response variable <span class="math notranslate nohighlight">\(y\in\mathbb{R}\)</span> as a linear function of features <span class="math notranslate nohighlight">\(\boldsymbol{x}\in\mathbb{R}^p\)</span> using the generic form</p>
+<div class="math notranslate nohighlight">
+\[
+y = \boldsymbol{\beta}\cdot \boldsymbol{x} + \varepsilon.
+\]</div>
+<p>We’ve also discussed extensions where the model can be non-linear in the features, provided it is linear in the parameters, i.e. a model of the form</p>
+<div class="math notranslate nohighlight">
+\[
+y = \boldsymbol{\beta}\cdot \phi(\boldsymbol{x}) + \varepsilon \hspace{10mm} (1)
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(\phi\)</span> is some pre-defined feature map. In this case, if <span class="math notranslate nohighlight">\(\mathbb{E}[\varepsilon] = 0\)</span> and <span class="math notranslate nohighlight">\(\mathbb{E}[\varepsilon^2] = \sigma^2\)</span>, then we get that</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbb{E}[y \mid \boldsymbol{x},\boldsymbol{\beta}] = \boldsymbol{\beta}\cdot\phi(\boldsymbol{x})\;\;\;\; \text{ and }\;\;\;\; \text{Var}[y\mid \boldsymbol{x},\boldsymbol{\beta}] = \sigma^2.
+\]</div>
+<p>For example, when we assume <span class="math notranslate nohighlight">\(\varepsilon \sim N(0,\sigma^2)\)</span>, we found that <span class="math notranslate nohighlight">\(y\mid \boldsymbol{x},\boldsymbol{\beta} \sim N(\boldsymbol{\beta}\cdot \phi(\boldsymbol{x}), \sigma^2)\)</span>. This is often a natural model for a continuous response variables.</p>
+<p>In many practical situations, however, we may be interested in predicting a response variable which does not take on continuous values. For example, which might want to build a model to predict whether or not an individual will default on a loan, given a variety of attributes of the individual. In this case, <span class="math notranslate nohighlight">\(y\in \{\text{default}, \text{no default}\}\)</span>. Or, we might want to estimate the number of calls a call center will recieve, given features like the time of day, whether, etc, in which case <span class="math notranslate nohighlight">\(y\in \{0,1,2,\dots\}\)</span>. In both of these cases, the reponse <span class="math notranslate nohighlight">\(y\)</span> takes on discrete values, in which case the model <span class="math notranslate nohighlight">\((1)\)</span> is no longer suited to the problem.</p>
+<p><em>Generalized linear models</em> (or GLMs) are a framework for modeling more general types of response variables. The step is to define a <em>link function</em> <span class="math notranslate nohighlight">\(g\)</span> such that</p>
+<div class="math notranslate nohighlight">
+\[
+g(\mathbb{E}[y\mid \boldsymbol{x},\boldsymbol{\beta}]) = \boldsymbol{\beta}\cdot \boldsymbol{x}.
+\]</div>
+<p>Note that linear regression is just a special case of this where <span class="math notranslate nohighlight">\(g(z) = z\)</span> is the identity function. Typically we will make certain assumptions about <span class="math notranslate nohighlight">\(g\)</span>, namely we will require that it is monotone and invertible, so that <span class="math notranslate nohighlight">\(g(a) = b \iff a = g^{-1}(b)\)</span>. There will also be a natural correspondence between GLMs and the so-called exponential family of distributions, which we will discuss in more detail in a later notebook. For now, we will introduce the most widely used GLM, the logistic regression model, which can be used to model a binary response variable.</p>
+</div>
+<div class="section" id="logistic-regression">
+<h2><span class="section-number">3.3.2. </span>Logistic regression<a class="headerlink" href="#logistic-regression" title="Permalink to this headline">¶</a></h2>
+<p>Consider a prediction problem with a binary response variable <span class="math notranslate nohighlight">\(y\in \{0,1\}\)</span> (here we model the outcome as either 0 or 1, though you can think of these as encodings for whatever binary response we want, e.g. “default” vs “no default”, “dog” vs “cat”, etc.). In logistic regression, we directly model the probability of an observation being in either class using the <em>logistic function</em>:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbb{E}[y\mid \boldsymbol{x},\boldsymbol{\beta}] = P(y= 1\mid \boldsymbol{x},\boldsymbol{\beta}) = \frac{1}{1+e^{-\boldsymbol{\beta}\cdot \boldsymbol{x}}}.
+\]</div>
+<p>Notice that this corresponds to our definition of a generalized linear model associated with the link function</p>
+<div class="math notranslate nohighlight">
+\[
+g(z) = \log\left(\frac{z}{1-z}\right)
+\]</div>
+<p>since</p>
+<div class="math notranslate nohighlight">
+\[
+g(\mathbb{E}[y\mid \boldsymbol{x},\boldsymbol{\beta}]) = \boldsymbol{\beta}\cdot \boldsymbol{x}.
+\]</div>
+<p>Now that we’ve defined the model, we need a method to actually fit the parameters <span class="math notranslate nohighlight">\(\boldsymbol{\beta}\)</span> given a set of data <span class="math notranslate nohighlight">\((\boldsymbol{x}_1,y_1),\dots,(\boldsymbol{x}_n,y_n)\)</span>. To do this, we will again use maximum likelihood estimation (similar to what we did for the <a class="reference internal" href="../basic_linear_regression/maximum_likelihood_estimation.html"><span class="doc std std-doc">Gaussian model</span></a>). For compactness, define <span class="math notranslate nohighlight">\(p_{\boldsymbol{\beta}}(\boldsymbol{x}) = P(Y=1\mid \boldsymbol{x},\boldsymbol{\beta})\)</span>. For an individual sample <span class="math notranslate nohighlight">\((\boldsymbol{x},y)\)</span>, the likelihood is</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+L(\boldsymbol{\beta}; \boldsymbol{x},y) = \begin{cases} p_{\boldsymbol{\beta}}(\boldsymbol{x}) &amp; \text{if } y = 1\\ 1-p_{\boldsymbol{\beta}}(\boldsymbol{x}) &amp; \text{if } y=0 \end{cases}
+\end{split}\]</div>
+<p>This can concisely be written in a single expression:</p>
+<div class="math notranslate nohighlight">
+\[
+L(\boldsymbol{\beta}; \boldsymbol{x},y) = p_{\boldsymbol{\beta}}(\boldsymbol{x})^{y}(1-p_{\boldsymbol{\beta}}(\boldsymbol{x}))^{1-y}.
+\]</div>
+<p>Then if the <span class="math notranslate nohighlight">\(y_i\)</span>’s are conditionally independent given the <span class="math notranslate nohighlight">\(\boldsymbol{x}_i\)</span>’s, the likelihood is</p>
+<div class="math notranslate nohighlight">
+\[
+L(\boldsymbol{\beta}; (\boldsymbol{x}_i,y_i)_{i=1}^n) = \prod_{i=1}^n  p_{\boldsymbol{\beta}}(\boldsymbol{x}_i)^{y_i}(1-p_{\boldsymbol{\beta}}(\boldsymbol{x}_i))^{1-y_i}
+\]</div>
+<p>and hence the negative log likelihood (which we want to minimize) is:</p>
+<div class="math notranslate nohighlight">
+\[
+\ell(\boldsymbol{\beta}) = -\log L(\boldsymbol{\beta}; (\boldsymbol{x}_i,y_i)_{i=1}^n) = -\sum_{i=1}^n \{y_i \log p_{\boldsymbol{\beta}}(\boldsymbol{x}_i) + (1-y_i)\log(1-p_{\boldsymbol{\beta}}(\boldsymbol{x}_i))\}.
+\]</div>
+<p>To find the minimizer, we would like to find <span class="math notranslate nohighlight">\(\boldsymbol{\beta}\)</span> such that <span class="math notranslate nohighlight">\(\nabla_{\boldsymbol{\beta}}\ell(\boldsymbol{\beta})=0\)</span>. With some calculus, we can calculate that</p>
+<div class="math notranslate nohighlight">
+\[
+\nabla_{\boldsymbol{\beta}}\ell(\boldsymbol{\beta}) = \boldsymbol{X}^\top (p_{\boldsymbol{\beta}}(\boldsymbol{X}) - \boldsymbol{y})
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(p_{\boldsymbol{\beta}}(\boldsymbol{X}) = \begin{bmatrix}p_{\boldsymbol{\beta}}(\boldsymbol{x}_1) &amp; \cdots &amp; p_{\boldsymbol{\beta}}(\boldsymbol{x}_n)\end{bmatrix}\)</span>. Unfortunately, unlike in linear regression, setting this equal to zero does not give an analytical solution for <span class="math notranslate nohighlight">\(\boldsymbol{\beta}\)</span>. Instead, we must use a numerical optimization algorithm to solve for the maximum likelihood estimator <span class="math notranslate nohighlight">\(\hat{\boldsymbol{\beta}}\)</span>. Examples of these algorithms are gradient descent and Newton’s method; we won’t focus on the details of these techniques too much in this course, though we give a description of how Newton’s method for logistic regression below.</p>
+<p>Let’s work through an example with an actual dataset. For this, we will work with the well-known Wisconsin Breast Cancer dataset. This dataset contains 30 different attributes for <span class="math notranslate nohighlight">\(n=569\)</span> tumors, as well as a label indicating whether the tumor is malignant (<span class="math notranslate nohighlight">\(y=1\)</span>) or benign (<span class="math notranslate nohighlight">\(y=0\)</span>). Each feature is a different physical property of the tumor, e.g. radius, perimeter, area, etc.We load the data below.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;datasets/breast_cancer.csv&quot;</span><span class="p">)</span>
+<span class="n">dataset</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>diagnosis</th>
+      <th>mean radius</th>
+      <th>mean texture</th>
+      <th>mean perimeter</th>
+      <th>mean area</th>
+      <th>mean smoothness</th>
+      <th>mean compactness</th>
+      <th>mean concavity</th>
+      <th>mean concave points</th>
+      <th>mean symmetry</th>
+      <th>...</th>
+      <th>worst radius</th>
+      <th>worst texture</th>
+      <th>worst perimeter</th>
+      <th>worst area</th>
+      <th>worst smoothness</th>
+      <th>worst compactness</th>
+      <th>worst concavity</th>
+      <th>worst concave points</th>
+      <th>worst symmetry</th>
+      <th>worst fractal dimension</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>17.99</td>
+      <td>10.38</td>
+      <td>122.80</td>
+      <td>1001.0</td>
+      <td>0.11840</td>
+      <td>0.27760</td>
+      <td>0.3001</td>
+      <td>0.14710</td>
+      <td>0.2419</td>
+      <td>...</td>
+      <td>25.38</td>
+      <td>17.33</td>
+      <td>184.60</td>
+      <td>2019.0</td>
+      <td>0.1622</td>
+      <td>0.6656</td>
+      <td>0.7119</td>
+      <td>0.2654</td>
+      <td>0.4601</td>
+      <td>0.11890</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>20.57</td>
+      <td>17.77</td>
+      <td>132.90</td>
+      <td>1326.0</td>
+      <td>0.08474</td>
+      <td>0.07864</td>
+      <td>0.0869</td>
+      <td>0.07017</td>
+      <td>0.1812</td>
+      <td>...</td>
+      <td>24.99</td>
+      <td>23.41</td>
+      <td>158.80</td>
+      <td>1956.0</td>
+      <td>0.1238</td>
+      <td>0.1866</td>
+      <td>0.2416</td>
+      <td>0.1860</td>
+      <td>0.2750</td>
+      <td>0.08902</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1</td>
+      <td>19.69</td>
+      <td>21.25</td>
+      <td>130.00</td>
+      <td>1203.0</td>
+      <td>0.10960</td>
+      <td>0.15990</td>
+      <td>0.1974</td>
+      <td>0.12790</td>
+      <td>0.2069</td>
+      <td>...</td>
+      <td>23.57</td>
+      <td>25.53</td>
+      <td>152.50</td>
+      <td>1709.0</td>
+      <td>0.1444</td>
+      <td>0.4245</td>
+      <td>0.4504</td>
+      <td>0.2430</td>
+      <td>0.3613</td>
+      <td>0.08758</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1</td>
+      <td>11.42</td>
+      <td>20.38</td>
+      <td>77.58</td>
+      <td>386.1</td>
+      <td>0.14250</td>
+      <td>0.28390</td>
+      <td>0.2414</td>
+      <td>0.10520</td>
+      <td>0.2597</td>
+      <td>...</td>
+      <td>14.91</td>
+      <td>26.50</td>
+      <td>98.87</td>
+      <td>567.7</td>
+      <td>0.2098</td>
+      <td>0.8663</td>
+      <td>0.6869</td>
+      <td>0.2575</td>
+      <td>0.6638</td>
+      <td>0.17300</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1</td>
+      <td>20.29</td>
+      <td>14.34</td>
+      <td>135.10</td>
+      <td>1297.0</td>
+      <td>0.10030</td>
+      <td>0.13280</td>
+      <td>0.1980</td>
+      <td>0.10430</td>
+      <td>0.1809</td>
+      <td>...</td>
+      <td>22.54</td>
+      <td>16.67</td>
+      <td>152.20</td>
+      <td>1575.0</td>
+      <td>0.1374</td>
+      <td>0.2050</td>
+      <td>0.4000</td>
+      <td>0.1625</td>
+      <td>0.2364</td>
+      <td>0.07678</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 31 columns</p>
+</div></div></div>
+</div>
+<p>The column <code class="docutils literal notranslate"><span class="pre">diagnosis</span></code> contains our response, and the ramining columns contain various features. For the sake of this example, we will restrict ourselves to a subset of the features.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">feature_cols</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;mean radius&quot;</span><span class="p">,</span> <span class="s2">&quot;mean texture&quot;</span><span class="p">,</span> <span class="s2">&quot;mean smoothness&quot;</span><span class="p">,</span> 
+                <span class="s2">&quot;mean compactness&quot;</span><span class="p">,</span> <span class="s2">&quot;mean symmetry&quot;</span><span class="p">,</span> <span class="s2">&quot;mean fractal dimension&quot;</span><span class="p">,</span> 
+                <span class="s2">&quot;radius error&quot;</span><span class="p">,</span> <span class="s2">&quot;texture error&quot;</span><span class="p">,</span> <span class="s2">&quot;smoothness error&quot;</span><span class="p">,</span> 
+                <span class="s2">&quot;compactness error&quot;</span><span class="p">,</span> <span class="s2">&quot;symmetry error&quot;</span><span class="p">,</span> <span class="s2">&quot;fractal dimension error&quot;</span><span class="p">]</span>
+
+<span class="n">y</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">[</span><span class="s2">&quot;diagnosis&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">[</span><span class="n">feature_cols</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+
+<span class="c1"># add a column of 1&#39;s</span>
+<span class="n">ones</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">([</span><span class="n">ones</span><span class="p">,</span> <span class="n">X</span><span class="p">])</span>
+
+<span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">y</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>((569, 13), (569,))
+</pre></div>
+</div>
+</div>
+</div>
+<p>Before actually fitting the logistic regression model, we will hold out 100 of our examples for testing in a later section of this notebook.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ix_test</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">100</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">ix_train</span> <span class="o">=</span> <span class="p">[</span><span class="n">j</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="k">if</span> <span class="n">j</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">ix_test</span><span class="p">]</span>
+
+<span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">ix_train</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="n">ix_train</span><span class="p">]</span>
+<span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">ix_test</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="n">ix_test</span><span class="p">]</span>
+
+<span class="n">X_train</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">X_test</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>((469, 13), (100, 13))
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can fit the model using the <code class="docutils literal notranslate"><span class="pre">statsmodels</span></code> package, as shown in the following cell.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">statsmodels.api</span> <span class="k">as</span> <span class="nn">sm</span> 
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">Logit</span><span class="p">(</span><span class="n">y_train</span><span class="p">,</span> <span class="n">X_train</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">model</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Optimization terminated successfully.
+         Current function value: 0.122233
+         Iterations 12
+</pre></div>
+</div>
+<div class="output text_html"><table class="simpletable">
+<caption>Logit Regression Results</caption>
+<tr>
+  <th>Dep. Variable:</th>           <td>y</td>        <th>  No. Observations:  </th>   <td>   469</td>  
+</tr>
+<tr>
+  <th>Model:</th>                 <td>Logit</td>      <th>  Df Residuals:      </th>   <td>   456</td>  
+</tr>
+<tr>
+  <th>Method:</th>                 <td>MLE</td>       <th>  Df Model:          </th>   <td>    12</td>  
+</tr>
+<tr>
+  <th>Date:</th>            <td>Thu, 27 Oct 2022</td> <th>  Pseudo R-squ.:     </th>   <td>0.8143</td>  
+</tr>
+<tr>
+  <th>Time:</th>                <td>19:43:17</td>     <th>  Log-Likelihood:    </th>  <td> -57.327</td> 
+</tr>
+<tr>
+  <th>converged:</th>             <td>True</td>       <th>  LL-Null:           </th>  <td> -308.77</td> 
+</tr>
+<tr>
+  <th>Covariance Type:</th>     <td>nonrobust</td>    <th>  LLR p-value:       </th> <td>5.406e-100</td>
+</tr>
+</table>
+<table class="simpletable">
+<tr>
+    <td></td>       <th>coef</th>     <th>std err</th>      <th>z</th>      <th>P>|z|</th>  <th>[0.025</th>    <th>0.975]</th>  
+</tr>
+<tr>
+  <th>const</th> <td>  -38.0525</td> <td>   10.556</td> <td>   -3.605</td> <td> 0.000</td> <td>  -58.742</td> <td>  -17.363</td>
+</tr>
+<tr>
+  <th>x1</th>    <td>    1.0621</td> <td>    0.277</td> <td>    3.835</td> <td> 0.000</td> <td>    0.519</td> <td>    1.605</td>
+</tr>
+<tr>
+  <th>x2</th>    <td>    0.4361</td> <td>    0.085</td> <td>    5.109</td> <td> 0.000</td> <td>    0.269</td> <td>    0.603</td>
+</tr>
+<tr>
+  <th>x3</th>    <td>   43.5993</td> <td>   38.289</td> <td>    1.139</td> <td> 0.255</td> <td>  -31.447</td> <td>  118.645</td>
+</tr>
+<tr>
+  <th>x4</th>    <td>   42.0605</td> <td>   22.336</td> <td>    1.883</td> <td> 0.060</td> <td>   -1.718</td> <td>   85.839</td>
+</tr>
+<tr>
+  <th>x5</th>    <td>   20.0628</td> <td>   15.632</td> <td>    1.283</td> <td> 0.199</td> <td>  -10.575</td> <td>   50.701</td>
+</tr>
+<tr>
+  <th>x6</th>    <td>   34.4038</td> <td>  127.147</td> <td>    0.271</td> <td> 0.787</td> <td> -214.799</td> <td>  283.607</td>
+</tr>
+<tr>
+  <th>x7</th>    <td>   10.5655</td> <td>    3.060</td> <td>    3.453</td> <td> 0.001</td> <td>    4.568</td> <td>   16.563</td>
+</tr>
+<tr>
+  <th>x8</th>    <td>   -1.2429</td> <td>    0.708</td> <td>   -1.756</td> <td> 0.079</td> <td>   -2.630</td> <td>    0.144</td>
+</tr>
+<tr>
+  <th>x9</th>    <td>   -2.0025</td> <td>  111.843</td> <td>   -0.018</td> <td> 0.986</td> <td> -221.211</td> <td>  217.206</td>
+</tr>
+<tr>
+  <th>x10</th>   <td>    3.6880</td> <td>   40.481</td> <td>    0.091</td> <td> 0.927</td> <td>  -75.654</td> <td>   83.030</td>
+</tr>
+<tr>
+  <th>x11</th>   <td>  -52.5009</td> <td>   56.204</td> <td>   -0.934</td> <td> 0.350</td> <td> -162.658</td> <td>   57.656</td>
+</tr>
+<tr>
+  <th>x12</th>   <td> -585.9642</td> <td>  314.301</td> <td>   -1.864</td> <td> 0.062</td> <td>-1201.983</td> <td>   30.054</td>
+</tr>
+</table><br/><br/>Possibly complete quasi-separation: A fraction 0.26 of observations can be<br/>perfectly predicted. This might indicate that there is complete<br/>quasi-separation. In this case some parameters will not be identified.</div></div>
+</div>
+<blockquote>
+<div><p>Remark: The output here contains a lot of information, like test statistics for each of the coefficients. For the most part, these can be interepreted in the same way as for the usual linear regression model, though with the caveat that the p-values are only <em>asymptotically</em> valid. We discuss this in some more detail in a later notebook.</p>
+</div></blockquote>
+<p>Now that we’ve fit the model, we would like to evaluate its performance. However, we haven’t discussed how to do this yet for a model with discrete responses; we introduce a few approaches to doing so in the next section.</p>
+</div>
+<div class="section" id="evaluating-classification-models">
+<h2><span class="section-number">3.3.3. </span>Evaluating classification models<a class="headerlink" href="#evaluating-classification-models" title="Permalink to this headline">¶</a></h2>
+<p>For linear regression, we saw a few different metrics for evaluating performance, for example: the MSE on the training set, the (adjusted)-<span class="math notranslate nohighlight">\(R^2\)</span>, or an MSE computed using cross validation. These are all metrics that are natural when working with a continuous response <span class="math notranslate nohighlight">\(y\in \mathbb{R}\)</span>, but they aren’t applicable in a classification setting, e.g. when <span class="math notranslate nohighlight">\(y\in \{0,1\}\)</span>.</p>
+<p>In this section, we introduce a few common methods for evaluating classification models, and logistic regression models in particular. Given the fitted parameters <span class="math notranslate nohighlight">\(\hat{\boldsymbol{\beta}}\)</span> of a logistic regression model, we can compute the probability that the response <span class="math notranslate nohighlight">\(y = 1\)</span> for a particular value of <span class="math notranslate nohighlight">\(\boldsymbol{x}\)</span> as</p>
+<div class="math notranslate nohighlight">
+\[
+p_{\hat{\boldsymbol{\beta}}}(\boldsymbol{x}) = P(y=1\mid \boldsymbol{x},\hat{\boldsymbol{\beta}}) = \frac{1}{1+e^{-\hat{\boldsymbol{\beta}}\cdot \boldsymbol{x}}}. \hspace{10mm} (2)
+\]</div>
+<p>We can turn this probability into an actual classifier, i.e. a function <span class="math notranslate nohighlight">\(C(\boldsymbol{x})\)</span> which makes a prediction in <span class="math notranslate nohighlight">\(\{0,1\}\)</span>, as follows: given a threshold <span class="math notranslate nohighlight">\(t \in [0,1]\)</span> let</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\hat{C}_t(\boldsymbol{x}) = \begin{cases}1 &amp; \text{if } p_{\hat{\boldsymbol{\beta}}}(\boldsymbol{x})\geq t\\ 0 &amp; \text{if }p_{\hat{\boldsymbol{\beta}}}(\boldsymbol{x}) &lt; t\end{cases}
+\end{split}\]</div>
+<p>A natural choice for <span class="math notranslate nohighlight">\(t\)</span> would be <span class="math notranslate nohighlight">\(1/2\)</span>, though as we will see, in certain situations it may make sense to use other values. Given a classifier <span class="math notranslate nohighlight">\(\hat{C}_t\)</span>, we can define it’s <em>classification error</em> as</p>
+<div class="math notranslate nohighlight">
+\[
+\text{Error}(\hat{C}_t) = \frac{1}{n}\sum_{i=1}^n \mathbf{1}(\hat{C}_t(\boldsymbol{x}_i) \neq y_i),
+\]</div>
+<p>i.e. the classification error is just the fraction of data points the classifier <span class="math notranslate nohighlight">\(\hat{C}_t\)</span> incorrectly predicts. Here, the data points <span class="math notranslate nohighlight">\((\boldsymbol{x}_i,y_i)_{i=1}^n\)</span> could either be the data used to fit the model or a hold-out set of examples; these are often called the “training error” and “validation error”, respectively. Let’s evaluate the classification error for both the training and the hold-out sets. To do this, we first compute the fitted probabilities from the logistic regression model, and then treshold them at <span class="math notranslate nohighlight">\(t=1/2\)</span> to obtain our predictions. We can use the built-in method for computing the prediction probabilties called <code class="docutils literal notranslate"><span class="pre">predict</span></code>, although it would be easy enough to do this ourselves using equation <span class="math notranslate nohighlight">\((2)\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># compute predicted probabilties</span>
+<span class="n">p_hat_train</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
+<span class="n">p_hat_test</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+
+<span class="c1"># treshold the predicted probabilities </span>
+<span class="n">y_hat_train</span> <span class="o">=</span> <span class="p">(</span><span class="n">p_hat_train</span> <span class="o">&gt;=</span> <span class="mf">0.5</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+<span class="n">y_hat_test</span> <span class="o">=</span> <span class="p">(</span><span class="n">p_hat_test</span> <span class="o">&gt;=</span> <span class="mf">0.5</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+
+<span class="c1"># compute the errors</span>
+<span class="n">error_train</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">y_hat_train</span> <span class="o">!=</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">error_test</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">y_hat_test</span> <span class="o">!=</span> <span class="n">y_test</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;training error = </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">error_train</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span><span class="si">}</span><span class="s2">, test error = </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">error_test</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>training error = 0.053, test error = 0.09
+</pre></div>
+</div>
+</div>
+</div>
+<p>Based on this measure, the model seems to do pretty well: on the hold-out set of data, we get less than 10% error rate.</p>
+<p>However, the classification error itself is often not sufficient to adequately measure performance. A good example of this is when we have significant inbalance in the label distribution: suppose we have <span class="math notranslate nohighlight">\(m=100\)</span> validation examples, <span class="math notranslate nohighlight">\(90\)</span> of which have label <span class="math notranslate nohighlight">\(0\)</span>, and only <span class="math notranslate nohighlight">\(10\)</span> of which have label <span class="math notranslate nohighlight">\(1\)</span>. Then the trivial classifier which always predicts <span class="math notranslate nohighlight">\(C(\boldsymbol{x}) = 0\)</span> regardless of the input will have only <span class="math notranslate nohighlight">\(10\%\)</span> classification error – seemingly quite low – even though the model hasn’t actually used the data. Indeed, our dataset has inbalanced classes as well (though to a less dramatic extent), which we can check:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n_malignant</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">y</span><span class="o">==</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">n_benign</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">y</span><span class="o">==</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;# Malignant: </span><span class="si">{</span><span class="n">n_malignant</span><span class="si">}</span><span class="s2">, # Benign: </span><span class="si">{</span><span class="n">n_benign</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span># Malignant: 212, # Benign: 357
+</pre></div>
+</div>
+</div>
+</div>
+<p>Instead, we may want to use some more refined metrics. A few of the most common ones are highlighted in the following table.</p>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="text-align:center head"><p><img alt="" src="../../_images/confusion-matrix.png" /></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-align:center"><p><strong>Figure 1: Metrics for evaluating a classification model. This matrix is often called the “confusion matrix”.</strong></p></td>
+</tr>
+</tbody>
+</table>
+<p>The above table containing two rows and two columns is often called the <em>confusion matrix</em> – it captures the following quantities:</p>
+<ul class="simple">
+<li><p>The number of <em>true positives</em>: examples which have true label <span class="math notranslate nohighlight">\(1\)</span> which the model predicts as having label <span class="math notranslate nohighlight">\(1\)</span></p></li>
+<li><p>The number of <em>false positives</em>: example which have true label <span class="math notranslate nohighlight">\(0\)</span> which the model (incorrectly) predicts as having label <span class="math notranslate nohighlight">\(1\)</span></p></li>
+<li><p>The number of <em>true negatives</em>: examples which have true label <span class="math notranslate nohighlight">\(0\)</span> which the model predicts as having label <span class="math notranslate nohighlight">\(0\)</span></p></li>
+<li><p>The number of <em>false negatives</em>: example which have true label <span class="math notranslate nohighlight">\(1\)</span> which the model (incorrectly) predicts as having label <span class="math notranslate nohighlight">\(0\)</span></p></li>
+</ul>
+<p>From this matrix, we can compute things like the <em>false positive rate</em> (FPR), the fraction of true negatives which are classified as positives or the <em>true postive rate</em> (TPR) the fraction of true positives which are classifier as positives. We can then define the false negative rate as FNR=1-TPR, and the true negative rate as TNR=1-FPR. For example, for the trivial classifier <span class="math notranslate nohighlight">\(C(\boldsymbol{x}) =0\)</span> we described earlier, the true negative rate would be <span class="math notranslate nohighlight">\(0\)</span> (which is good), but the false negative rate would be <span class="math notranslate nohighlight">\(1\)</span> (which is very bad).</p>
+<p>To see the utility of these metrics more concretely, consider again the example of predicting whether a tumor is benign or malignant. In this case, we might be much more concerned with having a low false negative rate than we are about having a high false positive rate: we want to make sure that everyone who <em>does</em> has a malignant tumor is captured, and less concerned if we incorrectly predict that some benign tumors are malignant (as this will be discovered via further tests). Let’s compute the confusion matrix for the logistic regression model we fit earlier. Note that we compute these using the testing examples, <em>not</em> the training examples. This allows us to get estimates for how the model will perform on new, unseen samples.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ix_pos</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argwhere</span><span class="p">(</span><span class="n">y_test</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">ix_neg</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argwhere</span><span class="p">(</span><span class="n">y_test</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+
+<span class="n">n_true_pos</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">y_hat_test</span><span class="p">[</span><span class="n">ix_pos</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">n_false_pos</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">y_hat_test</span><span class="p">[</span><span class="n">ix_neg</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">n_true_neg</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">y_hat_test</span><span class="p">[</span><span class="n">ix_neg</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">n_false_neg</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">y_hat_test</span><span class="p">[</span><span class="n">ix_pos</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;# True Positives: </span><span class="si">{</span><span class="n">n_true_pos</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;# False Positives: </span><span class="si">{</span><span class="n">n_false_pos</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;# True Negatives: </span><span class="si">{</span><span class="n">n_true_neg</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;# False Negatives: </span><span class="si">{</span><span class="n">n_false_neg</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span># True Positives: 33
+# False Positives: 3
+# True Negatives: 58
+# False Negatives: 6
+</pre></div>
+</div>
+</div>
+</div>
+<p>Using these values, we can compute the TPR, FPR, TNR, FNR.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n_pos</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">y_test</span><span class="o">==</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">n_neg</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">y_test</span><span class="o">==</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="n">TPR</span> <span class="o">=</span> <span class="n">n_true_pos</span><span class="o">/</span><span class="n">n_pos</span>
+<span class="n">FPR</span> <span class="o">=</span> <span class="n">n_false_pos</span><span class="o">/</span><span class="n">n_neg</span>
+<span class="n">TNR</span> <span class="o">=</span> <span class="n">n_true_neg</span><span class="o">/</span><span class="n">n_neg</span>
+<span class="n">FNR</span> <span class="o">=</span> <span class="n">n_false_neg</span><span class="o">/</span><span class="n">n_pos</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;TPR: </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">TPR</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span><span class="si">}</span><span class="s2">, FPR: </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">FPR</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span><span class="si">}</span><span class="s2">, TNR: </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">TNR</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span><span class="si">}</span><span class="s2">, FNR: </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">FNR</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>TPR: 0.846, FPR: 0.049, TNR: 0.951, FNR: 0.154
+</pre></div>
+</div>
+</div>
+</div>
+<p>In this example, we have a false negative rate of approximately <span class="math notranslate nohighlight">\(15\%\)</span> – this means that in about <span class="math notranslate nohighlight">\(15\%\)</span> of cases when a tumor is malignant, the model incorrectly predicts that it is benign (i.e., not dangerous). Let’s suppose (quite reasonably, in this case) that we wanted to be <em>really</em> sure that we didn’t have many false negatives – say, a false negative rate of less than 1% (equivalently, to require the TPR to be greater than 99%). One way to achieve this is to change the threshold <span class="math notranslate nohighlight">\(t\)</span> to something other than <span class="math notranslate nohighlight">\(1/2\)</span>. For example, suppose we set the threshold <span class="math notranslate nohighlight">\(t\)</span> to be 0. Then, by definition of <span class="math notranslate nohighlight">\(C_t\)</span>, <em>every</em> point would be classified as a positive example, and hence our FNR would be equal to <span class="math notranslate nohighlight">\(0\)</span>. Of course, this isn’t a good idea as we will lose all discriminative power. However, perhaps some value between <span class="math notranslate nohighlight">\(0\)</span> and <span class="math notranslate nohighlight">\(1/2\)</span> would yield a favorable tradeoff between false positive and true positive rates. One way to visualize this tradeoff is by using a <em>reciever operating characteristic</em> (or ROC) curve. The ROC curve is constructed as follows:</p>
+<ul class="simple">
+<li><p>For a grid of <span class="math notranslate nohighlight">\(t\)</span> values between <span class="math notranslate nohighlight">\(0\)</span> and <span class="math notranslate nohighlight">\(1\)</span>, compute <span class="math notranslate nohighlight">\(\text{FPR}(t)\)</span> and <span class="math notranslate nohighlight">\(\text{TPR}(t)\)</span>, the false positive and true positive rates of the classifier <span class="math notranslate nohighlight">\(C_t\)</span>.</p></li>
+<li><p>Plot <span class="math notranslate nohighlight">\(\text{FPR}(t)\)</span> against <span class="math notranslate nohighlight">\(\text{TPR}(t)\)</span>.</p></li>
+</ul>
+<p>The package <code class="docutils literal notranslate"><span class="pre">sklearn</span></code> provides a method for computing ROC curves in python.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">roc_curve</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">FPRs</span><span class="p">,</span> <span class="n">TPRs</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">roc_curve</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">p_hat_test</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">vlines</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;perfect classifier&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hlines</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;random classifier&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">FPRs</span><span class="p">,</span> <span class="n">TPRs</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;logistic regression model&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">FPRs</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">TPRs</span><span class="p">),</span> <span class="n">TPRs</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;AUC&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;False Positive Rate&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;True Positive Rate&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/logistic_regression_17_0.png" src="../../_images/logistic_regression_17_0.png" />
+</div>
+</div>
+<p>This plot shows an increasing curve representing a tradeoff between false positives and true postives: as we get a larger true positive rate, we must also accept more false positives. For example, to get 99% TPR, we have to tolerate approximately a 35% false positive rate.</p>
+<p>How do we assess how “good” an ROC curve is? In the best case, we could get a 100% TPR with a 0% FPR. In this case, the ROC curve would just trace up the left axis across the top of the plot (the green curve in the plot). In the worst case, we could have a random classifier, which randomly predicts either 0 or 1 for every datapoint. In this case, the ROC curve would look like the <span class="math notranslate nohighlight">\(y=x\)</span> line in the <span class="math notranslate nohighlight">\([0,1]\times [0,1]\)</span> box (the red line in the plot). This gives us an idea for how we can summarize an entire ROC curve: we can compute the <em>area under the ROC curve</em> (called the AUC, or AU-ROC). The ideal classifier would have a score of <span class="math notranslate nohighlight">\(1\)</span> under this metric (i.e. the area of the entire box), while the random classifier would have an AUC of <span class="math notranslate nohighlight">\(1/2\)</span>. The closer our AUC is to one, the more favorable the tradeoff between the TPR and FPR. We can estimate the AUC in python using the following.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">auc</span>
+
+<span class="n">AUC</span> <span class="o">=</span> <span class="n">auc</span><span class="p">(</span><span class="n">FPRs</span><span class="p">,</span> <span class="n">TPRs</span><span class="p">)</span>
+<span class="n">AUC</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.9760403530895334
+</pre></div>
+</div>
+</div>
+</div>
+<p>We see here that we get an AUC of <span class="math notranslate nohighlight">\(\approx 0.97\)</span>, which would be considered very high. In other settings, an AUC of <span class="math notranslate nohighlight">\(&gt;0.85\)</span> might be considered good, though the exact interpretation will depend on the application.</p>
+</div>
+<div class="section" id="conclusion">
+<h2><span class="section-number">3.3.4. </span>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this headline">¶</a></h2>
+<p>In this section, we introduced the logistic regression model for modeling binary response variable, and covered some basic techniques for evaluating these models. Below, we cover some details of how we can fit logistic regression models (and many other types of models) using an algorithm called Newton’s method. In the next section, we will discuss GLMs more generally.</p>
+</div>
+<div class="section" id="bonus-newton-s-method-for-fitting-logistic-regression">
+<h2><span class="section-number">3.3.5. </span>Bonus: Newton’s method for fitting logistic regression<a class="headerlink" href="#bonus-newton-s-method-for-fitting-logistic-regression" title="Permalink to this headline">¶</a></h2>
+<p>Newton’s method is a general procedure for finding zeros of a function <span class="math notranslate nohighlight">\(g:\mathbb{R}^d\to\mathbb{R}^d\)</span>. The general iterations are of the form:</p>
+<div class="math notranslate nohighlight">
+\[
+\boldsymbol{x}^{(t+1)} = \boldsymbol{x}^{(t)} - [\nabla g(\boldsymbol{x^{(t)}})]^{-1}g(\boldsymbol{x}^{(t)}),
+\]</div>
+<p>where here <span class="math notranslate nohighlight">\(\nabla g(\boldsymbol{x^{(t)}})\)</span> is the Jacobian matrix of the mapping <span class="math notranslate nohighlight">\(g\)</span>, i.e. the matrix whose <span class="math notranslate nohighlight">\((i,j)\)</span>th entry is <span class="math notranslate nohighlight">\(\frac{\partial g_i(\boldsymbol{x}^{(t)})}{\partial \boldsymbol{x}^{(t)}_j}\)</span>. To find a minimum of a function <span class="math notranslate nohighlight">\(f\)</span>, we apply this approach to the function <span class="math notranslate nohighlight">\(g = \nabla f:\mathbb{R}^d\to \mathbb{R}^d\)</span> to find a vector <span class="math notranslate nohighlight">\(\boldsymbol{x}\)</span> whose gradient is zero. In particular, the iterations are of the form:</p>
+<div class="math notranslate nohighlight">
+\[
+\boldsymbol{x}^{(t+1)} = \boldsymbol{x}^{(t)} - [\nabla^2 f(\boldsymbol{x^{(t)}})]^{-1}\nabla f(\boldsymbol{x}^{(t)}).
+\]</div>
+<p>Newton’s method can lead to faster convergence as a function of <span class="math notranslate nohighlight">\(t\)</span> than other methods like gradient descent, though it requires computation and inversion of the Hessian matrix, which can make it impractical in some situations. Nonetheless, it performs well in many circumstances, such as the fitting of GLMs. Below we look at an example with logistic regression.</p>
+<p>For logistic regression, the function we are interested in minimizing is the negative log-likelihood, which we’ve seen is given by</p>
+<div class="math notranslate nohighlight">
+\[
+\ell(\boldsymbol{\beta}) = -\sum_{i=1}^n \{y_i \log p_{\boldsymbol{\beta}}(\boldsymbol{x}_i) + (1-y_i)\log(1-p_{\boldsymbol{\beta}}(\boldsymbol{x}_i))\}
+\]</div>
+<p>We saw that the gradient of this function is <span class="math notranslate nohighlight">\(\nabla_{\boldsymbol{\beta}}\ell(\boldsymbol{\beta}) = \boldsymbol{X}^\top (p_{\boldsymbol{\beta}}(\boldsymbol{X}) - \boldsymbol{y})\)</span>. With some further computation, it can be shown that the Hessian (matrix of second derivatives) of <span class="math notranslate nohighlight">\(\ell(\boldsymbol{\beta})\)</span> is given by</p>
+<div class="math notranslate nohighlight">
+\[
+\nabla_{\boldsymbol{\beta}}^2\ell(\boldsymbol{\beta}) = \boldsymbol{X}^\top \boldsymbol{W}\boldsymbol{X}
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(\boldsymbol{W}\)</span> is the diagonal matrix whose <span class="math notranslate nohighlight">\(i^{th}\)</span> diagonal entry is  <span class="math notranslate nohighlight">\(p_{\boldsymbol{\beta}}(\boldsymbol{x}_i)(1-p_{\boldsymbol{\beta}}(\boldsymbol{x}_i))\)</span>. Hence, Newton’s method finds the maximum likelihood estimator using the following algorithm:</p>
+<ul class="simple">
+<li><p>Randomly initialize <span class="math notranslate nohighlight">\(\boldsymbol{\beta}^{(0)}\)</span></p></li>
+<li><p>Repeat until convergence: <span class="math notranslate nohighlight">\(\boldsymbol{\beta}^{(t+1)} = \boldsymbol{\beta}^{(t)} - [\boldsymbol{X}^\top \boldsymbol{W}\boldsymbol{X}]^{-1}\boldsymbol{X}^\top(p_{\boldsymbol{\beta}^{(t)}}(\boldsymbol{X})-\boldsymbol{y}).\)</span></p></li>
+</ul>
+<p>After sufficiently many time steps, this algorithm is guaranteed to converge to the maximum likelihood estimator <span class="math notranslate nohighlight">\(\hat{\boldsymbol{\beta}}\)</span>. In the below cell, we implement a function to perform Newton’s method to fit a logistic regression model.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">logit</span><span class="p">(</span><span class="n">z</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    logistic function</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="mf">1.</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">z</span><span class="p">))</span>
+
+<span class="k">def</span> <span class="nf">grad_l</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">beta</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    computes gradient of logistic negative log likelihood</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">logit</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">beta</span><span class="p">))</span> <span class="o">-</span> <span class="n">y</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">hess_l</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">beta</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    computes Hessian of logistic negative log likelihood</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># make W = diag(p(x1)*(1-p(x1)),...,p(xn)*(1-p(xn)))</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">logit</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">beta</span><span class="p">))</span>
+    <span class="n">W</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">p</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">p</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="nd">@W@X</span>
+ 
+<span class="k">def</span> <span class="nf">fit_logistic_newton</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">eps</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    run Newton&#39;s method until gradient norm is sufficiently small</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># randomly intialize beta</span>
+    <span class="n">beta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">grad_norm</span> <span class="o">=</span> <span class="n">eps</span><span class="o">+</span><span class="mi">1</span>
+    <span class="c1"># continue as long as gradient norm is larger than threshold eps</span>
+    <span class="k">while</span> <span class="n">grad_norm</span> <span class="o">&gt;</span> <span class="n">eps</span><span class="p">:</span>
+        <span class="n">beta</span> <span class="o">-=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">hess_l</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">beta</span><span class="p">)),</span> <span class="n">grad_l</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">beta</span><span class="p">))</span>
+        <span class="n">grad_norm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">grad_l</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">beta</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">beta</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s use this method to fit a logistic regression model using the same breast cancer dataset we used above.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fit_logistic_newton</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([-3.80525182e+01,  1.06212694e+00,  4.36064998e-01,  4.35993059e+01,
+        4.20604582e+01,  2.00627628e+01,  3.44037893e+01,  1.05654954e+01,
+       -1.24290288e+00, -2.00248431e+00,  3.68797130e+00, -5.25008539e+01,
+       -5.85964176e+02])
+</pre></div>
+</div>
+</div>
+</div>
+<p>As we can see, the coefficients match what we get from the <code class="docutils literal notranslate"><span class="pre">statsmodels</span></code> package (indeed, <code class="docutils literal notranslate"><span class="pre">statsmodels</span></code> itself uses a variant of Newton’s method to fit its models).</p>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./content/generalizing_linear_regression"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="nonlinear_regression.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title"><span class="section-number">3.2. </span>Fitting nonlinear functions: polynomial regression and kernel ridge regression</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="../extensions_applications/chheader.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><span class="section-number">4. </span>Extensions and applications</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            
+        </div>
+    </div>
+    <footer class="footer">
+  <p>
+    
+      By Michael W. Mahoney and Ryan Theisen<br/>
+    
+        &copy; Copyright 2021.<br/>
+  </p>
+</footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="../../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
+  </body>
+</html>
