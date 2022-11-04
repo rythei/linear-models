@@ -25,4 +25,5 @@ parts:
     - file: content/generalizing_linear_regression/ridge_and_lasso
     - file: content/generalizing_linear_regression/nonlinear_regression
     - file: content/generalizing_linear_regression/logistic_regression
+    - file: content/generalizing_linear_regression/glms
   - file: content/extensions_applications/chheader

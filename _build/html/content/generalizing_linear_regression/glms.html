@@ -1,0 +1,828 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>3.4. GLMs part 2: the generic GLM framework, exponential families, and statistical inference &#8212; Stat 151, Linear Models</title>
+    
+  <link href="../../_static/css/theme.css" rel="stylesheet">
+  <link href="../../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../../_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
+    <script>
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="4. Extensions and applications" href="../extensions_applications/chheader.html" />
+    <link rel="prev" title="3.3. GLMs part 1: logistic regression" href="logistic_regression.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../../_static/logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Stat 151, Linear Models</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../overview.html">
+   Welcome to Stat 151
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Linear models
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../python_basics/chheader.html">
+   1. Python 101
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_basics/python_basics.html">
+     1.1. The Basics
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_basics/python_numpy.html">
+     1.2. Introduction to NumPy
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_basics/python_plotting.html">
+     1.3. MatPlotLib
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../basic_linear_regression/chheader.html">
+   2. Basics of linear regression
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basic_linear_regression/visualizing_data.html">
+     2.1. Exploring and visualizing data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basic_linear_regression/simple_linear_regression.html">
+     2.2. Simple linear regression
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basic_linear_regression/simple_linear_regression_cont.html">
+     2.3. More on simple linear regression
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basic_linear_regression/vectors_and_matrices.html">
+     2.4. Basic concepts from linear algebra: vectors and matrices
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basic_linear_regression/multiple_predictors.html">
+     2.5. Linear regression with multiple predictors
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basic_linear_regression/more_least_squares.html">
+     2.6. More on least squares
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basic_linear_regression/maximum_likelihood_estimation.html">
+     2.7. Maximum likelihood estimation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basic_linear_regression/hypothesis_testing.html">
+     2.8. Hypothesis testing for the Gaussian model
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basic_linear_regression/diagnostics.html">
+     2.9. Diagnostics for linear regression
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="chheader.html">
+   3. Generalizing linear regression
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+  <label for="toctree-checkbox-3">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="ridge_and_lasso.html">
+     3.1. Regularizing regression: LASSO and Ridge
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="nonlinear_regression.html">
+     3.2. Fitting nonlinear functions: polynomial regression and kernel ridge regression
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="logistic_regression.html">
+     3.3. GLMs part 1: logistic regression
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     3.4. GLMs part 2: the generic GLM framework, exponential families, and statistical inference
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../extensions_applications/chheader.html">
+   4. Extensions and applications
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        <a class="dropdown-buttons"
+            href="../../_sources/content/generalizing_linear_regression/glms.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download notebook file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../_sources/content/generalizing_linear_regression/glms.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.md</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/erichson/LinearAlgebra/master?urlpath=tree/content/generalizing_linear_regression/glms.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#overview">
+   3.4.1. Overview
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#deriving-glms-from-exponential-families">
+   3.4.2. Deriving GLMs from exponential families
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#fitting-glms">
+   3.4.3. Fitting GLMs
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#statistical-inference-for-glms">
+   3.4.4. Statistical inference for GLMs
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>GLMs part 2: the generic GLM framework, exponential families, and statistical inference</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#overview">
+   3.4.1. Overview
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#deriving-glms-from-exponential-families">
+   3.4.2. Deriving GLMs from exponential families
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#fitting-glms">
+   3.4.3. Fitting GLMs
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#statistical-inference-for-glms">
+   3.4.4. Statistical inference for GLMs
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            
+              <div>
+                
+  <div class="tex2jax_ignore mathjax_ignore section" id="glms-part-2-the-generic-glm-framework-exponential-families-and-statistical-inference">
+<h1><span class="section-number">3.4. </span>GLMs part 2: the generic GLM framework, exponential families, and statistical inference<a class="headerlink" href="#glms-part-2-the-generic-glm-framework-exponential-families-and-statistical-inference" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2><span class="section-number">3.4.1. </span>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>As we saw in the previous section on logistic regression, there are many situations where we would like to understand the relationship between a response variable <span class="math notranslate nohighlight">\(y\)</span> and other observed variables <span class="math notranslate nohighlight">\(\boldsymbol{x}\)</span>, but where the assumption that <span class="math notranslate nohighlight">\(y\)</span> is normal (the typical assumption for regular linear regression) is not appropriate. Generalized linear models (GLMs) give us flexibility to model <span class="math notranslate nohighlight">\(y\)</span> as following other distributions.</p>
+<p>For example, in logistic regression, our response <span class="math notranslate nohighlight">\(y\)</span> was binary, and it was natural to model its distribution (conditional on <span class="math notranslate nohighlight">\(\boldsymbol{x}\)</span>) as <span class="math notranslate nohighlight">\(\text{Bernoulli}(p)\)</span>, where</p>
+<div class="math notranslate nohighlight">
+\[
+p = P(y=1\mid X=\boldsymbol{x}) = \mathbb{E}[y\mid X=\boldsymbol{x}].
+\]</div>
+<p>Since <span class="math notranslate nohighlight">\(\mathbb{E}[y\mid X=\boldsymbol{x}]\)</span> is a probability between 0 and 1, it does not make sense to model <span class="math notranslate nohighlight">\(\mathbb{E}[y\mid X=\boldsymbol{x}]\)</span> as a linear function of <span class="math notranslate nohighlight">\(\boldsymbol{x}\)</span> directly, but rather as the function</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbb{E}[y\mid X=\boldsymbol{x}] =P(y=1\mid X=\boldsymbol{x},\boldsymbol{\beta}) = \frac{1}{1+e^{-\boldsymbol{\beta}\cdot \boldsymbol{x}}} 
+\]</div>
+<p>Rearranging this equation, we get that</p>
+<div class="math notranslate nohighlight">
+\[
+g(p) = \log\left(\frac{p}{1-p}\right) = \boldsymbol{\beta}\cdot \boldsymbol{x}
+\]</div>
+<p>so that <em>some function</em> (denoted <span class="math notranslate nohighlight">\(g\)</span>) of the conditional mean <span class="math notranslate nohighlight">\(p=\mathbb{E}[y\mid X=\boldsymbol{x}]\)</span> is a linear combination of our data. The function <span class="math notranslate nohighlight">\(g\)</span> here is called the <em>link function</em>. We require that the link function has a few properties:</p>
+<ol class="simple">
+<li><p><span class="math notranslate nohighlight">\(g\)</span> must be invertible, which is equivalent to assuming that it is monotone (so that we can compute <span class="math notranslate nohighlight">\(g^{-1}(\boldsymbol{\beta}\cdot\boldsymbol{x})\)</span> to get back <span class="math notranslate nohighlight">\(\mathbb{E}[y\mid X=\boldsymbol{x}]\)</span>)</p></li>
+<li><p><span class="math notranslate nohighlight">\(g\)</span> must be differentiable</p></li>
+</ol>
+<p>By choosing different link functions with these properties, we can model a variety of types of data. In general, a GLM is any model for the response <span class="math notranslate nohighlight">\(y \mid X=\boldsymbol{x}\)</span> such that there exists a link function <span class="math notranslate nohighlight">\(g\)</span> satisfying</p>
+<div class="math notranslate nohighlight">
+\[
+g(\mathbb{E}[y\mid X=\boldsymbol{x}]) = \boldsymbol{\beta}\cdot \boldsymbol{x}.
+\]</div>
+<p>So far we’ve seen two examples:</p>
+<ul class="simple">
+<li><p>linear regression, where <span class="math notranslate nohighlight">\(y\mid X=\boldsymbol{x} \sim N(\mu, \sigma^2)\)</span> and <span class="math notranslate nohighlight">\(g(z) = z\)</span></p></li>
+<li><p>logistic regression, where <span class="math notranslate nohighlight">\(y\mid X=\boldsymbol{x} \sim \text{Bernoulli}(p)\)</span> and <span class="math notranslate nohighlight">\(g(z) = \log\frac{z}{1-z}\)</span></p></li>
+</ul>
+<p>In the next section, we will see that we can derive a wide variety of different GLMs, modelling different types of response variables, using a broad family of distributions called <em>exponential families</em>.</p>
+</div>
+<div class="section" id="deriving-glms-from-exponential-families">
+<h2><span class="section-number">3.4.2. </span>Deriving GLMs from exponential families<a class="headerlink" href="#deriving-glms-from-exponential-families" title="Permalink to this headline">¶</a></h2>
+<p>Consider a random variable <span class="math notranslate nohighlight">\(Y\)</span> whose distribution depends on a single parameter <span class="math notranslate nohighlight">\(\theta\)</span>. This distribution is a member of the exponential families of distributions (in canonical form) if its density can be written in the form</p>
+<div class="math notranslate nohighlight">
+\[
+p(y; \theta) = \frac{1}{Z(\theta)}h(y)e^{y\theta}\hspace{10mm} (1)
+\]</div>
+<p>Here <span class="math notranslate nohighlight">\(Z(\theta)\)</span> is a normalizing constant which, from the constraint <span class="math notranslate nohighlight">\(\int p(y; \theta) dy = 1\)</span>, is always equal to <span class="math notranslate nohighlight">\(Z(\theta) = \int h(y)e^{y\theta}dy\)</span>.</p>
+<p>Many commonly used distributions are exponential familes. Let’s see a few examples.</p>
+<p><strong>The normal distribution with fixed variance</strong>. Consider the <span class="math notranslate nohighlight">\(N(\mu, 1)\)</span> distribution. It’s density is given by</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+p(y; \mu) &amp;= \frac{1}{\sqrt{2\pi}}e^{-(y-\mu)^2/2}\\ 
+&amp;= \frac{1}{\sqrt{2\pi}}e^{-y^2/2 + y\mu - \mu^2/2}\\
+&amp;= \frac{1}{Z(\theta)}h(y)e^{y\theta}
+\end{align*}
+\end{split}\]</div>
+<p>where we’ve set <span class="math notranslate nohighlight">\(\theta = \mu\)</span>, <span class="math notranslate nohighlight">\(h(y) = e^{-y^2/2}\)</span> and <span class="math notranslate nohighlight">\(Z(\theta) = \sqrt{2\pi}e^{\theta^2/2}\)</span>.</p>
+<p><strong>The Bernoulli distribution</strong>. Consider the <span class="math notranslate nohighlight">\(\text{Bernoulli}(q)\)</span> distribution. It’s density can be written as</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+p(y; q) &amp;= \begin{cases} q &amp; y=1\\ 1-q &amp; y=0\end{cases}\\
+&amp;= q^{y}(1-q)^{1-y}\\
+&amp;= e^{y\log\frac{q}{1-q} + \log(1-q)}\\
+&amp;= \frac{1}{Z(\theta)}h(y)e^{y\theta}
+\end{align*}
+\end{split}\]</div>
+<p>where we’ve set <span class="math notranslate nohighlight">\(\theta = \log\frac{q}{1-q}\)</span>, <span class="math notranslate nohighlight">\(h(y) = 1\)</span>, and <span class="math notranslate nohighlight">\(Z(\theta) = 1+e^{\theta}\)</span>.</p>
+<p><strong>The Poisson distribution</strong>. Consider the <span class="math notranslate nohighlight">\(\text{Poisson}(\lambda)\)</span> distribution. It’s density can be written as</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+p(y; \lambda) &amp;= \frac{\lambda^{y}e^{-\lambda}}{y!}\\ 
+&amp;= e^{y\log \lambda - \log y! - \lambda}\\
+&amp;= \frac{1}{Z(\theta)}h(y)e^{y\theta} 
+\end{align*}
+\end{split}\]</div>
+<p>where we’ve set <span class="math notranslate nohighlight">\(\theta = \log \lambda\)</span>, <span class="math notranslate nohighlight">\(h(y) = \frac{1}{y!}\)</span>, and <span class="math notranslate nohighlight">\(Z(\theta) = e^{e^{\theta}}\)</span>. (Bit weird, this one!)</p>
+<p>There are also plenty of generalizations of exponential families, e.g. to multi-parameter distributions, though for simplicity, we will stick to the one-parameter case.</p>
+<p>There are a number of clever and convenient mathematical facts about exponential distribution. The first one which we shall use is the following identity, which holds whenever <span class="math notranslate nohighlight">\(Y\sim p(y;\theta)\)</span> for some exponential family of the form <span class="math notranslate nohighlight">\((1)\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{d}{d\theta} \log Z(\theta) = \mathbb{E}[Y]
+\]</div>
+<p>It’s straightforward enough to show why this is true. We have</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+\frac{d}{d\theta} \log Z(\theta) &amp;= \frac{d}{d\theta}\log \int h(y)e^{y\theta}dy\\
+&amp;= \frac{\int \frac{d}{d\theta} h(y)e^{y\theta}dy}{\int h(y)e^{y\theta}dy}\\
+&amp;=\frac{1}{Z(\theta)}\int y h(y)e^{y\theta}dy\\
+&amp;= \int y p(y;\theta)dy = \mathbb{E}[Y].
+\end{align*}
+\end{split}\]</div>
+<p>This is very convenient from the perspective of GLMs! To see why, define <span class="math notranslate nohighlight">\(\psi(\theta) = \frac{d}{d\theta}\log Z(\theta)\)</span>. Then if <span class="math notranslate nohighlight">\(\psi\)</span> is invertible, we have that</p>
+<div class="math notranslate nohighlight">
+\[
+\psi(\theta) = \mathbb{E}[Y] \iff \theta = \psi^{-1}(\mathbb{E}[Y]).
+\]</div>
+<p>In fact, it turns out that <span class="math notranslate nohighlight">\(\psi\)</span> is <em>always</em> invertible for an exponential family (this is another “magical” fact about exponential families). This means that if we want to build a regression model where the response is distributed according to some exponential family, we can automatically use the link function <span class="math notranslate nohighlight">\(g = \psi^{-1}\)</span>! Moreover, since what we really want to model is the <em>conditional</em> response <span class="math notranslate nohighlight">\(Y\)</span> given <span class="math notranslate nohighlight">\(X = \boldsymbol{x}\)</span>, we can additionally model <span class="math notranslate nohighlight">\(\theta\)</span> as a linear function of <span class="math notranslate nohighlight">\(\boldsymbol{x}\)</span>, i.e. <span class="math notranslate nohighlight">\(\theta(\boldsymbol{x}) = \boldsymbol{\beta}\cdot \boldsymbol{x}\)</span>, which finally gives us</p>
+<div class="math notranslate nohighlight">
+\[
+g(\mathbb{E}[Y\mid X=\boldsymbol{x}]) = \psi^{-1}(\mathbb{E}[Y\mid X=\boldsymbol{x}]) = \boldsymbol{\beta}\cdot \boldsymbol{x}.
+\]</div>
+<p>Basically, if we work with exponential families we automatically have a way to come up with the link function <span class="math notranslate nohighlight">\(g\)</span>.</p>
+<p><strong>Bernoulli example continued.</strong> For example, in the Bernoulli example (corresponding to logistic regression), we have that <span class="math notranslate nohighlight">\(Z(\theta) = 1+e^{\theta}\)</span> and so</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+\psi(\theta) &amp;= \frac{d}{d\theta} \log Z(\theta) \\
+&amp;= \frac{d}{d\theta} \log(1+e^{\theta}) \\
+&amp;= \frac{e^\theta}{1+e^{\theta}}.
+\end{align*}
+\end{split}\]</div>
+<p>Then <span class="math notranslate nohighlight">\(g(z) = \psi^{-1}(z) = \log\frac{z}{1-z}\)</span> – exactly what we got before!</p>
+</div>
+<div class="section" id="fitting-glms">
+<h2><span class="section-number">3.4.3. </span>Fitting GLMs<a class="headerlink" href="#fitting-glms" title="Permalink to this headline">¶</a></h2>
+<p>Like in logistic regression, we can fit GLMs using maximum likelihood estimation. Given samples <span class="math notranslate nohighlight">\(n\)</span> samples <span class="math notranslate nohighlight">\((y_i, \boldsymbol{x}_i)_{i=1}^n\)</span> with <span class="math notranslate nohighlight">\(y_i\mid \boldsymbol{x}_i\)</span> drawn independently from some exponential family with parameter <span class="math notranslate nohighlight">\(\theta_i = \boldsymbol{\beta}\cdot \boldsymbol{x}_i\)</span>, the joint likelihood is given by</p>
+<div class="math notranslate nohighlight">
+\[
+\begin{align*}
+L(\boldsymbol{\beta}; (y_i,\boldsymbol{x}_i)_{i=1}^n) = \prod_{i=1}^n \frac{1}{Z(\boldsymbol{\beta}\cdot \boldsymbol{x}_i)}h(y_i)e^{y_i \boldsymbol{\beta}\cdot \boldsymbol{x}_i}
+\end{align*}
+\]</div>
+<p>Computing the negative log-likelihood (which we want to minimize), this simplifies to</p>
+<div class="math notranslate nohighlight">
+\[
+\ell(\boldsymbol{\beta})=-\log L(\boldsymbol{\beta}; (y_i,\boldsymbol{x}_i)_{i=1}^n) = \sum_{i=1}^n \left\{\log Z(\boldsymbol{\beta}\cdot\boldsymbol{x}_i) - \log h(y_i) - y_i \boldsymbol{\beta}\cdot \boldsymbol{x}_i\right\}
+\]</div>
+<p><strong>Normal example continued.</strong> Let’s see that this formula makes sense in the normal case. We have <span class="math notranslate nohighlight">\(\log Z(\theta_i) = \frac{1}{2}\log(2\pi) + \theta_i^2/2\)</span>, <span class="math notranslate nohighlight">\(-\log h(y_i) = y_i^2/2\)</span> and so the formula becomes</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+\ell(\boldsymbol{\beta}) &amp;= \sum_{i=1}^n \left\{\frac{1}{2}\log(2\pi) + (\boldsymbol{\beta}\cdot \boldsymbol{x}_i)^2/2 + y_i^2/2 - y_i \boldsymbol{\beta}\cdot \boldsymbol{x}_i\right\} \\
+&amp;= \frac{n}{2}\log(2\pi) + \frac{1}{2}\sum_{i=1}^n (y_i - \boldsymbol{\beta}\cdot \boldsymbol{x}_i)^2 = \frac{n}{2}\log(2\pi) + \frac{1}{2}\|\boldsymbol{y} - \boldsymbol{X\beta}\|_2^2
+\end{align*}
+\end{split}\]</div>
+<p>This indeed recovers the negative log-likelihood we saw in the <a class="reference internal" href="../basic_linear_regression/maximum_likelihood_estimation.html"><span class="doc std std-doc">Gaussian model for linear regression</span></a>.</p>
+<p>Outside of the normal distribution case, we very rarely will be able to minimize the negative log-likelihood analytically, and instead will need to use computational methods to fit the models (for example, we could use Newton’s method like we saw in the previous section). In practice, we can just fit these models using a standard package provided in python or R.</p>
+<p>Let’s see an example of a problem where the reponse isn’t Bernoulli or normally distributed so we can get a taste of what we can do with GLMs. Here will illustrate Poisson regression using the <code class="docutils literal notranslate"><span class="pre">fishing</span></code> dataset, which we load below.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;datasets/fishing.csv&quot;</span><span class="p">)</span>
+<span class="n">dataset</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Unnamed: 0</th>
+      <th>site</th>
+      <th>totabund</th>
+      <th>density</th>
+      <th>meandepth</th>
+      <th>year</th>
+      <th>period</th>
+      <th>sweptarea</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>1</td>
+      <td>76</td>
+      <td>0.002070</td>
+      <td>804</td>
+      <td>1978</td>
+      <td>1977-1989</td>
+      <td>36710.000000</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>2</td>
+      <td>161</td>
+      <td>0.003520</td>
+      <td>808</td>
+      <td>2001</td>
+      <td>2000-2002</td>
+      <td>45741.253906</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>3</td>
+      <td>39</td>
+      <td>0.000981</td>
+      <td>809</td>
+      <td>2001</td>
+      <td>2000-2002</td>
+      <td>39775.000000</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>4</td>
+      <td>410</td>
+      <td>0.008039</td>
+      <td>848</td>
+      <td>1979</td>
+      <td>1977-1989</td>
+      <td>51000.000000</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>5</td>
+      <td>177</td>
+      <td>0.005933</td>
+      <td>853</td>
+      <td>2002</td>
+      <td>2000-2002</td>
+      <td>29831.251953</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>This dataset contains information about the number of fish observed in different sites over various time periods. The variable <code class="docutils literal notranslate"><span class="pre">totabund</span></code> records the number of fish observed in a given site and the variable <code class="docutils literal notranslate"><span class="pre">meandepth</span></code>represents the mean water depth of the sites area, respectively. Let’s plot these two variables against each other to get a sense of the relationship.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span> 
+
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">dataset</span><span class="p">[</span><span class="s2">&quot;meandepth&quot;</span><span class="p">],</span> <span class="n">dataset</span><span class="p">[</span><span class="s2">&quot;totabund&quot;</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Mean Water Depth&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;# Fish Observed&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/glms_3_0.png" src="../../_images/glms_3_0.png" />
+</div>
+</div>
+<p>We see a general decreasing trend: as water depth increases, fewer fish are observed. Now suppose that the distribution of fish observed given the water depth follows a Poisson distribution, and fit a Poisson regression model to model the relationship between these two values. We do this in the following.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">statsmodels.api</span> <span class="k">as</span> <span class="nn">sm</span> 
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="c1"># prep the data</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">[</span><span class="s2">&quot;meandepth&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">ones</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">([</span><span class="n">ones</span><span class="p">,</span> <span class="n">X</span><span class="p">])</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">[</span><span class="s2">&quot;totabund&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+
+<span class="c1"># fit the model using sm.GLM</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">GLM</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">family</span><span class="o">=</span><span class="n">sm</span><span class="o">.</span><span class="n">families</span><span class="o">.</span><span class="n">Poisson</span><span class="p">())</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">model</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="simpletable">
+<caption>Generalized Linear Model Regression Results</caption>
+<tr>
+  <th>Dep. Variable:</th>           <td>y</td>        <th>  No. Observations:  </th>  <td>   147</td> 
+</tr>
+<tr>
+  <th>Model:</th>                  <td>GLM</td>       <th>  Df Residuals:      </th>  <td>   145</td> 
+</tr>
+<tr>
+  <th>Model Family:</th>         <td>Poisson</td>     <th>  Df Model:          </th>  <td>     1</td> 
+</tr>
+<tr>
+  <th>Link Function:</th>          <td>Log</td>       <th>  Scale:             </th> <td>  1.0000</td>
+</tr>
+<tr>
+  <th>Method:</th>                <td>IRLS</td>       <th>  Log-Likelihood:    </th> <td> -8375.2</td>
+</tr>
+<tr>
+  <th>Date:</th>            <td>Fri, 04 Nov 2022</td> <th>  Deviance:          </th> <td>  15778.</td>
+</tr>
+<tr>
+  <th>Time:</th>                <td>00:22:27</td>     <th>  Pearson chi2:      </th> <td>1.67e+04</td>
+</tr>
+<tr>
+  <th>No. Iterations:</th>          <td>5</td>        <th>  Pseudo R-squ. (CS):</th>  <td> 1.000</td> 
+</tr>
+<tr>
+  <th>Covariance Type:</th>     <td>nonrobust</td>    <th>                     </th>     <td> </td>   
+</tr>
+</table>
+<table class="simpletable">
+<tr>
+    <td></td>       <th>coef</th>     <th>std err</th>      <th>z</th>      <th>P>|z|</th>  <th>[0.025</th>    <th>0.975]</th>  
+</tr>
+<tr>
+  <th>const</th> <td>    6.6466</td> <td>    0.013</td> <td>  523.960</td> <td> 0.000</td> <td>    6.622</td> <td>    6.671</td>
+</tr>
+<tr>
+  <th>x1</th>    <td>   -0.0006</td> <td> 6.66e-06</td> <td>  -94.741</td> <td> 0.000</td> <td>   -0.001</td> <td>   -0.001</td>
+</tr>
+</table></div></div>
+</div>
+<p>The coefficient of <span class="math notranslate nohighlight">\(-0.0006\)</span> for <code class="docutils literal notranslate"><span class="pre">meandepth</span></code> seems a bit odd – very low for the slope of the line that we’ve seen. This is because the Poisson model is actually modelling a transformed version of our data! Recall that for the Poisson model, we had <span class="math notranslate nohighlight">\(\boldsymbol{\beta}\cdot \boldsymbol{x}_i = \theta_i = \log \mathbb{E}[y_i \mid \boldsymbol{x}_i]\)</span>, so this coefficient really needs to be interpreted on a log scale. To see what the fitted model actually looks like, we can just plot its predictions.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">xx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">700</span><span class="p">,</span> <span class="mi">5200</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">ones</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">xx</span><span class="p">)</span>
+<span class="n">xx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">([</span><span class="n">ones</span><span class="p">,</span> <span class="n">xx</span><span class="p">])</span>
+<span class="n">yy</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">xx</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">dataset</span><span class="p">[</span><span class="s2">&quot;meandepth&quot;</span><span class="p">],</span> <span class="n">dataset</span><span class="p">[</span><span class="s2">&quot;totabund&quot;</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xx</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">yy</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;fitted model&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Mean Water Depth&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;# Fish Observed&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/glms_7_0.png" src="../../_images/glms_7_0.png" />
+</div>
+</div>
+<p>Just as a point of comparison, let’s see what would have happened if we fit a basic linear regression model to this data, ignoring that the counts aren’t actually discrete. To make a fair comparison, we will also transform the response to using a log scale for the OLS regression.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_ols</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">OLS</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">y</span><span class="p">),</span> <span class="n">X</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">yy_ols</span> <span class="o">=</span> <span class="n">model_ols</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">xx</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">dataset</span><span class="p">[</span><span class="s2">&quot;meandepth&quot;</span><span class="p">],</span> <span class="n">dataset</span><span class="p">[</span><span class="s2">&quot;totabund&quot;</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xx</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">yy</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Poisson model&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xx</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">yy_ols</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;OLS model&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Mean Water Depth&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;# Fish Observed&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/glms_9_0.png" src="../../_images/glms_9_0.png" />
+</div>
+</div>
+<p>In general, the models perform very similarly, though the Poisson model seems to capture the larger deviations in number of fish observed in shallow water.</p>
+<p>Notice that in the output for the Poisson regression model, there are various <span class="math notranslate nohighlight">\(z\)</span> statistics and <span class="math notranslate nohighlight">\(p\)</span>-values reported. Like in OLS regression, these are statistics for the hypothesis <span class="math notranslate nohighlight">\(\beta_j = 0\)</span>. In the next section, we explain how these numbers are obtained.</p>
+</div>
+<div class="section" id="statistical-inference-for-glms">
+<h2><span class="section-number">3.4.4. </span>Statistical inference for GLMs<a class="headerlink" href="#statistical-inference-for-glms" title="Permalink to this headline">¶</a></h2>
+<p>Recall that for OLS regression using the Gaussian model, we were able to perform statistical inference by exploiting the fact that <span class="math notranslate nohighlight">\(\hat{\boldsymbol{\beta}} \sim N(\boldsymbol{\beta}_\star, \sigma^2 (\boldsymbol{X^\top X})^{-1})\)</span>. Using this fact, we derived tests for hypothesis of the form <span class="math notranslate nohighlight">\(\beta_j = 0\)</span> or <span class="math notranslate nohighlight">\(\beta_{1}=\cdots=\beta_p = 0\)</span>. Since we are no longer working with the Gaussian mdoel of regression – which was critical for getting the distribution of <span class="math notranslate nohighlight">\(\hat{\boldsymbol{\beta}}\)</span> – how can we still perform statistical inference like this for GLMs? For example, how did <code class="docutils literal notranslate"><span class="pre">statsmodels</span></code> compute the <span class="math notranslate nohighlight">\(p\)</span>-values it gave in the output of the Poisson regression mode above?</p>
+<p>To perform statistical inference in this setting, we must instead rely on the <em>asymptotic</em> distribution of <span class="math notranslate nohighlight">\(\hat{\boldsymbol{\beta}}\)</span>, i.e. in the limit when <span class="math notranslate nohighlight">\(n\to\infty\)</span>. Fortunately, because we perform maximum likelihood estimation to fit <span class="math notranslate nohighlight">\(\hat{\boldsymbol{\beta}}\)</span>, this asymptotic distribution is easy to find using the following important result.</p>
+<p><strong>Asymptotic normality of the MLE</strong>. Let <span class="math notranslate nohighlight">\(\hat{\boldsymbol{\theta}}\)</span> be the maximum likelihood estimator of some parameters <span class="math notranslate nohighlight">\(\boldsymbol{\theta}_0\)</span>. Then as <span class="math notranslate nohighlight">\(n\to \infty\)</span>,</p>
+<div class="math notranslate nohighlight">
+\[
+\hat{\boldsymbol{\theta}} \sim N(\boldsymbol{\theta}_0, \boldsymbol{I}_n^{-1}(\boldsymbol{\theta}_0))
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(\boldsymbol{I}_n(\boldsymbol{\theta}_0)\)</span> is the <em>Fisher information matrix</em>, which is given by</p>
+<div class="math notranslate nohighlight">
+\[
+\boldsymbol{I}_n(\boldsymbol{\theta}_0) = \mathbb{E}_{\boldsymbol{\theta}_0}[\nabla^2_{\boldsymbol{\theta}}\ell(\boldsymbol{\theta}_0)]
+\]</div>
+<p>and <span class="math notranslate nohighlight">\(\ell\)</span> is the negative log-likelihood, as before.</p>
+<p>The Fisher information matrix measures the curvature of the likelihood around the true parameter – if this curvature is very high, the model contains lots of “information”, corresponding to smaller values of <span class="math notranslate nohighlight">\(\boldsymbol{I}_n^{-1}\)</span> which will mean lower variance for the MLE. The Fisher information has many interesting and important properties, though these are outside the scope of this section.</p>
+<p>We can now apply this result to our GLMs. Since <span class="math notranslate nohighlight">\(\hat{\boldsymbol{\beta}}\)</span> is a maximum likelihood estimator (assuming whatever model we’ve chosen is actually correct), we immediately get that for sufficiently large <span class="math notranslate nohighlight">\(n\)</span>, <span class="math notranslate nohighlight">\(\hat{\boldsymbol{\beta}}\)</span> is approximately distributed as <span class="math notranslate nohighlight">\(N(\boldsymbol{\beta}_\star, \boldsymbol{I}_n(\boldsymbol{\beta}_\star))\)</span>. The last issue we need to handle to actually use this distribution to perform hypothesis tests is the fact that <span class="math notranslate nohighlight">\(\boldsymbol{I}_n(\boldsymbol{\beta}_\star)\)</span> isn’t actually known (since we don’t know <span class="math notranslate nohighlight">\(\boldsymbol{\beta}_\star\)</span>). Instead, in practice we often use the plug-in estimator: <span class="math notranslate nohighlight">\(\hat{\boldsymbol{I}}_n = \nabla_{\boldsymbol{\beta}}^2 \ell(\hat{\boldsymbol{\beta}})|_{\boldsymbol{\beta}=\hat{\boldsymbol{\beta}}}\)</span>. Fortunately, most statistical software can do this the background for us.</p>
+<p>Nonetheless, it is important that we do not simply take these <span class="math notranslate nohighlight">\(p\)</span>-values without nuance: there are a number of things that we should consider when interpreting these numbers, based on the assumptions that we’ve made when fitting the model. Do we have enough data for the asymptotic regime to be reasonable? Perhaps even more importantly, is the model assumption we’ve made (i.e. which exponential family we’re modelling our data as following) reasonable for our data? Like always, we must be careful in assessing the validity of our models.</p>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./content/generalizing_linear_regression"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="logistic_regression.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title"><span class="section-number">3.3. </span>GLMs part 1: logistic regression</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="../extensions_applications/chheader.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><span class="section-number">4. </span>Extensions and applications</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            
+        </div>
+    </div>
+    <footer class="footer">
+  <p>
+    
+      By Michael W. Mahoney and Ryan Theisen<br/>
+    
+        &copy; Copyright 2021.<br/>
+  </p>
+</footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="../../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
+  </body>
+</html>
