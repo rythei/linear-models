@@ -213,12 +213,34 @@
      3.3. GLMs part 1: logistic regression
     </a>
    </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../generalizing_linear_regression/glms.html">
+     3.4. GLMs part 2: the generic GLM framework, exponential families, and statistical inference
+    </a>
+   </li>
   </ul>
  </li>
- <li class="toctree-l1">
+ <li class="toctree-l1 has-children">
   <a class="reference internal" href="../extensions_applications/chheader.html">
    4. Extensions and applications
   </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+  <label for="toctree-checkbox-4">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../extensions_applications/evd.html">
+     4.1. The Eigenvalue decomposition for symmetric matrices
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../extensions_applications/pca.html">
+     4.2. Principal Component Analysis (PCA)
+    </a>
+   </li>
+  </ul>
  </li>
 </ul>
 
@@ -289,7 +311,7 @@
         aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
     <div class="dropdown-buttons">
         
-        <a class="binder-button" href="https://mybinder.org/v2/gh/erichson/LinearAlgebra/master?urlpath=tree/content/python_basics/python_numpy.md"><button type="button"
+        <a class="binder-button" href="https://mybinder.org/v2/gh/rythei/linear-models/master?urlpath=tree/content/python_basics/python_numpy.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
                 data-placement="left"><img class="binder-button-logo"
                     src="../../_static/images/logo_binder.svg"
@@ -592,8 +614,8 @@ There are several ways how we can do this.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 526 ms, sys: 411 ms, total: 936 ms
-Wall time: 464 ms
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 479 ms, sys: 309 ms, total: 788 ms
+Wall time: 456 ms
 </pre></div>
 </div>
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>49999995000000
@@ -610,8 +632,8 @@ Instead, we can use NumPy to do the same operation much faster.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 11.7 ms, sys: 10.4 ms, total: 22.1 ms
-Wall time: 21.9 ms
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 11.8 ms, sys: 10.5 ms, total: 22.3 ms
+Wall time: 22.2 ms
 </pre></div>
 </div>
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>49999995000000
@@ -1484,8 +1506,8 @@ v^T w = v_{1}w_{1}+v_{2}w_{2}+\dots+v_{n}w_{n}
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 130 µs, sys: 11 µs, total: 141 µs
-Wall time: 48.9 µs
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 132 µs, sys: 12 µs, total: 144 µs
+Wall time: 49.8 µs
 </pre></div>
 </div>
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([44])
@@ -1502,8 +1524,8 @@ Instead, we can use numpy’s build in function to compute the inner product.</p
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 22 µs, sys: 10 µs, total: 32 µs
-Wall time: 17.9 µs
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: user 66 µs, sys: 101 µs, total: 167 µs
+Wall time: 78 µs
 </pre></div>
 </div>
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[44]])

@@ -213,12 +213,34 @@
      3.3. GLMs part 1: logistic regression
     </a>
    </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../generalizing_linear_regression/glms.html">
+     3.4. GLMs part 2: the generic GLM framework, exponential families, and statistical inference
+    </a>
+   </li>
   </ul>
  </li>
- <li class="toctree-l1">
+ <li class="toctree-l1 has-children">
   <a class="reference internal" href="../extensions_applications/chheader.html">
    4. Extensions and applications
   </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+  <label for="toctree-checkbox-4">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../extensions_applications/evd.html">
+     4.1. The Eigenvalue decomposition for symmetric matrices
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../extensions_applications/pca.html">
+     4.2. Principal Component Analysis (PCA)
+    </a>
+   </li>
+  </ul>
  </li>
 </ul>
 
@@ -289,7 +311,7 @@
         aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
     <div class="dropdown-buttons">
         
-        <a class="binder-button" href="https://mybinder.org/v2/gh/erichson/LinearAlgebra/master?urlpath=tree/content/basic_linear_regression/maximum_likelihood_estimation.md"><button type="button"
+        <a class="binder-button" href="https://mybinder.org/v2/gh/rythei/linear-models/master?urlpath=tree/content/basic_linear_regression/maximum_likelihood_estimation.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
                 data-placement="left"><img class="binder-button-logo"
                     src="../../_static/images/logo_binder.svg"
@@ -404,23 +426,23 @@ L(\boldsymbol{\theta}; z_1,\dots,z_n) = \prod_{i=1}^n p_{\boldsymbol{\theta}}(z_
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[-2.85652314 -1.14157277 -3.49662592 -0.48791666 -5.58189497  1.17901625
-  0.43576949 -1.96188837  2.59561151 -2.45167457 -2.25840432 -3.12192587
-  0.15840338 -5.77049617 -0.86825117 -1.26742066  0.54823504 -4.5823029
- -1.56597909  1.35138013 -3.34592012 -5.54259972 -5.46158745 -2.43587539
-  1.77302328 -5.05725124 -7.11529312 -4.14346655  0.09543674 -6.27704147
- -4.01465268 -1.99971686 -2.98583311 -1.48223406 -2.28834488 -2.39819427
- -0.90278638 -4.25661202 -1.91873531 -1.92298829 -3.48349684 -4.36632812
- -1.86966808 -1.84458685 -1.16241232 -1.72273866 -4.07638458 -3.38858554
- -3.33302166 -2.66786688  0.37359225 -2.55614399 -2.31945748 -3.13740966
-  0.61317941 -1.6976306  -2.77532047 -1.8601692  -1.5713832  -4.67168636
- -0.98164854 -0.63413678 -2.55082726 -2.18503633 -3.53242172 -2.36610764
- -0.83291886 -2.73581488 -2.64340728 -1.97172756 -4.16737597 -2.78444831
- -2.09532068 -2.23636106 -3.57634167 -1.3713749  -2.76299926 -2.00967274
- -1.11748471  2.09747504 -1.40913336 -1.11230733 -3.41777568 -0.82228924
- -2.58605864  1.17021127 -2.26599607 -2.12603507 -3.11349578 -4.65856785
- -4.90818995 -2.53748984 -5.17055792 -0.72518064  1.90539018  0.30653722
- -4.67848337 -2.36788964 -4.82514918 -1.1117415 ]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[-0.7069068   0.64431867 -2.6180921  -2.43639418 -3.10343006 -2.86076525
+ -0.99014022 -3.19551475  1.24109099 -4.37307892 -4.23258732 -3.98659265
+ -2.05473642 -0.74943171 -1.66755177 -0.58678327  1.05046003 -4.48461559
+ -2.93226579 -2.10950178 -2.6893354  -0.77622343 -1.55168099 -2.65551914
+ -0.3644567   0.20001118 -3.89440819  2.09592085  0.3729406  -3.53885496
+  1.27618317 -0.93374534 -1.47254733 -1.89513397 -6.25881602 -2.93443712
+ -0.0314606  -2.74651801 -2.58459583 -3.49871917 -1.26882425 -3.71671812
+ -5.39713056 -3.50588184 -1.05698262 -0.17233731 -2.5667214  -3.29368327
+ -4.3700503  -0.53417464  0.33422924 -0.58262694 -2.99318089  1.2215453
+ -5.11194064 -0.49295577 -3.03164951 -4.472621   -1.95170136 -1.71611034
+ -2.22555485 -5.59836475 -1.48838625  0.19883335 -4.07296271 -0.48319057
+ -2.43757938 -4.92585759 -1.16908394 -3.79792694 -1.15955734  0.48311609
+ -1.79045852 -2.17014372 -3.7422705  -5.57971384 -3.77318775 -3.60679016
+ -0.9696164  -1.60319009 -0.17944652 -0.27515317 -2.32725699 -1.28826747
+ -2.77308448 -0.33531116 -0.72236596 -4.31800247  0.284542   -4.83661042
+ -1.24340249 -0.8255337  -2.43947138 -5.17274257 -2.96678399 -0.34989312
+ -3.04300549 -4.67091437 -2.05542228 -1.38219514]
 </pre></div>
 </div>
 </div>
@@ -469,7 +491,7 @@ L(\mu,\sigma^2;z_1,\dots,z_n) = \prod_{i=1}^n p_{\mu,\sigma^2}(z_i) = (2\pi \sig
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(-2.2525480600860974, 3.6595530135511787)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(-2.0954563854835304, 3.2595399060058856)
 </pre></div>
 </div>
 </div>

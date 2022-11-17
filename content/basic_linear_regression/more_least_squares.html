@@ -213,12 +213,34 @@
      3.3. GLMs part 1: logistic regression
     </a>
    </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../generalizing_linear_regression/glms.html">
+     3.4. GLMs part 2: the generic GLM framework, exponential families, and statistical inference
+    </a>
+   </li>
   </ul>
  </li>
- <li class="toctree-l1">
+ <li class="toctree-l1 has-children">
   <a class="reference internal" href="../extensions_applications/chheader.html">
    4. Extensions and applications
   </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+  <label for="toctree-checkbox-4">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../extensions_applications/evd.html">
+     4.1. The Eigenvalue decomposition for symmetric matrices
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../extensions_applications/pca.html">
+     4.2. Principal Component Analysis (PCA)
+    </a>
+   </li>
+  </ul>
  </li>
 </ul>
 
@@ -289,7 +311,7 @@
         aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
     <div class="dropdown-buttons">
         
-        <a class="binder-button" href="https://mybinder.org/v2/gh/erichson/LinearAlgebra/master?urlpath=tree/content/basic_linear_regression/more_least_squares.md"><button type="button"
+        <a class="binder-button" href="https://mybinder.org/v2/gh/rythei/linear-models/master?urlpath=tree/content/basic_linear_regression/more_least_squares.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
                 data-placement="left"><img class="binder-button-logo"
                     src="../../_static/images/logo_binder.svg"
@@ -702,19 +724,19 @@ Longitude: -0.4345137546747741
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[-1.36181304e+14, -1.99892373e+14, -2.13252132e+13, ...,
-         2.06309981e+14,  1.67453357e+14,  1.84754892e+14],
-       [-3.74425971e+14, -2.24268119e+14, -1.16058360e+14, ...,
-         3.73180815e+14,  2.63244181e+14,  3.59309273e+14],
-       [ 1.13988290e+14,  5.10347791e+13,  1.26519500e+14, ...,
-        -1.06407440e+14, -1.20572977e+14, -2.20770237e+14],
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[-3.64341212e+12, -3.81586862e+13, -7.52955881e+13, ...,
+        -5.01751510e+13,  9.79755727e+12, -3.13684242e+13],
+       [-5.86637859e+13, -2.96664790e+13, -1.97259022e+12, ...,
+         5.30268998e+13,  1.32138071e+14, -2.99402743e+13],
+       [ 4.78566633e+12, -1.44694186e+13, -3.22615518e+13, ...,
+         8.72728597e+12,  1.27494311e+13, -2.19633827e+13],
        ...,
-       [ 3.57330388e+14,  2.98123062e+14,  7.34747279e+13, ...,
-        -3.66306820e+14, -2.58833380e+14, -2.82443062e+14],
-       [ 2.21057602e+14,  1.26976239e+14,  1.83325964e+14, ...,
-        -2.59878989e+14, -1.84533854e+14, -3.53893875e+14],
-       [-1.13462601e+13, -3.04144718e+13, -5.98131995e+12, ...,
-         7.96140212e+13, -9.50302332e+13, -8.64605093e+13]])
+       [ 2.99130483e+13,  2.25635147e+12,  3.12675116e+13, ...,
+         4.59574396e+13,  7.80446082e+13, -3.03595051e+13],
+       [-7.58822242e+12, -4.92054830e+12, -1.02316858e+14, ...,
+         3.52955152e+13,  8.37974326e+13, -1.42713125e+13],
+       [-9.97736172e+13,  5.84495737e+12, -1.09254994e+13, ...,
+         6.71052383e+12, -1.87471513e+11, -1.06820510e+13]])
 </pre></div>
 </div>
 </div>
@@ -728,19 +750,19 @@ Longitude: -0.4345137546747741
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[ 0.83984375,  0.3203125 ,  0.0859375 , ..., -0.9375    ,
-         0.78125   ,  0.21875   ],
-       [ 4.0859375 ,  1.03125   , -0.63671875, ...,  3.0625    ,
-        -0.3125    ,  0.375     ],
-       [-1.87548828,  2.84960938,  1.59570312, ..., -0.71875   ,
-        -1.54882812,  3.06054688],
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[ 1.40625000e+00,  1.66015625e-01, -4.44335938e-01, ...,
+        -4.29687500e-02, -2.89184570e-01, -4.68750000e-02],
+       [ 1.75000000e+00,  1.32812500e+00, -5.00000000e-01, ...,
+         6.87500000e-01, -4.62841797e+00,  3.90625000e-01],
+       [ 1.12500000e+00,  7.77343750e-01,  1.12500000e+00, ...,
+         8.67187500e-01, -4.79492188e-01, -4.68750000e-02],
        ...,
-       [-3.75      ,  2.6875    , -1.140625  , ..., -3.0625    ,
-         0.75      , -2.875     ],
-       [ 7.5703125 ,  4.6875    ,  0.8671875 , ..., -6.75      ,
-         1.25      , -4.0625    ],
-       [ 3.        ,  0.        ,  0.125     , ...,  0.        ,
-        -0.5       ,  2.5       ]])
+       [ 1.15625000e+00,  2.00195312e-01,  4.29687500e-01, ...,
+         9.26757812e-01,  1.46484375e-03,  1.83593750e-01],
+       [ 5.31250000e-01,  1.12304688e-01, -6.95312500e-01, ...,
+         2.80273438e-01,  1.05657959e+00, -3.55468750e-01],
+       [-2.00000000e+00, -2.18750000e-01,  3.75000000e-01, ...,
+         2.81250000e-01,  7.76367188e-01,  5.00000000e-01]])
 </pre></div>
 </div>
 </div>

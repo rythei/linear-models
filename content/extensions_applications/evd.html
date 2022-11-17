@@ -1,0 +1,806 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>4.1. The Eigenvalue decomposition for symmetric matrices &#8212; Stat 151, Linear Models</title>
+    
+  <link href="../../_static/css/theme.css" rel="stylesheet">
+  <link href="../../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../../_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
+    <script>
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="4.2. Principal Component Analysis (PCA)" href="pca.html" />
+    <link rel="prev" title="4. Extensions and applications" href="chheader.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../../_static/logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Stat 151, Linear Models</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../overview.html">
+   Welcome to Stat 151
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Linear models
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../python_basics/chheader.html">
+   1. Python 101
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_basics/python_basics.html">
+     1.1. The Basics
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_basics/python_numpy.html">
+     1.2. Introduction to NumPy
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../python_basics/python_plotting.html">
+     1.3. MatPlotLib
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../basic_linear_regression/chheader.html">
+   2. Basics of linear regression
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basic_linear_regression/visualizing_data.html">
+     2.1. Exploring and visualizing data
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basic_linear_regression/simple_linear_regression.html">
+     2.2. Simple linear regression
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basic_linear_regression/simple_linear_regression_cont.html">
+     2.3. More on simple linear regression
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basic_linear_regression/vectors_and_matrices.html">
+     2.4. Basic concepts from linear algebra: vectors and matrices
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basic_linear_regression/multiple_predictors.html">
+     2.5. Linear regression with multiple predictors
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basic_linear_regression/more_least_squares.html">
+     2.6. More on least squares
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basic_linear_regression/maximum_likelihood_estimation.html">
+     2.7. Maximum likelihood estimation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basic_linear_regression/hypothesis_testing.html">
+     2.8. Hypothesis testing for the Gaussian model
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../basic_linear_regression/diagnostics.html">
+     2.9. Diagnostics for linear regression
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../generalizing_linear_regression/chheader.html">
+   3. Generalizing linear regression
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+  <label for="toctree-checkbox-3">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../generalizing_linear_regression/ridge_and_lasso.html">
+     3.1. Regularizing regression: LASSO and Ridge
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../generalizing_linear_regression/nonlinear_regression.html">
+     3.2. Fitting nonlinear functions: polynomial regression and kernel ridge regression
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../generalizing_linear_regression/logistic_regression.html">
+     3.3. GLMs part 1: logistic regression
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../generalizing_linear_regression/glms.html">
+     3.4. GLMs part 2: the generic GLM framework, exponential families, and statistical inference
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="chheader.html">
+   4. Extensions and applications
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+  <label for="toctree-checkbox-4">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     4.1. The Eigenvalue decomposition for symmetric matrices
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="pca.html">
+     4.2. Principal Component Analysis (PCA)
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        <a class="dropdown-buttons"
+            href="../../_sources/content/extensions_applications/evd.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download notebook file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../_sources/content/extensions_applications/evd.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.md</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/rythei/linear-models/master?urlpath=tree/content/extensions_applications/evd.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#review-of-the-eigenvalue-decomposition">
+   4.1.1. Review of the eigenvalue decomposition
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#symmetric-matrices">
+   4.1.2. Symmetric matrices
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#covariance-and-covariance-ish-matrices">
+   4.1.3. Covariance (and covariance-ish) matrices
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>The Eigenvalue decomposition for symmetric matrices</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#review-of-the-eigenvalue-decomposition">
+   4.1.1. Review of the eigenvalue decomposition
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#symmetric-matrices">
+   4.1.2. Symmetric matrices
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#covariance-and-covariance-ish-matrices">
+   4.1.3. Covariance (and covariance-ish) matrices
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            
+              <div>
+                
+  <div class="tex2jax_ignore mathjax_ignore section" id="the-eigenvalue-decomposition-for-symmetric-matrices">
+<h1><span class="section-number">4.1. </span>The Eigenvalue decomposition for symmetric matrices<a class="headerlink" href="#the-eigenvalue-decomposition-for-symmetric-matrices" title="Permalink to this headline">¶</a></h1>
+<p>In preparation for some of the material we will present in the coming sections, here we give a review of the eigenvalue decomposition with a particular interest in symmetric matrices. We will then look an important example of a symmetric matrix: a covariance matrix.</p>
+<div class="section" id="review-of-the-eigenvalue-decomposition">
+<h2><span class="section-number">4.1.1. </span>Review of the eigenvalue decomposition<a class="headerlink" href="#review-of-the-eigenvalue-decomposition" title="Permalink to this headline">¶</a></h2>
+<p>The general eigenvalue problem for an <span class="math notranslate nohighlight">\(n\times n\)</span> matrix <span class="math notranslate nohighlight">\(\boldsymbol{A}\)</span> is the problem of finding <span class="math notranslate nohighlight">\(n\)</span> value vector pairs <span class="math notranslate nohighlight">\((\lambda_1, \boldsymbol{u}_1),\dots, (\lambda_n, \boldsymbol{u}_n)\)</span> satisfying</p>
+<div class="math notranslate nohighlight">
+\[
+\boldsymbol{Au}_i = \lambda_i \boldsymbol{u}_i.
+\]</div>
+<p>In words, the condition <span class="math notranslate nohighlight">\(\boldsymbol{Au} = \lambda \boldsymbol{u}\)</span> means “applying the linear transformation <span class="math notranslate nohighlight">\(\boldsymbol{A}\)</span> to <span class="math notranslate nohighlight">\(\boldsymbol{u}\)</span> is the same as rescaling <span class="math notranslate nohighlight">\(\boldsymbol{u}\)</span> by <span class="math notranslate nohighlight">\(\lambda\)</span>”. For a general square matrix <span class="math notranslate nohighlight">\(\boldsymbol{A}\)</span> and arbitrary vector <span class="math notranslate nohighlight">\(\boldsymbol{u}\)</span>, the vector <span class="math notranslate nohighlight">\(\boldsymbol{Au}\)</span> will be a rotated <em>and</em> rescaled version of <span class="math notranslate nohighlight">\(\boldsymbol{u}\)</span>, so the pair <span class="math notranslate nohighlight">\((\lambda, \boldsymbol{u})\)</span> must be a very special pair. Let’s illustrate this with the matrix</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\boldsymbol{A} = \begin{bmatrix}2&amp;1\\ 1&amp;2\end{bmatrix}
+\end{split}\]</div>
+<p>Let’s first see what this matrix does to two simple vectors, namely the standard basis vectors <span class="math notranslate nohighlight">\(\boldsymbol{e}_1 = (1,0), \boldsymbol{e}_2 = (0,1)\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="c1"># matrix A</span>
+<span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]])</span>
+
+<span class="c1"># standard basis vectors in 2-d</span>
+<span class="n">e1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">e2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+
+<span class="n">e1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">e2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">origin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">quiver</span><span class="p">(</span><span class="o">*</span><span class="n">origin</span><span class="p">,</span> <span class="o">*</span><span class="n">e1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;e1&#39;</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s1">&#39;xy&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">quiver</span><span class="p">(</span><span class="o">*</span><span class="n">origin</span><span class="p">,</span> <span class="o">*</span><span class="n">e2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;e2&#39;</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s1">&#39;xy&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">quiver</span><span class="p">(</span><span class="o">*</span><span class="n">origin</span><span class="p">,</span> <span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">e1</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Ae1&#39;</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s1">&#39;xy&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;darkred&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">quiver</span><span class="p">(</span><span class="o">*</span><span class="n">origin</span><span class="p">,</span> <span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">e2</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Ae2&#39;</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s1">&#39;xy&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;darkblue&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="o">-</span><span class="mf">.5</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="o">-</span><span class="mf">.5</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;transforming the standard basis vectors&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/evd_1_0.png" src="../../_images/evd_1_0.png" />
+</div>
+</div>
+<p>Indeed, we see that the standard basis vectors get rotated – not just rescaled – by <span class="math notranslate nohighlight">\(\boldsymbol{A}\)</span>, and so we cannot have that <span class="math notranslate nohighlight">\(\boldsymbol{Ae}_1 = \lambda \boldsymbol{e}_1\)</span> or <span class="math notranslate nohighlight">\(\boldsymbol{Ae}_2 = \lambda \boldsymbol{e}_2\)</span>. On the other hand, consider the vectors</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\boldsymbol{u}_1 = \begin{pmatrix}1/\sqrt{2} \\ 1/\sqrt{2}\end{pmatrix}, \hspace{10mm} \boldsymbol{u}_2 = \begin{pmatrix}1/\sqrt{2}\\ -1/\sqrt{2}\end{pmatrix}
+\end{split}\]</div>
+<p>Let’s see what happens when we act on these vectors with <span class="math notranslate nohighlight">\(\boldsymbol{A}\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">u1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span><span class="mi">1</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)])</span>
+<span class="n">u2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span><span class="o">-</span><span class="mi">1</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)])</span>
+<span class="n">origin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">quiver</span><span class="p">(</span><span class="o">*</span><span class="n">origin</span><span class="p">,</span> <span class="o">*</span><span class="n">u1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;u1&#39;</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s1">&#39;xy&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">quiver</span><span class="p">(</span><span class="o">*</span><span class="n">origin</span><span class="p">,</span> <span class="o">*</span><span class="n">u2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;u2&#39;</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s1">&#39;xy&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">quiver</span><span class="p">(</span><span class="o">*</span><span class="n">origin</span><span class="p">,</span> <span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">u1</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Au1&#39;</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s1">&#39;xy&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;darkred&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">quiver</span><span class="p">(</span><span class="o">*</span><span class="n">origin</span><span class="p">,</span> <span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">u2</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Au2&#39;</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s1">&#39;xy&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;darkblue&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="o">-</span><span class="mf">.5</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;transforming the eigenvectors of A&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/evd_3_0.png" src="../../_images/evd_3_0.png" />
+</div>
+</div>
+<p>Indeed, this time we have that <span class="math notranslate nohighlight">\(\boldsymbol{Au}_1\)</span> and <span class="math notranslate nohighlight">\(\boldsymbol{Au}_2\)</span> <em>are</em> just rescaled versions of <span class="math notranslate nohighlight">\(\boldsymbol{u}_1\)</span> and <span class="math notranslate nohighlight">\(\boldsymbol{u}_2\)</span>. In particular, we can check that</p>
+<div class="math notranslate nohighlight">
+\[
+\boldsymbol{Au}_1 = 3\boldsymbol{u}_1\;\;\;\; \text{ and }\;\;\;\; \boldsymbol{Au}_2 = \boldsymbol{u}_2
+\]</div>
+<p>which means that <span class="math notranslate nohighlight">\((3,\boldsymbol{u}_1)\)</span> and <span class="math notranslate nohighlight">\((1,\boldsymbol{u}_2)\)</span> are the <em>eigenvalue/eigenvector</em> pairs for the matrix <span class="math notranslate nohighlight">\(\boldsymbol{A}\)</span>.</p>
+<p>In theory, the values <span class="math notranslate nohighlight">\(\lambda_i\)</span> can be obtained by finding the roots of the <em>characteristic polynomial</em> <span class="math notranslate nohighlight">\(p(\lambda) = \det(\boldsymbol{A} - \lambda \boldsymbol{I})\)</span>, and we find the associated eigenvectors by solving the linear system <span class="math notranslate nohighlight">\((\boldsymbol{A}-\lambda \boldsymbol{I})\boldsymbol{u} = 0\)</span>. Note that the polynomial <span class="math notranslate nohighlight">\(p(\lambda)\)</span> will be of degree <span class="math notranslate nohighlight">\(n\)</span>, and hence will have exactly <span class="math notranslate nohighlight">\(n\)</span> zeros, and hence an <span class="math notranslate nohighlight">\(n\times n\)</span> matrix will always have <span class="math notranslate nohighlight">\(n\)</span> eigenvalue/eigenvector pairs. In practice, we use a methods provided in <code class="docutils literal notranslate"><span class="pre">numpy</span></code> to find these eigenvalues and vectors.</p>
+<p>Note that if we form the eigenvector into the columns of an <span class="math notranslate nohighlight">\(n\times n\)</span> matrix <span class="math notranslate nohighlight">\(\boldsymbol{U} = \begin{bmatrix} \boldsymbol{u_1} &amp; \dots &amp; \boldsymbol{u}_n \end{bmatrix}\)</span> and the eigenvalues into a diagonal matrix <span class="math notranslate nohighlight">\(\boldsymbol{\Lambda} = \text{diag}(\lambda_1,\dots,\lambda_n)\)</span>, then this can equivalently be expressed as</p>
+<div class="math notranslate nohighlight">
+\[
+\boldsymbol{AU} = \boldsymbol{U\Lambda} \implies \boldsymbol{A} = \boldsymbol{U\Lambda U}^{-1} \,\,\,\, \text{(assuming $\boldsymbol{U}$ invertible)}
+\]</div>
+<p>This form is typically called the <em>eigenvalue decomposition</em> of the matrix <span class="math notranslate nohighlight">\(\boldsymbol{A}\)</span>. In this section, we will focus on the case when <span class="math notranslate nohighlight">\(\boldsymbol{A}\)</span> is a symmetric matrix.</p>
+</div>
+<div class="section" id="symmetric-matrices">
+<h2><span class="section-number">4.1.2. </span>Symmetric matrices<a class="headerlink" href="#symmetric-matrices" title="Permalink to this headline">¶</a></h2>
+<p>In general, the eigenvalues and eigenvectors of a matrix may be real or complex valued, as they come from the roots of the polynomial <span class="math notranslate nohighlight">\(p(\lambda)\)</span>. For example, in the <span class="math notranslate nohighlight">\(2 \times 2\)</span> case, with</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\boldsymbol{A} = \begin{bmatrix} a_{11}&amp; a_{12}\\ a_{21} &amp; a_{22}\end{bmatrix}
+\end{split}\]</div>
+<p>the characteristic polynomial will be <span class="math notranslate nohighlight">\(p(\lambda) = \lambda^2 - (a_{11}+a_{22})\lambda + a_{11}a_{22}-a_{12}a_{21}\)</span>, which, by the quadratic formula, will have complex roots (and hence complex eigenvalues) whenever <span class="math notranslate nohighlight">\((a_{11}+a_{22})^2 - 4(a_{11}a_{22}-a_{12}a_{21}) &lt; 0\)</span>. On the other hand, if <span class="math notranslate nohighlight">\(\boldsymbol{A}\)</span> is <em>symmetric</em>, so that <span class="math notranslate nohighlight">\(\boldsymbol{A}^\top = \boldsymbol{A}\)</span>, then the eigenvalues and eigenvectors of <span class="math notranslate nohighlight">\(\boldsymbol{A}\)</span> will always satisfy the following two properties:</p>
+<ul class="simple">
+<li><p>The eigenvalues of a symmetric matrix <span class="math notranslate nohighlight">\(\boldsymbol{A}\)</span> are always real numbers.</p></li>
+<li><p>The eigenvectors of a symmetric matrix <span class="math notranslate nohighlight">\(\boldsymbol{A}\)</span> are always orthogonal.</p></li>
+</ul>
+<p>In particular, the latter condition means that the matrix <span class="math notranslate nohighlight">\(\boldsymbol{U}\)</span> of eigenvectors is an <em>orthogonal matrix</em> satisfying <span class="math notranslate nohighlight">\(\boldsymbol{U^\top U} = \boldsymbol{I}\)</span> and <span class="math notranslate nohighlight">\(\boldsymbol{UU^\top} = \boldsymbol{I}\)</span> (since <span class="math notranslate nohighlight">\(\boldsymbol{U}\)</span> is square). This means that <span class="math notranslate nohighlight">\(\boldsymbol{U}^{-1} = \boldsymbol{U}^\top\)</span>, and so in the symmetric case we can simplify the eigenvalue decomposition:</p>
+<div class="math notranslate nohighlight">
+\[
+\boldsymbol{A} = \boldsymbol{U\Lambda U}^\top.
+\]</div>
+<p>Here we briefly provide proofs for both of the above statements about the eigenvalues and eigenvectors of symmetric matrices <span class="math notranslate nohighlight">\(\boldsymbol{A}\)</span>.</p>
+<p><strong>Eigenvalues are real numbers.</strong> Let’s quickly see why symmetric matrices always have real-valued eigenvalues. For a number/vector <span class="math notranslate nohighlight">\(x\)</span>, let <span class="math notranslate nohighlight">\(\bar{x}\)</span> denote its complex conjugate (for a vector, this is just the complex conjugate in each coordinate). Then for any real matrix <span class="math notranslate nohighlight">\(\boldsymbol{A}\)</span>, let <span class="math notranslate nohighlight">\((\lambda, \boldsymbol{v})\)</span> be an eigenvalue/eigenvector pair of <span class="math notranslate nohighlight">\(\boldsymbol{A}\)</span>. Since <span class="math notranslate nohighlight">\(\boldsymbol{A}\)</span> is real-valued, we have that <span class="math notranslate nohighlight">\(\overline{\boldsymbol{Av}} = \bar{\lambda}\bar{\boldsymbol{v}}\)</span>. Then if <span class="math notranslate nohighlight">\(\boldsymbol{A}=\boldsymbol{A}^\top\)</span>, we have</p>
+<div class="math notranslate nohighlight">
+\[
+\bar{\boldsymbol{v}}^\top \boldsymbol{A} \boldsymbol{v} = \bar{\boldsymbol{v}}^\top (\lambda \boldsymbol{v}) = \lambda \bar{\boldsymbol{v}}^\top \boldsymbol{v}
+\]</div>
+<p>and</p>
+<div class="math notranslate nohighlight">
+\[
+\bar{\boldsymbol{v}}^\top \boldsymbol{A v} = \bar{\boldsymbol{v}}^\top \boldsymbol{A^\top v} = (\boldsymbol{A}\bar{\boldsymbol{v}}^\top)\boldsymbol{v} = \bar{\lambda}\bar{\boldsymbol{v}}^\top \boldsymbol{v}.
+\]</div>
+<p>Therefore <span class="math notranslate nohighlight">\(\lambda \bar{\boldsymbol{v}}^\top \boldsymbol{v} = \bar{\lambda}\bar{\boldsymbol{v}}^\top \boldsymbol{v}\)</span> which implies <span class="math notranslate nohighlight">\(\lambda = \bar{\lambda}\)</span>, and so <span class="math notranslate nohighlight">\(\lambda\)</span> must be a real number.</p>
+<p><strong>Eigenvectors are orthogonal.</strong> Next, let’s see why the eigenvectors of symmetric matrices are orthogonal. Suppose <span class="math notranslate nohighlight">\((\lambda, \boldsymbol{u})\)</span> and <span class="math notranslate nohighlight">\((\mu, \boldsymbol{v})\)</span> are two eigenvalue/eigenvector pairs for a symmetric matrix <span class="math notranslate nohighlight">\(\boldsymbol{A}\)</span> such that <span class="math notranslate nohighlight">\(\lambda \neq \mu\)</span> (i.e. they are distinct eigenvalues). Then <span class="math notranslate nohighlight">\(\boldsymbol{Au} = \lambda \boldsymbol{u}\)</span> and <span class="math notranslate nohighlight">\(\boldsymbol{Av} = \mu \boldsymbol{v}\)</span>. Then</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+\lambda \boldsymbol{u^\top v} &amp;= (\lambda \boldsymbol{u})^\top \boldsymbol{v} = (\boldsymbol{Au})^\top \boldsymbol{v}\\
+&amp;= \boldsymbol{u}^\top \underbrace{\boldsymbol{A}^\top}_{=\boldsymbol{A}} \boldsymbol{v}= \boldsymbol{u}^\top (\boldsymbol{Av})\\ &amp;= \boldsymbol{u}^\top (\mu \boldsymbol{v}) = \mu \boldsymbol{u^\top v}
+\end{align*}
+\end{split}\]</div>
+<p>Thus, rearranging we get</p>
+<div class="math notranslate nohighlight">
+\[
+(\lambda - \mu)\boldsymbol{u^\top v} = 0 \implies \boldsymbol{u^\top v} = 0
+\]</div>
+<p>since <span class="math notranslate nohighlight">\((\lambda - \mu) \neq 0\)</span>, because by assumption the eigenvectors are orthogonal.</p>
+<p>Let’s see an example in Python, using the <code class="docutils literal notranslate"><span class="pre">np.linalg.eig(A)</span></code> function to find eigenvalues. To find a symmetric matrix <span class="math notranslate nohighlight">\(\boldsymbol{A}\)</span>, we will use the following approach: first, draw a random <span class="math notranslate nohighlight">\(n\times n\)</span> matrix <span class="math notranslate nohighlight">\(\boldsymbol{B}\)</span>, and then let <span class="math notranslate nohighlight">\(\boldsymbol{A} = \boldsymbol{B^\top B}\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">n</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">B</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">n</span><span class="p">))</span>
+<span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">B</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">B</span><span class="p">)</span> <span class="c1"># B^T B is always a symmetric matrix</span>
+
+<span class="n">Lambda</span><span class="p">,</span> <span class="n">U</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eig</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+<span class="n">Lambda</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">Lambda</span><span class="p">)</span> <span class="c1"># numpy returns Lambda as an array, so let&#39;s make it a diagonal matrix</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now let’s verify that <span class="math notranslate nohighlight">\(\boldsymbol{A} = \boldsymbol{U\Lambda U^\top}\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ULUT</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">U</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">Lambda</span><span class="p">,</span> <span class="n">U</span><span class="o">.</span><span class="n">T</span><span class="p">))</span>
+<span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">ULUT</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True
+</pre></div>
+</div>
+</div>
+</div>
+<p>Indeed, the two matrices are the same. Next, let’s check that <span class="math notranslate nohighlight">\(\boldsymbol{U}\)</span> is in fact orthogonal, by checking that <span class="math notranslate nohighlight">\(\boldsymbol{U^\top U} = \boldsymbol{I}\)</span>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">UTU</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">U</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">U</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
+<span class="n">UTU</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[ 1.,  0., -0., -0.,  0., -0.,  0., -0.,  0.,  0.],
+       [ 0.,  1., -0., -0.,  0., -0.,  0., -0., -0., -0.],
+       [-0., -0.,  1., -0.,  0.,  0., -0.,  0.,  0.,  0.],
+       [-0., -0., -0.,  1.,  0.,  0.,  0.,  0.,  0., -0.],
+       [ 0.,  0.,  0.,  0.,  1.,  0.,  0., -0., -0.,  0.],
+       [-0., -0.,  0.,  0.,  0.,  1., -0.,  0.,  0., -0.],
+       [ 0.,  0., -0.,  0.,  0., -0.,  1.,  0.,  0., -0.],
+       [-0., -0.,  0.,  0., -0.,  0.,  0.,  1.,  0., -0.],
+       [ 0., -0.,  0.,  0., -0.,  0.,  0.,  0.,  1., -0.],
+       [ 0., -0., -0., -0.,  0., -0., -0., -0., -0.,  1.]])
+</pre></div>
+</div>
+</div>
+</div>
+<p>We get the identity back, and so <span class="math notranslate nohighlight">\(\boldsymbol{U}\)</span> is in fact orthogonal.</p>
+</div>
+<div class="section" id="covariance-and-covariance-ish-matrices">
+<h2><span class="section-number">4.1.3. </span>Covariance (and covariance-ish) matrices<a class="headerlink" href="#covariance-and-covariance-ish-matrices" title="Permalink to this headline">¶</a></h2>
+<p>Now that we’ve introduced the eigenvalue decomposition for symmetric matrices, we can focus on a particular example of symmetric matrix that will be of interest in this course: a covariance matrix.</p>
+<p>At the population level, for a random vector <span class="math notranslate nohighlight">\(\boldsymbol{x}\in \mathbb{R}^p\)</span> with mean <span class="math notranslate nohighlight">\(\boldsymbol{\mu} = \mathbb{E}[\boldsymbol{x}]\)</span>, the covariance matrix is defined as</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\boldsymbol{\Sigma} = \mathbb{E}[(\boldsymbol{x}-\boldsymbol{\mu})(\boldsymbol{x}-\boldsymbol{\mu})^\top] = \begin{bmatrix}\sigma_1^2 &amp; \sigma_{12} &amp; \cdots &amp; \sigma_{1p}\\
+\sigma_{21} &amp; \ddots &amp; \vdots &amp; \vdots \\ \vdots &amp; &amp; &amp; \vdots\\ \sigma_{p1} &amp; \cdots &amp; \cdots &amp; \sigma_{p}^2\end{bmatrix}
+\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\sigma_{j}^2 = \text{Var}[x_j]\)</span> and <span class="math notranslate nohighlight">\(\sigma_{jk} = \text{Cov}[x_j, x_k]\)</span>. Since <span class="math notranslate nohighlight">\(\sigma_{jk} = \text{Cov}[x_j, x_k] = \text{Cov}[x_k, x_j] = \sigma_{kj}\)</span>, the matrix <span class="math notranslate nohighlight">\(\boldsymbol{\Sigma}\)</span> is clearly a symmetric matrix.</p>
+<p>The situation is similar for a sample covariance matrix: given a matrix of data <span class="math notranslate nohighlight">\(\boldsymbol{X} \in \mathbb{R}^{n\times p}\)</span> containing <span class="math notranslate nohighlight">\(n\)</span> observations, the sample covariance matrix can be computed as</p>
+<div class="math notranslate nohighlight">
+\[
+\boldsymbol{C} = \frac{1}{n}\boldsymbol{X}_c^\top \boldsymbol{X}_c
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(\boldsymbol{X}_c\)</span> is the <em>centered</em> version of the matrix <span class="math notranslate nohighlight">\(\boldsymbol{X}\)</span> – i.e. the means of each column have been subtracted. It’s easy to see that the matrix <span class="math notranslate nohighlight">\(\boldsymbol{C}\)</span> is also symmetric. Let’s construct an example of a covariance matrix from data drawn from a multivariate normal distribution.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># makes it easier to see the origin</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span> 
+<span class="n">sns</span><span class="o">.</span><span class="n">set_style</span><span class="p">(</span><span class="s2">&quot;whitegrid&quot;</span><span class="p">)</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="c1"># generate data</span>
+<span class="n">mean</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
+<span class="n">cov</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">multivariate_normal</span><span class="p">(</span><span class="n">mean</span><span class="p">,</span> <span class="n">cov</span><span class="p">,</span> <span class="mi">300</span><span class="p">)</span>
+
+<span class="c1"># plot data</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">X</span><span class="p">[:,</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$x_1$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$x_2$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span><span class="mi">8</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span><span class="mi">8</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/evd_11_0.png" src="../../_images/evd_11_0.png" />
+</div>
+</div>
+<p>Before computing the covariance matrix for this data, let’s first consider just the symmetric matrix <span class="math notranslate nohighlight">\(\frac{1}{n}\boldsymbol{X^\top X}\)</span> (i.e. without centering the columns). Below we compute this matrix and calculate its eigenvalues and eigenvectors using <code class="docutils literal notranslate"><span class="pre">numpy</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">K</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="nd">@X</span><span class="o">/</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">eigenvalues</span><span class="p">,</span> <span class="n">eigenvectors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eig</span><span class="p">(</span><span class="n">K</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">eigenvectors</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">eigenvalues</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[ 0.72623706 -0.68744434]
+ [ 0.68744434  0.72623706]]
+[20.52310737  0.45987617]
+</pre></div>
+</div>
+</div>
+</div>
+<p>The eigenvectors are two unit vectors, which we will visualize shortly. Interestingly, one of the eigenvalues is much larger than the other – indicating that there is one direction along which the majority of the “action” of <span class="math notranslate nohighlight">\(\frac{1}{n}\boldsymbol{X^\top X}\)</span> occurs. To visualize this, we overlay the vectors <span class="math notranslate nohighlight">\(\lambda_i \boldsymbol{u}_i\)</span> on top of our previous scatterplot.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># plot data</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">X</span><span class="p">[:,</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">quiver</span><span class="p">(</span><span class="o">*</span><span class="n">origin</span><span class="p">,</span> <span class="o">*</span><span class="p">(</span><span class="n">eigenvectors</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">eigenvalues</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$\lambda_1 u_1$&#39;</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s1">&#39;xy&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">quiver</span><span class="p">(</span><span class="o">*</span><span class="n">origin</span><span class="p">,</span> <span class="o">*</span><span class="p">(</span><span class="n">eigenvectors</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">eigenvalues</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$\lambda_2 u_2$&#39;</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s1">&#39;xy&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$x_1$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$x_2$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span><span class="mi">8</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span><span class="mi">8</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/evd_15_0.png" src="../../_images/evd_15_0.png" />
+</div>
+</div>
+<p>As we can see from the plot, the large direction (associated with the big eigenvalue), seems to roughly point in the direction along which the two features correlate, though it appears to be a bit off. We can make this much better by first centering the data matrix <span class="math notranslate nohighlight">\(\boldsymbol{X}\)</span> and computing the covariance matrix <span class="math notranslate nohighlight">\(\boldsymbol{C}\)</span>.</p>
+<p>To center the data matrix <span class="math notranslate nohighlight">\(\boldsymbol{X}\)</span>, we can use a convenient matrix called the <em>centering matrix</em> <span class="math notranslate nohighlight">\(\boldsymbol{H}_n = \boldsymbol{I} - \frac{1}{n}\boldsymbol{11^\top}\)</span>. It’s a nice exercise to check that the matrix <span class="math notranslate nohighlight">\(\boldsymbol{X}_c = \boldsymbol{H}_n\boldsymbol{X}\)</span> has the centered columns we desire. Here, we will check this numerically.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># define centering matrix</span>
+<span class="n">Hn</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span><span class="o">/</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="c1"># get centered data</span>
+<span class="n">Xc</span> <span class="o">=</span> <span class="n">Hn</span><span class="nd">@X</span>
+
+<span class="c1"># check that the columns actually have mean zero</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">Xc</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]),</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">Xc</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>3.375077994860476e-16 -2.457293627837013e-16
+</pre></div>
+</div>
+</div>
+</div>
+<p>Indeed, this works! Let’s see what the centered data looks like in comparison to the original data.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># plot data</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">X</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;uncentered&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">Xc</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">Xc</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;centered&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$x_1$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$x_2$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span><span class="mi">8</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span><span class="mi">8</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/evd_19_0.png" src="../../_images/evd_19_0.png" />
+</div>
+</div>
+<p>As we might expect, centering the columns of <span class="math notranslate nohighlight">\(\boldsymbol{X}\)</span> simply shifts all the points to be centered around the origin. Now that we have our centered data, we can compute the covariance matrix <span class="math notranslate nohighlight">\(\boldsymbol{C} = \frac{1}{n}\boldsymbol{X}_c^\top \boldsymbol{X}_c\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">C</span> <span class="o">=</span> <span class="n">Xc</span><span class="o">.</span><span class="n">T</span><span class="nd">@Xc</span><span class="o">/</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">C</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[1.92047819, 0.95424773],
+       [0.95424773, 0.93758217]])
+</pre></div>
+</div>
+</div>
+</div>
+<p>(Note that the matrix <span class="math notranslate nohighlight">\(\boldsymbol{C}\)</span> looks a lot like the covariance matrix we used to generate a data from the multivariate normal distribution - it’s actually the maximum likelihood estimator for this matrix).</p>
+<p>Let’s now compute the eigenvalues and eigenvectors of this matrix and overlay them on our data the same way we did for the uncentered data.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># get eigenthings</span>
+<span class="n">eigenvalues</span><span class="p">,</span> <span class="n">eigenvectors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eig</span><span class="p">(</span><span class="n">C</span><span class="p">)</span>
+
+<span class="c1"># plot data</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">Xc</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">Xc</span><span class="p">[:,</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">quiver</span><span class="p">(</span><span class="o">*</span><span class="n">origin</span><span class="p">,</span> <span class="o">*</span><span class="p">(</span><span class="n">eigenvectors</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">eigenvalues</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$\lambda_1 u_1$&#39;</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s1">&#39;xy&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">quiver</span><span class="p">(</span><span class="o">*</span><span class="n">origin</span><span class="p">,</span> <span class="o">*</span><span class="p">(</span><span class="n">eigenvectors</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">eigenvalues</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$\lambda_2 u_2$&#39;</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s1">&#39;xy&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$x_1$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$x_2$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span><span class="mi">8</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span><span class="mi">8</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/evd_23_0.png" src="../../_images/evd_23_0.png" />
+</div>
+</div>
+<p>Now the eigenvectors (scaled by the corresponding eigenvalues) seem to capture very naturally the <em>directions</em> along which <span class="math notranslate nohighlight">\(X_1\)</span> and <span class="math notranslate nohighlight">\(X_2\)</span> correlate. In the next section, we will discuss a statistical technique called <em>principal components analysis</em> which explicitly utilizes this fact to extract structure in data and/or perform dimensionality reduction.</p>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./content/extensions_applications"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="chheader.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title"><span class="section-number">4. </span>Extensions and applications</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="pca.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><span class="section-number">4.2. </span>Principal Component Analysis (PCA)</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            
+        </div>
+    </div>
+    <footer class="footer">
+  <p>
+    
+      By Michael W. Mahoney and Ryan Theisen<br/>
+    
+        &copy; Copyright 2021.<br/>
+  </p>
+</footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="../../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
+  </body>
+</html>
